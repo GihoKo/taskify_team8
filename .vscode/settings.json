@@ -1,0 +1,12 @@
+{
+  "files.autoSave": "onFocusChange",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always"
+  },
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "css.customData": ["./.vscode/custom-css.json"],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}
