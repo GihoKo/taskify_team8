@@ -15,7 +15,7 @@ module.exports = {
     // @see https://nextjs.org/docs/pages/building-your-application/configuring/eslint#migrating-existing-config
     'plugin:@next/next/recommended',
   ],
-  ignorePatterns: ['build', 'dist', 'public', '.eslintrc.cjs', 'next.config.js', 'svgo.config.js', 'node_modules/'],
+  ignorePatterns: ['build', 'dist', 'public', '.eslintrc.cjs', 'next.config.mjs', 'svgo.config.js', 'node_modules/'],
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
