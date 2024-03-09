@@ -1,3 +1,4 @@
 {
+  //TODO: 린트 셋팅 (형민님)
   "extends": "next/core-web-vitals"
 }
