@@ -3,8 +3,7 @@ import { Inter } from 'next/font/google';
 import StyledComponentsRegistry from '@/lib/registry';
 import type {} from 'styled-components/cssprop';
 
-import { Modal } from '@hooks/use-modal';
-import ModalProvider from '@hooks/use-modal/provider/ModalProvider';
+import { Modal, ModalProvider } from '@hooks/use-modal';
 
 import type { Metadata } from 'next';
 
