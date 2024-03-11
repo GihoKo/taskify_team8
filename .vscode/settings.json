@@ -8,5 +8,17 @@
   },
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "css.customData": ["./.vscode/custom-css.json"],
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "material-icon-theme.folders.associations": {
+    "_components": "Components",
+    "_constants": "Constant",
+    "_hooks": "Hook",
+    "_utils": "Utils"
+  },
+  "material-icon-theme.files.associations": {
+    "tsconfig.path.json": "Tsconfig"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
+  }
 }
