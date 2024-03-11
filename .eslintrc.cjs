@@ -14,6 +14,7 @@ module.exports = {
     'plugin:prettier/recommended',
     // @see https://nextjs.org/docs/pages/building-your-application/configuring/eslint#migrating-existing-config
     'plugin:@next/next/recommended',
+    "plugin:compat/recommended",
   ],
   ignorePatterns: ['build', 'dist', 'public', '.eslintrc.cjs', 'next.config.mjs', 'svgo.config.js', 'node_modules/'],
   settings: {
@@ -35,7 +36,7 @@ module.exports = {
     },
     tsconfigRootDir: __dirname,
   },
-  plugins: ['@next/eslint-plugin-next', '@typescript-eslint', 'prettier', 'react', 'react-hooks', 'jsx-a11y', 'import'],
+  plugins: ['@next/eslint-plugin-next', '@typescript-eslint', 'prettier', 'react', 'react-hooks', 'jsx-a11y', 'import', 'compat'],
   overrides: [
     {
       files: ['**/*.tsx'],
@@ -79,7 +80,6 @@ module.exports = {
     '@typescript-eslint/naming-convention': 'off',
     camelcase: 'off',
     'react/require-default-props': 'off',
-    'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-shadow': 'off',
     '@typescript-eslint/return-await': 'off',
     '@typescript-eslint/no-unused-expressions': 'off',
