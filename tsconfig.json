@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,  //TODO: 어떻게할까?
+    "allowJs": true, //TODO: 어떻게할까?
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -16,7 +16,7 @@
       {
         "name": "next"
       }
-    ],
+    ]
   },
   "extends": ["./tsconfig.path.json"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

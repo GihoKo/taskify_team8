@@ -3,6 +3,8 @@ import { Inter } from 'next/font/google';
 import StyledComponentsRegistry from '@/utils/registry';
 import type {} from 'styled-components/cssprop';
 
+import { Modal, ModalProvider } from '@hooks/use-modal';
+
 import type { Metadata } from 'next';
 
 import '@/styles/global.css';
@@ -22,7 +24,13 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <ModalProvider>
+            {children}
+            <div id='modal' />
+            <Modal />
+          </ModalProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
