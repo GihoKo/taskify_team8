@@ -6,7 +6,7 @@ export { useCloseModal } from './useCloseModal';
 
 export { useModalList, useModalListWithoutRef } from './useModalList';
 
-export { default as ModalProvier } from './provider/ModalProvider';
+export { default as ModalProvider } from './provider/ModalProvider';
 
 export { default as ModalListProvider } from './provider/ModalListProvider';
 
