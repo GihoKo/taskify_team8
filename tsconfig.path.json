@@ -4,6 +4,13 @@
     "paths": {
       "@components/*": ["./components/*"],
       "@hooks/*": ["./hooks/*"],
+      "@apis/*": ["./apis/*"],
+      "@utils/*": ["./utils/*"],
+      "@styles/*": ["./styles/*"],
+      "@interface/*": ["./interface/*"],
+      "@constants/*": ["./constants/*"],
+      "@store/*": ["./store/*"],
+      "@public/*": ["./public/*"],
       "@/*": ["./*"]
     }
   }
