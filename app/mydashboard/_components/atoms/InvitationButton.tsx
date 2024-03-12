@@ -3,10 +3,15 @@ import styled from 'styled-components';
 interface Props {
   children: string;
   type: 'accept' | 'refuse';
+  onClick: () => void;
 }
 
-export default function InvitationButton({ children, type }: Props) {
-  return <S.Button type={type}>{children}</S.Button>;
+export default function InvitationButton({ children, type, onClick }: Props) {
+  return (
+    <S.Button type={type} onClick={onClick}>
+      {children}
+    </S.Button>
+  );
 }
 
 // @ToDo : props.type 중복코드 합치기

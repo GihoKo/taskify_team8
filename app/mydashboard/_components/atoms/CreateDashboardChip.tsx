@@ -5,7 +5,7 @@ import createIcon from '@public/images/add.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 // @ToDo : Image 컴포넌트 크기 반응형으로 해야함
-export default function CreateDashboardIcon() {
+export default function CreateDashboardChip() {
   return (
     <S.CreateDashboardIcon>
       <S.ImageWrapper>

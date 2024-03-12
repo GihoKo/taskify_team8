@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import CreateDashboardIcon from '../atoms/CreateDashboardIcon';
+import CreateDashboardIcon from '../atoms/CreateDashboardChip';
 
 interface Props {
   onClick: () => void;
