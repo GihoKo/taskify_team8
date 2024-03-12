@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import previousIcon from '@public/images/pagenation-left-arrow.svg';
-import nextIcon from '@public/images/pagenation-right-arrow.svg';
+import previousIcon from '@public/images/icons/pagenation-left-arrow.svg';
+import nextIcon from '@public/images/icons/pagenation-right-arrow.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 interface Props {
