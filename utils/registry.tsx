@@ -21,9 +21,6 @@ export default function StyledComponentsRegistry({ children }: { children: React
 
   // @see{@link https://triplexblog.kr/277}
   return (
-    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      {/* <ThemeProvider theme={palette}>{children as React.ReactChild}</ThemeProvider> */}
-      {children as React.ReactChild}
-    </StyleSheetManager>
+    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>{children as React.ReactChild}</StyleSheetManager>
   );
 }
