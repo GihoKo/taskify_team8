@@ -3,9 +3,7 @@
 import React, { useState } from 'react';
 
 import { useServerInsertedHTML } from 'next/navigation';
-import { ServerStyleSheet, StyleSheetManager, ThemeProvider } from 'styled-components';
-
-import { palette } from '@/styles/theme';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
 export default function StyledComponentsRegistry({ children }: { children: React.ReactNode }) {
   // Only create stylesheet once with lazy initial state
@@ -23,8 +21,6 @@ export default function StyledComponentsRegistry({ children }: { children: React
 
   // @see{@link https://triplexblog.kr/277}
   return (
-    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      <ThemeProvider theme={palette}>{children as React.ReactChild}</ThemeProvider>
-    </StyleSheetManager>
+    <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>{children as React.ReactChild}</StyleSheetManager>
   );
 }
