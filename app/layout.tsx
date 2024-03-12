@@ -1,7 +1,8 @@
 import { Inter } from 'next/font/google';
 
-import StyledComponentsRegistry from '@/utils/registry';
 import type {} from 'styled-components/cssprop';
+
+import ClientThemeProvider from '@/providers/ClientThemeProvider';
 
 import { Modal, ModalProvider } from '@hooks/use-modal';
 
@@ -24,13 +25,13 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <StyledComponentsRegistry>
+        <ClientThemeProvider>
           <ModalProvider>
             {children}
             <div id='modal' />
             <Modal />
           </ModalProvider>
-        </StyledComponentsRegistry>
+        </ClientThemeProvider>
       </body>
     </html>
   );
