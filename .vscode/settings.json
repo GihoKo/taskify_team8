@@ -19,6 +19,6 @@
     "tsconfig.path.json": "Tsconfig"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "ms-vsliveshare.vsliveshare"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
