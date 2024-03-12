@@ -20,7 +20,7 @@ const S = {
     display: flex;
     width: 2rem;
     height: 2rem;
-    padding: 0.2727rem;
+    padding: 0.28rem;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
