@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import prevIcon from '@public/images/pagenation-left-arrow.svg';
+import previousIcon from '@public/images/pagenation-left-arrow.svg';
 import nextIcon from '@public/images/pagenation-right-arrow.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 interface Props {
-  type: 'next' | 'prev';
+  type: 'next' | 'previous';
   onClick: () => void;
 }
 
@@ -16,14 +16,14 @@ export default function PageNationButton({ type, onClick }: Props) {
       {type === 'next' ? (
         <Image src={nextIcon} alt={'페이지네이션 다음 버튼 이미지'} width={16} height={16} />
       ) : (
-        <Image src={prevIcon} alt={'페이지네이션 이전 버튼 이미지'} width={16} height={16} />
+        <Image src={previousIcon} alt={'페이지네이션 이전 버튼 이미지'} width={16} height={16} />
       )}
     </S.PageNationButton>
   );
 }
 
 const S = {
-  PageNationButton: styled.button<{ type: 'next' | 'prev' }>`
+  PageNationButton: styled.button<{ type: 'next' | 'previous' }>`
     width: 3.6rem;
     height: 3.6rem;
     border-radius: ${(props) => (props.type === 'next' ? '0 0.4rem 0.4rem 0' : '0.4rem 0 0 0.4rem')};
