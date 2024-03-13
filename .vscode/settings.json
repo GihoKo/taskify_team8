@@ -18,7 +18,4 @@
   "material-icon-theme.files.associations": {
     "tsconfig.path.json": "Tsconfig"
   },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
 }
