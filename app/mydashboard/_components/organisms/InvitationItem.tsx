@@ -6,13 +6,18 @@ import InvitationButtonWrapper from '../molecules/InvitationButtonWrapper';
 import InvitationDashboardName from '../molecules/InvitationDashboardName';
 import InvitationInviteeName from '../molecules/InvitationInviteeName';
 
+interface Props {
+  dashboardName: string;
+  inviter: string;
+}
+
 // @ToDo 반응형 grid 수정 필요
-export default function InvitationItem() {
+export default function InvitationItem({ dashboardName, inviter }: Props) {
   return (
     <S.Wrapper>
       <S.NameWrapper>
-        <InvitationDashboardName />
-        <InvitationInviteeName />
+        <InvitationDashboardName dashboardName={dashboardName} />
+        <InvitationInviteeName inviter={inviter} />
       </S.NameWrapper>
       <InvitationButtonWrapper />
     </S.Wrapper>

@@ -2,11 +2,15 @@ import styled from 'styled-components';
 
 import InvitationText from '../atoms/InvitationText';
 
-export default function InvitationDashboardName() {
+interface Props {
+  dashboardName: string;
+}
+
+export default function InvitationDashboardName({ dashboardName }: Props) {
   return (
     <S.Wrapper>
       <InvitationText type='label'>이름</InvitationText>
-      <InvitationText type='content'>프로덕트 디자인</InvitationText>
+      <InvitationText type='content'>{dashboardName}</InvitationText>
     </S.Wrapper>
   );
 }

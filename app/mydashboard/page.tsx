@@ -1,10 +1,9 @@
 'use client';
 
 import InvitationTitle from './_components/atoms/InvitationTitle';
-import InvitationHeader from './_components/molecules/InvitationHeader';
 import InvitationSearchBar from './_components/molecules/InvitationSearchBar';
 import DashboardBox from './_components/organisms/DashboardBox';
-import InvitationItem from './_components/organisms/InvitationItem';
+import InvitationContainer from './_components/organisms/InvitationContainer';
 
 export default function MyDashboardPage() {
   return (
@@ -12,8 +11,7 @@ export default function MyDashboardPage() {
       <DashboardBox />
       <InvitationTitle />
       <InvitationSearchBar />
-      <InvitationHeader />
-      <InvitationItem />
+      <InvitationContainer />
     </>
   );
 }
