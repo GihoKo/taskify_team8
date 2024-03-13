@@ -7,8 +7,10 @@ import SearchIcon from '../atoms/SearchIcon';
 export default function InvitationSearchBar() {
   return (
     <S.Wrapper>
-      <SearchIcon />
-      <S.Input placeholder='검색' />
+      <S.Positioner>
+        <SearchIcon />
+        <S.Input placeholder='검색' />
+      </S.Positioner>
     </S.Wrapper>
   );
 }
@@ -16,6 +18,17 @@ export default function InvitationSearchBar() {
 const S = {
   Wrapper: styled.div`
     width: 100%;
+    margin-bottom: 0.8rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      margin-bottom: 2.4rem;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      margin-bottom: 2.4rem;
+    }
+  `,
+  Positioner: styled.div`
     position: relative;
   `,
   Input: styled.input`
@@ -27,7 +40,6 @@ const S = {
     padding-bottom: 1rem;
     padding-left: 4.4rem;
     padding-right: 1rem;
-
     font-size: 1.4rem;
 
     @media ${mediaBreakpoint.tablet} {

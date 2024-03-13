@@ -9,13 +9,15 @@ export default function InvitationTitle() {
 const S = {
   Title: styled.h1`
     color: ${({ theme }) => theme.color.black_333236};
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 700;
+    margin-bottom: 2rem;
+
     @media ${mediaBreakpoint.tablet} {
-      font-size: 24px;
+      font-size: 2.4rem;
     }
     @media ${mediaBreakpoint.pc} {
-      font-size: 24px;
+      font-size: 2.4rem;
     }
   `,
 };

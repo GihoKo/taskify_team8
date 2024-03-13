@@ -1,17 +1,13 @@
 'use client';
 
-import InvitationTitle from './_components/atoms/InvitationTitle';
-import InvitationSearchBar from './_components/molecules/InvitationSearchBar';
 import DashboardBox from './_components/organisms/DashboardBox';
-import InvitationContainer from './_components/organisms/InvitationContainer';
+import InvitationBox from './_components/organisms/InvitationBox';
 
 export default function MyDashboardPage() {
   return (
     <>
       <DashboardBox />
-      <InvitationTitle />
-      <InvitationSearchBar />
-      <InvitationContainer />
+      <InvitationBox />
     </>
   );
 }
