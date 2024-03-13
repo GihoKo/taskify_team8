@@ -16,7 +16,10 @@ const S = {
   Wrapper: styled.div`
     width: 2.2rem;
     height: 2.2rem;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1.2rem;
 
     @media ${mediaBreakpoint.tablet} {
       width: 2.4rem;
