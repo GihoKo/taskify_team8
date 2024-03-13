@@ -7,18 +7,24 @@ import styled from 'styled-components';
 export default function ColumnInput() {
   return (
     <>
-      <form>
+      <S.ColumnForm>
         <S.ColumnLabel htmlFor='column-name'>이름</S.ColumnLabel>
         <S.ColumnInput id='column-name' type='text' placeholder='새로운 프로젝트' />
-      </form>
+      </S.ColumnForm>
     </>
   );
 }
 
 const S = {
+  ColumnForm: styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  `,
+
   ColumnInput: styled.input`
     color: ${({ theme }) => theme.color.black_333236};
-    border: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
+    border: 0.1rem solid ${({ theme }) => theme.color.gray_D9D9D9};
     border-radius: 0.6rem;
     font-size: 1.4rem;
 
@@ -28,7 +34,7 @@ const S = {
 
     &:focus {
       outline: none;
-      border: 1px solid ${({ theme }) => theme.color.violet_5534DA};
+      border: 0.1rem solid ${({ theme }) => theme.color.violet_5534DA};
     }
 
     @media ${mediaBreakpoint.tablet} {
