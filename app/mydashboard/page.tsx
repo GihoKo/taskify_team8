@@ -1,6 +1,6 @@
 'use client';
 
-import InvitationLabel from './_components/atoms/InvitationLabel';
+import InvitationText from './_components/atoms/InvitationText';
 import InvitationTitle from './_components/atoms/InvitationTitle';
 import InvitationButtonWrapper from './_components/molecules/InvitationButtonWrapper';
 import InvitationSearchBar from './_components/molecules/InvitationSearchBar';
@@ -13,8 +13,10 @@ export default function MyDashboardPage() {
       <InvitationTitle />
       <InvitationSearchBar />
       <InvitationButtonWrapper />
-      <InvitationLabel>이름</InvitationLabel>
-      <InvitationLabel>초대자</InvitationLabel>
+      <InvitationText type='label'>이름</InvitationText>
+      <InvitationText type='content'>프로덕트 디자인</InvitationText>
+      <InvitationText type='label'>초대자</InvitationText>
+      <InvitationText type='content'>손동희</InvitationText>
     </>
   );
 }
