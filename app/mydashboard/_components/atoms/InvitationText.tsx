@@ -4,7 +4,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 interface Props {
   children: string;
-  type: 'label' | 'content';
+  type: 'label' | 'content' | 'header';
 }
 
 export default function InvitationText({ children, type }: Props) {
@@ -12,7 +12,7 @@ export default function InvitationText({ children, type }: Props) {
 }
 
 const S = {
-  Text: styled.div<{ type: 'label' | 'content' }>`
+  Text: styled.div<{ type: 'label' | 'content' | 'header' }>`
     color: ${({ theme, type }) => (type === 'content' ? theme.color.black_333236 : theme.color.gray_9FA6B2)};
     font-size: 1.4rem;
     font-weight: 400;
