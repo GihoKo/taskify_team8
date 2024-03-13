@@ -4,6 +4,9 @@
 :root {
   font-size: 62.5%;
   /* 1rem = 10px */
+}
+
+* {
   box-sizing: border-box;
 }
 
