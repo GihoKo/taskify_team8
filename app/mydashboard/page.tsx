@@ -1,7 +1,7 @@
 'use client';
 
-import PageNationWrapper from './_components/molecules/PageNationWrapper';
+import DashboardContainer from './_components/organisms/DashboardContainer';
 
 export default function MyDashboardPage() {
-  return <PageNationWrapper />;
+  return <DashboardContainer />;
 }
