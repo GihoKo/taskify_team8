@@ -13,6 +13,7 @@ export interface ReplyProps {
   onClickDelete: () => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function Reply({ id, name, createdDate, content, onClickModify, onClickDelete }: ReplyProps) {
   return (
     <S.Area>
