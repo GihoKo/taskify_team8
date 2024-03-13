@@ -4,6 +4,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import InvitationText from '../atoms/InvitationText';
 
+// @ToDo 반응형 grid 수정 필요
 export default function InvitationHeader() {
   return (
     <S.Wrapper>
@@ -20,12 +21,12 @@ const S = {
     width: 100%;
 
     @media ${mediaBreakpoint.tablet} {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
     }
     @media ${mediaBreakpoint.pc} {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
     }
   `,
 };
