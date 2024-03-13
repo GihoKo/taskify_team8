@@ -6,22 +6,18 @@ import rightArrowIcon from '@public/images/icons/icon-right-arrow.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 // @ToDo 상하 정렬 수정해야할듯
-export default function DashboardButton() {
+// @ToDo 나중에 데이터 바인딩 시 props, 타입 변경 해야함
+export default function DashboardItem({ myDashboard, title }: { myDashboard: boolean; title: string }) {
   // 상태로 왕관 아이콘 관리 예정
   // const [myDashboard, setMyDashboard] = useState(true);
-
-  const mockData = {
-    myDashboard: true,
-    title: '비브리지',
-  };
 
   return (
     <S.Button>
       <S.TitleWrapper>
         <S.Dot />
-        <S.Title>{mockData.title}</S.Title>
+        <S.Title>{title}</S.Title>
         <S.CrownImageWrapper>
-          {mockData.myDashboard ? <Image src={crownIcon} alt='왕관 이미지' fill /> : null}
+          {myDashboard ? <Image src={crownIcon} alt='왕관 이미지' fill /> : null}
         </S.CrownImageWrapper>
       </S.TitleWrapper>
       <Image src={rightArrowIcon} alt='오른쪽 화살표 이미지' width={18} height={18} />
@@ -57,7 +53,7 @@ const S = {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
-    background: var(--orange_FFA500, #ffa500);
+    background: ${({ theme }) => theme.color.gray_787486};
     margin-right: 1.2rem;
 
     @media ${mediaBreakpoint.pc} {
