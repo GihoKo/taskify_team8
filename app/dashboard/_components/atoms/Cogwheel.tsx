@@ -9,11 +9,12 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 interface CogWheelProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fixedSize?: string;
+  as?: 'button' | 'div';
 }
 
-const Cogwheel = ({ fixedSize, ...rest }: CogWheelProps) => {
+const Cogwheel = ({ fixedSize, as = 'button', ...rest }: CogWheelProps) => {
   return (
-    <S.CogwheelButton $fixedSize={fixedSize} {...rest}>
+    <S.CogwheelButton as={as} $fixedSize={fixedSize} {...rest}>
       <S.CogwheelImage fill src={'/images/icons/cogwheel-unfilled-w24-h24.svg'} alt='컬럼 수정 톱니 바퀴 버튼 이미지' />
     </S.CogwheelButton>
   );
