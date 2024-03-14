@@ -19,7 +19,8 @@ const S = {
     display: flex;
     flex-direction: column;
 
-    width: fit-content;
+    /* width: fit-content; */
+    width: 100%;
     height: fit-content;
 
     @media ${mediaBreakpoint.tablet} {
