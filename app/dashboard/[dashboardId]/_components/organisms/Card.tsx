@@ -84,7 +84,8 @@ const S = {
     row-gap: 1.02rem;
 
     width: 100%;
-    max-width: 28.4rem;
+    /* max-width: 28.4rem; */
+    min-width: 30.8rem;
     height: fit-content;
     box-sizing: border-box;
 

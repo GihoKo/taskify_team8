@@ -20,7 +20,7 @@ type DashboardNavProps = PropsWithChildren;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DashboardNav = ({ children }: DashboardNavProps) => {
   return (
-    <S.Box>
+    <S.Wrapper>
       <S.DashBoardNameBox>
         <S.DashBoardName>비브리지</S.DashBoardName>
         <S.CrownIcon src={'/images/icons/icon-crown.svg'} alt='왕관 이미지' width={20.103} height={16} />
@@ -51,7 +51,6 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
               borderWidth={{
                 onMobile: '2px',
               }}
-              isOverlapping
             >
               B
             </FirstLetterProfile>
@@ -59,17 +58,19 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
           </S.MyInfoBox>
         </S.ProfileBox>
       </S.RightContentsBox>
-    </S.Box>
+    </S.Wrapper>
   );
 };
 
 export default DashboardNav;
 
 const S = {
-  Box: styled.nav`
+  Wrapper: styled.nav`
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     width: 100%;
+    min-width: 30.8rem;
     height: 6rem;
     border-bottom: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
 
@@ -77,8 +78,6 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       padding-inline: 4rem;
-
-      justify-content: flex-end;
 
       height: 7rem;
     }
