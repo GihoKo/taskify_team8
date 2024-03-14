@@ -14,7 +14,7 @@ interface CogWheelProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Cogwheel = ({ fixedSize, ...rest }: CogWheelProps) => {
   return (
     <S.CogwheelButton $fixedSize={fixedSize} {...rest}>
-      <S.CogwheelImage fill src={'/images/icons/cogwheel.svg'} alt='컬럼 수정 톱니 바퀴 버튼 이미지' />
+      <S.CogwheelImage fill src={'/images/icons/cogwheel-unfilled-w24-h24.svg'} alt='컬럼 수정 톱니 바퀴 버튼 이미지' />
     </S.CogwheelButton>
   );
 };
