@@ -2,37 +2,19 @@
 
 import { PropsWithChildren } from 'react';
 
+import Image from 'next/image';
 import { css, styled } from 'styled-components';
 
+import { Color, ResponsiveBooleanUtility, ResponsiveUnitUtility } from '@interface/style';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
-
-/**
- * mobile first unit utility
- */
-type ResponsiveUnitUtility =
-  | {
-      onPc?: string;
-      onTablet?: string;
-      onMobile: string;
-    }
-  | string;
-
-/**
- * mobile first boolean utility
- */
-type ResponsiveBooleanUtility =
-  | {
-      onPc?: boolean;
-      onTablet?: boolean;
-      onMobile: boolean;
-    }
-  | boolean;
 
 type FirstLetterProfileProps = PropsWithChildren<{
   profileSize: ResponsiveUnitUtility;
   fontSize: ResponsiveUnitUtility;
   borderWidth?: ResponsiveUnitUtility;
   isOverlapping?: ResponsiveBooleanUtility;
+  backgroundColor: Color;
+  profileImageUrl?: string | null;
 }>;
 
 /**
@@ -44,10 +26,18 @@ const FirstLetterProfile = ({
   fontSize,
   borderWidth,
   isOverlapping,
+  backgroundColor,
+  profileImageUrl,
 }: FirstLetterProfileProps) => {
   return (
-    <S.Box $isOverlapping={isOverlapping} $profileSize={profileSize} $fontSize={fontSize} $borderWidth={borderWidth}>
-      {children}
+    <S.Box
+      $isOverlapping={isOverlapping}
+      $profileSize={profileSize}
+      $fontSize={fontSize}
+      $borderWidth={borderWidth}
+      $backgroundColor={backgroundColor}
+    >
+      {profileImageUrl ? <S.ProfileImage alt='유저 프로필' fill src={profileImageUrl} /> : children}
     </S.Box>
   );
 };
@@ -59,10 +49,10 @@ const overlappedPosition = css<{ $isOverlapping?: ResponsiveBooleanUtility }>`
     typeof $isOverlapping === 'boolean' &&
     $isOverlapping &&
     css`
-      margin-left: -1rem; /* 1.2rem - 0.2rem */
+      margin-left: -1rem; /* -1.3rem + 0.2rem + 0.1rem */
 
       @media ${mediaBreakpoint.tablet} {
-        margin-left: -0.8rem; /* 1.4rem - 0.6rem */
+        margin-left: -0.8rem; /* -1.9rem + 0.6rem + 0.5rem */
       }
     `}
 `;
@@ -121,10 +111,12 @@ const borderStyle = css<{ $borderWidth?: ResponsiveUnitUtility }>`
           border-style: solid;
 
           @media ${mediaBreakpoint.tablet} {
+            // maybe need not to check this condition
             border-style: ${$borderWidth.onTablet && 'solid'};
           }
 
           @media ${mediaBreakpoint.pc} {
+            // maybe need not to check this condition
             border-style: ${$borderWidth.onPc && 'solid'};
           }
         `}
@@ -155,6 +147,7 @@ const S = {
     $fontSize: ResponsiveUnitUtility;
     $isOverlapping?: ResponsiveBooleanUtility;
     $borderWidth?: ResponsiveUnitUtility;
+    $backgroundColor: Color;
   }>`
     ${profileSize};
 
@@ -167,7 +160,10 @@ const S = {
     align-items: center;
     flex-shrink: 0;
 
-    background: #a3c4a2;
+    position: relative;
+    overflow: hidden;
+
+    background: ${({ $backgroundColor }) => $backgroundColor};
     ${borderStyle}
     border-color: ${({ theme }) => theme.color.white_FFFFFF};
     border-radius: 50%;
@@ -178,5 +174,12 @@ const S = {
     font-family: Montserrat;
     font-weight: 600;
     line-height: normal;
+  `,
+
+  ProfileImage: styled(Image)`
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
   `,
 };
