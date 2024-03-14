@@ -1,10 +1,10 @@
-export type Hex = `#${string}`;
+export type RGB = `rgb(${number}, ${number}, ${number})`;
 
-export type Rgb = `rgb(${string}, ${string}, ${string})`;
+export type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
 
-export type Rgba = `rgba(${string}, ${string}, ${string}, ${string})`;
+export type HEX = `#${string}`;
 
-export type Color = Hex | Rgb | Rgba;
+export type Color = RGB | HEX | RGBA;
 
 export type MobileFirstResponsiveUtility<T extends NonNullable<unknown>> = T | { onPc?: T; onTablet?: T; onMobile: T };
 
