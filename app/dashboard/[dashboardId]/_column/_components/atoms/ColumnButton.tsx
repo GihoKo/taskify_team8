@@ -3,16 +3,16 @@
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import styled from 'styled-components';
 
-interface Props {
+interface ColumnButtonProps {
   text: string;
 }
 //text prop에 버튼이름을 주면 됨.
-export default function ColumnButton({ text }: Props) {
+export default function ColumnButton({ text }: ColumnButtonProps) {
   return <S.CreateButton text={text}>{text}</S.CreateButton>;
 }
 
 const S = {
-  CreateButton: styled.div<Props>`
+  CreateButton: styled.div<ColumnButtonProps>`
     background-color: ${({ text, theme }) => (text === '취소' ? theme.color.white_FFFFFF : theme.color.violet_5534DA)};
     color: ${({ text, theme }) => (text === '취소' ? theme.color.gray_787486 : theme.color.white_FFFFFF)};
     font-size: 1.4rem;
