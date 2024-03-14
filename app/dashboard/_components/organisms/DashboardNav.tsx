@@ -7,8 +7,9 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
+
 import { mockDashboardMemberList } from '../../_constants/mockDashboardMemberList';
-import FirstLetterProfile from '../atoms/FirstLetterProfile';
 import DashboardMemberList from '../molecules/DashboardMemberList';
 import InviteButton from '../molecules/InviteButton';
 import ManageButton from '../molecules/ManageButton';
@@ -38,6 +39,7 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
           {/* 내 프로필 정보 */}
           <S.MyInfoBox>
             <FirstLetterProfile
+              backgroundColor='#a3c4a2'
               profileSize={{
                 onMobile: '3.4rem',
                 onPc: '3.8rem',
