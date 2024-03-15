@@ -2,12 +2,16 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import heroImage from '@public/images/hero.png';
+import priorityFeatureImage from '@public/images/priority-feature.png';
+import TodoFeatureImage from '@public/images/todo-feature.png';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+
+import { LANDING_PAGE_VARIOUS_SETTING_ITEMS } from '../constants';
 
 export default function Main() {
   return (
-    <S.Main>
-      <S.HeroWrapper>
+    <S.MainArea>
+      <S.HeroBox>
         <S.ImageWrapper>
           <Image src={heroImage} alt='히어로 이미지' fill />
         </S.ImageWrapper>
@@ -17,13 +21,154 @@ export default function Main() {
         </S.TitleWrapper>
         <S.ServiceDescription>서비스의 메인 설명 들어갑니다.</S.ServiceDescription>
         <S.LoginButton onClick={() => {}}>로그인하기</S.LoginButton>
-      </S.HeroWrapper>
-    </S.Main>
+      </S.HeroBox>
+
+      <S.IntroduceBox>
+        <S.PointFeatureContainer>
+          <S.PointFeatureItem>
+            <S.PointDescriptionWrapper>
+              <S.PointLabel>Point 1</S.PointLabel>
+              <S.PointDescription>
+                일의 우선순위를
+                <br /> 관리하세요
+              </S.PointDescription>
+            </S.PointDescriptionWrapper>
+            <S.PriorityImageWrapper>
+              <Image src={priorityFeatureImage} alt='우선순위 기능 소개 이미지' fill />
+            </S.PriorityImageWrapper>
+          </S.PointFeatureItem>
+          <S.PointFeatureItem>
+            <S.PointDescriptionWrapper>
+              <S.PointLabel>Point 2</S.PointLabel>
+              <S.PointDescription>
+                해야 할 일을
+                <br /> 등록하세요
+              </S.PointDescription>
+            </S.PointDescriptionWrapper>
+            <S.TodoImageWrapper>
+              <Image src={TodoFeatureImage} alt='우선순위 기능 소개 이미지' fill />
+            </S.TodoImageWrapper>
+          </S.PointFeatureItem>
+        </S.PointFeatureContainer>
+
+        <S.SettingBox>
+          <S.SettingIntroduce>생산성을 높이는 다양한 설정 ⚡</S.SettingIntroduce>
+          <S.SettingContainer>
+            {LANDING_PAGE_VARIOUS_SETTING_ITEMS.map((item) => (
+              <S.SettingWrapper key={item.id}>
+                <S.SettingImageWrapper>
+                  <S.SettingImage>
+                    <Image src={item.imageSource} alt='설정 이미지' layout='fill' objectFit='contain' />
+                  </S.SettingImage>
+                </S.SettingImageWrapper>
+                <S.SettingDescriptionWrapper>
+                  <S.SettingTitle>{item.title}</S.SettingTitle>
+                  <S.SettingDescription>{item.description}</S.SettingDescription>
+                </S.SettingDescriptionWrapper>
+              </S.SettingWrapper>
+            ))}
+          </S.SettingContainer>
+        </S.SettingBox>
+      </S.IntroduceBox>
+    </S.MainArea>
   );
 }
 
 const S = {
-  Main: styled.main`
+  SettingBox: styled.section`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
+
+  SettingIntroduce: styled.h3`
+    color: ${({ theme }) => theme.color.white_FFFFFF};
+    text-align: center;
+    font-feature-settings:
+      'clig' off,
+      'liga' off;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 4.2rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      font-size: 2.8rem;
+      margin-bottom: 3.6rem;
+    }
+  `,
+
+  SettingContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      gap: 4.8rem;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      flex-direction: row;
+      gap: 3.3rem;
+    }
+  `,
+
+  SettingWrapper: styled.div`
+    width: 34.3rem;
+    border-radius: 0.8rem;
+    overflow: hidden;
+
+    @media ${mediaBreakpoint.tablet} {
+      width: 37.8rem;
+    }
+  `,
+
+  SettingImageWrapper: styled.div`
+    width: 100%;
+    height: 23.5rem;
+    padding: 0rem 4.1rem;
+    background-color: ${({ theme }) => theme.color.black_4B4B4B};
+
+    @media ${mediaBreakpoint.tablet} {
+      height: 26rem;
+      padding: 0rem 3.9rem;
+    }
+  `,
+  SettingImage: styled.div`
+    width: 100%;
+    height: 100%;
+    position: relative;
+  `,
+
+  SettingDescriptionWrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 2.7rem 3.2rem;
+    background: ${({ theme }) => theme.color.black_171717};
+    gap: 1.8rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      padding-top: 3.3rem;
+      height: 12.4rem;
+    }
+  `,
+
+  SettingTitle: styled.h4`
+    color: ${({ theme }) => theme.color.white_FFFFFF};
+    font-size: 18px;
+    font-weight: 700;
+
+    @media ${mediaBreakpoint.tablet} {
+      font-size: 18px;
+    }
+  `,
+
+  SettingDescription: styled.p`
+    color: ${({ theme }) => theme.color.gray_9FA6B2};
+    font-size: 16px;
+    font-weight: 500;
+  `,
+
+  MainArea: styled.main`
     display: flex;
     flex-direction: column;
     background-color: ${({ theme }) => theme.color.black_000000};
@@ -32,13 +177,9 @@ const S = {
     @media ${mediaBreakpoint.tablet} {
       padding-top: 9.4rem;
     }
-
-    @media ${mediaBreakpoint.pc} {
-      padding-top: 9.4rem;
-    }
   `,
 
-  HeroWrapper: styled.div`
+  HeroBox: styled.div`
     background-color: ${({ theme }) => theme.color.black_000000};
     display: flex;
     flex-direction: column;
@@ -73,7 +214,6 @@ const S = {
     }
 
     @media ${mediaBreakpoint.tablet} {
-      flex-direction: row;
       gap: 2.8rem;
     }
   `,
@@ -108,7 +248,6 @@ const S = {
 
     @media ${mediaBreakpoint.pc} {
       font-size: 90px;
-      line-height: 65px; /* 72.222% */
     }
   `,
 
@@ -128,8 +267,6 @@ const S = {
 
     @media ${mediaBreakpoint.pc} {
       font-size: 1.6rem;
-      margin-top: 2.4rem;
-      margin-bottom: 6.6rem;
     }
   `,
 
@@ -149,14 +286,128 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       width: 28rem;
-      padding: 1.5rem 0rem 1.6rem 0rem;
+      padding: 1.5rem 0rem 1.6rem;
       margin-bottom: 18.4rem;
     }
+  `,
 
+  IntroduceBox: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
+
+  PointFeatureContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 5.9rem;
+    margin-bottom: 9rem;
+  `,
+
+  PointFeatureItem: styled.div`
+    width: 34.3rem;
+    height: 68.6rem;
+    padding-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    background: ${({ theme }) => theme.color.black_171717};
+    position: relative;
+
+    @media ${mediaBreakpoint.tablet} {
+      padding-top: 6.3rem;
+      padding-left: 6rem;
+      width: 66.4rem;
+      height: 97.2rem;
+      align-items: start;
+    }
     @media ${mediaBreakpoint.pc} {
-      width: 28rem;
-      padding: 1.5rem 0rem 1.4rem 0rem;
-      margin-bottom: 18.4rem;
+      padding-top: 12.3rem;
+      width: 120rem;
+      height: 60rem;
+    }
+  `,
+
+  PointDescriptionWrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 6.1rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      align-items: start;
+      gap: 10rem;
+    }
+  `,
+
+  PointLabel: styled.h2`
+    color: ${({ theme }) => theme.color.gray_9FA6B2};
+    text-align: center;
+    font-feature-settings:
+      'clig' off,
+      'liga' off;
+    font-size: 1.8rem;
+    font-weight: 500;
+
+    @media ${mediaBreakpoint.tablet} {
+      align-items: start;
+      font-size: 2.2rem;
+    }
+  `,
+
+  PointDescription: styled.p`
+    color: ${({ theme }) => theme.color.white_FFFFFF};
+    text-align: center;
+    font-feature-settings:
+      'clig' off,
+      'liga' off;
+    font-size: 3.6rem;
+    font-weight: 700;
+    line-height: 5rem; /* 138.889% */
+
+    @media ${mediaBreakpoint.tablet} {
+      text-align: start;
+      font-size: 4.8rem;
+    }
+  `,
+
+  PriorityImageWrapper: styled.div`
+    border-radius: 8px 0px;
+    overflow: hidden;
+    width: 29.6rem;
+    height: 24.8rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    @media ${mediaBreakpoint.tablet} {
+      width: 51.94rem;
+      height: 43.5rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 59.4rem;
+      height: 49.74rem;
+    }
+  `,
+
+  TodoImageWrapper: styled.div`
+    border-radius: 8px 8px 0px 0px;
+    overflow: hidden;
+    display: flex;
+    width: 21.71rem;
+    height: 25rem;
+    position: absolute;
+    bottom: 0;
+
+    @media ${mediaBreakpoint.tablet} {
+      width: 36.04rem;
+      height: 41.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 43.6rem;
+      height: 50.2rem;
     }
   `,
 };
