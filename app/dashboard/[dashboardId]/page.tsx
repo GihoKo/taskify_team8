@@ -1,20 +1,20 @@
 import CardColumn from './_components/atoms/CardColumn';
 import ColumnContainer from './_components/atoms/ColumnContainer';
-import ColumnList from './_components/atoms/ColumnList';
-import CardAppendRectangle from './_components/molecules/CardAppendRectangle';
-import ColumnAppenderRectangle from './_components/molecules/ColumnAppenderRectangle';
+import ColumnContainerGroup from './_components/atoms/ColumnContainerGroup';
+import CardAppendButton from './_components/molecules/CardAppendButton';
+import ColumnAppendButton from './_components/molecules/ColumnAppendButton';
 import Card from './_components/organisms/Card';
 import ColumnHeader from './_components/organisms/ColumnHeader';
 
 const DashboardPage = () => {
   return (
     <>
-      <ColumnList>
+      <ColumnContainerGroup>
         {[1, 2, 3].map((v) => (
           <ColumnContainer key={v}>
             <ColumnHeader />
             <CardColumn>
-              <CardAppendRectangle />
+              <CardAppendButton />
               <Card />
               <Card />
               <Card />
@@ -22,9 +22,9 @@ const DashboardPage = () => {
           </ColumnContainer>
         ))}
         <ColumnContainer isLastColumn>
-          <ColumnAppenderRectangle />
+          <ColumnAppendButton />
         </ColumnContainer>
-      </ColumnList>
+      </ColumnContainerGroup>
     </>
   );
 };
