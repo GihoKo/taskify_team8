@@ -1,9 +1,11 @@
 'use client';
 
-import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import styled from 'styled-components';
-//Todo: validate 했을 때 디자인 추가 필요
-//기본적인 디자인, 틀만 완성
+
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+
+// Todo: validate 했을 때 디자인 추가 필요
+// 기본적인 디자인, 틀만 완성
 export default function ColumnInput() {
   return (
     <>
