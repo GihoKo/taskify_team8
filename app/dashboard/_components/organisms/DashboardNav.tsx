@@ -72,6 +72,7 @@ const S = {
     width: 100%;
     min-width: 30.8rem;
     height: 6rem;
+    flex-shrink: 0;
     border-bottom: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
 
     padding-inline: 1.2rem;
