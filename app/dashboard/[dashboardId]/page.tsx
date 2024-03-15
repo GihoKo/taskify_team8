@@ -30,8 +30,6 @@ const DashboardPage = () => {
           </ColumnContainer>
         </ColumnList>
       </Page>
-      {/* <Cogwheel /> */}
-      {/* <Cogwheel fixedSize='2rem' /> */}
     </>
   );
 };

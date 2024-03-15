@@ -21,13 +21,16 @@ const S = {
     font-family: Pretendard;
     font-size: 1.2rem;
     font-weight: 400;
+    margin-right: 1.2rem;
 
     @media ${mediaBreakpoint.tablet} {
       font-size: 1.4rem;
+      margin-right: 1.6rem;
     }
 
     @media ${mediaBreakpoint.pc} {
       font-size: 1.4rem;
+      margin-right: 1.6rem;
     }
   `,
 };
