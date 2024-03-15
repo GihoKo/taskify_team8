@@ -1,7 +1,13 @@
+'use client';
+
+import Main from './_components/Main';
+import Navbar from './_components/Navbar';
+
 export default function Home() {
   return (
     <>
-      <h1>안녕하세요 프리텐다드인가요?</h1>
+      <Navbar />
+      <Main />
     </>
   );
 }
