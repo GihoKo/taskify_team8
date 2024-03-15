@@ -52,32 +52,30 @@ export function Input({
 const S = {
   InputField: styled.div`
     width: 100%;
-    border: 0.1rem solid $gray_d9d9d9;
+    border: 0.1rem solid ${({ theme }) => theme.color.gray_D9D9D9};
     border-radius: 0.8rem;
     padding: 1.5rem 1.6rem;
     outline: none;
 
-    font-size: $font_size_medium;
-    color: $on_surface;
+    font-size: 1.6rem;
+    color: ${({ theme }) => theme.color.black_333236};
     font-weight: 400;
 
-    transition: border-color 0.2s ease-in-out;
-
     &::placeholder {
-      color: $hint_color;
+      color: ${({ theme }) => theme.color.gray_9FA6B2};
     }
 
     &:focus {
-      border-color: $primary;
+      border-color: ${({ theme }) => theme.color.violet_5534DA};
     }
 
     &:disabled {
-      color: $hint_color;
-      background: $surface_container;
+      color: ${({ theme }) => theme.color.gray_9FA6B2};
+      background: ${({ theme }) => theme.color.white_FFFFFF};
     }
 
     &.error {
-      border-color: $error;
+      border-color: ${({ theme }) => theme.color.red_D6173A};
     }
 
     @media ${mediaBreakpoint.tablet} {
@@ -104,8 +102,8 @@ const S = {
     }
   `,
   ErrorMessage: styled.div`
-    color: $error;
-    font-size: $font_size_small;
+    color: ${({ theme }) => theme.color.red_D6173A};
+    font-size: 1.4rem;
     font-weight: 400;
   `,
 };
