@@ -6,13 +6,13 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-type ColumnListProps = PropsWithChildren;
+type ColumnContainerGroupProps = PropsWithChildren;
 
-const ColumnList = ({ children }: ColumnListProps) => {
+const ColumnContainerGroup = ({ children }: ColumnContainerGroupProps) => {
   return <S.Box>{children}</S.Box>;
 };
 
-export default ColumnList;
+export default ColumnContainerGroup;
 
 const S = {
   Box: styled.article`

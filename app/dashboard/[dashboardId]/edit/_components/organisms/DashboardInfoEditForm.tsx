@@ -9,7 +9,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import BaseButton from '../atoms/BaseButton';
 import ColorSelectList from '../molecules/color-select-list';
-import InputWithLabel from '../molecules/input-with-label/InputWithLabel';
+import InputWithLabel from '../molecules/InputWithLabel';
 
 type DashboardInfoEditFormProps = PropsWithChildren;
 

@@ -4,7 +4,7 @@ import { ElementRef, forwardRef } from 'react';
 
 import styled from 'styled-components';
 
-import BaseInput, { BaseInputComponentType, BaseInputProps } from '../../atoms/BaseInput';
+import BaseInput, { BaseInputComponentType, BaseInputProps } from '../atoms/BaseInput';
 
 interface InputWithLabelProps extends BaseInputProps {
   ErrorComponent?: React.ReactNode;
