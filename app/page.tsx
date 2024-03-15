@@ -1,11 +1,13 @@
 'use client';
 
-import Navbar from './_components/molecules/Navbar';
+import Main from './_components/Main';
+import Navbar from './_components/Navbar';
 
 export default function Home() {
   return (
     <>
       <Navbar />
+      <Main />
     </>
   );
 }

@@ -7,7 +7,7 @@ interface ButtonProps {
   onClick: () => void;
 }
 
-export default function NavbarButton({ children, onClick }: ButtonProps) {
+export default function SignButton({ children, onClick }: ButtonProps) {
   return <S.Button onClick={onClick}>{children}</S.Button>;
 }
 
