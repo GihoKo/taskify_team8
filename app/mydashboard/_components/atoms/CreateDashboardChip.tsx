@@ -9,7 +9,7 @@ export default function CreateDashboardChip() {
   return (
     <S.CreateDashboardIcon>
       <S.ImageWrapper>
-        <Image src={createIcon} alt={'대시보드 생성 버튼 이미지'} fill />
+        <Image fill src={createIcon} alt={'대시보드 생성 버튼 이미지'} />
       </S.ImageWrapper>
     </S.CreateDashboardIcon>
   );

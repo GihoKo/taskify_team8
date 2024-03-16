@@ -7,7 +7,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 export default function SearchIcon() {
   return (
     <S.Wrapper>
-      <Image src={searchIcon} alt='돋보기 아이콘 이미지' fill />
+      <Image fill src={searchIcon} alt='돋보기 아이콘 이미지' />
     </S.Wrapper>
   );
 }

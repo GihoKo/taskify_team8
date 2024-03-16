@@ -9,8 +9,8 @@ interface Props {
 export default function InvitationDashboardName({ dashboardName }: Props) {
   return (
     <S.Wrapper>
-      <InvitationText type='label'>이름</InvitationText>
-      <InvitationText type='content'>{dashboardName}</InvitationText>
+      <InvitationText status='label'>이름</InvitationText>
+      <InvitationText status='content'>{dashboardName}</InvitationText>
     </S.Wrapper>
   );
 }

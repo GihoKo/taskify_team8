@@ -17,7 +17,7 @@ export default function DashboardItem({ myDashboard, title }: { myDashboard: boo
         <S.Dot />
         <S.Title>{title}</S.Title>
         <S.CrownImageWrapper>
-          {myDashboard ? <Image src={crownIcon} alt='왕관 이미지' fill /> : null}
+          {myDashboard ? <Image fill src={crownIcon} alt='왕관 이미지' /> : null}
         </S.CrownImageWrapper>
       </S.TitleWrapper>
       <Image src={rightArrowIcon} alt='오른쪽 화살표 이미지' width={18} height={18} />

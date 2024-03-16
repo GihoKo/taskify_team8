@@ -2,28 +2,30 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+type Status = 'label' | 'content' | 'header';
+
 interface Props {
   children: string;
-  type: 'label' | 'content' | 'header';
+  status: Status;
 }
 
-export default function InvitationText({ children, type }: Props) {
-  return <S.Text type={type}>{children}</S.Text>;
+export default function InvitationText({ children, status }: Props) {
+  return <S.Text status={status}>{children}</S.Text>;
 }
 
 const S = {
-  Text: styled.div<{ type: 'label' | 'content' | 'header' }>`
-    color: ${({ theme, type }) => (type === 'content' ? theme.color.black_333236 : theme.color.gray_9FA6B2)};
+  Text: styled.div<{ status: Status }>`
+    color: ${({ theme, status }) => (status === 'content' ? theme.color.black_333236 : theme.color.gray_9FA6B2)};
     font-size: 1.4rem;
     font-weight: 400;
 
     @media ${mediaBreakpoint.tablet} {
-      display: ${({ type }) => (type === 'label' ? 'none' : 'block')};
+      display: ${({ status }) => (status === 'label' ? 'none' : 'block')};
       font-size: 1.6rem;
     }
 
     @media ${mediaBreakpoint.pc} {
-      display: ${({ type }) => (type === 'label' ? 'none' : 'block')};
+      display: ${({ status }) => (status === 'label' ? 'none' : 'block')};
       font-size: 1.6rem;
     }
   `,

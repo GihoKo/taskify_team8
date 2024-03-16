@@ -4,7 +4,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import InvitationButtonWrapper from '../molecules/InvitationButtonWrapper';
 import InvitationDashboardName from '../molecules/InvitationDashboardName';
-import InvitationInviteeName from '../molecules/InvitationInviteeName';
+import InvitationInviteeName from '../molecules/InvitationInviterName';
 
 interface Props {
   dashboardName: string;

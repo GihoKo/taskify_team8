@@ -13,7 +13,7 @@ export default function Main() {
     <S.MainArea>
       <S.HeroBox>
         <S.ImageWrapper>
-          <Image src={heroImage} alt='히어로 이미지' fill />
+          <Image fill src={heroImage} alt='히어로 이미지' />
         </S.ImageWrapper>
         <S.TitleWrapper>
           <S.WhiteText>새로운 일정 관리</S.WhiteText>
