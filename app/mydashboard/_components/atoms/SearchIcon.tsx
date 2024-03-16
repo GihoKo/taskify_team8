@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import searchIcon from '@public/images/icons/icon-search.svg';
+import searchIcon from '@public/images/icons/search-filledBlack-333236-w22-h22.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 export default function SearchIcon() {

@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import heroImage from '@public/images/hero.png';
-import priorityFeatureImage from '@public/images/priority-feature.png';
-import TodoFeatureImage from '@public/images/todo-feature.png';
+import heroImage from '@public/images/mocks/hero.png';
+import priorityFeatureImage from '@public/images/mocks/priority-feature.png';
+import TodoFeatureImage from '@public/images/mocks/todo-feature.png';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import { LANDING_PAGE_VARIOUS_SETTING_ITEMS } from '../constants';

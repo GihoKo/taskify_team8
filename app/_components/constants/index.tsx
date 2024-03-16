@@ -1,17 +1,17 @@
 import { StaticImageData } from 'next/image';
 
-import dashboardSettingImage from '@public/images/dashboard-setting.png';
-import invitationSettingImage from '@public/images/invitation-setting.png';
-import membersSettingImage from '@public/images/members-setting.png';
+import dashboardSettingImage from '@public/images/mocks/dashboard-setting.png';
+import invitationSettingImage from '@public/images/mocks/invitation-setting.png';
+import membersSettingImage from '@public/images/mocks/members-setting.png';
 
-interface landingPageVariousSettings {
+interface landingPageVariousSettingItems {
   id: number;
   imageSource: StaticImageData;
   title: string;
   description: string;
 }
 
-export const LANDING_PAGE_VARIOUS_SETTING_ITEMS: landingPageVariousSettings[] = [
+export const LANDING_PAGE_VARIOUS_SETTING_ITEMS: landingPageVariousSettingItems[] = [
   {
     id: 0,
     imageSource: dashboardSettingImage,

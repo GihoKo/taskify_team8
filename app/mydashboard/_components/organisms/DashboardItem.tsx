@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import crownIcon from '@public/images/icons/icon-crown.svg';
-import rightArrowIcon from '@public/images/icons/icon-right-arrow.svg';
+import crownIcon from '@public/images/icons/crown-filledYellow-FDD446-w16-h12.svg';
+import rightArrowIcon from '@public/images/icons/right-arrow-filled-black-333236-w18-h18.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 // @ToDo 상하 정렬 수정해야할듯
