@@ -18,4 +18,6 @@ export default function MyDashboardPage() {
   );
 }
 
-const MainArea = styled.main``;
+const MainArea = styled.main`
+  background-color: ${({ theme }) => theme.color.gray_FAFAFA};
+`;
