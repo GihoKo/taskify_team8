@@ -10,7 +10,7 @@ import CreateModalTitle from '../commons/ColumnModalTitile';
 
 export default function UpdateColumnModal() {
   return (
-    <S.DeleteColumnModalBox>
+    <S.UpdateColumnModalBox>
       <CreateModalTitle title='컬럼 관리' />
       <ColumnInput />
       <S.ColumnButtonContainer>
@@ -20,7 +20,7 @@ export default function UpdateColumnModal() {
           <ColumnButton text='변경' />
         </S.ColumnButtonsWrap>
       </S.ColumnButtonContainer>
-    </S.DeleteColumnModalBox>
+    </S.UpdateColumnModalBox>
   );
 }
 
@@ -55,7 +55,7 @@ const S = {
     }
   `,
 
-  DeleteColumnModalBox: styled.div`
+  UpdateColumnModalBox: styled.div`
     display: flex;
     flex-direction: column;
     padding: 2.8rem 2rem;
