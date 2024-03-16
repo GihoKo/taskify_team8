@@ -16,7 +16,7 @@ export default function InvitationInviterName({ inviter }: Props) {
 }
 
 const S = {
-  Wrapper: styled.div`
+  Wrapper: styled.span`
     display: flex;
     gap: 1.6rem;
   `,

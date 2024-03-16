@@ -16,7 +16,7 @@ export default function PageNationText({ total, current }: Props) {
 }
 
 const S = {
-  Text: styled.div`
+  Text: styled.p`
     color: var(--black-black_333236, #333236);
     font-family: Pretendard;
     font-size: 1.2rem;

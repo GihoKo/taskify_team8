@@ -7,6 +7,7 @@ import TodoFeatureImage from '@public/images/mocks/todo-feature.png';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import { LANDING_PAGE_VARIOUS_SETTING_ITEMS } from '../constants';
+import { handleGotoSignInButtonClick } from '../mock';
 
 export default function Main() {
   return (
@@ -20,7 +21,7 @@ export default function Main() {
           <S.VioletText>Taskify</S.VioletText>
         </S.TitleWrapper>
         <S.ServiceDescription>서비스의 메인 설명 들어갑니다.</S.ServiceDescription>
-        <S.LoginButton onClick={() => {}}>로그인하기</S.LoginButton>
+        <S.LoginButton onClick={handleGotoSignInButtonClick}>로그인하기</S.LoginButton>
       </S.HeroBox>
 
       <S.IntroduceBox>

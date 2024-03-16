@@ -14,7 +14,7 @@ export default function InvitationText({ children, status }: Props) {
 }
 
 const S = {
-  Text: styled.div<{ status: Status }>`
+  Text: styled.span<{ status: Status }>`
     color: ${({ theme, status }) => (status === 'content' ? theme.color.black_333236 : theme.color.gray_9FA6B2)};
     font-size: 1.4rem;
     font-weight: 400;

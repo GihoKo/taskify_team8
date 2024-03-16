@@ -16,7 +16,7 @@ export default function InvitationHeader() {
 }
 
 const S = {
-  Wrapper: styled.div`
+  Wrapper: styled.header`
     display: none;
     width: 100%;
 

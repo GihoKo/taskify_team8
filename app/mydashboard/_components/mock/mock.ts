@@ -11,13 +11,13 @@ export const dashboardMock = [
   {
     id: 0,
     myDashboard: true,
-    title: '비브리지',
+    Name: '비브리지',
     color: 'theme.color.red_D6173A',
   },
-  { id: 1, myDashboard: true, title: '코드잇' },
-  { id: 2, myDashboard: false, title: '3분기 계획' },
-  { id: 3, myDashboard: false, title: '회의록' },
-  { id: 4, myDashboard: false, title: '중요 문서함' },
+  { id: 1, myDashboard: true, Name: '코드잇' },
+  { id: 2, myDashboard: false, Name: '3분기 계획' },
+  { id: 3, myDashboard: false, Name: '회의록' },
+  { id: 4, myDashboard: false, Name: '중요 문서함' },
 ];
 
 export const PageNationTextMock = {

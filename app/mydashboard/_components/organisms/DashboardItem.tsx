@@ -7,19 +7,19 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 // @ToDo 상하 정렬 수정해야할듯
 // @ToDo 나중에 데이터 바인딩 시 props, 타입 변경 해야함
-export default function DashboardItem({ myDashboard, title }: { myDashboard: boolean; title: string }) {
+export default function DashboardItem({ myDashboard, Name }: { myDashboard: boolean; Name: string }) {
   // 상태로 왕관 아이콘 관리 예정
   // const [myDashboard, setMyDashboard] = useState(true);
 
   return (
     <S.Button>
-      <S.TitleWrapper>
+      <S.NameWrapper>
         <S.Dot />
-        <S.Title>{title}</S.Title>
+        <S.Name>{Name}</S.Name>
         <S.CrownImageWrapper>
           {myDashboard ? <Image fill src={crownIcon} alt='왕관 이미지' /> : null}
         </S.CrownImageWrapper>
-      </S.TitleWrapper>
+      </S.NameWrapper>
       <Image src={rightArrowIcon} alt='오른쪽 화살표 이미지' width={18} height={18} />
     </S.Button>
   );
@@ -41,7 +41,7 @@ const S = {
     }
   `,
 
-  TitleWrapper: styled.div`
+  NameWrapper: styled.div`
     display: flex;
     align-items: center;
   `,
@@ -73,7 +73,7 @@ const S = {
     }
   `,
 
-  Title: styled.div`
+  Name: styled.span`
     color: var(--black-black_333236, #333236);
     font-size: 1.4rem;
     font-weight: 600;

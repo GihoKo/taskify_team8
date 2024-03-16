@@ -42,6 +42,7 @@ const S = {
       gap: 0;
     }
   `,
+
   NameWrapper: styled.div`
     display: flex;
     flex-direction: column;
