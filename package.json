@@ -22,7 +22,7 @@
     "Firefox ESR",
     "not dead",
     "not op_mini all",
-    "not KaiOS Browser"
+    "not kaios > 0 "
   ],
   "dependencies": {
     "@tanstack/react-query": "^5.25.0",
