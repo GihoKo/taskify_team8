@@ -41,27 +41,12 @@ const S = {
       padding-bottom: 2rem;
       gap: 0;
     }
-
-    @media ${mediaBreakpoint.pc} {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      align-items: center;
-      padding-top: 2rem;
-      padding-bottom: 2rem;
-      gap: 0;
-    }
   `,
   NameWrapper: styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
     @media ${mediaBreakpoint.tablet} {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0;
-    }
-
-    @media ${mediaBreakpoint.pc} {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0;

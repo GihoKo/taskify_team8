@@ -22,9 +22,5 @@ const S = {
     @media ${mediaBreakpoint.tablet} {
       font-size: 1.6rem;
     }
-
-    @media ${mediaBreakpoint.pc} {
-      font-size: 1.6rem;
-    }
   `,
 };

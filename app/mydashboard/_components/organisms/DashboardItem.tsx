@@ -39,9 +39,6 @@ const S = {
     @media ${mediaBreakpoint.tablet} {
       padding: 2rem 2.4rem;
     }
-    @media ${mediaBreakpoint.pc} {
-      padding: 2rem 2.6rem;
-    }
   `,
 
   TitleWrapper: styled.div`
@@ -87,7 +84,6 @@ const S = {
       font-size: 1.6rem;
     }
     @media ${mediaBreakpoint.pc} {
-      font-size: 1.6rem;
       margin-right: 1.6rem;
     }
   `,

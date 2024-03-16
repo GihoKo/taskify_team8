@@ -75,99 +75,6 @@ export default function Main() {
 }
 
 const S = {
-  SettingBox: styled.section`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `,
-
-  SettingIntroduce: styled.h3`
-    color: ${({ theme }) => theme.color.white_FFFFFF};
-    text-align: center;
-    font-feature-settings:
-      'clig' off,
-      'liga' off;
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 4.2rem;
-
-    @media ${mediaBreakpoint.tablet} {
-      font-size: 2.8rem;
-      margin-bottom: 3.6rem;
-    }
-  `,
-
-  SettingContainer: styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-
-    @media ${mediaBreakpoint.tablet} {
-      gap: 4.8rem;
-    }
-
-    @media ${mediaBreakpoint.pc} {
-      flex-direction: row;
-      gap: 3.3rem;
-    }
-  `,
-
-  SettingWrapper: styled.div`
-    width: 34.3rem;
-    border-radius: 0.8rem;
-    overflow: hidden;
-
-    @media ${mediaBreakpoint.tablet} {
-      width: 37.8rem;
-    }
-  `,
-
-  SettingImageWrapper: styled.div`
-    width: 100%;
-    height: 23.5rem;
-    padding: 0rem 4.1rem;
-    background-color: ${({ theme }) => theme.color.black_4B4B4B};
-
-    @media ${mediaBreakpoint.tablet} {
-      height: 26rem;
-      padding: 0rem 3.9rem;
-    }
-  `,
-  SettingImage: styled.div`
-    width: 100%;
-    height: 100%;
-    position: relative;
-  `,
-
-  SettingDescriptionWrapper: styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 2.7rem 3.2rem;
-    background: ${({ theme }) => theme.color.black_171717};
-    gap: 1.8rem;
-
-    @media ${mediaBreakpoint.tablet} {
-      padding-top: 3.3rem;
-      height: 12.4rem;
-    }
-  `,
-
-  SettingTitle: styled.h4`
-    color: ${({ theme }) => theme.color.white_FFFFFF};
-    font-size: 1.8rem;
-    font-weight: 700;
-
-    @media ${mediaBreakpoint.tablet} {
-      font-size: 1.8rem;
-    }
-  `,
-
-  SettingDescription: styled.p`
-    color: ${({ theme }) => theme.color.gray_9FA6B2};
-    font-size: 1.6rem;
-    font-weight: 500;
-  `,
-
   MainArea: styled.main`
     display: flex;
     flex-direction: column;
@@ -185,6 +92,7 @@ const S = {
     flex-direction: column;
     align-items: center;
   `,
+
   ImageWrapper: styled.div`
     position: relative;
     width: 28.7rem;
@@ -199,9 +107,9 @@ const S = {
     @media ${mediaBreakpoint.pc} {
       width: 72.2rem;
       height: 42.2rem;
-      margin-bottom: 4.8rem;
     }
   `,
+
   TitleWrapper: styled.div`
     display: flex;
     flex-direction: column;
@@ -233,6 +141,7 @@ const S = {
       font-size: 7.6rem;
     }
   `,
+
   VioletText: styled.h1`
     color: ${({ theme }) => theme.color.violet_5534DA};
     text-align: center;
@@ -275,7 +184,7 @@ const S = {
     display: flex;
     width: 23.52rem;
     color: ${({ theme }) => theme.color.white_FFFFFF};
-    padding: 1.3rem 0rem 1.2rem 0rem;
+    padding: 1.3rem 0rem 1.2rem;
     justify-content: center;
     align-items: center;
 
@@ -384,6 +293,7 @@ const S = {
       width: 51.94rem;
       height: 43.5rem;
     }
+
     @media ${mediaBreakpoint.pc} {
       width: 59.4rem;
       height: 49.74rem;
@@ -405,9 +315,104 @@ const S = {
       left: 50%;
       transform: translateX(-50%);
     }
+
     @media ${mediaBreakpoint.pc} {
       width: 43.6rem;
       height: 50.2rem;
     }
+  `,
+
+  SettingBox: styled.section`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
+
+  SettingIntroduce: styled.h3`
+    color: ${({ theme }) => theme.color.white_FFFFFF};
+    text-align: center;
+    font-feature-settings:
+      'clig' off,
+      'liga' off;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 4.2rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      font-size: 2.8rem;
+      margin-bottom: 3.6rem;
+    }
+  `,
+
+  SettingContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      gap: 4.8rem;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      flex-direction: row;
+      gap: 3.3rem;
+    }
+  `,
+
+  SettingWrapper: styled.div`
+    width: 34.3rem;
+    border-radius: 0.8rem;
+    overflow: hidden;
+
+    @media ${mediaBreakpoint.tablet} {
+      width: 37.8rem;
+    }
+  `,
+
+  SettingImageWrapper: styled.div`
+    width: 100%;
+    height: 23.5rem;
+    padding: 0rem 4.1rem;
+    background-color: ${({ theme }) => theme.color.black_4B4B4B};
+
+    @media ${mediaBreakpoint.tablet} {
+      height: 26rem;
+      padding: 0rem 3.9rem;
+    }
+  `,
+
+  SettingImage: styled.div`
+    width: 100%;
+    height: 100%;
+    position: relative;
+  `,
+
+  SettingDescriptionWrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 2.7rem 3.2rem;
+    background: ${({ theme }) => theme.color.black_171717};
+    gap: 1.8rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      padding-top: 3.3rem;
+      height: 12.4rem;
+    }
+  `,
+
+  SettingTitle: styled.h4`
+    color: ${({ theme }) => theme.color.white_FFFFFF};
+    font-size: 1.8rem;
+    font-weight: 700;
+
+    @media ${mediaBreakpoint.tablet} {
+      font-size: 1.8rem;
+    }
+  `,
+
+  SettingDescription: styled.p`
+    color: ${({ theme }) => theme.color.gray_9FA6B2};
+    font-size: 1.6rem;
+    font-weight: 500;
   `,
 };

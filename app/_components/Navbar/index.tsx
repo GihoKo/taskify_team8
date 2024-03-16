@@ -39,7 +39,6 @@ const S = {
     }
 
     @media ${mediaBreakpoint.pc} {
-      height: 7rem;
       padding-right: 8rem;
       padding-left: 8rem;
     }
@@ -72,11 +71,6 @@ const S = {
       width: 8rem;
       height: 2.2rem;
     }
-    @media ${mediaBreakpoint.pc} {
-      display: block;
-      width: 8rem;
-      height: 2.2rem;
-    }
   `,
 
   ButtonWrapper: styled.div`
@@ -84,10 +78,6 @@ const S = {
     gap: 2rem;
 
     @media ${mediaBreakpoint.tablet} {
-      gap: 3.6rem;
-    }
-
-    @media ${mediaBreakpoint.pc} {
       gap: 3.6rem;
     }
   `,

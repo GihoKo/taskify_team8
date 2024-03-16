@@ -39,8 +39,8 @@ const S = {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
     }
+
     @media ${mediaBreakpoint.pc} {
-      display: grid;
       grid-template-columns: repeat(3, 1fr);
     }
   `,
