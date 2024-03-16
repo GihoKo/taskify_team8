@@ -29,5 +29,9 @@ const S = {
     @media ${mediaBreakpoint.tablet} {
       padding: 2rem 2rem 4.8rem;
     }
+
+    @media ${mediaBreakpoint.pc} {
+      max-width: 62rem;
+    }
   `,
 };
