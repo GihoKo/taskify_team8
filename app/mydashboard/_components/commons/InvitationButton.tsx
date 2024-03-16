@@ -12,7 +12,7 @@ interface Props {
 
 export default function InvitationButton({ children, status, onClick }: Props) {
   return (
-    <S.Button status={status} onClick={onClick}>
+    <S.Button $status={status} onClick={onClick}>
       {children}
     </S.Button>
   );
@@ -20,19 +20,20 @@ export default function InvitationButton({ children, status, onClick }: Props) {
 
 // @ToDo : props.status 중복코드 합치기
 const S = {
-  Button: styled.button<{ status: Status }>`
-    display: flex;
+  Button: styled.button<{ $status: Status }>`
+    border-radius: 0.4rem;
+    border: ${(props) => (props.$status === 'accept' ? 'none' : '0.1rem solid var(--gray_D9D9D9, #D9D9D9)')};
     width: 10.9rem;
+    display: flex;
     padding: 0.7rem 3.7rem;
-    color: ${(props) => (props.status === 'accept' ? 'var(--white_FFFFFF, #FFFFFF)' : 'var(--violet_5534DA, #5534DA)')};
+    color: ${(props) =>
+      props.$status === 'accept' ? 'var(--white_FFFFFF, #FFFFFF)' : 'var(--violet_5534DA, #5534DA)'};
     justify-content: center;
     align-items: center;
     gap: 1rem;
-
-    border-radius: 0.4rem;
-    border: ${(props) => (props.status === 'accept' ? 'none' : '0.1rem solid var(--gray_D9D9D9, #D9D9D9)')};
     background: ${(props) =>
-      props.status === 'accept' ? 'var(--violet_5534DA, #5534DA)' : 'var(--white_FFFFFF, #FFFFFF)'};
+      props.$status === 'accept' ? 'var(--violet_5534DA, #5534DA)' : 'var(--white_FFFFFF, #FFFFFF)'};
+    cursor: pointer;
 
     @media ${mediaBreakpoint.tablet} {
       width: 7.2rem;
