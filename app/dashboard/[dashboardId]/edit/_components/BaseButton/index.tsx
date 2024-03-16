@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { ResponsiveUnitUtility } from '@interface/style';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
-import { setBaseButtonResponsiveHeight, setBaseButtonResponsiveWidth } from '@styles/utils/button';
+import { setBaseButtonResponsiveHeight, setBaseButtonResponsiveWidth } from '@styles/utils/responsiveButtonUtils';
 
 interface BaseButtonSizeProps {
   width?: ResponsiveUnitUtility;
@@ -15,17 +15,17 @@ interface BaseButtonSizeProps {
 
 interface BaseButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: BaseButtonSizeProps;
-  fullWidth?: boolean;
+  hasFullWidth?: boolean;
 }
 
 export interface BaseButtonStyledComponentProps {
   $size?: BaseButtonSizeProps;
-  $fullWidth?: boolean;
+  $hasFullWidth?: boolean;
 }
 
-const BaseButton = ({ children, disabled, size, fullWidth, ...rest }: BaseButtonProps) => {
+const BaseButton = ({ children, disabled, size, hasFullWidth, ...rest }: BaseButtonProps) => {
   return (
-    <S.Button $size={size} $fullWidth={fullWidth} disabled={disabled} {...rest}>
+    <S.Button $size={size} $hasFullWidth={hasFullWidth} disabled={disabled} {...rest}>
       {children}
     </S.Button>
   );

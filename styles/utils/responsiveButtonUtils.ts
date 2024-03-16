@@ -1,14 +1,32 @@
 import { css } from 'styled-components';
 
-import { BaseButtonStyledComponentProps } from '@/app/dashboard/[dashboardId]/edit/_components/atoms/BaseButton';
+import { BaseButtonStyledComponentProps } from '@/app/dashboard/[dashboardId]/edit/_components/BaseButton';
 import { ResponsiveUnitUtility } from '@interface/style';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+/**
+ *
+ *
+ * @see{@link BaseButtonStyledComponentProps}와 함께 사용할 것
+ *
+ * @example
+ * ```ts
+ * Button: styled.button<BaseButtonStyledComponentProps>`
+ *   display: flex;
+ *   justify-content: center;
+ *   align-items: center;
+ *   flex-shrink: 0;
+ *
+ *   ${setBaseButtonResponsiveWidth('8.4rem')}
+ *   ${setBaseButtonResponsiveHeight({ onMobile: '2.8rem', onTablet: '3.2rem' })}
+ * `
+ * ```
+ */
 export const setBaseButtonResponsiveWidth = (
   defaultWidth?: ResponsiveUnitUtility,
 ) => css<BaseButtonStyledComponentProps>`
-  ${({ $size, $fullWidth }) => {
-    if ($fullWidth) {
+  ${({ $size, $hasFullWidth }) => {
+    if ($hasFullWidth) {
       return css`
         width: 100%;
       `;
@@ -22,7 +40,7 @@ export const setBaseButtonResponsiveWidth = (
       }
 
       if (typeof defaultWidth === 'undefined') {
-        console.warn('The $size, $size.width, $fullWidth, and defaultWidth properties are all undefined.');
+        console.warn('The $size, $size.width, $hasFullWidth, and defaultWidth properties are all undefined.');
 
         return;
       }
@@ -62,6 +80,24 @@ export const setBaseButtonResponsiveWidth = (
   }}
 `;
 
+/**
+ *
+ *
+ * @see{@link BaseButtonStyledComponentProps}와 함께 사용할 것
+ *
+ * @example
+ * ```ts
+ * Button: styled.button<BaseButtonStyledComponentProps>`
+ *   display: flex;
+ *   justify-content: center;
+ *   align-items: center;
+ *   flex-shrink: 0;
+ *
+ *   ${setBaseButtonResponsiveWidth('8.4rem')}
+ *   ${setBaseButtonResponsiveHeight({ onMobile: '2.8rem', onTablet: '3.2rem' })}
+ * `
+ * ```
+ */
 export const setBaseButtonResponsiveHeight = (
   defaultHeight?: ResponsiveUnitUtility,
 ) => css<BaseButtonStyledComponentProps>`
