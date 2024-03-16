@@ -2,6 +2,8 @@
 
 import styled from 'styled-components';
 
+import SideBar from '@components/organisms/SideBar';
+
 import InvitationList from './_components/InvitationList';
 import MyDashboardList from './_components/MyDashboardList';
 import DashboardNav from '../../components/organisms/DashboardNav';
@@ -10,7 +12,7 @@ export default function MyDashboardPage() {
   return (
     <>
       <DashboardNav />
-      {/* <Sidebar/> */}
+      <SideBar />
       <MainArea>
         <MyDashboardList />
         <InvitationList />

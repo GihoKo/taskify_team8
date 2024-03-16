@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import createIcon from '@public/images/icons/add-filledViolet_5534DA-16w-16h.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import PageNationButton from '@components/atoms/PageNationButton';
+
 import DashboardItem from './DashboardItem';
-import PageNationButton from '../commons/PageNationButton';
 import {
   dashboardMock,
   handleCreateDashboardClick,
