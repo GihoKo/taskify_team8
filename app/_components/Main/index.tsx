@@ -154,17 +154,17 @@ const S = {
 
   SettingTitle: styled.h4`
     color: ${({ theme }) => theme.color.white_FFFFFF};
-    font-size: 18px;
+    font-size: 1.8rem;
     font-weight: 700;
 
     @media ${mediaBreakpoint.tablet} {
-      font-size: 18px;
+      font-size: 1.8rem;
     }
   `,
 
   SettingDescription: styled.p`
     color: ${({ theme }) => theme.color.gray_9FA6B2};
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: 500;
   `,
 
@@ -237,17 +237,17 @@ const S = {
     color: ${({ theme }) => theme.color.violet_5534DA};
     text-align: center;
     font-family: Montserrat;
-    font-size: 42px;
+    font-size: 4.2rem;
     font-weight: 700;
-    letter-spacing: -1px;
+    letter-spacing: -0.1rem;
 
     @media ${mediaBreakpoint.tablet} {
-      font-size: 70px;
-      line-height: 65px; /* 92.857% */
+      font-size: 7rem;
+      line-height: 6.5rem; /* 92.857% */
     }
 
     @media ${mediaBreakpoint.pc} {
-      font-size: 90px;
+      font-size: 9rem;
     }
   `,
 
@@ -279,7 +279,7 @@ const S = {
     justify-content: center;
     align-items: center;
 
-    border-radius: 8px;
+    border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.violet_5534DA};
 
     margin-bottom: 8rem;
@@ -311,7 +311,7 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.black_171717};
     position: relative;
 
@@ -372,7 +372,7 @@ const S = {
   `,
 
   PriorityImageWrapper: styled.div`
-    border-radius: 8px 0px;
+    border-radius: 0.8rem 0rem;
     overflow: hidden;
     width: 29.6rem;
     height: 24.8rem;
@@ -391,7 +391,7 @@ const S = {
   `,
 
   TodoImageWrapper: styled.div`
-    border-radius: 8px 8px 0px 0px;
+    border-radius: 0.8rem 0.8rem 0rem 0rem;
     overflow: hidden;
     display: flex;
     width: 21.71rem;

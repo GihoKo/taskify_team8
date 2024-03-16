@@ -33,15 +33,15 @@ const S = {
       props.type === 'accept' ? 'var(--violet_5534DA, #5534DA)' : 'var(--white_FFFFFF, #FFFFFF)'};
 
     @media ${mediaBreakpoint.tablet} {
-      width: 72px;
-      height: 30px;
-      padding: 6px 23px;
+      width: 7.2rem;
+      height: 3rem;
+      padding: 0.6rem 2.3rem;
     }
 
     @media ${mediaBreakpoint.pc} {
-      width: 84px;
-      height: 32px;
-      padding: 7px 29px;
+      width: 8.4rem;
+      height: 3.2rem;
+      padding: 0.7rem 2.9rem;
     }
   `,
 };

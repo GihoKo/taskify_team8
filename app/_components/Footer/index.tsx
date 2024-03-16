@@ -67,7 +67,7 @@ const S = {
 
   SiteInfo: styled.div`
     color: ${({ theme }) => theme.color.gray_9FA6B2};
-    font-size: 12px;
+    font-size: 1.2rem;
     font-weight: 400;
 
     @media ${mediaBreakpoint.tablet} {
