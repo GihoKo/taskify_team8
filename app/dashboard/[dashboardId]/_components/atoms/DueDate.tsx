@@ -13,7 +13,7 @@ const DueDate = ({ children }: DueDateProps) => {
   return (
     <S.ContentBox>
       <S.CalendarBox>
-        <S.Calendar fill alt='달력 이미지' src={'/images/icons/card-calendar.svg'} />
+        <S.Calendar fill alt='달력 이미지' src={'/images/icons/calendar-unfilled-w18-h18.svg'} />
       </S.CalendarBox>
       <S.Text>{children}</S.Text>
     </S.ContentBox>

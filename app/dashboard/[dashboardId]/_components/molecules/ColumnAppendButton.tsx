@@ -6,20 +6,20 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import PlusShapeButton from '../atoms/PlusShapeButton';
+import PlusShapeIcon from '../atoms/PlusShapeIcon';
 
-type ColumnAppenderRectangleProps = PropsWithChildren;
+type ColumnAppendButtonProps = PropsWithChildren;
 
-const ColumnAppenderRectangle = ({ children }: ColumnAppenderRectangleProps) => {
+const ColumnAppendButton = ({ children }: ColumnAppendButtonProps) => {
   return (
     <S.Box>
       {children || '새로운 컬럼 추가하기'}
-      <PlusShapeButton />
+      <PlusShapeIcon />
     </S.Box>
   );
 };
 
-export default ColumnAppenderRectangle;
+export default ColumnAppendButton;
 
 const S = {
   Box: styled.button`

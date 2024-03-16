@@ -2,11 +2,12 @@
 
 import styled from 'styled-components';
 
+import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
+
 import { useResizeObserver } from '@hooks/useResizeObserver';
 
 import { getVisibleProfileListCount } from '../../_utils/count/getVisibleProfileListCount';
 import { isOverZero } from '../../_utils/count/isOverZero';
-import FirstLetterProfile from '../atoms/FirstLetterProfile';
 
 export interface Member {
   id: number;
@@ -35,6 +36,8 @@ const DashboardMemberList = ({ members }: DashboardMemberListProps) => {
       {!!members.length &&
         members.slice(0, visibleProfileListCount).map((member, idx) => (
           <FirstLetterProfile
+            key={member.id}
+            backgroundColor='#a3c4a2'
             profileSize={{
               onMobile: '3.4rem',
               onPc: '3.8rem',
@@ -47,13 +50,13 @@ const DashboardMemberList = ({ members }: DashboardMemberListProps) => {
               onMobile: '2px',
             }}
             isOverlapping={!!idx}
-            key={member.id}
           >
             {member.nickname[0]}
           </FirstLetterProfile>
         ))}
       {shouldShowMore && (
         <FirstLetterProfile
+          backgroundColor='#a3c4a2'
           profileSize={{
             onMobile: '3.4rem',
             onPc: '3.8rem',
