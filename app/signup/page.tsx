@@ -1,6 +1,12 @@
 'use-client';
 
-export default function MyDashboardPage() {
-  return <></>;
+import Input from './_components/Input/Input';
+
+export default function Signup() {
+  return (
+    <>
+      {/* Pass dummy data to Input component */}
+      <Input />
+    </>
+  );
 }
-// 테스트 시에만 사용합니다
