@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColumnButton from '../commons/ColumnButton';
+import ColumnButtonsWrap from '../commons/ColumnButtonWrap';
 import ColumnInput from '../commons/ColumnInput';
 import CreateModalTitle from '../commons/ColumnModalTitile';
 
@@ -13,10 +14,10 @@ export default function CreateColumnModal() {
     <S.CreateColumnBox>
       <CreateModalTitle title='새 컬럼 생성' />
       <ColumnInput />
-      <S.ColumnButtonContainer>
+      <ColumnButtonsWrap>
         <ColumnButton text='취소' />
         <ColumnButton text='생성' />
-      </S.ColumnButtonContainer>
+      </ColumnButtonsWrap>
     </S.CreateColumnBox>
   );
 }
