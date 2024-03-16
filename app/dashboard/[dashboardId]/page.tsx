@@ -1,13 +1,37 @@
-import ColumnButton from './_column/_components/atoms/ColumnButton';
-import ColumnInput from './_column/_components/atoms/ColumnInput';
+import CardColumn from './_components/atoms/CardColumn';
+import ColumnContainer from './_components/atoms/ColumnContainer';
+import ColumnList from './_components/atoms/ColumnList';
+import Page from './_components/atoms/Page';
+import CardAppendRectangle from './_components/molecules/CardAppendRectangle';
+import ColumnAppenderRectangle from './_components/molecules/ColumnAppenderRectangle';
+import Card from './_components/organisms/Card';
+import ColumnHeader from './_components/organisms/ColumnHeader';
+import DashboardNav from './_components/organisms/DashboardNav';
 
-// 버튼 레이아웃 확인을 위해 잠시 ColumnButton 사용중
-export default function DashboardDetail() {
+const DashboardPage = () => {
   return (
     <>
-      <ColumnButton text='생성' />
-      <ColumnButton text='취소' />
-      <ColumnInput />
+      <Page>
+        <DashboardNav />
+        <ColumnList>
+          {[1, 2, 3, 4].map((v) => (
+            <ColumnContainer key={v}>
+              <ColumnHeader />
+              <CardColumn>
+                <CardAppendRectangle />
+                <Card />
+                <Card />
+                <Card />
+              </CardColumn>
+            </ColumnContainer>
+          ))}
+          <ColumnContainer isLastColumn>
+            <ColumnAppenderRectangle />
+          </ColumnContainer>
+        </ColumnList>
+      </Page>
     </>
   );
-}
+};
+
+export default DashboardPage;
