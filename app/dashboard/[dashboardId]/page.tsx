@@ -1,9 +1,32 @@
-import CreateColumnModal from './_components/molecules/_modal/CreateColumnModal';
+import CardColumn from './_components/atoms/CardColumn';
+import ColumnContainer from './_components/atoms/ColumnContainer';
+import ColumnContainerGroup from './_components/atoms/ColumnContainerGroup';
+import CardAppendButton from './_components/molecules/CardAppendButton';
+import ColumnAppendButton from './_components/molecules/ColumnAppendButton';
+import Card from './_components/organisms/Card';
+import ColumnHeader from './_components/organisms/ColumnHeader';
 
-export default function DashboardDetail() {
+const DashboardPage = () => {
   return (
     <>
-      <CreateColumnModal />
+      <ColumnContainerGroup>
+        {[1, 2, 3].map((v) => (
+          <ColumnContainer key={v}>
+            <ColumnHeader />
+            <CardColumn>
+              <CardAppendButton />
+              <Card />
+              <Card />
+              <Card />
+            </CardColumn>
+          </ColumnContainer>
+        ))}
+        <ColumnContainer isLastColumn>
+          <ColumnAppendButton />
+        </ColumnContainer>
+      </ColumnContainerGroup>
     </>
   );
-}
+};
+
+export default DashboardPage;

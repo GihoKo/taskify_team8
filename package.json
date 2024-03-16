@@ -16,6 +16,14 @@
       "eslint --fix"
     ]
   },
+  "browserslist": [
+    "last 2 versions",
+    "> 0.5%",
+    "Firefox ESR",
+    "not dead",
+    "not op_mini all",
+    "not kaios > 0 "
+  ],
   "dependencies": {
     "@tanstack/react-query": "^5.25.0",
     "axios": "^1.6.7",

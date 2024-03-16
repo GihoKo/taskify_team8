@@ -7,8 +7,8 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 interface ColumnButtonProps {
   text: string;
 }
-// text prop에 버튼이름을 주면 됨.
 
+// text prop에 버튼이름을 주면 됨.
 export default function ColumnButton({ text }: ColumnButtonProps) {
   return <S.CreateButton text={text}>{text}</S.CreateButton>;
 }
