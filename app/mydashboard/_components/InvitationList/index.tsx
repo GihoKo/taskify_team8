@@ -63,16 +63,10 @@ const S = {
   TitleWrapper: styled.div`
     padding-top: 1.6rem;
     padding-left: 1.6rem;
-    margin-bottom: 10.5rem;
 
     @media ${mediaBreakpoint.tablet} {
       padding-top: 3.2rem;
       padding-left: 2.8rem;
-      margin-bottom: 6.7rem;
-    }
-
-    @media ${mediaBreakpoint.pc} {
-      margin-bottom: 6.6rem;
     }
   `,
 
@@ -91,6 +85,7 @@ const S = {
     width: 100%;
     margin-bottom: 0.8rem;
     position: relative;
+    margin-top: 2rem;
 
     @media ${mediaBreakpoint.tablet} {
       margin-bottom: 2.4rem;
@@ -148,6 +143,16 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    margin-top: 10.5rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      margin-top: 6.7rem;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      margin-top: 6.6rem;
+    }
   `,
 
   NoInvitedImageWrapper: styled.div`
