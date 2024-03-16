@@ -6,13 +6,13 @@ import InvitationButton from '../commons/InvitationButton';
 import InvitationText from '../commons/InvitationText';
 import { handleInvitationAccept, handleInvitationRefuse } from '../mock/mock';
 
-interface Props {
+interface InvitationProps {
   dashboardName: string;
   inviter: string;
 }
 
 // @ToDo 반응형 grid 수정 필요
-export default function InvitationItem({ dashboardName, inviter }: Props) {
+export default function InvitationItem({ dashboardName, inviter }: InvitationProps) {
   return (
     <S.Wrapper>
       <S.NameWrapper>

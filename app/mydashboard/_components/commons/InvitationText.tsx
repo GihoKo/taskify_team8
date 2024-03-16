@@ -4,12 +4,12 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 type Status = 'label' | 'content' | 'header';
 
-interface Props {
+interface InvitationTextProps {
   children: string;
   status: Status;
 }
 
-export default function InvitationText({ children, status }: Props) {
+export default function InvitationText({ children, status }: InvitationTextProps) {
   return <S.Text $status={status}>{children}</S.Text>;
 }
 

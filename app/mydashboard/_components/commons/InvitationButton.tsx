@@ -4,13 +4,13 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 type Status = 'accept' | 'refuse';
 
-interface Props {
+interface InvitationButtonProps {
   children: string;
   status: Status;
   onClick: () => void;
 }
 
-export default function InvitationButton({ children, status, onClick }: Props) {
+export default function InvitationButton({ children, status, onClick }: InvitationButtonProps) {
   return (
     <S.Button $status={status} onClick={onClick}>
       {children}

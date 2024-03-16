@@ -7,12 +7,12 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 type Status = 'next' | 'previous';
 
-interface Props {
+interface PageNationButtonProps {
   status: Status;
   onClick: () => void;
 }
 
-export default function PageNationButton({ status, onClick }: Props) {
+export default function PageNationButton({ status, onClick }: PageNationButtonProps) {
   return (
     <S.PageNationButton onClick={onClick} $status={status}>
       {status === 'next' ? (
