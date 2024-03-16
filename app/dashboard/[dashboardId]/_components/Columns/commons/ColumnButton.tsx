@@ -26,7 +26,7 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: center;
-
+    cursor: pointer;
     @media ${mediaBreakpoint.tablet} {
       font-size: 1.6rem;
       width: 12rem;
