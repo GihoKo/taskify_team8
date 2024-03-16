@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import cardMockImage from '@public/images/mocks/card-mock-image.png';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
 import CardTag from '@components/atoms/tag/CardTag';
 
 import { formatDateShorter } from '@utils/time/formatDateShorter';
 
 import DueDate from '../atoms/DueDate';
-import FirstLetterProfile from '../atoms/FirstLetterProfile';
 
 type CardProps = {
   title: string;
@@ -63,6 +63,7 @@ const Card = ({
                 onMobile: '1rem',
                 onTablet: '1.2rem',
               }}
+              backgroundColor='#a3c4a2'
             >
               {assignee?.nickname ? assignee.nickname[0] : 'B'}
             </FirstLetterProfile>
@@ -83,7 +84,8 @@ const S = {
     row-gap: 1.02rem;
 
     width: 100%;
-    max-width: 28.4rem;
+    /* max-width: 28.4rem; */
+    min-width: 30.8rem;
     height: fit-content;
     box-sizing: border-box;
 

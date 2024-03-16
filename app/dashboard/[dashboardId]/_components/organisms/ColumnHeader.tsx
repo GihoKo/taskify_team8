@@ -2,7 +2,8 @@
 
 import styled from 'styled-components';
 
-import Cogwheel from '../atoms/Cogwheel';
+import Cogwheel from '@/app/dashboard/_components/atoms/Cogwheel';
+
 import ColumnProgressBar from '../molecules/ColumnProgressBar';
 
 const ColumnHeader = () => {

@@ -4,17 +4,17 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import PlusShapeButton from '../atoms/PlusShapeButton';
+import PlusShapeIcon from '../atoms/PlusShapeIcon';
 
-const CardAppendRectangle = () => {
+const CardAppendButton = () => {
   return (
-    <S.Box>
-      <PlusShapeButton />
+    <S.Box type='button'>
+      <PlusShapeIcon />
     </S.Box>
   );
 };
 
-export default CardAppendRectangle;
+export default CardAppendButton;
 
 const S = {
   Box: styled.button`

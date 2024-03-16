@@ -5,15 +5,15 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-const PlusShapeButton = () => {
+const PlusShapeIcon = () => {
   return (
     <S.ImageBox>
-      <S.PlusImage fill alt='카드 추가 버튼 이미지' src={'/images/icons/card-append-img.svg'} />
+      <S.PlusImage fill alt='카드 추가 버튼 이미지' src={'/images/icons/plus-filledViolet_5534DA-w16-h16.svg'} />
     </S.ImageBox>
   );
 };
 
-export default PlusShapeButton;
+export default PlusShapeIcon;
 
 const S = {
   ImageBox: styled.div`
