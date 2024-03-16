@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import ColumnButton from '../../atoms/ColumnButton';
-import ColumnInput from '../../atoms/ColumnInput';
-import CreateModalTitle from '../../atoms/ColumnModalTitile';
+import ColumnButton from '../commons/ColumnButton';
+import ColumnInput from '../commons/ColumnInput';
+import CreateModalTitle from '../commons/ColumnModalTitile';
 
 export default function CreateColumnModal() {
   return (
