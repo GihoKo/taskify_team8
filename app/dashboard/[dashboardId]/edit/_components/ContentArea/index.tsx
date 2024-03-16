@@ -5,6 +5,7 @@ import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+import { dashboardNavbarHeight } from '@styles/navbarHeight';
 
 type ContentsAreaProps = PropsWithChildren;
 
@@ -18,7 +19,8 @@ const S = {
   Area: styled.article`
     width: 100%;
     min-width: 30.8rem;
-    height: 100%;
+    /* height: 100%; */
+    height: calc(100% - ${dashboardNavbarHeight.onMobile});
     flex-shrink: 0;
 
     display: flex;
@@ -28,10 +30,12 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       padding: 2rem 2rem 4.8rem;
+      height: calc(100% - ${dashboardNavbarHeight.onTablet});
     }
 
     @media ${mediaBreakpoint.pc} {
       max-width: 62rem;
+      height: calc(100% - ${dashboardNavbarHeight.onPc});
     }
   `,
 };
