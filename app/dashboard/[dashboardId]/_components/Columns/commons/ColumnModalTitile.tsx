@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 interface CreateModalTitleProps {
-  children: string;
+  title: string;
 }
 
-export default function CreateModalTitle({ children }: CreateModalTitleProps) {
-  return <S.ColumnModalTitle>{children}</S.ColumnModalTitle>;
+export default function CreateModalTitle({ title }: CreateModalTitleProps) {
+  return <S.ColumnModalTitle>{title}</S.ColumnModalTitle>;
 }
 
 const S = {

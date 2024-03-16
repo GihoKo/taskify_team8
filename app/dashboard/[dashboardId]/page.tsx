@@ -1,6 +1,7 @@
 import CardColumn from './_components/atoms/CardColumn';
 import ColumnContainer from './_components/atoms/ColumnContainer';
 import ColumnContainerGroup from './_components/atoms/ColumnContainerGroup';
+import UpdateColumnModal from './_components/Columns/UpdateColumnModal';
 import CardAppendButton from './_components/molecules/CardAppendButton';
 import ColumnAppendButton from './_components/molecules/ColumnAppendButton';
 import Card from './_components/organisms/Card';
@@ -25,6 +26,7 @@ const DashboardPage = () => {
           <ColumnAppendButton />
         </ColumnContainer>
       </ColumnContainerGroup>
+      <UpdateColumnModal />
     </>
   );
 };
