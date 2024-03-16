@@ -13,9 +13,9 @@ export default function Main() {
   return (
     <S.MainArea>
       <S.HeroBox>
-        <S.ImageWrapper>
+        <S.HeroImageWrapper>
           <Image fill src={heroImage} alt='히어로 이미지' />
-        </S.ImageWrapper>
+        </S.HeroImageWrapper>
         <S.TitleWrapper>
           <S.WhiteText>새로운 일정 관리</S.WhiteText>
           <S.VioletText>Taskify</S.VioletText>
@@ -26,30 +26,34 @@ export default function Main() {
 
       <S.IntroduceBox>
         <S.PointFeatureContainer>
-          <S.PointFeatureItem>
-            <S.PointDescriptionWrapper>
+          <S.PriorityWrapper>
+            <S.PriorityDescriptionWrapper>
               <S.PointLabel>Point 1</S.PointLabel>
               <S.PointDescription>
                 일의 우선순위를
                 <br /> 관리하세요
               </S.PointDescription>
-            </S.PointDescriptionWrapper>
-            <S.PriorityImageWrapper>
-              <Image src={priorityFeatureImage} alt='우선순위 기능 소개 이미지' fill />
-            </S.PriorityImageWrapper>
-          </S.PointFeatureItem>
-          <S.PointFeatureItem>
-            <S.PointDescriptionWrapper>
+            </S.PriorityDescriptionWrapper>
+            <S.PriorityImagePositioner>
+              <S.PriorityImageWrapper>
+                <Image src={priorityFeatureImage} alt='우선순위 기능 소개 이미지' fill />
+              </S.PriorityImageWrapper>
+            </S.PriorityImagePositioner>
+          </S.PriorityWrapper>
+          <S.TodoWrapper>
+            <S.TodoDescriptionWrapper>
               <S.PointLabel>Point 2</S.PointLabel>
               <S.PointDescription>
                 해야 할 일을
                 <br /> 등록하세요
               </S.PointDescription>
-            </S.PointDescriptionWrapper>
-            <S.TodoImageWrapper>
-              <Image src={TodoFeatureImage} alt='우선순위 기능 소개 이미지' fill />
-            </S.TodoImageWrapper>
-          </S.PointFeatureItem>
+            </S.TodoDescriptionWrapper>
+            <S.TodoImagePositioner>
+              <S.TodoImageWrapper>
+                <Image src={TodoFeatureImage} alt='우선순위 기능 소개 이미지' fill />
+              </S.TodoImageWrapper>
+            </S.TodoImagePositioner>
+          </S.TodoWrapper>
         </S.PointFeatureContainer>
 
         <S.SettingBox>
@@ -94,7 +98,7 @@ const S = {
     align-items: center;
   `,
 
-  ImageWrapper: styled.div`
+  HeroImageWrapper: styled.div`
     position: relative;
     width: 28.7rem;
     height: 16.8rem;
@@ -105,6 +109,7 @@ const S = {
       height: 31.4rem;
       margin-bottom: 4.8rem;
     }
+
     @media ${mediaBreakpoint.pc} {
       width: 72.2rem;
       height: 42.2rem;
@@ -188,10 +193,8 @@ const S = {
     padding: 1.3rem 0rem 1.2rem;
     justify-content: center;
     align-items: center;
-
     border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.violet_5534DA};
-
     margin-bottom: 8rem;
 
     @media ${mediaBreakpoint.tablet} {
@@ -214,39 +217,118 @@ const S = {
     margin-bottom: 9rem;
   `,
 
-  PointFeatureItem: styled.div`
+  PriorityWrapper: styled.article`
     width: 34.3rem;
     height: 68.6rem;
     padding-top: 6rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
     border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.black_171717};
     position: relative;
 
     @media ${mediaBreakpoint.tablet} {
-      padding-top: 6.3rem;
-      padding-left: 6rem;
       width: 66.4rem;
       height: 97.2rem;
-      align-items: start;
+      padding-top: 6.3rem;
+      padding-left: 6rem;
     }
     @media ${mediaBreakpoint.pc} {
-      padding-top: 12.3rem;
       width: 120rem;
       height: 60rem;
+      flex-direction: row;
     }
   `,
-
-  PointDescriptionWrapper: styled.div`
+  PriorityDescriptionWrapper: styled.div`
     display: flex;
     flex-direction: column;
     gap: 6.1rem;
+  `,
+
+  PriorityImagePositioner: styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  `,
+
+  PriorityImageWrapper: styled.div`
+    border-radius: 0.8rem 0rem;
+    overflow: hidden;
+    width: 29.6rem;
+    height: 24.8rem;
+    position: relative;
 
     @media ${mediaBreakpoint.tablet} {
-      align-items: start;
-      gap: 10rem;
+      width: 51.94rem;
+      height: 43.5rem;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      width: 59.4rem;
+      height: 49.74rem;
+    }
+  `,
+
+  TodoWrapper: styled.article`
+    width: 34.3rem;
+    height: 68.6rem;
+    padding-top: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 0.8rem;
+    background: ${({ theme }) => theme.color.black_171717};
+    position: relative;
+
+    @media ${mediaBreakpoint.tablet} {
+      width: 66.4rem;
+      height: 97.2rem;
+      padding-top: 6.3rem;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      width: 120rem;
+      height: 60rem;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+  `,
+
+  TodoDescriptionWrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+    padding-left: 6rem;
+    gap: 6.1rem;
+
+    @media ${mediaBreakpoint.pc} {
+      padding-left: 0;
+    }
+  `,
+
+  TodoImagePositioner: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  `,
+
+  TodoImageWrapper: styled.div`
+    border-radius: 0.8rem 0.8rem 0 0;
+    overflow: hidden;
+    width: 21.7rem;
+    height: 25rem;
+    position: relative;
+
+    @media ${mediaBreakpoint.tablet} {
+      width: 36rem;
+      height: 41.5rem;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      width: 43.6rem;
+      height: 50.2rem;
+      margin-left: 10.8rem;
+      margin-right: 10rem;
     }
   `,
 
@@ -260,7 +342,7 @@ const S = {
     font-weight: 500;
 
     @media ${mediaBreakpoint.tablet} {
-      align-items: start;
+      text-align: start;
       font-size: 2.2rem;
     }
   `,
@@ -273,7 +355,7 @@ const S = {
       'liga' off;
     font-size: 3.6rem;
     font-weight: 700;
-    line-height: 5rem; /* 138.889% */
+    line-height: 6.4rem;
 
     @media ${mediaBreakpoint.tablet} {
       text-align: start;
@@ -281,49 +363,7 @@ const S = {
     }
   `,
 
-  PriorityImageWrapper: styled.div`
-    border-radius: 0.8rem 0rem;
-    overflow: hidden;
-    width: 29.6rem;
-    height: 24.8rem;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-
-    @media ${mediaBreakpoint.tablet} {
-      width: 51.94rem;
-      height: 43.5rem;
-    }
-
-    @media ${mediaBreakpoint.pc} {
-      width: 59.4rem;
-      height: 49.74rem;
-    }
-  `,
-
-  TodoImageWrapper: styled.div`
-    border-radius: 0.8rem 0.8rem 0rem 0rem;
-    overflow: hidden;
-    display: flex;
-    width: 21.71rem;
-    height: 25rem;
-    position: absolute;
-    bottom: 0;
-
-    @media ${mediaBreakpoint.tablet} {
-      width: 36.04rem;
-      height: 41.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    @media ${mediaBreakpoint.pc} {
-      width: 43.6rem;
-      height: 50.2rem;
-    }
-  `,
-
-  SettingBox: styled.section`
+  SettingBox: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -360,7 +400,7 @@ const S = {
     }
   `,
 
-  SettingWrapper: styled.div`
+  SettingWrapper: styled.article`
     width: 34.3rem;
     border-radius: 0.8rem;
     overflow: hidden;
