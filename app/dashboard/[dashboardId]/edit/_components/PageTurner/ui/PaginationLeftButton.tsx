@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes } from 'react';
 import Image from 'next/image';
 import styled, { css } from 'styled-components';
 
-import leftArrow from '@public/images/icons/pagenation-left-arrow.svg';
+import leftArrow from '@public/images/icons/pagenation-left-arrow-fiiledGray-D9D9D9-w16-h16.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 type PaginationLeftButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;

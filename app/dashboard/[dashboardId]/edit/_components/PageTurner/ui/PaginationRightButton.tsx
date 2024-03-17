@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import rightArrow from '@public/images/icons/pagenation-right-arrow.svg';
+import rightArrow from '@public/images/icons/pagenation-right-arrow-fiiledGray-D9D9D9-w16-h16.svg';
 
 import { paginationButtonSharedStyle } from './PaginationLeftButton';
 
