@@ -1,6 +1,6 @@
 'use-client';
 
-import Input from './_components/Input/Input';
+import Input from '../../components/molecules/Input';
 
 export default function Signup() {
   return (
