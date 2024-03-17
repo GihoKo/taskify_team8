@@ -51,7 +51,7 @@ export const useModalListWithoutRef = () => {
  * const modalRef = useRef<HTMLElemet>(null);
  * const { openModal, closeModal } = useModal();
  * const handleModal = () => {
- *   openModal(MyCustomModal, { linkUrl: input, onClose: clearInput });
+ *   openModal(MyCustomModal, { modalRef, linkUrl: input, onClose: clearInput });
  * };
  * ```
  */
