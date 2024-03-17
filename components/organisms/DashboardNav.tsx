@@ -3,39 +3,58 @@
 import { PropsWithChildren } from 'react';
 
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
 
-import { mockDashboardMemberList } from '../../_constants/mockDashboardMemberList';
-import DashboardMemberList from '../molecules/DashboardMemberList';
-import InviteButton from '../molecules/InviteButton';
-import ManageButton from '../molecules/ManageButton';
+import DashboardMemberList from '../../app/dashboard/_components/molecules/DashboardMemberList';
+import InviteButton from '../../app/dashboard/_components/molecules/InviteButton';
+import ManageButton from '../../app/dashboard/_components/molecules/ManageButton';
+import { mockDashboardMemberList } from '../../app/dashboard/_constants/mockDashboardMemberList';
 
 type DashboardNavProps = PropsWithChildren;
 
 // TODO: api 연결되면 프롭 수정
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DashboardNav = ({ children }: DashboardNavProps) => {
+  const pathname = usePathname();
+
   return (
-    <S.Wrapper>
-      <S.DashBoardNameBox>
-        <S.DashBoardName>비브리지</S.DashBoardName>
-        <S.CrownIcon src={'/images/icons/icon-crown.svg'} alt='왕관 이미지' width={20.103} height={16} />
+    <S.Wrapper $pathname={pathname}>
+      <S.DashBoardNameBox $pathname={pathname}>
+        {pathname === '/mydashboard' ? (
+          <S.DashBoardName>내 대시보드</S.DashBoardName>
+        ) : (
+          <>
+            <S.DashBoardName>비브리지</S.DashBoardName>
+            <S.CrownIcon
+              src={'/images/icons/crown-filledYellow-FDD446-w16-h12.svg'}
+              alt='왕관 이미지'
+              width={20.103}
+              height={16}
+            />
+          </>
+        )}
       </S.DashBoardNameBox>
 
       <S.RightContentsBox>
-        <S.ButtonContainer>
-          <ManageButton />
-          <InviteButton />
-        </S.ButtonContainer>
-
+        {pathname === '/mydashboard' ? null : (
+          <S.ButtonContainer>
+            <ManageButton />
+            <InviteButton />
+          </S.ButtonContainer>
+        )}
         <S.ProfileBox>
           {/* 멤버 프로필 정보 */}
-          <DashboardMemberList members={mockDashboardMemberList} />
-          <S.Stick />
+          {pathname === '/mydashboard' ? null : (
+            <>
+              <DashboardMemberList members={mockDashboardMemberList} />
+              <S.Stick />
+            </>
+          )}
           {/* 내 프로필 정보 */}
           <S.MyInfoBox>
             <FirstLetterProfile
@@ -66,10 +85,10 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
 export default DashboardNav;
 
 const S = {
-  Wrapper: styled.nav`
+  Wrapper: styled.nav<{ $pathname: string }>`
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: ${({ $pathname }) => ($pathname === '/mydashboard' ? 'space-between' : 'flex-end')};
     width: 100%;
     min-width: 30.8rem;
     height: 6rem;
@@ -80,7 +99,7 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       padding-inline: 4rem;
-
+      justify-content: ${({ $pathname }) => ($pathname === '/mydashboard' ? 'space-between' : 'flex-end')};
       height: 7rem;
     }
 
@@ -91,8 +110,8 @@ const S = {
     }
   `,
 
-  DashBoardNameBox: styled.section`
-    display: none;
+  DashBoardNameBox: styled.section<{ $pathname: string }>`
+    display: ${({ $pathname }) => ($pathname === '/mydashboard' ? 'block' : 'none')};
 
     @media ${mediaBreakpoint.pc} {
       display: flex;

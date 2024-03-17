@@ -1,13 +1,24 @@
 'use client';
 
-import DashboardBox from './_components/organisms/DashboardBox';
-import InvitationBox from './_components/organisms/InvitationBox';
+import styled from 'styled-components';
+
+import InvitationList from './_components/InvitationList';
+import MyDashboardList from './_components/MyDashboardList';
+import DashboardNav from '../../components/organisms/DashboardNav';
 
 export default function MyDashboardPage() {
   return (
     <>
-      <DashboardBox />
-      <InvitationBox />
+      <DashboardNav />
+      {/* <Sidebar/> */}
+      <MainArea>
+        <MyDashboardList />
+        <InvitationList />
+      </MainArea>
     </>
   );
 }
+
+const MainArea = styled.main`
+  background-color: ${({ theme }) => theme.color.gray_FAFAFA};
+`;
