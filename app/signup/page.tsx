@@ -12,8 +12,8 @@ import axios from '@apis/axios';
 
 import Input from '@components/molecules/Input';
 
-import ModalCheckIt from './_components/ModalCheckIt';
-import useModalToggle from './_hooks/useModal';
+import ModalCheckIt from '../../components/molecules/ModalCheckIt';
+import useModalToggle from '../../hooks/use-modal/useSignModal';
 
 interface Inputs {
   email: string;
