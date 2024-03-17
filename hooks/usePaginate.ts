@@ -38,7 +38,7 @@ type CanJumpToNextPageGroup = boolean;
  *   const navigate = useNavigate();
  *
  *   const { changePage, currentPage, setCurrentPage, ...usePaginateRest } = usePaginate({
- *     count: result?.count,
+ *     totalCount: result?.count,
  *     itemsPerPage,
  *     pagesPerGroup,
  *   });
@@ -90,7 +90,7 @@ const usePaginate = ({ totalCount, itemsPerPage = 8, pagesPerGroup = 5 }: usePag
   const [currentPage, setCurrentPage] = useState(1); // 시작 페이지 번호 1
 
   const totalPages: TotalPages = useMemo(() => {
-    return totalCount && Math.ceil(totalCount / itemsPerPage);
+    return totalCount ? Math.ceil(totalCount / itemsPerPage) : 0;
   }, [totalCount, itemsPerPage]);
 
   const currentPageGroup: CurrentPageGroup = useMemo(
