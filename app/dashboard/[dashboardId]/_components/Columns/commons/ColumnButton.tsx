@@ -23,11 +23,10 @@ const S = {
     height: 4.2rem;
     border-radius: 0.8rem;
     border: 1px solid ${({ text, theme }) => (text === '취소' ? theme.color.gray_D9D9D9 : '')};
-
     display: flex;
     align-items: center;
     justify-content: center;
-
+    cursor: pointer;
     @media ${mediaBreakpoint.tablet} {
       font-size: 1.6rem;
       width: 12rem;
