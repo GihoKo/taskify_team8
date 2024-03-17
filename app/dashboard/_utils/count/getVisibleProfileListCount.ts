@@ -1,11 +1,11 @@
 import { device } from '@styles/mediaBreakpoint';
 
-type GetVisibleProfileListCountParams = {
+type getVisibleProfileListCountParams = {
   membersCount: number;
   resizeInfo: DOMRect | null;
 };
 
-export const getVisibleProfileListCount = ({ membersCount, resizeInfo }: GetVisibleProfileListCountParams): number => {
+export const getVisibleProfileListCount = ({ membersCount, resizeInfo }: getVisibleProfileListCountParams): number => {
   if (membersCount === 0) {
     return 0;
   }

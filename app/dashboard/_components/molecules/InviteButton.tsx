@@ -2,7 +2,7 @@
 
 import { ButtonHTMLAttributes } from 'react';
 
-import AddBox from '@public/images/icons/add-box-unfilled.svg?component';
+import AddBox from '@public/images/icons/plus-box-unfilled-w20-h20.svg?component';
 
 import ButtonWithIcon from '../atoms/ButtonWithIcon';
 

@@ -7,8 +7,9 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
+
 import { mockDashboardMemberList } from '../../_constants/mockDashboardMemberList';
-import FirstLetterProfile from '../atoms/FirstLetterProfile';
 import DashboardMemberList from '../molecules/DashboardMemberList';
 import InviteButton from '../molecules/InviteButton';
 import ManageButton from '../molecules/ManageButton';
@@ -19,7 +20,7 @@ type DashboardNavProps = PropsWithChildren;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DashboardNav = ({ children }: DashboardNavProps) => {
   return (
-    <S.Box>
+    <S.Wrapper>
       <S.DashBoardNameBox>
         <S.DashBoardName>비브리지</S.DashBoardName>
         <S.CrownIcon src={'/images/icons/icon-crown.svg'} alt='왕관 이미지' width={20.103} height={16} />
@@ -38,6 +39,7 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
           {/* 내 프로필 정보 */}
           <S.MyInfoBox>
             <FirstLetterProfile
+              backgroundColor='#a3c4a2'
               profileSize={{
                 onMobile: '3.4rem',
                 onPc: '3.8rem',
@@ -49,7 +51,6 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
               borderWidth={{
                 onMobile: '2px',
               }}
-              isOverlapping
             >
               B
             </FirstLetterProfile>
@@ -57,26 +58,27 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
           </S.MyInfoBox>
         </S.ProfileBox>
       </S.RightContentsBox>
-    </S.Box>
+    </S.Wrapper>
   );
 };
 
 export default DashboardNav;
 
 const S = {
-  Box: styled.nav`
+  Wrapper: styled.nav`
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     width: 100%;
+    min-width: 30.8rem;
     height: 6rem;
+    flex-shrink: 0;
     border-bottom: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
 
     padding-inline: 1.2rem;
 
     @media ${mediaBreakpoint.tablet} {
       padding-inline: 4rem;
-
-      justify-content: flex-end;
 
       height: 7rem;
     }

@@ -29,7 +29,8 @@ const hasBorder = css<{ $isLastColumn?: boolean }>`
 
 const S = {
   Container: styled.div<{ $isLastColumn?: boolean }>`
-    width: 30.8rem;
+    min-width: 30.8rem;
+    width: 100%;
     padding-block: ${({ $isLastColumn }) => ($isLastColumn ? '1.2rem' : '1.7rem 1.2rem')};
     padding-inline: ${({ $isLastColumn }) => ($isLastColumn ? '0.9rem 1.5rem' : '1.2rem')};
 

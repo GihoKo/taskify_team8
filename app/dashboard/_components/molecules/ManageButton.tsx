@@ -9,7 +9,7 @@ type ManageButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 const ManageButton = (props: ManageButtonProps) => {
   return (
-    <ButtonWithIcon Icon={<Cogwheel fixedSize='2rem' />} {...props}>
+    <ButtonWithIcon Icon={<Cogwheel as='div' fixedSize='2rem' />} {...props}>
       관리
     </ButtonWithIcon>
   );
