@@ -10,37 +10,26 @@ import TaskifySvg from '@public/images/logos/taskify-text-small-filledViolet-w80
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColoredDot from '@components/atoms/ColoredDot';
+import {
+  dashboardMock,
+  handleCreateDashboardButtonClick,
+  handlePagenationNextButtonClick,
+  handlePagenationPreviousButtonClick,
+} from '@components/mock/mock';
 
 import PageNationButton from '../atoms/PageNationButton';
-
-const handlePagenationNextButtonClick = () => {};
-const handlePagenationPreviousButtonClick = () => {};
-
-const dashboardMock = [
-  {
-    id: 0,
-    isMyDashboard: true,
-    name: '비브리지',
-    color: '#D6173A',
-  },
-  { id: 1, isMyDashboard: true, name: '코드잇', color: '#3A7BD6' },
-  { id: 2, isMyDashboard: false, name: '3분기 계획', color: '#3AD6A8' },
-  { id: 3, isMyDashboard: false, name: '회의록', color: '#FFD600' },
-  { id: 4, isMyDashboard: false, name: '중요 문서함', color: '#8A3AD6' },
-];
-
-const handleCreateDashboardButtonClick = () => {};
 
 export default function SideBar() {
   return (
     <>
       <S.SideBarArea>
+        {/* 로고 */}
         <S.TitleSvgWrap>
           <S.PencilLogoSvg />
           <S.TextLogoSvg />
         </S.TitleSvgWrap>
 
-        {/* 대시보드 생성 버튼 */}
+        {/* 대시보드 생성 버튼 박스 */}
         <S.CreateDashboardBox>
           <S.CreateDashboardText>Dash Boards</S.CreateDashboardText>
           <S.CreateDashboardButton onClick={handleCreateDashboardButtonClick}>
@@ -52,17 +41,15 @@ export default function SideBar() {
         <S.DashboardContainer>
           {dashboardMock.map((dashboard) => {
             return (
-              <>
-                <S.DashboardItem>
-                  <ColoredDot color={dashboard.color} />
-                  <S.DashboardName $isMyDashboard={dashboard.isMyDashboard}>{dashboard.name}</S.DashboardName>
-                  {dashboard.isMyDashboard ? (
-                    <S.ImageWrapper>
-                      <Image src={crown} alt='왕관 이미지' fill />
-                    </S.ImageWrapper>
-                  ) : null}
-                </S.DashboardItem>
-              </>
+              <S.DashboardItem key={dashboard.id}>
+                <ColoredDot color={dashboard.color} />
+                <S.DashboardName $isMyDashboard={dashboard.isMyDashboard}>{dashboard.name}</S.DashboardName>
+                {dashboard.isMyDashboard ? (
+                  <S.ImageWrapper>
+                    <Image src={crown} alt='왕관 이미지' fill />
+                  </S.ImageWrapper>
+                ) : null}
+              </S.DashboardItem>
             );
           })}
         </S.DashboardContainer>
@@ -81,6 +68,7 @@ const S = {
   SideBarArea: styled.div`
     width: 6.7rem;
     height: 100%;
+
     @media ${mediaBreakpoint.tablet} {
       width: 16rem;
     }
@@ -92,12 +80,14 @@ const S = {
 
   PencilLogoSvg: styled(LogoSvg)`
     @media ${mediaBreakpoint.tablet} {
-      width: 2.8815rem;
-      height: 3.3069rem;
+      width: 2.88rem;
+      height: 3.3rem;
     }
   `,
+
   TextLogoSvg: styled(TaskifySvg)`
     display: none;
+
     @media ${mediaBreakpoint.tablet} {
       display: block;
       width: 8rem;
@@ -108,15 +98,16 @@ const S = {
   TitleSvgWrap: styled.div`
     display: flex;
     align-items: center;
-    margin: 2rem 2.237rem 3.887rem 2.2rem;
+    margin: 2rem 2.24rem 3.89rem 2.2rem;
 
     @media ${mediaBreakpoint.tablet} {
-      margin: 2rem 2.52rem 5.993rem 2.6rem;
+      margin: 2rem 2.52rem 5.99rem 2.6rem;
     }
     @media ${mediaBreakpoint.pc} {
-      margin: 2rem 0 5.993rem 2.4rem;
+      margin: 2rem 0 5.99rem 2.4rem;
     }
   `,
+
   CreateDashboardBox: styled.div`
     display: flex;
     align-items: center;
@@ -129,6 +120,7 @@ const S = {
       padding-right: 2rem;
       margin-bottom: 3rem;
     }
+
     @media ${mediaBreakpoint.pc} {
       padding-right: 2.4rem;
     }
@@ -137,6 +129,7 @@ const S = {
   CreateDashboardButton: styled.button`
     border: none;
     background-color: transparent;
+    padding: 0;
     cursor: pointer;
   `,
 
@@ -164,6 +157,7 @@ const S = {
       padding-left: 1.2rem;
     }
   `,
+
   DashboardItem: styled.li`
     width: 4rem;
     height: 4rem;
