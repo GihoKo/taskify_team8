@@ -1,9 +1,11 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import axios from '@apis/axios';
@@ -24,6 +26,7 @@ export default function SignIn() {
   const { setUser } = useUserStore();
   const [emailError, setEmailError] = useState<boolean>(false); // 각종 에러 문구
   const [passwordError, setPasswordError] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showPwdError, setShowPwdError, showPwdToggle] = useToggle(false);
 
   const { register, handleSubmit, watch } = useForm<IFormInput>();
@@ -145,7 +148,7 @@ export default function SignIn() {
           <S.LogoWrap>
             <S.Logo>
               <Link href={'/'}>
-                <Image src={'/images/logoLogin.svg'} alt='로고' fill />
+                <Image src={'/images/icons/logoLogin.svg'} alt='로고' fill />
               </Link>
             </S.Logo>
             <p>오늘도 만나서 반가워요!</p>
@@ -191,7 +194,7 @@ const S = {
   Signinback: styled.div`
     width: 100%;
     height: 100vh;
-    background: var(--gray-FAFAFA);
+    background: ${({ theme }) => theme.color.gray_FAFAFA};
   `,
   Signin: styled.div`
     width: 100%;
@@ -205,7 +208,7 @@ const S = {
     margin-bottom: 3.8rem;
     text-align: center;
     & p {
-      color: var(--black-333236);
+      color: ${({ theme }) => theme.color.black_333236};
       font-size: 2rem;
       font-weight: 500;
       margin-top: 1rem;
@@ -271,20 +274,20 @@ const S = {
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    background: var(--violet-5534DA);
-    color: var(--white-FFFFFF);
+    background: ${({ theme }) => theme.color.violet_5534DA};
+    color: ${({ theme }) => theme.color.white_FFFFFF};
     font-size: 1.8rem;
     font-weight: 500;
     border: none;
     cursor: pointer;
   `,
   Signup: styled.div`
-    color: var(--black-333236);
+    color: ${({ theme }) => theme.color.black_333236};
     text-align: center;
     font-size: 1.6rem;
     margin-top: 2.4rem;
     & span {
-      color: var(--violet-5534DA);
+      color: ${({ theme }) => theme.color.violet_5534DA};
       text-decoration-line: underline;
       margin-left: 0.5rem;
     }
