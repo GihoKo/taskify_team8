@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 import Page from './_components/atoms/Page';
-import DashboardNav from './_components/organisms/DashboardNav';
+import DashboardNav from '../../components/organisms/DashboardNav';
 
 type DashboardLayoutProps = PropsWithChildren;
 
