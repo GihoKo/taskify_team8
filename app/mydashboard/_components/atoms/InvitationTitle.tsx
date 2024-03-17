@@ -7,7 +7,7 @@ export default function InvitationTitle() {
 }
 
 const S = {
-  Title: styled.h1`
+  Title: styled.h3`
     color: ${({ theme }) => theme.color.black_333236};
     font-size: 2rem;
     font-weight: 700;

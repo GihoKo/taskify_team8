@@ -5,10 +5,10 @@ import InvitationButton from '../atoms/InvitationButton';
 export default function InvitationButtonWrapper() {
   return (
     <S.Wrapper>
-      <InvitationButton type='accept' onClick={() => {}}>
+      <InvitationButton status='accept' onClick={() => {}}>
         수락
       </InvitationButton>
-      <InvitationButton type='refuse' onClick={() => {}}>
+      <InvitationButton status='refuse' onClick={() => {}}>
         거절
       </InvitationButton>
     </S.Wrapper>

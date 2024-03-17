@@ -16,15 +16,11 @@ const S = {
     border: none;
     color: ${({ theme }) => theme.color.white_FFFFFF};
     background-color: ${({ theme }) => theme.color.black_000000};
-    font-size: 14px;
+    font-size: 1.4rem;
     cursor: pointer;
 
     @media ${mediaBreakpoint.tablet} {
-      font-size: 16px;
-    }
-
-    @media ${mediaBreakpoint.pc} {
-      font-size: 16px;
+      font-size: 1.6rem;
     }
   `,
 };

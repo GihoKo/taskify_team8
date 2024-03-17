@@ -8,15 +8,15 @@ import InvitationText from '../atoms/InvitationText';
 export default function InvitationHeader() {
   return (
     <S.Wrapper>
-      <InvitationText type='header'>이름</InvitationText>
-      <InvitationText type='header'>초대자</InvitationText>
-      <InvitationText type='header'>수락 여부</InvitationText>
+      <InvitationText status='header'>이름</InvitationText>
+      <InvitationText status='header'>초대자</InvitationText>
+      <InvitationText status='header'>수락 여부</InvitationText>
     </S.Wrapper>
   );
 }
 
 const S = {
-  Wrapper: styled.div`
+  Wrapper: styled.header`
     display: none;
     width: 100%;
 

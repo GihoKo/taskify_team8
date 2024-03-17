@@ -6,17 +6,17 @@ interface Props {
   inviter: string;
 }
 
-export default function InvitationInviteeName({ inviter }: Props) {
+export default function InvitationInviterName({ inviter }: Props) {
   return (
     <S.Wrapper>
-      <InvitationText type='label'>초대자</InvitationText>
-      <InvitationText type='content'>{inviter}</InvitationText>
+      <InvitationText status='label'>초대자</InvitationText>
+      <InvitationText status='content'>{inviter}</InvitationText>
     </S.Wrapper>
   );
 }
 
 const S = {
-  Wrapper: styled.div`
+  Wrapper: styled.span`
     display: flex;
     gap: 1.6rem;
   `,

@@ -39,7 +39,7 @@ const S = {
       padding-bottom: 2.4rem;
     }
   `,
-  Text: styled.div`
+  Text: styled.span`
     color: var(--black-black_333236, #333236);
     text-align: center;
     font-size: 1.4rem;

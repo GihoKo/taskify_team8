@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import createIcon from '@public/images/icons/add.svg';
+import createIcon from '@public/images/icons/add-filledViolet_5534DA-16w-16h.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 // @ToDo : Image 컴포넌트 크기 반응형으로 해야함
@@ -9,7 +9,7 @@ export default function CreateDashboardChip() {
   return (
     <S.CreateDashboardIcon>
       <S.ImageWrapper>
-        <Image src={createIcon} alt={'대시보드 생성 버튼 이미지'} fill />
+        <Image fill src={createIcon} alt={'대시보드 생성 버튼 이미지'} />
       </S.ImageWrapper>
     </S.CreateDashboardIcon>
   );

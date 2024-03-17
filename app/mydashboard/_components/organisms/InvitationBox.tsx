@@ -25,8 +25,5 @@ const S = {
     @media ${mediaBreakpoint.tablet} {
       padding-top: 3.2rem;
     }
-    @media ${mediaBreakpoint.pc} {
-      padding-top: 3.2rem;
-    }
   `,
 };

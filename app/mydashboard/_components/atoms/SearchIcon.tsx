@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import searchIcon from '@public/images/icons/icon-search.svg';
+import searchIcon from '@public/images/icons/search-filledBlack-333236-w22-h22.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 export default function SearchIcon() {
   return (
     <S.Wrapper>
-      <Image src={searchIcon} alt='돋보기 아이콘 이미지' fill />
+      <Image fill src={searchIcon} alt='돋보기 아이콘 이미지' />
     </S.Wrapper>
   );
 }
