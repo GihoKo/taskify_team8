@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-interface ButtonProps {
+interface SignButtonProps {
   children: string;
   onClick: () => void;
 }
 
-export default function SignButton({ children, onClick }: ButtonProps) {
+export default function SignButton({ children, onClick }: SignButtonProps) {
   return <S.Button onClick={onClick}>{children}</S.Button>;
 }
 

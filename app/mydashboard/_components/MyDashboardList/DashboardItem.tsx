@@ -5,16 +5,23 @@ import crownIcon from '@public/images/icons/crown-filledYellow-FDD446-w16-h12.sv
 import rightArrowIcon from '@public/images/icons/right-arrow-filled-black-333236-w18-h18.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+interface DashboardItemProps {
+  myDashboard: boolean;
+  Name: string;
+  color: string;
+  onClick: () => void;
+}
+
 // @ToDo 상하 정렬 수정해야할듯
 // @ToDo 나중에 데이터 바인딩 시 props, 타입 변경 해야함
-export default function DashboardItem({ myDashboard, Name }: { myDashboard: boolean; Name: string }) {
+export default function DashboardItem({ myDashboard, Name, color, onClick }: DashboardItemProps) {
   // 상태로 왕관 아이콘 관리 예정
   // const [myDashboard, setMyDashboard] = useState(true);
 
   return (
-    <S.Button>
+    <S.Button onClick={onClick}>
       <S.NameWrapper>
-        <S.Dot />
+        <S.Circle $color={color} />
         <S.Name>{Name}</S.Name>
         <S.CrownImageWrapper>
           {myDashboard ? <Image fill src={crownIcon} alt='왕관 이미지' /> : null}
@@ -35,6 +42,7 @@ const S = {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 
     @media ${mediaBreakpoint.tablet} {
       padding: 2rem 2.4rem;
@@ -46,11 +54,11 @@ const S = {
     align-items: center;
   `,
 
-  Dot: styled.div`
+  Circle: styled.div<{ $color: string }>`
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
-    background: ${({ theme }) => theme.color.gray_787486};
+    background: ${({ theme, $color }) => $color || theme.color.gray_787486};
     margin-right: 1.2rem;
 
     @media ${mediaBreakpoint.pc} {

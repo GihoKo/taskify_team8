@@ -1,13 +1,21 @@
 'use client';
 
-import DashboardBox from './_components/organisms/DashboardBox';
-import InvitationBox from './_components/organisms/InvitationBox';
+import styled from 'styled-components';
+
+import InvitationList from './_components/InvitationList';
+import MyDashboardList from './_components/MyDashboardList';
 
 export default function MyDashboardPage() {
   return (
     <>
-      <DashboardBox />
-      <InvitationBox />
+      {/* <Navbar/> */}
+      {/* <Sidebar/> */}
+      <MainArea>
+        <MyDashboardList />
+        <InvitationList />
+      </MainArea>
     </>
   );
 }
+
+const MainArea = styled.main``;

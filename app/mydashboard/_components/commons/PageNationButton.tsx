@@ -7,14 +7,14 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 type Status = 'next' | 'previous';
 
-interface Props {
+interface PageNationButtonProps {
   status: Status;
   onClick: () => void;
 }
 
-export default function PageNationButton({ status, onClick }: Props) {
+export default function PageNationButton({ status, onClick }: PageNationButtonProps) {
   return (
-    <S.PageNationButton onClick={onClick} status={status}>
+    <S.PageNationButton onClick={onClick} $status={status}>
       {status === 'next' ? (
         <Image src={nextIcon} alt={'페이지네이션 다음 버튼 이미지'} width={16} height={16} />
       ) : (
@@ -25,12 +25,13 @@ export default function PageNationButton({ status, onClick }: Props) {
 }
 
 const S = {
-  PageNationButton: styled.button<{ status: Status }>`
+  PageNationButton: styled.button<{ $status: Status }>`
     width: 3.6rem;
     height: 3.6rem;
-    border-radius: ${(props) => (props.status === 'next' ? '0 0.4rem 0.4rem 0' : '0.4rem 0 0 0.4rem')};
+    border-radius: ${(props) => (props.$status === 'next' ? '0 0.4rem 0.4rem 0' : '0.4rem 0 0 0.4rem')};
     border: 0.1rem solid var(--gray_D9D9D9, #d9d9d9);
     background: var(--white_FFFFFF, #fff);
+    cursor: pointer;
 
     @media ${mediaBreakpoint.tablet} {
       width: 4rem;
