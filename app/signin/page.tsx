@@ -22,11 +22,14 @@ interface IFormInput {
 
 export default function SignIn() {
   const { setUser } = useUserStore();
-  const [emailError, setEmailError] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<boolean>(false); // 각종 에러 문구
   const [passwordError, setPasswordError] = useState<boolean>(false);
   const [showPwdError, setShowPwdError, showPwdToggle] = useToggle(false);
 
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const { register, handleSubmit, watch } = useForm<IFormInput>();
+
+  const email = watch('email');
+  const password = watch('password');
 
   const onSubmit: SubmitHandler<IFormInput> = (data: { email: string; password: string }) => {
     const loginData = {
@@ -72,6 +75,68 @@ export default function SignIn() {
     }
   };
 
+  // 유효성검사 true 나오게끔
+  const validateEmail = (email: string) => {
+    const isvalidateEmail = /\S+@\S+\.\S+/.test(email);
+    setEmailError(!isvalidateEmail);
+  };
+
+  const validatePassword = (password: string) => {
+    const isvalidatePassword = password?.length >= 8;
+    setPasswordError(!isvalidatePassword);
+  };
+
+  useEffect(() => {
+    if (email !== '') {
+      validateEmail(email);
+    } else if (email === '') {
+      setEmailError(false);
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (password !== '') {
+      validatePassword(password);
+    } else if (password === '') {
+      setPasswordError(false);
+    }
+  }, [password]);
+
+  // foucs out
+  const handleBlur = (field: string) => {
+    return () => {
+      switch (field) {
+        case 'email':
+          validateEmail(email);
+          break;
+        case 'password':
+          validatePassword(password);
+          break;
+        default:
+          break;
+      }
+    };
+  };
+
+  // foucs in
+  const handleFocus = (field: string) => {
+    return () => {
+      switch (field) {
+        case 'email':
+          setEmailError(false);
+          break;
+        case 'password':
+          setPasswordError(false);
+          break;
+        default:
+          break;
+      }
+    };
+  };
+
+  // 에러메세지가 없고 모든값이 빈값이 아닐때 버튼 활성화
+  const lastCheck = !emailError && !passwordError && email !== '' && password !== '';
+
   return (
     <>
       {showPwdError && <ModalCheckIt text='비밀번호가 일치하지 않습니다.' submitButton='확인' wrong={showPwdToggle} />}
@@ -94,6 +159,8 @@ export default function SignIn() {
               data='이메일'
               wrong={emailError}
               name='email'
+              handleFocus={handleFocus('email')}
+              handleBlur={handleBlur('email')}
             />
             <Input
               hookform={register('password')}
@@ -102,9 +169,11 @@ export default function SignIn() {
               data='pwd'
               wrong={passwordError}
               name='password'
+              handleFocus={handleFocus('password')}
+              handleBlur={handleBlur('password')}
             />
 
-            <S.Submit type='submit' value='로그인' />
+            {lastCheck ? <S.Button type='submit'>가입하기</S.Button> : <S.NoneButton>가입하기</S.NoneButton>}
           </S.LoginForm>
           <S.Signup>
             회원이 아니신가요?
@@ -140,6 +209,39 @@ const S = {
       font-size: 2rem;
       font-weight: 500;
       margin-top: 1rem;
+    }
+  `,
+  NoneButton: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 5rem;
+    border-radius: 0.8rem;
+    background: ${({ theme }) => theme.color.gray_9FA6B2};
+    color: ${({ theme }) => theme.color.white_FFFFFF};
+    font-size: 1.8rem;
+    font-weight: 500;
+
+    @media (max-width: 767px) {
+      height: 5rem;
+      gap: 1rem;
+    }
+  `,
+  Button: styled.button`
+    width: 100%;
+    height: 5rem;
+    border: none;
+    border-radius: 0.8rem;
+    background: ${({ theme }) => theme.color.violet_5534DA};
+    color: ${({ theme }) => theme.color.white_FFFFFF};
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 500;
+
+    @media (max-width: 767px) {
+      height: 5rem;
+      gap: 1rem;
     }
   `,
   Logo: styled.div`
