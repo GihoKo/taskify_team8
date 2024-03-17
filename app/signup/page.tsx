@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // 페이지 넘길 때 참고해주세요!! next/router 쓰면 안됩니당
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import axios from '@apis/axios';
