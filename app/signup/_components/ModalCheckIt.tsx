@@ -41,7 +41,7 @@ const S = {
     height: ${(props) => props?.height || ''};
     flex-shrink: 0;
     border-radius: 0.8rem;
-    background: var(--white-FFFFFF);
+    background: ${({ theme }) => theme.color.white_FFFFFF};
     flex-direction: column;
     display: flex;
     justify-content: center;
@@ -54,7 +54,7 @@ const S = {
   `,
   description: styled.p`
     margin-top: 7rem;
-    color: var(--black-333236);
+    color: ${({ theme }) => theme.color.black_333236};
     text-align: center;
 
     font-size: 1.8rem;
@@ -77,8 +77,8 @@ const S = {
     gap: 1rem;
     flex-shrink: 0;
     border-radius: 0.8rem;
-    border: 1px solid var(--gray-D9D9D9);
-    color: var(--gray-787486);
+    border: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
+    color: ${({ theme }) => theme.color.gray_787486};
     text-align: center;
     font-size: 1.6rem;
     font-weight: 500;
@@ -95,8 +95,9 @@ const S = {
     align-items: center;
     gap: 1rem;
     flex-shrink: 0;
-    border-radius: 8px;
-    background: ${(props) => (props.disabled ? 'var(--violet-8-percent)' : 'var(--violet-5534DA)')};
+    border-radius: 0.8rem;
+    background: ${(props) =>
+      props.disabled ? 'var(--violet-violet-8, #F1EFFD)' : 'var(--violet-violet_5534DA, #5534DA)'};
     color: var(--white-FFFFFF) !important;
     text-align: center;
 
@@ -104,7 +105,8 @@ const S = {
     font-weight: 500;
 
     &:hover {
-      background: ${(props) => (props.disabled ? 'var(--violet-8-percent)' : 'var(--violet-5534DA)')} !important;
+      background: ${(props) =>
+        props.disabled ? 'var(--violet-violet-8, #F1EFFD)' : 'var(--violet-violet_5534DA, #5534DA)'} !important;
       color: var(--white-FFFFFF) !important;
     }
 

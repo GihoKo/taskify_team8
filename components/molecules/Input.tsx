@@ -74,9 +74,9 @@ export default function Input({
             />
             <S.imageWrap onClick={handlePwd}>
               {pwd ? (
-                <Image src={'/images/visibilityOff.svg'} alt='off' fill />
+                <Image src={'/images/icons/icon-eyesOff.svg'} alt='off' fill />
               ) : (
-                <Image src={'/images/visibilityOn.svg'} alt='on' fill />
+                <Image src={'/images/icons/icon-eyesOn.svg'} alt='on' fill />
               )}
             </S.imageWrap>
           </S.inputInner>
@@ -105,7 +105,7 @@ const S = {
     position: relative;
   `,
   label: styled.label`
-    color: var(--black-333236);
+    color: ${({ theme }) => theme.color.black_333236};
     font-size: 1.6rem;
     font-weight: 400;
   `,
@@ -113,8 +113,9 @@ const S = {
     width: 100%;
     padding: 15px 16px;
     border-radius: 8px;
-    border: ${(props) => (props.wrong ? '1px solid var(--red-D6173A)' : '1px solid var(--violet-5534DA)')};
-    background: var(--white-FFFFFF);
+    border: ${(props) =>
+      props.wrong ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
+    background: ${({ theme }) => theme.color.white_FFFFFF};
     font-size: 1.6rem;
     font-weight: 400;
     line-height: normal;
@@ -128,7 +129,7 @@ const S = {
     cursor: pointer;
   `,
   wrong: styled.div`
-    color: var(--red-D6173A);
+    color: ${({ theme }) => theme.color.red_D6173A};
     font-size: 1.4rem;
   `,
 };
