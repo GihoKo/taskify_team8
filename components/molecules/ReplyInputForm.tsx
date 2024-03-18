@@ -26,6 +26,8 @@ const S = {
     justify-content: center;
     align-items: flex-start;
 
+    margin-bottom: 3rem;
+
     gap: 0.8rem;
     flex-shrink: 0;
     position: relative;
