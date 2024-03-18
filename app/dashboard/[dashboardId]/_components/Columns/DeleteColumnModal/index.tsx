@@ -12,8 +12,13 @@ export default function DeleteColumnModal() {
     <S.DeleteColumnModalBox>
       <S.DeleteColumnMessage>컬럼의 모든 카드를 삭제하시겠습니까?</S.DeleteColumnMessage>
       <ColumnButtonsWrap>
+<<<<<<< Updated upstream
         <ColumnButton text='취소' />
         <ColumnButton text='삭제' />
+=======
+        <ColumnButton>취소</ColumnButton>
+        <ColumnButton>삭제</ColumnButton>
+>>>>>>> Stashed changes
       </ColumnButtonsWrap>
     </S.DeleteColumnModalBox>
   );

@@ -1,5 +1,8 @@
+<<<<<<< Updated upstream
 'use client';
 
+=======
+>>>>>>> Stashed changes
 import { ReactElement } from 'react';
 
 import styled from 'styled-components';

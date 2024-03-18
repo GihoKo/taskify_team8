@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 'use client';
+=======
+import { PropsWithChildren, useId } from 'react';
+>>>>>>> Stashed changes
 
 import styled from 'styled-components';
 
@@ -6,12 +10,41 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 // Todo: validate 했을 때 디자인 추가 필요
 // 기본적인 디자인, 틀만 완성
+<<<<<<< Updated upstream
 export default function ColumnInput() {
   return (
     <>
       <S.ColumnForm>
         <S.ColumnLabel htmlFor='column-name'>이름</S.ColumnLabel>
         <S.ColumnInput id='column-name' type='text' placeholder='새로운 프로젝트' />
+=======
+
+interface ColumnInputProps {
+  placeholder: string;
+  inputValue: string;
+  onChange: (value: string) => void;
+}
+
+export default function ColumnInput({
+  children,
+  placeholder,
+  onChange,
+  inputValue,
+}: PropsWithChildren<ColumnInputProps>) {
+  const id = useId();
+
+  return (
+    <>
+      <S.ColumnForm>
+        <S.ColumnLabel htmlFor={id}>{children}</S.ColumnLabel>
+        <S.ColumnInput
+          value={inputValue}
+          onChange={(e) => onChange(e.target.value)}
+          id={id}
+          type='text'
+          placeholder={placeholder}
+        />
+>>>>>>> Stashed changes
       </S.ColumnForm>
     </>
   );
