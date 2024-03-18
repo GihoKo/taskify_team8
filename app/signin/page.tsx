@@ -49,7 +49,7 @@ export default function SignIn() {
     if (LS !== null) {
       router.push(`/mydashboard`);
     }
-  }, []);
+  }, [router]);
 
   async function login(data: { email: string; password: string }) {
     try {
@@ -142,7 +142,9 @@ export default function SignIn() {
 
   return (
     <>
-      {showPwdError && <ModalCheckIt text='비밀번호가 일치하지 않습니다.' submitButton='확인' wrong={showPwdToggle} />}
+      {showPwdError && (
+        <ModalCheckIt text='비밀번호가 일치하지 않습니다.' submitButtonText='확인' errorMessage={showPwdToggle} />
+      )}
       <S.Signinback>
         <S.Signin>
           <S.LogoWrap>
@@ -160,7 +162,7 @@ export default function SignIn() {
               title='이메일'
               placeholder='이메일을 입력해 주세요'
               data='이메일'
-              wrong={emailError}
+              errorMessage={emailError}
               name='email'
               handleFocus={handleFocus('email')}
               handleBlur={handleBlur('email')}
@@ -170,7 +172,7 @@ export default function SignIn() {
               title='비밀번호'
               placeholder='비밀번호를 입력해 주세요'
               data='pwd'
-              wrong={passwordError}
+              errorMessage={passwordError}
               name='password'
               handleFocus={handleFocus('password')}
               handleBlur={handleBlur('password')}

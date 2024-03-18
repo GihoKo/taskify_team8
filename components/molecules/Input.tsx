@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
+import { UseFormRegister } from 'react-hook-form';
 
 import Image from 'next/image';
 import styled from 'styled-components';
+
+interface FormValues {
+  email: string;
+  nickname: string;
+  password: string;
+  passwordCheck: string;
+}
 
 interface InputProps {
   title?: string;
   placeholder?: string;
   data?: string;
-  wrong?: boolean;
-  handleBlur?: any;
+  errorMessage?: boolean;
+  handleBlur?: React.FocusEventHandler<HTMLInputElement>;
   value?: string;
-  hookform?: any;
+  hookform: ReturnType<UseFormRegister<FormValues>>;
   name?: string;
   disabled?: boolean;
   defaultValue?: string;
@@ -21,7 +29,7 @@ export default function Input({
   data,
   placeholder,
   title,
-  wrong,
+  errorMessage,
   handleBlur,
   value,
   hookform,
@@ -49,13 +57,13 @@ export default function Input({
             placeholder={placeholder}
             value={value}
             onFocus={handleFocus}
-            wrong={wrong}
+            errorMessage={!!errorMessage}
             name={name}
             disabled={disabled}
             defaultValue={defaultValue}
           />
-          {wrong && data === '이메일' && <S.wrong>{data} 형식으로 작성해 주세요.</S.wrong>}
-          {wrong && data === '닉네임' && <S.wrong>10자 이하로 작성해주세요.</S.wrong>}
+          {errorMessage && data === '이메일' && <S.errorMessage>{data} 형식으로 작성해 주세요.</S.errorMessage>}
+          {errorMessage && data === '닉네임' && <S.errorMessage>10자 이하로 작성해주세요.</S.errorMessage>}
         </S.inputWrap>
       ) : (
         <S.inputWrap>
@@ -69,7 +77,7 @@ export default function Input({
               onBlur={handleBlur}
               value={value}
               onFocus={handleFocus}
-              wrong={wrong}
+              errorMessage={!!errorMessage}
               name={name}
             />
             <S.imageWrap onClick={handlePwd}>
@@ -80,11 +88,11 @@ export default function Input({
               )}
             </S.imageWrap>
           </S.inputInner>
-          {wrong &&
+          {errorMessage &&
             (title === '비밀번호' ? (
-              <S.wrong>8자 이상 입력해 주세요.</S.wrong>
+              <S.errorMessage>8자 이상 입력해 주세요.</S.errorMessage>
             ) : (
-              <S.wrong>비밀번호를 확인해 주세요.</S.wrong>
+              <S.errorMessage>비밀번호를 확인해 주세요.</S.errorMessage>
             ))}
         </S.inputWrap>
       )}
@@ -109,12 +117,12 @@ const S = {
     font-size: 1.6rem;
     font-weight: 400;
   `,
-  input: styled.input<{ wrong: boolean }>`
+  input: styled.input<{ errorMessage: boolean }>`
     width: 100%;
     padding: 15px 16px;
     border-radius: 8px;
     border: ${(props) =>
-      props.wrong ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
+      props.errorMessage ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
     background: ${({ theme }) => theme.color.white_FFFFFF};
     font-size: 1.6rem;
     font-weight: 400;
@@ -128,7 +136,7 @@ const S = {
     right: 1.6rem;
     cursor: pointer;
   `,
-  wrong: styled.div`
+  errorMessage: styled.div`
     color: ${({ theme }) => theme.color.red_D6173A};
     font-size: 1.4rem;
   `,
