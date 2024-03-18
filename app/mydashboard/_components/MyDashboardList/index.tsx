@@ -68,6 +68,7 @@ const S = {
     border-radius: 0.8rem;
     border: 0.1rem solid ${({ theme }) => theme.color.gray_D9D9D9};
     width: 100%;
+    height: 5.8rem;
     padding-top: 1.9rem;
     padding-bottom: 1.9rem;
     display: flex;
@@ -78,10 +79,12 @@ const S = {
     cursor: pointer;
 
     @media ${mediaBreakpoint.tablet} {
+      height: 6.8rem;
       padding-top: 2.3rem;
       padding-bottom: 2.3rem;
     }
     @media ${mediaBreakpoint.pc} {
+      height: 7rem;
       padding-top: 2.4rem;
       padding-bottom: 2.4rem;
     }

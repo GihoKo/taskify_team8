@@ -23,7 +23,7 @@ const S = {
   Button: styled.button<{ $status: Status }>`
     border-radius: 0.4rem;
     border: ${(props) => (props.$status === 'accept' ? 'none' : '0.1rem solid var(--gray_D9D9D9, #D9D9D9)')};
-    width: 10.9rem;
+    width: 100%;
     display: flex;
     padding: 0.7rem 3.7rem;
     color: ${(props) =>
