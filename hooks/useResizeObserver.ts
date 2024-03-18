@@ -10,10 +10,6 @@ export const useResizeObserver = <T extends HTMLElement>(dependencyList: Depende
   const observerTargetRef = useRef<T>();
 
   useEffect(() => {
-    /**
-     * TODO: ResizeObserver polyfill 알아보기
-     */
-    // eslint-disable-next-line compat/compat
     const resizeObserver = new ResizeObserver(([entry]) => {
       if (entry && entry.target.getBoundingClientRect) {
         setResizeInfo(entry.target.getBoundingClientRect());
