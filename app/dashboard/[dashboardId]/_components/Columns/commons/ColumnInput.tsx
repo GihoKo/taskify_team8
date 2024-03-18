@@ -29,10 +29,10 @@ const S = {
     border: 0.1rem solid ${({ theme }) => theme.color.gray_D9D9D9};
     border-radius: 0.6rem;
     font-size: 1.4rem;
-
     width: 28.7rem;
     height: 4.2rem;
     padding: 0 1.6rem;
+    margin-bottom: 2.4rem;
 
     &:focus {
       outline: none;
@@ -43,6 +43,7 @@ const S = {
       font-size: 1.6rem;
       width: 48.4rem;
       height: 4.8rem;
+      margin-bottom: 2.8rem;
     }
   `,
   ColumnLabel: styled.label`
