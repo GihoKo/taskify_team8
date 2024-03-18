@@ -17,9 +17,7 @@ export default function InvitationList() {
 
   return (
     <S.Box>
-      <S.TitleWrapper>
-        <S.Title>초대받은 대시보드</S.Title>
-      </S.TitleWrapper>
+      <S.Title>초대받은 대시보드</S.Title>
       {inviteList.length !== 0 ? (
         <>
           <S.SearchBarWrapper>
@@ -58,36 +56,30 @@ const S = {
     display: flex;
     flex-direction: column;
     background: ${({ theme }) => theme.color.white_FFFFFF};
-  `,
-
-  TitleWrapper: styled.div`
-    padding-top: 1.6rem;
-    padding-left: 1.6rem;
-
-    @media ${mediaBreakpoint.tablet} {
-      padding-top: 3.2rem;
-      padding-left: 2.8rem;
-    }
+    margin-top: 2.4rem;
   `,
 
   Title: styled.h3`
+    padding: 2.4rem 0 0 1.6rem;
     color: ${({ theme }) => theme.color.black_333236};
     font-size: 2rem;
     font-weight: 700;
 
     @media ${mediaBreakpoint.tablet} {
+      padding: 3.2rem 0 0 2.8rem;
       font-size: 2.4rem;
-      margin-left: 2.8rem;
     }
   `,
 
   SearchBarWrapper: styled.div`
     width: 100%;
+    padding: 0 1.6rem;
     margin-bottom: 0.8rem;
     position: relative;
     margin-top: 2rem;
 
     @media ${mediaBreakpoint.tablet} {
+      padding: 0 2.8rem;
       margin-bottom: 2.4rem;
     }
   `,
@@ -115,11 +107,12 @@ const S = {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 1.2rem;
+    left: 2.8rem;
 
     @media ${mediaBreakpoint.tablet} {
       width: 2.4rem;
       height: 2.4rem;
+      left: 4.4rem;
     }
   `,
 
@@ -128,8 +121,10 @@ const S = {
   InvitationHeaderWrapper: styled.header`
     display: none;
     width: 100%;
+    padding: 0 1.6rem;
 
     @media ${mediaBreakpoint.tablet} {
+      padding: 0 2.8rem;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
     }
