@@ -15,6 +15,8 @@ type FirstLetterProfileProps = PropsWithChildren<{
   isOverlapping?: ResponsiveBooleanUtility;
   backgroundColor: Color;
   profileImageUrl?: string | null;
+  as?: 'div' | 'button';
+  onClick?: VoidFunction;
 }>;
 
 /**
@@ -28,9 +30,13 @@ const FirstLetterProfile = ({
   isOverlapping,
   backgroundColor,
   profileImageUrl,
+  as = 'div',
+  onClick,
 }: FirstLetterProfileProps) => {
   return (
     <S.Box
+      as={as}
+      onClick={onClick}
       $isOverlapping={isOverlapping}
       $profileSize={profileSize}
       $fontSize={fontSize}
@@ -154,6 +160,8 @@ const S = {
     ${overlappedPosition}
 
     ${fontSize}
+
+    cursor: ${({ as }) => (as === 'button' ? 'pointer' : 'default')};
 
     display: flex;
     justify-content: center;

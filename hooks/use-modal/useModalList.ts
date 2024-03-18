@@ -44,7 +44,16 @@ export const useModalListWithoutRef = () => {
 };
 
 /**
- * use multi overlapped modals
+ * use for multi layer modalList
+ *
+ * @example
+ * ```ts
+ * const modalRef = useRef<HTMLElemet>(null);
+ * const { openModal, closeModal } = useModal();
+ * const handleModal = () => {
+ *   openModal(MyCustomModal, { linkUrl: input, onClose: clearInput });
+ * };
+ * ```
  */
 export const useModalList = <MC extends ModalComponent, T extends HTMLElement>() => {
   const { openModalImpl, closeModal } = useModalListImpl();
