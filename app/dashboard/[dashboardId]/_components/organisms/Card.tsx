@@ -169,6 +169,20 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       font-size: 1.6rem;
+      /* max-width: 39.3rem; */
+      max-width: 57rem;
+      max-height: 1.9rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      max-width: initial;
+      max-height: initial;
+      overflow: initial;
+      text-overflow: initial;
+      white-space: initial;
     }
   `,
 
