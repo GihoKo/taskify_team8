@@ -58,6 +58,7 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
           {/* 내 프로필 정보 */}
           <S.MyInfoBox>
             <FirstLetterProfile
+              as='button'
               backgroundColor='#a3c4a2'
               profileSize={{
                 onMobile: '3.4rem',
