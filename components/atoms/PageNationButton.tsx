@@ -18,7 +18,7 @@ interface PageNationButtonProps {
 export default function PageNationButton({ status, onClick, disabled }: PageNationButtonProps) {
   if (!disabled) {
     return (
-      <S.PageNationButton onClick={onClick} $status={status}>
+      <S.PageNationButton onClick={onClick} $status={status} disabled={disabled}>
         {status === 'next' ? (
           <Image src={blackNextIcon} alt={'활성화 페이지네이션 다음 버튼 이미지'} width={16} height={16} />
         ) : (
@@ -29,7 +29,7 @@ export default function PageNationButton({ status, onClick, disabled }: PageNati
   }
 
   return (
-    <S.PageNationButton onClick={onClick} $status={status}>
+    <S.PageNationButton onClick={onClick} $status={status} disabled={disabled}>
       {status === 'next' ? (
         <Image src={grayNextIcon} alt={'활성화 페이지네이션 다음 버튼 이미지'} width={16} height={16} />
       ) : (

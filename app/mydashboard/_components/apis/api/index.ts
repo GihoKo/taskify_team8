@@ -17,10 +17,12 @@ export interface DashboardList {
   dashboards: Dashboard[];
 }
 
-export const getDashboardList = async () => {
+export const getDashboardList = async (currentPage: number) => {
   const { data } = await instanceAddedAccessToken.get<DashboardList>(
-    `/dashboards?navigationMethod=infiniteScroll&page=1&size=5`,
+    `/dashboards?navigationMethod=pagination&page=${currentPage}&size=5`,
   );
+
+  console.log(data);
 
   return data;
 };
