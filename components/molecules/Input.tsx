@@ -8,7 +8,7 @@ interface InputProps {
   placeholder?: string;
   data?: string;
   errorMessage?: boolean;
-  handleBlur?: any;
+  handleBlur?: React.FocusEventHandler<HTMLInputElement>;
   value?: string;
   hookform?: any;
   name?: string;
@@ -30,10 +30,10 @@ export default function Input({
   defaultValue,
   handleFocus,
 }: InputProps) {
-  const [password, setPassword] = useState<boolean>(true);
+  const [pwd, setPwd] = useState<boolean>(true);
 
   const handlePwd = () => {
-    setPassword((prev) => !prev);
+    setPwd((prev) => !prev);
   };
 
   return (
@@ -63,7 +63,7 @@ export default function Input({
           <S.inputInner>
             <S.input
               {...hookform}
-              type={password ? 'password' : 'text'}
+              type={pwd ? 'password' : 'text'}
               id={data + title}
               placeholder={placeholder}
               onBlur={handleBlur}
@@ -73,7 +73,7 @@ export default function Input({
               name={name}
             />
             <S.imageWrap onClick={handlePwd}>
-              {password ? (
+              {pwd ? (
                 <Image src={'/images/icons/icon-eyesOff.svg'} alt='off' fill />
               ) : (
                 <Image src={'/images/icons/icon-eyesOn.svg'} alt='on' fill />
@@ -109,12 +109,12 @@ const S = {
     font-size: 1.6rem;
     font-weight: 400;
   `,
-  input: styled.input<{ wrong: boolean }>`
+  input: styled.input<{ errorMessage: boolean }>`
     width: 100%;
     padding: 15px 16px;
     border-radius: 8px;
     border: ${(props) =>
-      props.wrong ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
+      props.errorMessage ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
     background: ${({ theme }) => theme.color.white_FFFFFF};
     font-size: 1.6rem;
     font-weight: 400;

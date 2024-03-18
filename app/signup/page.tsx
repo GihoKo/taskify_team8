@@ -21,6 +21,7 @@ interface Inputs {
   password: string;
   passwordCheck: string;
 }
+
 function SignUp() {
   const router = useRouter();
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false); // 회원가입 성공
