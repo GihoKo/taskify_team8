@@ -19,7 +19,7 @@ export default function SelectInput({ title, options }: SelectInputProps): JSX.E
       <TextLabel id={id} inputTitle={title} />
       <S.Select id={id}>
         {options.map((option, index) => (
-          // ToDo:나중에 카테고리아이디로 변경 eslint-disable-next-line react/no-array-index-key
+          // eslint-disable-next-line react/no-array-index-key
           <S.Option key={index} value={option}>
             {option}
           </S.Option>
