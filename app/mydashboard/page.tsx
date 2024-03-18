@@ -1,5 +1,9 @@
 'use client';
 
+import styled from 'styled-components';
+
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+
 import SideBar from '@components/organisms/SideBar';
 
 import InvitationList from './_components/InvitationList';
@@ -8,15 +12,38 @@ import DashboardNav from '../../components/organisms/DashboardNav';
 
 export default function MyDashboardPage() {
   return (
-    <div style={{ display: 'flex' }}>
+    <S.Page>
       <SideBar />
-      <div>
+      <S.RightSide>
         <DashboardNav />
-        <main style={{ backgroundColor: '#FAFAFA', padding: '2.4rem 2.4rem 0' }}>
+        <S.Main>
           <MyDashboardList />
           <InvitationList />
-        </main>
-      </div>
-    </div>
+        </S.Main>
+      </S.RightSide>
+    </S.Page>
   );
 }
+
+const S = {
+  Page: styled.div`
+    display: flex;
+  `,
+  RightSide: styled.div`
+    background-color: ${({ theme }) => theme.color.gray_FAFAFA};
+    flex-grow: 1;
+  `,
+  Main: styled.main`
+    padding: 2.4rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      padding: 4rem 4rem 11.7rem 4rem;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      width: 102.4rem;
+      padding-top: 4.4rem;
+      padding-bottom: 12.3rem;
+    }
+  `,
+};

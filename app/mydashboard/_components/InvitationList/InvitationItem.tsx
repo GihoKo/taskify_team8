@@ -17,7 +17,9 @@ export default function InvitationItem({ dashboardName, inviter }: InvitationPro
     <S.Wrapper>
       <S.NameWrapper>
         <S.DashboardNameWrapper>
-          <InvitationText status='label'>이름</InvitationText>
+          <S.InvitationNamePositioner>
+            <InvitationText status='label'>이름</InvitationText>
+          </S.InvitationNamePositioner>
           <InvitationText status='content'>{dashboardName}</InvitationText>
         </S.DashboardNameWrapper>
         <S.InviterNameWrapper>
@@ -40,19 +42,15 @@ export default function InvitationItem({ dashboardName, inviter }: InvitationPro
 const S = {
   Wrapper: styled.div`
     border-bottom: 0.1rem solid ${({ theme }) => theme.color.gray_EEEEEE};
-    padding: 0rem 1.6rem;
+    padding: 1.6rem 2.8rem;
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-    padding-top: 1.6rem;
-    padding-bottom: 1.6rem;
 
     @media ${mediaBreakpoint.tablet} {
       display: grid;
       grid-template-columns: 2fr 1fr;
       align-items: center;
-      padding-top: 2rem;
-      padding-bottom: 2rem;
       gap: 0;
     }
   `,
@@ -78,6 +76,7 @@ const S = {
     display: flex;
     gap: 1.6rem;
   `,
+  InvitationNamePositioner: styled.div``,
 
   ButtonWrapper: styled.div`
     display: flex;
