@@ -9,6 +9,8 @@ interface FormValues {
   nickname: string;
   password: string;
   passwordCheck: string;
+  newPassword: string;
+  newPasswordCheck: string;
 }
 
 interface InputProps {

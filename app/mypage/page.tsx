@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
@@ -14,7 +15,6 @@ import DashboardNav from '@components/organisms/DashboardNav';
 import useUserStore from '@store/user';
 
 import useToggle from '../signin/_hooks/useToggle';
-
 // 사이드바 추가 필.
 
 interface Member {
@@ -47,6 +47,7 @@ function MyPage() {
   const [modalText, setModalText] = useState<string>('');
   const [profileBtn, setProfileBtn] = useState<boolean>(false);
   const [pwdBtn, setPwdBtn] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showPwdError, setShowPwdError, showPwdToggle] = useToggle(false);
 
   // profile
@@ -99,7 +100,7 @@ function MyPage() {
     } else {
       setProfileBtn(false);
     }
-  }, [profile1]);
+  }, [profile1, profile2, user.nickname, user.profileImageUrl]);
 
   useEffect(() => {
     if (pwd1.length === 0 || pwd2.length === 0 || pwd3.length === 0) {
@@ -130,7 +131,7 @@ function MyPage() {
 
   useEffect(() => {
     fetchProfileImage();
-  }, []);
+  }, []); // Todo: 타입에러 수정 필요
 
   useEffect(() => {
     setCurrentUser(user);
@@ -213,14 +214,13 @@ function MyPage() {
   const pwdChange = async (data: { password: string; newPassword: string }) => {
     if (!pwdWrong && data.password !== '' && data.newPassword !== '') {
       try {
-        const res = await axios.put('/auth/password', data);
-
         setModalText('비밀번호가 변경 되었습니다');
         showPwdToggle();
 
         router.push('/mypage');
-      } catch (err: any) {
-        setModalText(err.response.data.message);
+      } catch (err: unknown) {
+        const err = error as AxiosError;
+        setModalText(err.response.data.message); // Todo: 오류수정 필요
         showPwdToggle();
       }
     }
@@ -241,9 +241,8 @@ function MyPage() {
 
   return (
     <S.Wrap>
-      {showPwdError && <ModalCheckIt text={modalText} submitButtonText='확인' wrong={showPwdToggle} />}
+      {showPwdError && <ModalCheckIt text={modalText} submitButtonText='확인' errorMessage={showPwdToggle} />}
       <DashboardNav />
-      <Sidemenu />
       <S.Mypage>
         <S.Back onClick={() => router.back()}>{'<'} 뒤로가기</S.Back>
 
@@ -321,7 +320,7 @@ function MyPage() {
                 title='새 비밀번호 확인'
                 placeholder='새 비밀번호 입력'
                 data='pwd'
-                wrong={pwdWrong}
+                errorMessage={pwdWrong}
                 name='newPasswordCheck'
                 handleBlur={handleNewPasswordBlur}
               />
@@ -336,4 +335,149 @@ function MyPage() {
 
 export default MyPage;
 
-const S = {};
+const S = {
+  Wrap: styled.div`
+    position: relative;
+  `,
+  Mypage: styled.div`
+    width: calc(100% - 30rem);
+    min-height: calc(100vh - 7rem);
+    display: flex;
+    flex-direction: column;
+    margin-left: 30rem;
+    padding: 2rem;
+    background-color: #fafafa;
+    gap: 1.2rem;
+    @media all and (max-width: 1199px) {
+      width: calc(100% - 16rem);
+      margin-left: 16rem;
+    }
+    @media all and (max-width: 767px) {
+      width: calc(100% - 7rem);
+      margin-left: 7rem;
+    }
+  `,
+  Back: styled.div`
+    color: var(--black-333236);
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  `,
+  Box: styled.form`
+    width: 100%;
+    max-width: 62rem;
+    padding: 3.2rem 2.8rem;
+    border-radius: 8px;
+    background: var(--white-FFFFFF);
+  `,
+  BoxTitle: styled.div`
+    color: var(--black-333236);
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 3.2rem;
+    @media all and (max-width: 767px) {
+      font-size: 2rem;
+    }
+  `,
+  BoxImg: styled.div`
+    width: 18.2rem;
+    height: 18.2rem;
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+    display: table;
+    @media all and (max-width: 767px) {
+      width: 10rem;
+      height: 10rem;
+    }
+  `,
+  ChangeImg: styled.div`
+    width: 18.2rem;
+    height: 18.2rem;
+    position: relative;
+    &:hover label {
+      display: block;
+    }
+    input[type='file'] {
+      position: absolute;
+      width: 0;
+      height: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+    }
+    @media all and (max-width: 767px) {
+      width: 10rem;
+      height: 10rem;
+    }
+  `,
+  ChangeImgInner: styled.label`
+    width: 18.2rem;
+    height: 18.2rem;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: none;
+    display: none;
+    cursor: pointer;
+    @media all and (max-width: 767px) {
+      width: 10rem;
+      height: 10rem;
+    }
+  `,
+  ImgEdit: styled.div`
+    width: 2rem;
+    height: 2rem;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  `,
+  BtnBox: styled.div`
+    display: flex;
+    justify-content: space-between;
+  `,
+  Submit: styled.input<{ null: boolean }>`
+    width: 8.4rem;
+    height: 3.2rem;
+    border-radius: 4px;
+    background: ${(props) => (props.null ? 'var(--gray-9FA6B2)' : 'var(--violet-5534DA)')};
+    margin-top: 3.2rem;
+    color: var(--white-FFFFFF);
+    text-align: center;
+    font-size: 1.4rem;
+    line-height: 3.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: block;
+    border: none;
+    margin: 3.2rem 0 0 auto;
+  `,
+  DeleteImg: styled.div`
+    width: 8.4rem;
+    height: 3.2rem;
+    border-radius: 4px;
+    background: var(--violet-5534DA);
+    margin-top: 3.2rem;
+    color: var(--white-FFFFFF);
+    text-align: center;
+    font-size: 1.4rem;
+    line-height: 3.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: block;
+    border: none;
+  `,
+  InputBox: styled.div`
+    display: flex;
+    gap: 1.6rem;
+    @media all and (max-width: 767px) {
+      flex-direction: column;
+    }
+  `,
+  Inputs: styled.div`
+    display: flex;
+    flex-flow: wrap;
+    gap: 1.6rem;
+  `,
+};
