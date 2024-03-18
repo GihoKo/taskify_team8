@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import cardMockImage from '@public/images/mocks/card-mock-image.png';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import CardTag from '@components/atoms/CardTag';
 import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
-import CardTag from '@components/atoms/tag/CardTag';
 
 import { formatDateShorter } from '@utils/time/formatDateShorter';
 

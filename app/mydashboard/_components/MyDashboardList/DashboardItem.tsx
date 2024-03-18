@@ -37,6 +37,7 @@ const S = {
     border-radius: 0.8rem;
     border: 0.1rem solid var(--gray-gray_D9D9D9, #d9d9d9);
     width: 100%;
+    height: 5.8rem;
     background: var(--white-white_FFFFFF, #fff);
     padding: 2rem 2rem;
     display: flex;
@@ -45,7 +46,12 @@ const S = {
     cursor: pointer;
 
     @media ${mediaBreakpoint.tablet} {
+      height: 6.8rem;
       padding: 2rem 2.4rem;
+    }
+
+    @media ${mediaBreakpoint.pc} {
+      height: 7rem;
     }
   `,
 

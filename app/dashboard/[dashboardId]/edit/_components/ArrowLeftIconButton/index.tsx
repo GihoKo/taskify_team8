@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import ArrowLeftIcon from '../atoms/ArrowLeftIcon';
+import ArrowLeftIcon from '../ArrowLeftIcon';
 
 type ArrowLeftIconButtonProps = PropsWithChildren;
 
@@ -23,9 +23,12 @@ export default ArrowLeftIconButton;
 
 const S = {
   Button: styled.button`
+    cursor: pointer;
+
     display: flex;
     align-items: flex-start; /* 텍스트가 여백 남기고 위에 붙어있음 */
     column-gap: 0.6rem;
+    width: fit-content;
 
     color: ${({ theme }) => theme.color.black_333236};
     font-size: 1.4rem;

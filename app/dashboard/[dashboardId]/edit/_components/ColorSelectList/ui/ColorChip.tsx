@@ -9,7 +9,7 @@ import { Color } from '@interface/style';
 import checkedIcon from '@public/images/icons/check-filledWhite-w24-h24.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import { useColorSelectListContext } from './hooks/useColorSelectListContext';
+import { useColorSelectListContext } from '../hooks/useColorSelectListContext';
 
 interface ColorChipProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
   /**

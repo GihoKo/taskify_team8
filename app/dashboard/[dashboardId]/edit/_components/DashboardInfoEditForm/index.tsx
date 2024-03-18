@@ -7,9 +7,9 @@ import styled from 'styled-components';
 import { Color } from '@interface/style';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import BaseButton from '../atoms/BaseButton';
-import ColorSelectList from '../molecules/color-select-list';
-import InputWithLabel from '../molecules/input-with-label/InputWithLabel';
+import BaseButton from '../BaseButton';
+import ColorSelectList from '../ColorSelectList';
+import InputWithLabel from '../InputWithLabel';
 
 type DashboardInfoEditFormProps = PropsWithChildren;
 
@@ -26,7 +26,7 @@ const DashboardInfoEditForm = ({ children }: DashboardInfoEditFormProps) => {
   return (
     <S.Form>
       <S.ContentsArea>
-        <S.BoardNameAndColorSelectListBox>
+        <S.FormHeader>
           <S.DashboardName>비브리지</S.DashboardName>
           <ColorSelectList>
             <ColorSelectList.Container>
@@ -35,7 +35,7 @@ const DashboardInfoEditForm = ({ children }: DashboardInfoEditFormProps) => {
               ))}
             </ColorSelectList.Container>
           </ColorSelectList>
-        </S.BoardNameAndColorSelectListBox>
+        </S.FormHeader>
         <InputWithLabel>대시보드 이름</InputWithLabel>
       </S.ContentsArea>
       <S.SubmitButton type='submit'>변경</S.SubmitButton>
@@ -94,7 +94,7 @@ const S = {
     justify-content: space-between;
   `,
 
-  BoardNameAndColorSelectListBox: styled.section`
+  FormHeader: styled.section`
     display: flex;
     justify-content: space-between;
     align-items: center;
