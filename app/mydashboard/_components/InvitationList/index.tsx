@@ -58,6 +58,7 @@ const S = {
     display: flex;
     flex-direction: column;
     background: ${({ theme }) => theme.color.white_FFFFFF};
+    margin-top: 2.4rem;
   `,
 
   TitleWrapper: styled.div`
@@ -83,6 +84,7 @@ const S = {
 
   SearchBarWrapper: styled.div`
     width: 100%;
+    padding: 0 1.6rem;
     margin-bottom: 0.8rem;
     position: relative;
     margin-top: 2rem;
@@ -115,7 +117,7 @@ const S = {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    left: 1.2rem;
+    left: 2.8rem;
 
     @media ${mediaBreakpoint.tablet} {
       width: 2.4rem;

@@ -40,6 +40,7 @@ export default function InvitationItem({ dashboardName, inviter }: InvitationPro
 const S = {
   Wrapper: styled.div`
     border-bottom: 0.1rem solid ${({ theme }) => theme.color.gray_EEEEEE};
+    padding: 0rem 1.6rem;
     display: flex;
     flex-direction: column;
     gap: 1.6rem;

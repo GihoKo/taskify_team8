@@ -1,7 +1,5 @@
 'use client';
 
-import styled from 'styled-components';
-
 import SideBar from '@components/organisms/SideBar';
 
 import InvitationList from './_components/InvitationList';
@@ -10,17 +8,15 @@ import DashboardNav from '../../components/organisms/DashboardNav';
 
 export default function MyDashboardPage() {
   return (
-    <>
-      <DashboardNav />
+    <div style={{ display: 'flex' }}>
       <SideBar />
-      <MainArea>
-        <MyDashboardList />
-        <InvitationList />
-      </MainArea>
-    </>
+      <div>
+        <DashboardNav />
+        <main style={{ backgroundColor: '#FAFAFA', padding: '2.4rem 2.4rem 0' }}>
+          <MyDashboardList />
+          <InvitationList />
+        </main>
+      </div>
+    </div>
   );
 }
-
-const MainArea = styled.main`
-  background-color: ${({ theme }) => theme.color.gray_FAFAFA};
-`;

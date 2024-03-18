@@ -67,7 +67,7 @@ export default function SideBar() {
 const S = {
   SideBarArea: styled.div`
     width: 6.7rem;
-    height: 100%;
+    border-right: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
 
     @media ${mediaBreakpoint.tablet} {
       width: 16rem;
