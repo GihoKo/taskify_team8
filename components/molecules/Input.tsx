@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
+import { UseFormRegister } from 'react-hook-form';
 
 import Image from 'next/image';
 import styled from 'styled-components';
+
+interface FormValues {
+  email: string;
+  nickname: string;
+  password: string;
+  passwordCheck: string;
+}
 
 interface InputProps {
   title?: string;
@@ -10,8 +18,7 @@ interface InputProps {
   errorMessage?: boolean;
   handleBlur?: React.FocusEventHandler<HTMLInputElement>;
   value?: string;
-  hookform?: any;
-  // ToDo : any 타입에러 수정
+  hookform: ReturnType<UseFormRegister<FormValues>>;
   name?: string;
   disabled?: boolean;
   defaultValue?: string;
@@ -50,7 +57,7 @@ export default function Input({
             placeholder={placeholder}
             value={value}
             onFocus={handleFocus}
-            errorMessage={errorMessage}
+            errorMessage={!!errorMessage}
             name={name}
             disabled={disabled}
             defaultValue={defaultValue}
@@ -70,7 +77,7 @@ export default function Input({
               onBlur={handleBlur}
               value={value}
               onFocus={handleFocus}
-              errorMessage={errorMessage}
+              errorMessage={!!errorMessage}
               name={name}
             />
             <S.imageWrap onClick={handlePwd}>
