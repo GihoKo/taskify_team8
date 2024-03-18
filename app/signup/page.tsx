@@ -186,9 +186,11 @@ function SignUp() {
 
   return (
     <>
-      {showSuccessModal && <ModalCheckIt text='가입이 완료되었습니다!' submitButton='확인' wrong={handleModalToggle} />}
+      {showSuccessModal && (
+        <ModalCheckIt text='가입이 완료되었습니다!' submitButtonText='확인' errorMessage={handleModalToggle} />
+      )}
       {isModalOpen && (
-        <ModalCheckIt text='이미 사용 중인 이메일입니다.' submitButton='확인' wrong={handleModalToggle} />
+        <ModalCheckIt text='이미 사용 중인 이메일입니다.' submitButtonText='확인' errorMessage={handleModalToggle} />
       )}
       <S.Container>
         <S.Logo>
@@ -204,7 +206,7 @@ function SignUp() {
             data='이메일'
             title='이메일'
             placeholder='이메일을 입력해 주세요'
-            wrong={emailError}
+            errorMessage={emailError}
             name='email'
             handleFocus={handleFocus('email')}
             handleBlur={handleBlur('email')}
@@ -214,7 +216,7 @@ function SignUp() {
             data='닉네임'
             title='닉네임'
             placeholder='닉네임을 입력해 주세요'
-            wrong={nicknameError}
+            errorMessage={nicknameError}
             name='nickname'
             handleFocus={handleFocus('nickname')}
             handleBlur={handleBlur('nickname')}
@@ -224,7 +226,7 @@ function SignUp() {
             title='비밀번호'
             placeholder='8자 이상 입력해 주세요'
             data='pwd'
-            wrong={passwordError}
+            errorMessage={passwordError}
             name='password'
             handleFocus={handleFocus('password')}
             handleBlur={handleBlur('password')}
@@ -234,7 +236,7 @@ function SignUp() {
             title='비밀번호확인'
             placeholder='비밀번호를 한번 더 입력해 주세요'
             data='pwd'
-            wrong={passwordCheckError}
+            errorMessage={passwordCheckError}
             name='passwordCheck'
             handleFocus={handleFocus('passwordCheck')}
             handleBlur={handleBlur('passwordCheck')}

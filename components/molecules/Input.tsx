@@ -7,7 +7,7 @@ interface InputProps {
   title?: string;
   placeholder?: string;
   data?: string;
-  wrong?: boolean;
+  errorMessage?: boolean;
   handleBlur?: any;
   value?: string;
   hookform?: any;
@@ -21,7 +21,7 @@ export default function Input({
   data,
   placeholder,
   title,
-  wrong,
+  errorMessage,
   handleBlur,
   value,
   hookform,
@@ -30,10 +30,10 @@ export default function Input({
   defaultValue,
   handleFocus,
 }: InputProps) {
-  const [pwd, setPwd] = useState<boolean>(true);
+  const [password, setPassword] = useState<boolean>(true);
 
   const handlePwd = () => {
-    setPwd((prev) => !prev);
+    setPassword((prev) => !prev);
   };
 
   return (
@@ -49,13 +49,13 @@ export default function Input({
             placeholder={placeholder}
             value={value}
             onFocus={handleFocus}
-            wrong={wrong}
+            errorMessage={errorMessage}
             name={name}
             disabled={disabled}
             defaultValue={defaultValue}
           />
-          {wrong && data === '이메일' && <S.wrong>{data} 형식으로 작성해 주세요.</S.wrong>}
-          {wrong && data === '닉네임' && <S.wrong>10자 이하로 작성해주세요.</S.wrong>}
+          {errorMessage && data === '이메일' && <S.errorMessage>{data} 형식으로 작성해 주세요.</S.errorMessage>}
+          {errorMessage && data === '닉네임' && <S.errorMessage>10자 이하로 작성해주세요.</S.errorMessage>}
         </S.inputWrap>
       ) : (
         <S.inputWrap>
@@ -63,28 +63,28 @@ export default function Input({
           <S.inputInner>
             <S.input
               {...hookform}
-              type={pwd ? 'password' : 'text'}
+              type={password ? 'password' : 'text'}
               id={data + title}
               placeholder={placeholder}
               onBlur={handleBlur}
               value={value}
               onFocus={handleFocus}
-              wrong={wrong}
+              errorMessage={errorMessage}
               name={name}
             />
             <S.imageWrap onClick={handlePwd}>
-              {pwd ? (
+              {password ? (
                 <Image src={'/images/icons/icon-eyesOff.svg'} alt='off' fill />
               ) : (
                 <Image src={'/images/icons/icon-eyesOn.svg'} alt='on' fill />
               )}
             </S.imageWrap>
           </S.inputInner>
-          {wrong &&
+          {errorMessage &&
             (title === '비밀번호' ? (
-              <S.wrong>8자 이상 입력해 주세요.</S.wrong>
+              <S.errorMessage>8자 이상 입력해 주세요.</S.errorMessage>
             ) : (
-              <S.wrong>비밀번호를 확인해 주세요.</S.wrong>
+              <S.errorMessage>비밀번호를 확인해 주세요.</S.errorMessage>
             ))}
         </S.inputWrap>
       )}
@@ -128,7 +128,7 @@ const S = {
     right: 1.6rem;
     cursor: pointer;
   `,
-  wrong: styled.div`
+  errorMessage: styled.div`
     color: ${({ theme }) => theme.color.red_D6173A};
     font-size: 1.4rem;
   `,
