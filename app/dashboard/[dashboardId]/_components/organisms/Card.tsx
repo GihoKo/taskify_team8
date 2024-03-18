@@ -3,15 +3,20 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+// import ToDoModal from '@/app/_modals/ToDoModal';
 import cardMockImage from '@public/images/mocks/card-mock-image.png';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
 import CardTag from '@components/atoms/tag/CardTag';
 
+import { useModal } from '@hooks/use-modal/useModal';
 import { formatDateShorter } from '@utils/time/formatDateShorter';
 
 import DueDate from '../atoms/DueDate';
+
+/* 방법 1 */
+// const TodoModal = dynamic(() => import('@/app/_modals/ToDoModal'));
 
 type CardProps = {
   title: string;
@@ -38,8 +43,30 @@ const Card = ({
 
   // TODO: api 연결하면 Partial 제거하기
 }: Partial<CardProps>) => {
+  const { openModal } = useModal();
+
+  const handleCardClick = async () => {
+    // openModal(ToDoModal, {
+    //   modalName: 'ToDoModal',
+    //   onClose: () => {
+    //     console.log('closed! ');
+    //   },
+    // });
+
+    // # lazy loading 기법
+    // 로드 속도를 향상시킬 수 있는 방법 중 하나
+    // static import (상단)
+    // dynamic import es6 문법 (조건문이나 특정 이벤트 핸들러 안에서 불러오는 방법)
+    // Promise로 처리됩니다.
+    // @see{https://ko.javascript.info/modules-dynamic-imports}
+
+    const TodoModal = await import('@/app/_modals/ToDoModal').then((module) => module.default);
+
+    openModal(TodoModal);
+  };
+
   return (
-    <S.Box>
+    <S.Box onClick={handleCardClick}>
       {cardMockImage && (
         <S.ImageBox>
           <S.Image fill src={cardMockImage} alt='카드 이미지' />
@@ -78,6 +105,8 @@ export default Card;
 
 const S = {
   Box: styled.section`
+    cursor: pointer;
+
     display: flex;
     flex-direction: column;
     justify-content: center;

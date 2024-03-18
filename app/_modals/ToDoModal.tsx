@@ -15,6 +15,8 @@ import AssigneeInformation from '@components/molecules/AssigneeInformation';
 import TagBadgeContainer from '@components/molecules/TagBadgeContainer';
 import ReplyArea from '@components/organisms/ReplyArea';
 
+import { ModalComponentProps } from '@hooks/use-modal/types';
+
 const mockData = [
   {
     id: '1',
@@ -50,13 +52,23 @@ const mockData = [
   },
 ];
 
-export default function ToDoModal(): JSX.Element {
+// export default function ToDoModal(): JSX.Element {
+
+export default function ToDoModal({ closeModal, modalRef }: ModalComponentProps) {
+  const handleCloseModal = () => {
+    closeModal();
+  };
+
   return (
     <S.ModalTestDimmed>
-      <S.ModalPage>
+      <S.ModalPage
+        ref={(node) => {
+          if (modalRef) modalRef.current = node;
+        }}
+      >
         <S.ButtonBox>
           <S.KebabIcon />
-          <S.CloseIcon />
+          <S.CloseIcon onClick={handleCloseModal} />
         </S.ButtonBox>
 
         <S.Heading>새로운 일정관리</S.Heading>
@@ -104,11 +116,15 @@ const iconCss = css`
 const S = {
   // TODO: Test영역 삭제 필요.
   ModalTestDimmed: styled.div`
-    height: 1554px;
+    /* height: 1554px; */
     flex-shrink: 0;
     background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    inset: 0;
   `,
 
   ModalPage: styled.div`

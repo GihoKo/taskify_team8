@@ -4,6 +4,8 @@
 :root {
   font-size: 62.5%;
   /* 1rem = 10px */
+  --root-z-index: 1;
+  --modal-z-index: 3;
 }
 
 * {
@@ -14,6 +16,19 @@ html,
 body {
   min-height: 100vh;
   height: 100%;
+}
+
+#root {
+  position: relative;
+
+  min-height: 100vh;
+  height: fit-content;
+  z-index: var(--root-z-index);
+}
+
+#modal {
+  position: fixed;
+  z-index: var(--modal-z-index);
 }
 
 .sr-only {
