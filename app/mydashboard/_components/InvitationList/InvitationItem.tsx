@@ -1,7 +1,12 @@
+'use client';
+
+import { useEffect } from 'react';
+
 import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import { getInvitionList } from '../apis/api';
 import InvitationButton from '../commons/InvitationButton';
 import InvitationText from '../commons/InvitationText';
 import { handleInvitationAccept, handleInvitationRefuse } from '../mock/mock';
@@ -13,6 +18,14 @@ interface InvitationProps {
 
 // @ToDo 반응형 grid 수정 필요
 export default function InvitationItem({ dashboardName, inviter }: InvitationProps) {
+  // 초대 리스트 조회
+  useEffect(() => {
+    (async () => {
+      const { invitations } = await getInvitionList();
+      console.log(invitations);
+    })();
+  }, []);
+
   return (
     <S.Wrapper>
       <S.NameWrapper>

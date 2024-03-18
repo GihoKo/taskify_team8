@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -7,16 +11,24 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import PageNationButton from '@components/atoms/PageNationButton';
 
 import DashboardItem from './DashboardItem';
+import { Dashboard, getDashboardList } from '../apis/api';
 import {
-  dashboardMock,
   handleCreateDashboardClick,
-  handleDashboardClick,
   PageNationNextButtonMock,
   PagenationPreviouseButtonMock,
   PageNationTextMock,
 } from '../mock/mock';
 
 export default function MyDashboardList() {
+  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  // 대시보드 리스트 조회
+  useEffect(() => {
+    (async () => {
+      const { dashboards } = await getDashboardList();
+      setDashboards(dashboards);
+    })();
+  }, []);
+
   return (
     <S.Box>
       <S.DashboardContainer>
@@ -28,8 +40,8 @@ export default function MyDashboardList() {
             </S.CreateDashboardIconWrapper>
           </S.CreateDashboardIconPositioner>
         </S.CreateDashboardButton>
-        {dashboardMock.map((item) => (
-          <DashboardItem key={item.id} onClick={handleDashboardClick} {...item} />
+        {dashboards.map((item) => (
+          <DashboardItem key={item.id} {...item} />
         ))}
       </S.DashboardContainer>
       <S.PageNationWrapper>
