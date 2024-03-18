@@ -8,6 +8,16 @@ import {
   OpenModalOptions,
 } from './types';
 
+/**
+ *
+ * @example
+ * ```ts
+ * const { openModal, closeModal } = useModal();
+ * const handleModal = () => {
+ *   openModal(MyCustomModal, { linkUrl: input, onClose: clearInput });
+ * };
+ * ```
+ */
 export const useModal = () => {
   const { close, open } = useModalDispatch();
 

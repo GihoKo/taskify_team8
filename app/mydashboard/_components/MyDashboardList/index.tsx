@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import createIcon from '@public/images/icons/add-filledViolet_5534DA-16w-16h.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import PageNationButton from '@components/atoms/PageNationButton';
+
 import DashboardItem from './DashboardItem';
-import PageNationButton from '../commons/PageNationButton';
 import {
   dashboardMock,
   handleCreateDashboardClick,
@@ -67,6 +68,7 @@ const S = {
     border-radius: 0.8rem;
     border: 0.1rem solid ${({ theme }) => theme.color.gray_D9D9D9};
     width: 100%;
+    height: 5.8rem;
     padding-top: 1.9rem;
     padding-bottom: 1.9rem;
     display: flex;
@@ -77,10 +79,12 @@ const S = {
     cursor: pointer;
 
     @media ${mediaBreakpoint.tablet} {
+      height: 6.8rem;
       padding-top: 2.3rem;
       padding-bottom: 2.3rem;
     }
     @media ${mediaBreakpoint.pc} {
+      height: 7rem;
       padding-top: 2.4rem;
       padding-bottom: 2.4rem;
     }
