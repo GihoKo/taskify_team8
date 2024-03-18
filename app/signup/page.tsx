@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { AxiosError } from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -63,8 +64,10 @@ function SignUp() {
           router.push('/login');
         }
       }
-    } catch (error: any) {
-      if (error.response && error.response.status === 409) {
+    } catch (error: unknown) {
+      const err = error as AxiosError;
+
+      if (err.response && err.response.status === 409) {
         openModal();
       } else {
         console.error('회원가입 요청 오류!', error);

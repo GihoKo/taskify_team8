@@ -11,6 +11,7 @@ interface InputProps {
   handleBlur?: React.FocusEventHandler<HTMLInputElement>;
   value?: string;
   hookform?: any;
+  // ToDo : any 타입에러 수정
   name?: string;
   disabled?: boolean;
   defaultValue?: string;
