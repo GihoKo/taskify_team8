@@ -42,20 +42,20 @@ export interface invitee {
   id: number;
 }
 
+export interface Invitation {
+  id: number;
+  inviter: Inviter;
+  teamId: string;
+  dashboard: InvitationListDashboard;
+  invitee: invitee;
+  inviteAccepted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface InvitationList {
   cursorId: number;
-  invitations: [
-    {
-      id: number;
-      inviter: Inviter;
-      teamId: string;
-      dashboard: InvitationListDashboard;
-      invitee: invitee;
-      inviteAccepted: boolean;
-      createdAt: string;
-      updatedAt: string;
-    },
-  ];
+  invitations: Invitation[];
 }
 
 export const getInvitionList = async () => {

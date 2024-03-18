@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -10,17 +10,34 @@ import uninvitedSvg from '@public/images/logos/unInvited_filledGray_D9D9D9-w100-
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import InvitationItem from './InvitationItem';
+import { getInvitionList, Invitation, putInvitationAnswer } from '../apis/api';
 import InvitationText from '../commons/InvitationText';
-import { InvitationMock } from '../mock/mock';
 
 export default function InvitationList() {
-  // eslint-disable-next-line
-  const [inviteList, setInviteList] = useState([1]);
+  const [invitationList, setInvitationList] = useState<Invitation[]>([]);
+
+  const handleInvitationAcceptButtonClick = async (id: number) => {
+    await putInvitationAnswer(id, true);
+    setInvitationList((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const handleInvitationRefuseButtonClick = async (id: number) => {
+    await putInvitationAnswer(id, false);
+    setInvitationList((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  // 초대 리스트 조회
+  useEffect(() => {
+    (async () => {
+      const { invitations } = await getInvitionList();
+      setInvitationList(invitations);
+    })();
+  }, []);
 
   return (
     <S.Box>
       <S.Title>초대받은 대시보드</S.Title>
-      {inviteList.length !== 0 ? (
+      {invitationList.length !== 0 ? (
         <>
           <S.SearchBarWrapper>
             <S.SearchIconWrapper>
@@ -34,8 +51,13 @@ export default function InvitationList() {
               <InvitationText status='header'>초대자</InvitationText>
               <InvitationText status='header'>수락 여부</InvitationText>
             </S.InvitationHeaderWrapper>
-            {InvitationMock.map((item) => (
-              <InvitationItem key={item.id} dashboardName={item.dashboardName} inviter={item.inviter} />
+            {invitationList.map((item) => (
+              <InvitationItem
+                key={item.id}
+                {...item}
+                onAcceptClick={handleInvitationAcceptButtonClick}
+                onRefuseClick={handleInvitationRefuseButtonClick}
+              />
             ))}
           </S.InvitationContainer>
         </>
