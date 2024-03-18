@@ -43,12 +43,14 @@ export interface OpenedModalState {
  *
  * @example
  * ```tsx
- * const MyModal: ModalComponent = ({ closeModal, modalRef, submitModal }) => {
+ * const MyModal: ModalComponent<{ userName: string; }> = ({ closeModal, modalRef, submitModal, userName }) => {
  *  return (
  *     <div ref={(node) => {
-          if (modalRef) modalRef.current = node;
-        }}>
+ *         if (modalRef) modalRef.current = node;
+ *       }}>
+ *        </h1>{userName}</h1>
  *       <button onClick={closeModal}>close</button>
+ *       <button onClick={submitModal}>submit</button>
  *     </div>
  *  );
  * };
@@ -63,12 +65,14 @@ export type ModalComponent<CustomComponentProps = Obj> = ComponentType<
  *
  * @example
  * ```tsx
- * const MyModal = ({ closeModal, modalRef, submitModal }: ModalComponentProps) => {
+ * const MyModal = ({ closeModal, modalRef, submitModal, userName }: ModalComponentProps<{ userName: string; }>) => {
  *   return (
  *     <div ref={ref={(node) => {
-          if (modalRef) modalRef.current = node;
-        }}>
+ *         if (modalRef) modalRef.current = node;
+ *       }}>
+ *       <h1>{userName}</h1>
  *       <button onClick={closeModal}>close</button>
+ *       <button onClick={submitModal}>submit</button>
  *     </div>
  *  );
  * };

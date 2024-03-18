@@ -13,7 +13,10 @@ export default Page;
 
 const S = {
   Page: styled.div`
+    min-width: fit-content;
     width: 100%;
+    min-height: 100vh;
+    max-height: max-content;
     height: 100%;
 
     background: ${({ theme }) => theme.color.gray_FAFAFA};
