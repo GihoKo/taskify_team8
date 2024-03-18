@@ -36,11 +36,13 @@ export const PageNationTextMock = {
 export const PagenationPreviouseButtonMock = {
   status: 'previous' as const,
   onClick: () => {},
+  disabled: true,
 };
 
 export const PageNationNextButtonMock = {
   status: 'next' as const,
   onClick: () => {},
+  disabled: false,
 };
 
 export const handleCreateDashboardClick = () => {};
