@@ -47,7 +47,6 @@ const setColumnGap = (defaultColumnGap: string) => css<StyledContainerProps>`
 const S = {
   Container: styled.div<StyledContainerProps>`
     display: flex;
-    /* column-gap: 1rem; */
     ${setColumnGap('1rem')}
 
     width: fit-content;

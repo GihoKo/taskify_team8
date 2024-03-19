@@ -4,33 +4,26 @@ import { PropsWithChildren } from 'react';
 
 import styled from 'styled-components';
 
-import { Color } from '@interface/style';
+import { CHIP_COLOR_LIST } from '@constants/ColorChipsColor';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import ColorSelectList from '@components/molecules/ColorSelectList';
+
 import BaseButton from '../BaseButton';
-import ColorSelectList from '../ColorSelectList';
 import InputWithLabel from '../InputWithLabel';
 
 type DashboardInfoEditFormProps = PropsWithChildren;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DashboardInfoEditForm = ({ children }: DashboardInfoEditFormProps) => {
-  const chipColors: Color[] = [
-    'rgba(122, 197, 85, 1)',
-    'rgba(118, 13, 222, 1)',
-    'rgba(255, 165, 0, 1)',
-    'rgba(118, 165, 234, 1)',
-    'rgba(232, 118, 234, 1)',
-  ];
-
   return (
     <S.Form>
       <S.ContentsArea>
         <S.FormHeader>
           <S.DashboardName>비브리지</S.DashboardName>
-          <ColorSelectList>
+          <ColorSelectList shouldShowSelectedColorChipOnly={{ onMobile: true, onTablet: false, onPc: false }}>
             <ColorSelectList.Container>
-              {chipColors.map((color) => (
+              {CHIP_COLOR_LIST.map((color) => (
                 <ColorSelectList.ColorChip key={color} chipColor={color} selected={color === 'rgba(118, 13, 222, 1)'} />
               ))}
             </ColorSelectList.Container>
