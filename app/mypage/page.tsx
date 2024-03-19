@@ -219,8 +219,8 @@ function MyPage() {
         showPasswordToggle();
 
         router.push('/mypage');
-      } catch (error: unknown) {
-        setModalText(error.response.data.message); // Todo: 오류수정 필요
+      } catch (err) {
+        setModalText('error'); // 에러가 발생했을 때 'error' 메시지를 표시합니다. 못된 타입에러를 물리치기 위해 텍스트로 대체하였습니다.
         showPasswordToggle();
       }
     }
