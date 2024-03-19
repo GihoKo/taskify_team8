@@ -6,25 +6,34 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import { ModalComponentProps } from '@hooks/use-modal/types';
+
 import ColumnButton from '../commons/ColumnButton';
 import ColumnInput from '../commons/ColumnInput';
 import CreateModalTitle from '../commons/ColumnModalTitle';
+import ModalDimmed from '../commons/ModalDimmed';
 
-export default function UpdateColumnModal() {
+export default function UpdateColumnModal({ closeModal, modalRef, submitModal }: ModalComponentProps) {
   const [inputValue, setInputValue] = useState('');
 
   return (
-    <S.UpdateColumnModalBox>
-      <CreateModalTitle title='컬럼 관리' />
-      <ColumnInput inputValue={inputValue} onChange={setInputValue} placeholder='컬럼 제목을 입력해주세요.' />
-      <S.ColumnButtonContainer>
-        <S.ColumnDeleteButton>삭제하기</S.ColumnDeleteButton>
-        <S.ColumnButtonsWrap>
-          <ColumnButton>취소</ColumnButton>
-          <ColumnButton>변경</ColumnButton>
-        </S.ColumnButtonsWrap>
-      </S.ColumnButtonContainer>
-    </S.UpdateColumnModalBox>
+    <ModalDimmed>
+      <S.UpdateColumnModalBox
+        ref={(node) => {
+          if (modalRef) modalRef.current = node;
+        }}
+      >
+        <CreateModalTitle title='컬럼 관리' />
+        <ColumnInput inputValue={inputValue} onChange={setInputValue} placeholder='컬럼 제목을 입력해주세요.' />
+        <S.ColumnButtonContainer>
+          <S.ColumnDeleteButton>삭제하기</S.ColumnDeleteButton>
+          <S.ColumnButtonsWrap>
+            <ColumnButton onClick={closeModal}>취소</ColumnButton>
+            <ColumnButton onClick={submitModal}>변경</ColumnButton>
+          </S.ColumnButtonsWrap>
+        </S.ColumnButtonContainer>
+      </S.UpdateColumnModalBox>
+    </ModalDimmed>
   );
 }
 

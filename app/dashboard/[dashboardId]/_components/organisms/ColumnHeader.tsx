@@ -4,13 +4,23 @@ import styled from 'styled-components';
 
 import Cogwheel from '@/app/dashboard/_components/atoms/Cogwheel';
 
+import { useModal } from '@hooks/use-modal/useModal';
+
 import ColumnProgressBar from '../molecules/ColumnProgressBar';
 
 const ColumnHeader = () => {
+  const { openModal } = useModal();
+
+  const handleUpdateColumnClick = async () => {
+    const UpdateColumnModal = await import('../Columns/UpdateColumnModal').then((module) => module.default);
+
+    openModal(UpdateColumnModal);
+  };
+
   return (
     <S.Box>
       <ColumnProgressBar />
-      <Cogwheel />
+      <Cogwheel onClick={handleUpdateColumnClick} />
     </S.Box>
   );
 };
