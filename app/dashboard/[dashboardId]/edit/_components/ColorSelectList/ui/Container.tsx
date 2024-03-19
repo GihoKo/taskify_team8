@@ -16,10 +16,6 @@ const Container = ({ children, $columnGap }: ContainerProps) => {
 
 export default Container;
 
-// const columnGap = css<StyledContainerProps>`
-/**
- * TODO: 함수화 할 수 있는 지 실험 중
- */
 const setColumnGap = (defaultColumnGap: string) => css<StyledContainerProps>`
   ${({ $columnGap }) => {
     if (!$columnGap) {

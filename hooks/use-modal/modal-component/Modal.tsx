@@ -14,15 +14,13 @@ const Modal = () => {
   } = useContext(ModalStateContext);
   const { close } = useModalDispatch();
 
-  const onCloseHandler = (callback?: VoidFunction) => {
+  const onCloseHandler = () => {
     typeof onClose === 'function' && onClose();
-    typeof callback === 'function' && callback();
     close();
   };
 
-  const onSubmitHandler = (callback?: VoidFunction) => {
+  const onSubmitHandler = () => {
     typeof onSubmit === 'function' && onSubmit();
-    typeof callback === 'function' && callback();
     close();
   };
 

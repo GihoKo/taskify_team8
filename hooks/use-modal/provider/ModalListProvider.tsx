@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 
-import { ModalListDispatchContext, ModalListStateContext } from '../context/ModalsContext';
+import { ModalListDispatchContext, ModalListStateContext } from '../context/ModalListContext';
 import { Close, ModalListProviderProps, Open, OpenedModalState } from '../types';
 
 const ModalListProvider = ({ children }: ModalListProviderProps) => {
@@ -11,10 +11,10 @@ const ModalListProvider = ({ children }: ModalListProviderProps) => {
   const open: Open = ({ ModalComponent, props }) => {
     setOpenedModalList((prev) => {
       if (prev.length === 0) {
-        return [{ ModalComponent, props }];
+        return [{ ModalComponent, props: props || {} }];
       }
 
-      return [...prev, { ModalComponent, props }];
+      return [...prev, { ModalComponent, props: props || {} }];
     });
   };
 
