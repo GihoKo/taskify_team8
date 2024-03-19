@@ -6,16 +6,19 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColumnButton from '../commons/ColumnButton';
 import ColumnButtonsWrap from '../commons/ColumnButtonWrap';
+import ModalDimmed from '../commons/ModalDimmed';
 
 export default function DeleteColumnModal() {
   return (
-    <S.DeleteColumnModalBox>
-      <S.DeleteColumnMessage>컬럼의 모든 카드를 삭제하시겠습니까?</S.DeleteColumnMessage>
-      <ColumnButtonsWrap>
-        <ColumnButton>취소</ColumnButton>
-        <ColumnButton>삭제</ColumnButton>
-      </ColumnButtonsWrap>
-    </S.DeleteColumnModalBox>
+    <ModalDimmed>
+      <S.DeleteColumnModalBox>
+        <S.DeleteColumnMessage>컬럼의 모든 카드를 삭제하시겠습니까?</S.DeleteColumnMessage>
+        <ColumnButtonsWrap>
+          <ColumnButton>취소</ColumnButton>
+          <ColumnButton>삭제</ColumnButton>
+        </ColumnButtonsWrap>
+      </S.DeleteColumnModalBox>
+    </ModalDimmed>
   );
 }
 
@@ -27,7 +30,7 @@ const S = {
     width: 32.7rem;
     height: 22rem;
     padding: 2.8rem 2rem;
-
+    z-index: 999;
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.color.white_FFFFFF};
 
