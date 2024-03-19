@@ -1,10 +1,12 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import { getFirstDashboard } from '@/app/mydashboard/_components/apis/api';
+import { getFirstDashboardId } from '@apis/dashboards/getFirstDashboardId';
 import LogoSvg from '@public/images/logos/logo-small-unfilled-w23-h37.svg?component';
 import LogoTextSvg from '@public/images/logos/taskify-text-small-unfilled-w80-h22.svg?component';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
@@ -20,7 +22,7 @@ export default function Navbar() {
   useEffect(() => {
     (async () => {
       if (isLogin) {
-        const firstDashboardId = await getFirstDashboard();
+        const firstDashboardId = await getFirstDashboardId();
         router.push(`/dashboard/${firstDashboardId}`);
       }
     })();

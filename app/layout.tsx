@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import type {} from 'styled-components/cssprop';
 
 import ClientThemeProvider from '@/providers/ClientThemeProvider';
+import TanstackQueryProviders from '@/providers/TanstackQueryProvider';
 
 import { Modal, ModalProvider } from '@hooks/use-modal';
 
@@ -26,11 +27,13 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <ClientThemeProvider>
-          <ModalProvider>
-            {children}
-            <div id='modal' />
-            <Modal />
-          </ModalProvider>
+          <TanstackQueryProviders>
+            <ModalProvider>
+              {children}
+              <div id='modal' />
+              <Modal />
+            </ModalProvider>
+          </TanstackQueryProviders>
         </ClientThemeProvider>
       </body>
     </html>

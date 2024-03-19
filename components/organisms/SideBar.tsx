@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import { useGetDashboardList } from '@/queries/dashboard/useGetDashboardList.query';
 import createDashboardIcon from '@public/images/icons/add-filledGray_787486-w20-w20.svg';
 import crown from '@public/images/icons/crown-filledYellow-FDD446-w16-h12.svg';
 import LogoSvg from '@public/images/logos/logo-small-filledViolet-w28.82-h33.07.svg?component';
@@ -11,7 +12,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColoredDot from '@components/atoms/ColoredDot';
 import {
-  dashboardMock,
+  // dashboardMock,
   handleCreateDashboardButtonClick,
   handlePagenationNextButtonClick,
   handlePagenationPreviousButtonClick,
@@ -20,6 +21,15 @@ import {
 import PageNationButton from '../atoms/PageNationButton';
 
 export default function SideBar() {
+  // const { data, isLoading, isFetching } = useGetDashboardList(currentPage);
+  const { data, isLoading, isFetching } = useGetDashboardList(1);
+
+  console.log(data);
+
+  if (isLoading || isFetching) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <S.SideBarArea>
@@ -39,12 +49,25 @@ export default function SideBar() {
 
         {/* 대시보드 아이템 리스트 */}
         <S.DashboardContainer>
-          {dashboardMock.map((dashboard) => {
+          {/* {dashboardMock.map((dashboard) => {
             return (
               <S.DashboardItem key={dashboard.id}>
                 <ColoredDot color={dashboard.color} />
                 <S.DashboardName $isMyDashboard={dashboard.isMyDashboard}>{dashboard.name}</S.DashboardName>
                 {dashboard.isMyDashboard ? (
+                  <S.ImageWrapper>
+                    <Image src={crown} alt='왕관 이미지' fill />
+                  </S.ImageWrapper>
+                ) : null}
+              </S.DashboardItem>
+            );
+          })} */}
+          {data?.dashboards.map((dashboard) => {
+            return (
+              <S.DashboardItem key={dashboard.id}>
+                <ColoredDot color={dashboard.color} />
+                <S.DashboardName $isMyDashboard={dashboard.createdByMe}>{dashboard.title}</S.DashboardName>
+                {dashboard.createdByMe ? (
                   <S.ImageWrapper>
                     <Image src={crown} alt='왕관 이미지' fill />
                   </S.ImageWrapper>
@@ -64,7 +87,7 @@ export default function SideBar() {
   );
 }
 
-const S = {
+export const S = {
   SideBarArea: styled.div`
     width: 6.7rem;
     border-right: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
