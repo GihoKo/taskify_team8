@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Image from 'next/image';
@@ -114,7 +114,7 @@ function MyPage() {
   const router = useRouter();
 
   // -- 이미지 / 닉네임 변경 시작
-  const fetchProfileImage = async () => {
+  const fetchProfileImage = useCallback(async () => {
     try {
       const response = await axios.get('users/me');
 
@@ -128,11 +128,11 @@ function MyPage() {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [previewUrl]); // previewUrl을 종속성으로 사용합니다.
 
   useEffect(() => {
     fetchProfileImage();
-  }, []); // Todo: 타입에러 수정 필요
+  }, [fetchProfileImage]); // fetchProfileImage 함수를 종속성으로 사용합니다.
 
   useEffect(() => {
     setCurrentUser(user);
