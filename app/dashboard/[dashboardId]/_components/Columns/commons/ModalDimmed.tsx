@@ -17,8 +17,8 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
     background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    inset: 0;
   `,
 };
