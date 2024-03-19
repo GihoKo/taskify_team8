@@ -3,15 +3,16 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import axios from '@apis/axios';
-
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
+
+import { setAccessToken } from '@utils/token/setAccessToken';
 
 import useUserStore from '@store/user';
 
@@ -54,7 +55,8 @@ export default function SignIn() {
   async function login(data: { email: string; password: string }) {
     try {
       const res = await axios.post('auth/login', data);
-      localStorage.setItem('login', res.data.accessToken);
+      setAccessToken(res.data.accessToken);
+      // localStorage.setItem('login', res.data.accessToken);
 
       await setUserData();
       router.push('/mydashboard');

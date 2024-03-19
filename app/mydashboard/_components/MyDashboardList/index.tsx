@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -15,6 +16,17 @@ import { Dashboard, getDashboardList } from '../apis/api';
 import { handleCreateDashboardClick } from '../mock/mock';
 
 export default function MyDashboardList() {
+  const { data, isSuccess } = useQuery({
+    queryKey: ['dashboard', 'dashboardList', 3],
+    queryFn: () => getDashboardList(3),
+    // staleTime: 1000 * 60 * 3, // 5 분 // 현재 가져온 데이터를 몇 밀리세컨드 동안 유효하게(=신선한 데이터라고 판단하게) 할지 시간, 기본값은 0
+    // gcTime: 1000 * 60 * 10, // 10분  // garbage collector가 서버로부터 가져온 데이터를 몇 밀리세컨드 동안 메모리에 유지할지 시간, 기본값이 5분?
+  });
+  // const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  // const [currentPage, setCurrentPage] = useState<number>(1);
+  // const [totalPage, setTotalPage] = useState<number>();
+
+  const [dashboards, setDashboards] = useState<Dashboard[]>(isSuccess ? data.dashboards : []);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>();
 
@@ -26,15 +38,21 @@ export default function MyDashboardList() {
     setCurrentPage((prev) => prev - 1);
   };
 
-  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   // 대시보드 리스트 조회
   useEffect(() => {
-    (async () => {
-      const { dashboards, totalCount } = await getDashboardList(currentPage);
+    // (async () => {
+    //   const { dashboards, totalCount } = await getDashboardList(currentPage);
+    //   setDashboards(dashboards);
+    //   setTotalPage(Math.ceil(totalCount / 5));
+    // })();
+
+    if (isSuccess) {
+      const { dashboards, totalCount } = data;
+
       setDashboards(dashboards);
       setTotalPage(Math.ceil(totalCount / 5));
-    })();
-  }, [currentPage]);
+    }
+  }, [currentPage, data, isSuccess]);
 
   return (
     <S.Box>
