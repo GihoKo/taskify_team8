@@ -46,8 +46,8 @@ function MyPage() {
   const [previewUrl, setPreviewUrl] = useState<string>('/images/more.svg');
   const [PasswordWrong, setPasswordWrong] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
-  const [profileBtn, setProfileBtn] = useState<boolean>(false);
-  const [PasswordBtn, setPasswordBtn] = useState<boolean>(false);
+  const [profileButton, setProfileButton] = useState<boolean>(false);
+  const [PasswordButton, setPasswordButton] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showPasswordError, setShowPasswordError, showPasswordToggle] = useToggle(false);
 
@@ -97,17 +97,17 @@ function MyPage() {
 
   useEffect(() => {
     if (profile1 === user.nickname || profile2 === user.profileImageUrl) {
-      setProfileBtn(true);
+      setProfileButton(true);
     } else {
-      setProfileBtn(false);
+      setProfileButton(false);
     }
   }, [profile1, profile2, user.nickname, user.profileImageUrl]);
 
   useEffect(() => {
     if (Password1.length === 0 || Password2.length === 0 || Password3.length === 0) {
-      setPasswordBtn(true);
+      setPasswordButton(true);
     } else {
-      setPasswordBtn(false);
+      setPasswordButton(false);
     }
   }, [Password1, Password2, Password3]);
 
@@ -165,7 +165,7 @@ function MyPage() {
       setUser(res.data);
 
       if (!res.data.profileImageUrl) {
-        setPreviewUrl('/images/more.svg');
+        setPreviewUrl('/images/icons/profile-add.svg');
       } else {
         setPreviewUrl(res.data.profileImageUrl);
       }
@@ -189,7 +189,7 @@ function MyPage() {
 
           setPreviewUrl(imageUrl);
 
-          setProfileBtn(false);
+          setProfileButton(false);
         }
       }
     }
@@ -200,12 +200,12 @@ function MyPage() {
       ...prev,
       profileImageUrl: null,
     }));
-    setPreviewUrl('/images/more.svg');
+    setPreviewUrl('/images/icons/profile-add.svg');
   };
 
   useEffect(() => {
     if (profileValue.profileImageUrl === null) {
-      setProfileBtn(false);
+      setProfileButton(false);
     }
   }, [profileValue.profileImageUrl]);
 
@@ -257,12 +257,12 @@ function MyPage() {
                 alt='이미지 추가'
                 fill
                 placeholder='blur'
-                blurDataURL={'/images/more.svg'}
+                blurDataURL={'/images/icons/profile-add.svg'} // Todo: 이미지가 있었는데 없어진다.. 수정 필요
               />
               <S.ChangeImg>
                 <S.ChangeImgInner htmlFor='file'>
                   <S.ImgEdit>
-                    <Image src={'/images/imgEdit.svg'} alt='이미지 변경' fill />
+                    <Image src={'/images/icons/profile-add.svg'} alt='이미지 변경' fill />
                   </S.ImgEdit>
                 </S.ChangeImgInner>
 
@@ -291,10 +291,10 @@ function MyPage() {
               )}
             </S.Inputs>
           </S.InputBox>
-          <S.BtnBox>
+          <S.ButtonBox>
             <S.DeleteImg onClick={handleDeleteImg}>이미지 삭제</S.DeleteImg>
-            <S.Submit type='submit' value={'저장'} null={profileBtn} disabled={!!profileBtn} />
-          </S.BtnBox>
+            <S.Submit type='submit' value={'저장'} null={profileButton} disabled={!!profileButton} />
+          </S.ButtonBox>
         </S.Box>
 
         <S.Box onSubmit={handleSubmit2(onSubmit2)}>
@@ -327,7 +327,7 @@ function MyPage() {
               />
             </S.Inputs>
           </S.InputBox>
-          <S.Submit type='submit' value='변경' null={PasswordBtn} disabled={!!PasswordBtn} />
+          <S.Submit type='submit' value='변경' null={PasswordButton} disabled={!!PasswordButton} />
         </S.Box>
       </S.Mypage>
     </S.Wrap>
@@ -357,7 +357,7 @@ const S = {
     }
   `,
   Back: styled.div`
-    color: var(--black-333236);
+    color: ${({ theme }) => theme.color.black_333236};
     font-size: 1.6rem;
     font-weight: 500;
     margin-bottom: 1rem;
@@ -368,10 +368,10 @@ const S = {
     max-width: 62rem;
     padding: 3.2rem 2.8rem;
     border-radius: 8px;
-    background: var(--white-FFFFFF);
+    background: ${({ theme }) => theme.color.white_FFFFFF};
   `,
   BoxTitle: styled.div`
-    color: var(--black-333236);
+    color: ${({ theme }) => theme.color.black_333236};
     font-size: 2.4rem;
     font-weight: 700;
     margin-bottom: 3.2rem;
@@ -432,7 +432,7 @@ const S = {
     top: 50%;
     transform: translate(-50%, -50%);
   `,
-  BtnBox: styled.div`
+  ButtonBox: styled.div`
     display: flex;
     justify-content: space-between;
   `,
@@ -440,9 +440,10 @@ const S = {
     width: 8.4rem;
     height: 3.2rem;
     border-radius: 4px;
-    background: ${(props) => (props.null ? 'var(--gray-9FA6B2)' : 'var(--violet-5534DA)')};
+    background: ${(props) =>
+      props.null ? 'var(--gray-9FA6B2, #9fa6b2)' : 'var(--violet-5534DA, #5534DA)'}; //Todo: 테마로 바꿔야해용
     margin-top: 3.2rem;
-    color: var(--white-FFFFFF);
+    color: ${({ theme }) => theme.color.white_FFFFFF};
     text-align: center;
     font-size: 1.4rem;
     line-height: 3.2rem;
@@ -456,9 +457,9 @@ const S = {
     width: 8.4rem;
     height: 3.2rem;
     border-radius: 4px;
-    background: var(--violet-5534DA);
+    background: ${({ theme }) => theme.color.violet_5534DA};
     margin-top: 3.2rem;
-    color: var(--white-FFFFFF);
+    color: ${({ theme }) => theme.color.white_FFFFFF};
     text-align: center;
     font-size: 1.4rem;
     line-height: 3.2rem;
