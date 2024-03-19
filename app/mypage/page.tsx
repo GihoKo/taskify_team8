@@ -1,7 +1,8 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
@@ -11,11 +12,11 @@ import axios from '@apis/axios';
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
 import DashboardNav from '@components/organisms/DashboardNav';
+import SideBar from '@components/organisms/SideBar';
 
 import useUserStore from '@store/user';
 
 import useToggle from '../signin/_hooks/useToggle';
-// 사이드바 추가 필.
 
 interface Member {
   id: number;
@@ -218,9 +219,8 @@ function MyPage() {
         showPwdToggle();
 
         router.push('/mypage');
-      } catch (err: unknown) {
-        const err = error as AxiosError;
-        setModalText(err.response.data.message); // Todo: 오류수정 필요
+      } catch (error: any) {
+        setModalText(error.response.data.message); // Todo: 오류수정 필요
         showPwdToggle();
       }
     }
@@ -243,6 +243,7 @@ function MyPage() {
     <S.Wrap>
       {showPwdError && <ModalCheckIt text={modalText} submitButtonText='확인' errorMessage={showPwdToggle} />}
       <DashboardNav />
+      <SideBar />
       <S.Mypage>
         <S.Back onClick={() => router.back()}>{'<'} 뒤로가기</S.Back>
 
@@ -338,7 +339,7 @@ export default MyPage;
 const S = {
   Wrap: styled.div`
     position: relative;
-  `,
+  `, // Todo: 사이드바 위치 조정 필요
   Mypage: styled.div`
     width: calc(100% - 30rem);
     min-height: calc(100vh - 7rem);
