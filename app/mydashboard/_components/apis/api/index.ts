@@ -22,8 +22,6 @@ export const getDashboardList = async (currentPage: number) => {
     `/dashboards?navigationMethod=pagination&page=${currentPage}&size=5`,
   );
 
-  console.log(data);
-
   return data;
 };
 
@@ -54,12 +52,18 @@ export interface Invitation {
 }
 
 export interface InvitationList {
-  cursorId: number;
+  cursorId: number | null;
   invitations: Invitation[];
 }
 
-export const getInvitionList = async () => {
+export const getInitialInvitionList = async () => {
   const { data } = await instanceAddedAccessToken.get<InvitationList>(`/invitations?size=6`);
+
+  return data;
+};
+
+export const getMoreInvitionList = async (cursorId: number | null) => {
+  const { data } = await instanceAddedAccessToken.get<InvitationList>(`/invitations?cursorId=${cursorId}&size=6`);
 
   return data;
 };

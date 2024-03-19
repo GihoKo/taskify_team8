@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -10,11 +10,13 @@ import uninvitedSvg from '@public/images/logos/unInvited_filledGray_D9D9D9-w100-
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import InvitationItem from './InvitationItem';
-import { getInvitionList, Invitation, putInvitationAnswer } from '../apis/api';
+import { getInitialInvitionList, getMoreInvitionList, Invitation, putInvitationAnswer } from '../apis/api';
 import InvitationText from '../commons/InvitationText';
 
 export default function InvitationList() {
   const [invitationList, setInvitationList] = useState<Invitation[]>([]);
+  const [cursorId, setCursorId] = useState<number | null>(null);
+  const currentLastInvitation = useRef<HTMLDivElement>(null);
 
   const handleInvitationAcceptButtonClick = async (id: number) => {
     await putInvitationAnswer(id, true);
@@ -26,11 +28,38 @@ export default function InvitationList() {
     setInvitationList((prev) => prev.filter((item) => item.id !== id));
   };
 
+  useEffect(() => {
+    console.log(currentLastInvitation.current);
+
+    if (currentLastInvitation.current) {
+      const currentLastInvitationIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (entry.isIntersecting && currentLastInvitation.current) {
+              const data = await getMoreInvitionList(cursorId);
+              setInvitationList((prev) => [...prev, ...data.invitations]);
+
+              if (data.cursorId !== null) {
+                setCursorId(data.cursorId);
+              }
+
+              currentLastInvitationIo.disconnect();
+            }
+          });
+        },
+        { threshold: 1 },
+      );
+
+      currentLastInvitationIo.observe(currentLastInvitation.current);
+    }
+  }, [currentLastInvitation, cursorId]);
+
   // 초대 리스트 조회
   useEffect(() => {
     (async () => {
-      const { invitations } = await getInvitionList();
-      setInvitationList(invitations);
+      const data = await getInitialInvitionList();
+      setInvitationList(data.invitations);
+      setCursorId(data.cursorId);
     })();
   }, []);
 
@@ -57,6 +86,8 @@ export default function InvitationList() {
                 {...item}
                 onAcceptClick={handleInvitationAcceptButtonClick}
                 onRefuseClick={handleInvitationRefuseButtonClick}
+                ref={currentLastInvitation}
+                cursorId={cursorId}
               />
             ))}
           </S.InvitationContainer>
