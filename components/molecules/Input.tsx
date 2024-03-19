@@ -106,6 +106,7 @@ const S = {
     max-width: 52rem;
     height: 7.7rem;
     display: flex;
+
     flex-direction: column;
     gap: 0.8rem;
   `,
@@ -116,11 +117,12 @@ const S = {
     color: ${({ theme }) => theme.color.black_333236};
     font-size: 1.6rem;
     font-weight: 400;
-  `,
+  `, // Todo : 찾았다 반응형은 여기서!!
   input: styled.input<{ errorMessage: boolean }>`
     width: 100%;
     padding: 15px 16px;
     border-radius: 8px;
+
     border: ${(props) =>
       props.errorMessage ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
     background: ${({ theme }) => theme.color.white_FFFFFF};

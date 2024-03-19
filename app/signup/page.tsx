@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import axios from '@apis/axios';
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import Input from '@components/molecules/Input';
 
@@ -199,7 +200,7 @@ function SignUp() {
       <S.Container>
         <S.Logo>
           <Link href={'/'}>
-            <Image src='/images/icons/logoLogin.svg' alt='로고' fill />
+            <Image src='/images/icons/logoLogin.svg' alt='로고' fill priority />
           </Link>
         </S.Logo>
         <S.Text>첫 방문을 환영합니다!</S.Text>
@@ -286,11 +287,16 @@ const S = {
   Logo: styled.div`
     position: relative;
     margin: 1rem auto;
-    width: 20rem;
-    height: 27.9rem;
 
-    @media (max-width: 767px) {
-      margin: 30rem auto 0.8rem;
+    width: 14rem;
+    height: 19.53rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 20rem;
+      height: 27.9rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 20rem;
+      height: 27.9rem;
     }
   `,
   Text: styled.p`
@@ -322,11 +328,6 @@ const S = {
     color: ${({ theme }) => theme.color.white_FFFFFF};
     font-size: 1.8rem;
     font-weight: 500;
-
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
-    }
   `,
   Button: styled.button`
     width: 100%;
@@ -338,11 +339,6 @@ const S = {
     text-align: center;
     font-size: 1.8rem;
     font-weight: 500;
-
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
-    }
   `,
   Logintext: styled.div`
     display: flex;
