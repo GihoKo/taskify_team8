@@ -20,7 +20,7 @@ interface InputProps {
   errorMessage?: boolean;
   handleBlur?: React.FocusEventHandler<HTMLInputElement>;
   value?: string;
-  hookform: ReturnType<UseFormRegister<FormValues>>;
+  hookform?: ReturnType<UseFormRegister<FormValues>>;
   name?: string;
   disabled?: boolean;
   defaultValue?: string;

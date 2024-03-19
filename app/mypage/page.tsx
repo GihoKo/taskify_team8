@@ -34,7 +34,7 @@ interface IFormInput {
   profileImageUrl: string;
 }
 
-interface PwdChange {
+interface PasswordChange {
   password: number;
   newPassword: number;
   newPasswordCheck: number;
@@ -44,12 +44,12 @@ function MyPage() {
   const { user, setUser } = useUserStore();
   const [currentUser, setCurrentUser] = useState<Member | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('/images/more.svg');
-  const [pwdWrong, setPwdWrong] = useState<boolean>(false);
+  const [PasswordWrong, setPasswordWrong] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [profileBtn, setProfileBtn] = useState<boolean>(false);
-  const [pwdBtn, setPwdBtn] = useState<boolean>(false);
+  const [PasswordBtn, setPasswordBtn] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [showPwdError, setShowPwdError, showPwdToggle] = useToggle(false);
+  const [showPasswordError, setShowPasswordError, showPasswordToggle] = useToggle(false);
 
   // profile
   const { register: register1, handleSubmit: handleSubmit1, watch: watch1 } = useForm<IFormInput>();
@@ -62,24 +62,24 @@ function MyPage() {
     handleChangeProfile(postData);
   };
 
-  // pwd
-  const { register: register2, handleSubmit: handleSubmit2, watch: watch2 } = useForm<PwdChange>();
+  // Password
+  const { register: register2, handleSubmit: handleSubmit2, watch: watch2 } = useForm<PasswordChange>();
 
-  const onSubmit2: SubmitHandler<PwdChange> = (data: {
+  const onSubmit2: SubmitHandler<PasswordChange> = (data: {
     password: number;
     newPassword: number;
     newPasswordCheck: number;
   }) => {
-    const pwdValue = {
+    const PasswordValue = {
       password: String(data.password),
       newPassword: String(data.newPassword),
     };
 
     if (data.newPasswordCheck !== data.newPassword) {
-      setPwdWrong(true);
+      setPasswordWrong(true);
     } else {
-      setPwdWrong(false);
-      pwdChange(pwdValue);
+      setPasswordWrong(false);
+      PasswordChange(PasswordValue);
     }
   };
 
@@ -90,9 +90,9 @@ function MyPage() {
   // watch 사용
   const profile1 = watch1('nickname');
   const profile2 = watch1('profileImageUrl');
-  const pwd1 = String(watch2('newPassword'));
-  const pwd2 = String(watch2('newPasswordCheck'));
-  const pwd3 = String(watch2('password'));
+  const Password1 = String(watch2('newPassword'));
+  const Password2 = String(watch2('newPasswordCheck'));
+  const Password3 = String(watch2('password'));
   // watch 사용
 
   useEffect(() => {
@@ -104,12 +104,12 @@ function MyPage() {
   }, [profile1, profile2, user.nickname, user.profileImageUrl]);
 
   useEffect(() => {
-    if (pwd1.length === 0 || pwd2.length === 0 || pwd3.length === 0) {
-      setPwdBtn(true);
+    if (Password1.length === 0 || Password2.length === 0 || Password3.length === 0) {
+      setPasswordBtn(true);
     } else {
-      setPwdBtn(false);
+      setPasswordBtn(false);
     }
-  }, [pwd1, pwd2, pwd3]);
+  }, [Password1, Password2, Password3]);
 
   const router = useRouter();
 
@@ -212,16 +212,16 @@ function MyPage() {
   // -- 이미지 / 닉네임 변경 끝
 
   // 비밀번호 변경 시작
-  const pwdChange = async (data: { password: string; newPassword: string }) => {
-    if (!pwdWrong && data.password !== '' && data.newPassword !== '') {
+  const PasswordChange = async (data: { password: string; newPassword: string }) => {
+    if (!PasswordWrong && data.password !== '' && data.newPassword !== '') {
       try {
         setModalText('비밀번호가 변경 되었습니다');
-        showPwdToggle();
+        showPasswordToggle();
 
         router.push('/mypage');
-      } catch (error: any) {
+      } catch (error: unknown) {
         setModalText(error.response.data.message); // Todo: 오류수정 필요
-        showPwdToggle();
+        showPasswordToggle();
       }
     }
   };
@@ -229,22 +229,22 @@ function MyPage() {
   // 비밀번호 변경 끝
 
   const handleNewPasswordBlur = () => {
-    const newPassword = pwd1;
-    const newPasswordCheck = pwd2;
+    const newPassword = Password1;
+    const newPasswordCheck = Password2;
 
     if (newPassword !== newPasswordCheck && newPassword !== '' && newPasswordCheck !== '') {
-      setPwdWrong(true);
+      setPasswordWrong(true);
     } else {
-      setPwdWrong(false);
+      setPasswordWrong(false);
     }
   };
 
   return (
     <S.Wrap>
-      {showPwdError && <ModalCheckIt text={modalText} submitButtonText='확인' errorMessage={showPwdToggle} />}
-      <DashboardNav />
+      {showPasswordError && <ModalCheckIt text={modalText} submitButtonText='확인' errorMessage={showPasswordToggle} />}
       <SideBar />
       <S.Mypage>
+        <DashboardNav />
         <S.Back onClick={() => router.back()}>{'<'} 뒤로가기</S.Back>
 
         <S.Box onSubmit={handleSubmit1(onSubmit1)}>
@@ -305,14 +305,14 @@ function MyPage() {
                 hookform={register2('password')}
                 title='현재 비밀번호'
                 placeholder='현재 비밀번호 입력'
-                data='pwd'
+                data='Password'
                 name='password'
               />
               <Input
                 hookform={register2('newPassword')}
                 title='새 비밀번호'
                 placeholder='새 비밀번호 입력'
-                data='pwd'
+                data='Password'
                 name='newPassword'
                 handleBlur={handleNewPasswordBlur}
               />
@@ -320,14 +320,14 @@ function MyPage() {
                 hookform={register2('newPasswordCheck')}
                 title='새 비밀번호 확인'
                 placeholder='새 비밀번호 입력'
-                data='pwd'
-                errorMessage={pwdWrong}
+                data='Password'
+                errorMessage={PasswordWrong}
                 name='newPasswordCheck'
                 handleBlur={handleNewPasswordBlur}
               />
             </S.Inputs>
           </S.InputBox>
-          <S.Submit type='submit' value='변경' null={pwdBtn} disabled={!!pwdBtn} />
+          <S.Submit type='submit' value='변경' null={PasswordBtn} disabled={!!PasswordBtn} />
         </S.Box>
       </S.Mypage>
     </S.Wrap>
@@ -338,16 +338,14 @@ export default MyPage;
 
 const S = {
   Wrap: styled.div`
-    position: relative;
-  `, // Todo: 사이드바 위치 조정 필요
+    display: flex;
+  `,
   Mypage: styled.div`
-    width: calc(100% - 30rem);
-    min-height: calc(100vh - 7rem);
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    margin-left: 30rem;
     padding: 2rem;
-    background-color: #fafafa;
+    background-color: ${({ theme }) => theme.color.gray_FAFAFA};
     gap: 1.2rem;
     @media all and (max-width: 1199px) {
       width: calc(100% - 16rem);
