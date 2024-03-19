@@ -29,8 +29,6 @@ export default function InvitationList() {
   };
 
   useEffect(() => {
-    console.log(currentLastInvitation.current);
-
     if (currentLastInvitation.current) {
       const currentLastInvitationIo = new IntersectionObserver(
         (entries) => {
@@ -47,7 +45,7 @@ export default function InvitationList() {
             }
           });
         },
-        { threshold: 1 },
+        { threshold: 1 }, // entry.isIntersecting이 성립하지만 threshold가 1이 아닐 때는 콜백이 실행되지 않음
       );
 
       currentLastInvitationIo.observe(currentLastInvitation.current);
