@@ -16,7 +16,7 @@ const ColumnContainerGroup = ({ children }: ColumnContainerGroupProps) => {
 export default ColumnContainerGroup;
 
 const S = {
-  Box: styled.article`
+  Box: styled.main`
     display: flex;
     flex-direction: column;
 

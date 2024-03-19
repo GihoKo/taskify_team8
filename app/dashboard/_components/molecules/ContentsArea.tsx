@@ -4,23 +4,23 @@ import { PropsWithChildren } from 'react';
 
 import styled from 'styled-components';
 
-type PageProps = PropsWithChildren;
-const Page = ({ children }: PageProps) => {
-  return <S.Page>{children}</S.Page>;
+type ContentsAreaProps = PropsWithChildren;
+
+const ContentsArea = ({ children }: ContentsAreaProps) => {
+  return <S.Area>{children}</S.Area>;
 };
 
-export default Page;
+export default ContentsArea;
 
 const S = {
-  Page: styled.div`
-    display: flex;
-
+  Area: styled.div`
     min-width: fit-content;
     width: 100%;
     min-height: 100vh;
     max-height: max-content;
     height: 100%;
 
-    background: ${({ theme }) => theme.color.gray_FAFAFA};
+    display: flex;
+    flex-direction: column;
   `,
 };
