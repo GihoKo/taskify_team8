@@ -13,6 +13,9 @@ import axios from '@apis/axios';
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
 
+import { getAccessToken } from '@utils/token/getAccessToken';
+import { setAccessToken } from '@utils/token/setAccessToken';
+
 import useUserStore from '@store/user';
 
 import useToggle from './_hooks/useToggle';
@@ -44,7 +47,8 @@ export default function SignIn() {
 
   const router = useRouter();
   useEffect(() => {
-    const LS = localStorage.getItem('login');
+    // const LS = localStorage.getItem('login');
+    const LS = getAccessToken();
 
     if (LS !== null) {
       router.push(`/mydashboard`);
@@ -53,8 +57,9 @@ export default function SignIn() {
 
   async function login(data: { email: string; password: string }) {
     try {
-      const res = await axios.post('auth/login', data);
-      localStorage.setItem('login', res.data.accessToken);
+      const res = await axios.post('/auth/login', data);
+      // localStorage.setItem('login', res.data.accessToken);
+      setAccessToken(res.data.accessToken);
 
       await setUserData();
       router.push('/mydashboard');
@@ -71,7 +76,7 @@ export default function SignIn() {
 
   const setUserData = async () => {
     try {
-      const respons = await axios.get('users/me');
+      const respons = await axios.get('/users/me');
       setUser(respons.data);
     } catch (error) {
       console.error('사용자 정보 가져오기 실패:', error);
