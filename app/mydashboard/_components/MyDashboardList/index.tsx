@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -7,16 +11,31 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import PageNationButton from '@components/atoms/PageNationButton';
 
 import DashboardItem from './DashboardItem';
-import {
-  dashboardMock,
-  handleCreateDashboardClick,
-  handleDashboardClick,
-  PageNationNextButtonMock,
-  PagenationPreviouseButtonMock,
-  PageNationTextMock,
-} from '../mock/mock';
+import { Dashboard, getDashboardList } from '../apis/api';
+import { handleCreateDashboardClick } from '../mock/mock';
 
 export default function MyDashboardList() {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>();
+
+  const handleNextDashboardPageClick = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePreviousDashboardPageClick = () => {
+    setCurrentPage((prev) => prev - 1);
+  };
+
+  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
+  // 대시보드 리스트 조회
+  useEffect(() => {
+    (async () => {
+      const { dashboards, totalCount } = await getDashboardList(currentPage);
+      setDashboards(dashboards);
+      setTotalPage(Math.ceil(totalCount / 5));
+    })();
+  }, [currentPage]);
+
   return (
     <S.Box>
       <S.DashboardContainer>
@@ -28,16 +47,16 @@ export default function MyDashboardList() {
             </S.CreateDashboardIconWrapper>
           </S.CreateDashboardIconPositioner>
         </S.CreateDashboardButton>
-        {dashboardMock.map((item) => (
-          <DashboardItem key={item.id} onClick={handleDashboardClick} {...item} />
+        {dashboards.map((item) => (
+          <DashboardItem key={item.id} {...item} />
         ))}
       </S.DashboardContainer>
       <S.PageNationWrapper>
         <S.PageNationText>
-          {PageNationTextMock.total} 페이지 중 {PageNationTextMock.current}
+          {totalPage} 페이지 중 {currentPage}
         </S.PageNationText>
-        <PageNationButton {...PagenationPreviouseButtonMock} />
-        <PageNationButton {...PageNationNextButtonMock} />
+        <PageNationButton status='previous' disabled={currentPage === 1} onClick={handlePreviousDashboardPageClick} />
+        <PageNationButton status='next' disabled={currentPage === totalPage} onClick={handleNextDashboardPageClick} />
       </S.PageNationWrapper>
     </S.Box>
   );
