@@ -70,7 +70,7 @@ const S = {
     height: 100%;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.5);
-    top: 0;w
+    top: 0;
   `,
 
   CreateColumnBox: styled.div`
