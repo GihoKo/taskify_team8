@@ -1,4 +1,6 @@
-import { useState } from 'react';
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -8,17 +10,61 @@ import uninvitedSvg from '@public/images/logos/unInvited_filledGray_D9D9D9-w100-
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import InvitationItem from './InvitationItem';
+import { getInitialInvitionList, getMoreInvitionList, Invitation, putInvitationAnswer } from '../apis/api';
 import InvitationText from '../commons/InvitationText';
-import { InvitationMock } from '../mock/mock';
 
 export default function InvitationList() {
-  // eslint-disable-next-line
-  const [inviteList, setInviteList] = useState([1]);
+  const [invitationList, setInvitationList] = useState<Invitation[]>([]);
+  const [cursorId, setCursorId] = useState<number | null>(null);
+  const currentLastInvitation = useRef<HTMLDivElement>(null);
+
+  const handleInvitationAcceptButtonClick = async (id: number) => {
+    await putInvitationAnswer(id, true);
+    setInvitationList((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const handleInvitationRefuseButtonClick = async (id: number) => {
+    await putInvitationAnswer(id, false);
+    setInvitationList((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  useEffect(() => {
+    if (currentLastInvitation.current) {
+      const currentLastInvitationIo = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(async (entry) => {
+            if (entry.isIntersecting && currentLastInvitation.current) {
+              const data = await getMoreInvitionList(cursorId);
+              setInvitationList((prev) => [...prev, ...data.invitations]);
+
+              if (data.cursorId !== null) {
+                setCursorId(data.cursorId);
+              }
+
+              currentLastInvitationIo.disconnect();
+            }
+          });
+        },
+        { threshold: 1 }, // entry.isIntersecting이 성립하지만 threshold가 1이 아닐 때는 콜백이 실행되지 않음
+      );
+
+      currentLastInvitationIo.observe(currentLastInvitation.current);
+    }
+  }, [currentLastInvitation, cursorId]);
+
+  // 초대 리스트 조회
+  useEffect(() => {
+    (async () => {
+      const data = await getInitialInvitionList();
+      setInvitationList(data.invitations);
+      setCursorId(data.cursorId);
+    })();
+  }, []);
 
   return (
     <S.Box>
       <S.Title>초대받은 대시보드</S.Title>
-      {inviteList.length !== 0 ? (
+      {invitationList.length !== 0 ? (
         <>
           <S.SearchBarWrapper>
             <S.SearchIconWrapper>
@@ -32,8 +78,15 @@ export default function InvitationList() {
               <InvitationText status='header'>초대자</InvitationText>
               <InvitationText status='header'>수락 여부</InvitationText>
             </S.InvitationHeaderWrapper>
-            {InvitationMock.map((item) => (
-              <InvitationItem key={item.id} dashboardName={item.dashboardName} inviter={item.inviter} />
+            {invitationList.map((item) => (
+              <InvitationItem
+                key={item.id}
+                {...item}
+                onAcceptClick={handleInvitationAcceptButtonClick}
+                onRefuseClick={handleInvitationRefuseButtonClick}
+                ref={currentLastInvitation}
+                cursorId={cursorId}
+              />
             ))}
           </S.InvitationContainer>
         </>

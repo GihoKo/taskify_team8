@@ -1,3 +1,5 @@
+'use client';
+
 import { useModal } from './useModal';
 
 export type { ModalComponent, ModalComponentProps } from './types';

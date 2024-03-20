@@ -3,31 +3,43 @@
 import { ButtonHTMLAttributes, MouseEvent, useEffect } from 'react';
 
 import Image from 'next/image';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { Color } from '@interface/style';
+import { Color, ResponsiveBooleanUtility } from '@interface/style';
 import checkedIcon from '@public/images/icons/check-filledWhite-w24-h24.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import { useColorSelectListContext } from '../hooks/useColorSelectListContext';
 
+interface StyledSelectedButtonProps {
+  $chipColor: Color;
+  $isSelected?: boolean;
+  $shouldShowSelectedColorChipOnly?: ResponsiveBooleanUtility;
+}
+
 interface ColorChipProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
   /**
    * custom onClick handler
    */
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: ({ event, selectedColor }: { event?: MouseEvent<HTMLButtonElement>; selectedColor: Color }) => void;
+  /**
+   * chip에 부여되는 색상
+   */
   chipColor: Color;
+  /**
+   * 선택된 색상인지 여부
+   */
   selected?: boolean;
 }
 
 const ColorChip = ({ chipColor, onClick, selected }: ColorChipProps) => {
-  const { setSelectedColor, selectedColor } = useColorSelectListContext();
+  const { setSelectedColor, selectedColor, shouldShowSelectedColorChipOnly } = useColorSelectListContext();
 
   const handleOnClick = (event: MouseEvent<HTMLButtonElement>) => {
     setSelectedColor(chipColor);
 
     if (typeof onClick === 'function') {
-      onClick(event);
+      onClick({ event, selectedColor: chipColor });
     }
   };
 
@@ -35,12 +47,18 @@ const ColorChip = ({ chipColor, onClick, selected }: ColorChipProps) => {
     if (selected) {
       setSelectedColor(chipColor);
     }
-  }, []);
+  }, [selected]);
 
   const isSelected = selectedColor === chipColor;
 
   return (
-    <S.SelectButton $isSelected={isSelected} type='button' $chipColor={chipColor} onClick={handleOnClick}>
+    <S.SelectButton
+      $isSelected={isSelected}
+      $shouldShowSelectedColorChipOnly={shouldShowSelectedColorChipOnly}
+      type='button'
+      $chipColor={chipColor}
+      onClick={handleOnClick}
+    >
       <S.ImageBox $isSelected={isSelected}>
         <S.CheckImage alt='색상 선택완료 표시 아이콘' sizes='100vw' fill src={checkedIcon} />
       </S.ImageBox>
@@ -50,14 +68,50 @@ const ColorChip = ({ chipColor, onClick, selected }: ColorChipProps) => {
 
 export default ColorChip;
 
+const display = css<Omit<StyledSelectedButtonProps, '$chipColor'>>`
+  ${({ $isSelected, $shouldShowSelectedColorChipOnly }) => {
+    if (!$shouldShowSelectedColorChipOnly) {
+      return css`
+        display: flex;
+      `;
+    }
+
+    if ($shouldShowSelectedColorChipOnly === true) {
+      return css`
+        display: ${$isSelected ? 'flex' : 'none'};
+      `;
+    }
+
+    if ($isSelected) {
+      return css`
+        display: flex;
+      `;
+    }
+
+    if (!$isSelected) {
+      return css`
+        display: ${$shouldShowSelectedColorChipOnly.onMobile ? 'none' : 'flex'};
+
+        @media ${mediaBreakpoint.tablet} {
+          display: ${$shouldShowSelectedColorChipOnly.onTablet ? 'none' : 'flex'};
+        }
+
+        @media ${mediaBreakpoint.pc} {
+          display: ${$shouldShowSelectedColorChipOnly.onPc ? 'none' : 'flex'};
+        }
+      `;
+    }
+  }};
+`;
+
 const S = {
-  SelectButton: styled.button<{ $chipColor: Color; $isSelected?: boolean }>`
+  SelectButton: styled.button<StyledSelectedButtonProps>`
     width: 2.8rem;
     height: 2.8rem;
     padding: 0.3rem;
     border: none;
 
-    display: ${({ $isSelected }) => ($isSelected ? 'flex' : 'none')};
+    ${display}
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
@@ -68,14 +122,8 @@ const S = {
     cursor: pointer;
 
     @media ${mediaBreakpoint.tablet} {
-      display: flex;
-
       width: 3rem;
       height: 3rem;
-    }
-
-    @media ${mediaBreakpoint.pc} {
-      display: flex;
     }
   `,
 

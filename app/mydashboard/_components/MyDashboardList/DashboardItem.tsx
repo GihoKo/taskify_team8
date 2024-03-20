@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -5,26 +7,20 @@ import crownIcon from '@public/images/icons/crown-filledYellow-FDD446-w16-h12.sv
 import rightArrowIcon from '@public/images/icons/right-arrow-filled-black-333236-w18-h18.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-interface DashboardItemProps {
-  myDashboard: boolean;
-  Name: string;
-  color: string;
-  onClick: () => void;
-}
+import { Dashboard } from '../apis/api';
 
-// @ToDo 상하 정렬 수정해야할듯
-// @ToDo 나중에 데이터 바인딩 시 props, 타입 변경 해야함
-export default function DashboardItem({ myDashboard, Name, color, onClick }: DashboardItemProps) {
-  // 상태로 왕관 아이콘 관리 예정
-  // const [myDashboard, setMyDashboard] = useState(true);
+type DashboardItemType = Pick<Dashboard, 'title' | 'color' | 'createdByMe'>;
 
+interface DashboardItemProps extends DashboardItemType {}
+
+export default function DashboardItem({ title, color, createdByMe }: DashboardItemProps) {
   return (
-    <S.Button onClick={onClick}>
+    <S.Button onClick={() => {}}>
       <S.NameWrapper>
         <S.Circle $color={color} />
-        <S.Name>{Name}</S.Name>
+        <S.Title>{title}</S.Title>
         <S.CrownImageWrapper>
-          {myDashboard ? <Image fill src={crownIcon} alt='왕관 이미지' /> : null}
+          {createdByMe ? <Image fill src={crownIcon} alt='왕관 이미지' /> : null}
         </S.CrownImageWrapper>
       </S.NameWrapper>
       <Image src={rightArrowIcon} alt='오른쪽 화살표 이미지' width={18} height={18} />
@@ -87,7 +83,7 @@ const S = {
     }
   `,
 
-  Name: styled.span`
+  Title: styled.span`
     color: var(--black-black_333236, #333236);
     font-size: 1.4rem;
     font-weight: 600;
