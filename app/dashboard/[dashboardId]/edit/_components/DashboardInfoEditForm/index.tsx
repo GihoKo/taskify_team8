@@ -1,6 +1,6 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -9,27 +9,72 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColorSelectList from '@components/molecules/ColorSelectList';
 
+import { useFormOnSubmit } from '@hooks/useFormOnSubmit';
+
+import { useEditDashboardInfo } from '../../_hooks/useEditDashboardInfo.query';
+import { useGetDashboardDetailInfo } from '../../_hooks/useGetDashboardDetailInfo.query';
 import BaseButton from '../BaseButton';
 import InputWithLabel from '../InputWithLabel';
 
-type DashboardInfoEditFormProps = PropsWithChildren;
+type DashboardInfoEditFormProps = PropsWithChildren<{ dashboardId: number }>;
+type DashboardFormInputs = {
+  dashboardName: string;
+};
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const DashboardInfoEditForm = ({ children }: DashboardInfoEditFormProps) => {
+const DashboardInfoEditForm = ({ dashboardId }: DashboardInfoEditFormProps) => {
+  const { data, refetch } = useGetDashboardDetailInfo(dashboardId);
+  const [dashboardInfo, setDashboardInfo] = useState(data);
+  const [selectedColor, setSelectedColor] = useState(data?.color);
+  const { mutate, isSuccess } = useEditDashboardInfo();
+
+  const { register, handleSubmit } = useFormOnSubmit<DashboardFormInputs>({
+    defaultValues: {
+      dashboardName: dashboardInfo?.title || '',
+    },
+    onSubmit: async (inputs) => {
+      console.log(inputs);
+      mutate({ color: selectedColor || '', title: inputs.dashboardName, dashboardId });
+
+      if (isSuccess) {
+        refetch();
+      }
+    },
+  });
+
+  useEffect(() => {
+    setDashboardInfo(data);
+    setSelectedColor(data?.color);
+  }, [data]);
+
   return (
-    <S.Form>
+    <S.Form onSubmit={handleSubmit}>
       <S.ContentsArea>
         <S.FormHeader>
-          <S.DashboardName>비브리지</S.DashboardName>
+          <S.DashboardName>{dashboardInfo?.title}</S.DashboardName>
           <ColorSelectList shouldShowSelectedColorChipOnly={{ onMobile: true, onTablet: false, onPc: false }}>
             <ColorSelectList.Container>
               {CHIP_COLOR_LIST.map((color) => (
-                <ColorSelectList.ColorChip key={color} chipColor={color} selected={color === 'rgba(118, 13, 222, 1)'} />
+                // <ColorSelectList.ColorChip key={color} chipColor={color} selected={color === 'rgba(118, 13, 222, 1)'} />
+                <ColorSelectList.ColorChip
+                  onClick={({ selectedColor }) => setSelectedColor(selectedColor)}
+                  key={color}
+                  chipColor={color}
+                  selected={color === dashboardInfo?.color}
+                />
               ))}
             </ColorSelectList.Container>
           </ColorSelectList>
         </S.FormHeader>
-        <InputWithLabel>대시보드 이름</InputWithLabel>
+        <InputWithLabel
+          {...register('dashboardName', {
+            required: {
+              value: true,
+              message: '대시보드 이름을 입력해주세요.',
+            },
+          })}
+        >
+          대시보드 이름
+        </InputWithLabel>
       </S.ContentsArea>
       <S.SubmitButton type='submit'>변경</S.SubmitButton>
     </S.Form>

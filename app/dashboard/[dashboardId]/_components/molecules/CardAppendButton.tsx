@@ -35,7 +35,7 @@ const S = {
 
     position: sticky;
     top: 0;
-    z-index: ${({ theme }) => theme.zIndex.modal};
+    z-index: ${({ theme }) => theme.zIndex.floatingButton};
 
     @media ${mediaBreakpoint.tablet} {
       height: 4rem;
