@@ -57,7 +57,7 @@ function SignUp() {
   const handleSubmits = async (data: { email: string; nickname: string; password: string }) => {
     try {
       if (isChecked && !emailError && !passwordCheckError && !nicknameError) {
-        const response = await axios.post('users', data);
+        const response = await axios.post('/users', data);
 
         if (response.status === 201) {
           setShowSuccessModal(true);

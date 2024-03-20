@@ -2,10 +2,11 @@
 
 import { MutableRefObject, useEffect, useRef } from 'react';
 
-import { useModalListDispatch } from './context/ModalsContext';
+import { useModalListDispatch } from './context/ModalListContext';
 import {
   CloseModal,
   ModalComponent,
+  ModalComponentHasAllRequiredProps,
   OpenModalImpl,
   OpenModalOptions,
   OpenModalWithModalRef,
@@ -55,18 +56,27 @@ export const useModalListWithoutRef = () => {
  * };
  * ```
  */
-export const useModalList = <MC extends ModalComponent, T extends HTMLElement>() => {
+export const useModalList = <T extends HTMLElement>() => {
   const { openModalImpl, closeModal } = useModalListImpl();
 
   const modalMapRef = useRef<
-    Map<MutableRefObject<T | null> | null, { ModalComponent: MC; options?: OpenModalOptions }>
+    Map<
+      MutableRefObject<T | null> | null,
+      { ModalComponent: ModalComponentHasAllRequiredProps<ModalComponent>; options?: OpenModalOptions }
+    >
   >(new Map());
 
   const openModal: OpenModalWithModalRef = (ModalComponent, props, options) => {
     openModalImpl(ModalComponent, props);
 
     if (typeof props === 'object' && props !== null && props.modalRef) {
-      modalMapRef.current.set(props.modalRef, { ModalComponent: ModalComponent as unknown as MC, options });
+      // 이미 Map에 먼저 저장된 props.modalRef가 null일 때, 또 다른 props.modalRef가 null인 ModalComponent가 들어와서 기존 null에 매핑되어 있던 ModalComponent가 대체되어도 상관없음.
+      // modalMapRef.current는 어차피 매핑 키로 들어오는 props.modalRef가 null이면, 매핑된 모달이 교체되든 말든 mousedown으로 닫을 필요가 없어지는 컴포넌트들로 취급할 것임.
+      // useEffect안의 ref 조건문이 그 역할을 수행하는 부분임.
+      modalMapRef.current.set(props.modalRef as MutableRefObject<T | null> | null, {
+        ModalComponent,
+        options,
+      });
     }
   };
 

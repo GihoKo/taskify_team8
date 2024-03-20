@@ -2,7 +2,7 @@ import { Inter } from 'next/font/google';
 
 import type {} from 'styled-components/cssprop';
 
-import ClientThemeProvider from '@/providers/ClientThemeProvider';
+import ClientProvider from '@/providers/ClientProvider';
 
 import { Modal, ModalProvider } from '@hooks/use-modal';
 
@@ -23,15 +23,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='ko'>
       <body className={inter.className}>
-        <ClientThemeProvider>
+        <ClientProvider>
           <ModalProvider>
-            {children}
+            <div id='root'>{children}</div>
             <div id='modal' />
             <Modal />
           </ModalProvider>
-        </ClientThemeProvider>
+        </ClientProvider>
       </body>
     </html>
   );

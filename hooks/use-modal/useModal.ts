@@ -23,7 +23,7 @@ export const useModal = () => {
 
   const openModal = <MC extends ModalComponent>(
     Component: ModalComponentHasAllRequiredProps<MC>,
-    props?: ExposedModalPropsWithoutModalRef<MC>,
+    props?: ExposedModalPropsWithoutModalRef<MC> | null,
     options?: OpenModalOptions,
   ) => {
     open({ ModalComponent: Component, props, options });

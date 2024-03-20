@@ -11,6 +11,8 @@
       "@constants/*": ["./constants/*"],
       "@store/*": ["./store/*"],
       "@public/*": ["./public/*"],
+      "@queries/*": ["./queries/*"],
+      "@lib/*": ["./lib/*"],
       "@/*": ["./*"]
     }
   }

@@ -1,12 +1,10 @@
 'use client';
 
-import { ButtonHTMLAttributes } from 'react';
-
 import AddBox from '@public/images/icons/plus-box-unfilled-w20-h20.svg?component';
 
-import ButtonWithIcon from '../atoms/ButtonWithIcon';
+import ButtonWithIcon, { ButtonWithIconProps } from '../atoms/ButtonWithIcon';
 
-type InviteButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type InviteButtonProps = Omit<ButtonWithIconProps, 'href'>;
 
 const InviteButton = (props: InviteButtonProps) => {
   return (
