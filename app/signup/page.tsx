@@ -3,12 +3,11 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
-
-import axios from '@apis/axios';
 
 import Input from '@components/molecules/Input';
 

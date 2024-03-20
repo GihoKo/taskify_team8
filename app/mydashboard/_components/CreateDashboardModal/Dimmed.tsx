@@ -2,11 +2,11 @@
 
 import styled from 'styled-components';
 
-interface DimProps {
+interface DimmedProps {
   children: React.ReactNode;
 }
 
-export default function Dim({ children }: DimProps) {
+export default function Dimmed({ children }: DimmedProps) {
   return <S.Wrapper>{children}</S.Wrapper>;
 }
 

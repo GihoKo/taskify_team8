@@ -5,8 +5,8 @@ import { getDashboardList } from '@apis/dashboards/getDashboardList';
 import SideBar from '@components/organisms/SideBar';
 
 import InvitationList from './_components/InvitationList';
+import Main from './_components/Main';
 import MyDashboardList from './_components/MyDashboardList';
-import Main from './Main';
 import ServerComponent from './ServerComponent';
 import DashboardNav from '../../components/organisms/DashboardNav';
 
