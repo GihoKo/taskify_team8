@@ -47,7 +47,7 @@ const ColorChip = ({ chipColor, onClick, selected }: ColorChipProps) => {
     if (selected) {
       setSelectedColor(chipColor);
     }
-  }, []);
+  }, [selected]);
 
   const isSelected = selectedColor === chipColor;
 

@@ -16,7 +16,11 @@ export const axiosToken = axios.create({
 // 요청 인터셉터를 추가하여 모든 요청에 토큰을 포함시킴
 axiosToken.interceptors.request.use(
   async (config) => {
-    const accessToken = getAccessToken();
+    let accessToken;
+
+    if (typeof window !== 'undefined') {
+      accessToken = getAccessToken();
+    }
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;

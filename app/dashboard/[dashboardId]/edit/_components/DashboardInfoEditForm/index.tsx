@@ -22,10 +22,10 @@ type DashboardFormInputs = {
 };
 
 const DashboardInfoEditForm = ({ dashboardId }: DashboardInfoEditFormProps) => {
-  const { data, refetch } = useGetDashboardDetailInfo(dashboardId);
+  const { data, refetch, isFetched, isSuccess } = useGetDashboardDetailInfo(dashboardId);
   const [dashboardInfo, setDashboardInfo] = useState(data);
   const [selectedColor, setSelectedColor] = useState(data?.color);
-  const { mutate, isSuccess } = useEditDashboardInfo();
+  const { mutate, isSuccess: isSuccessbyMutate } = useEditDashboardInfo();
 
   const { register, handleSubmit } = useFormOnSubmit<DashboardFormInputs>({
     defaultValues: {
@@ -35,16 +35,19 @@ const DashboardInfoEditForm = ({ dashboardId }: DashboardInfoEditFormProps) => {
       console.log(inputs);
       mutate({ color: selectedColor || '', title: inputs.dashboardName, dashboardId });
 
-      if (isSuccess) {
+      if (isSuccessbyMutate) {
         refetch();
       }
     },
   });
 
   useEffect(() => {
-    setDashboardInfo(data);
-    setSelectedColor(data?.color);
-  }, [data]);
+    if (isFetched && isSuccess) {
+      setDashboardInfo(data);
+      setSelectedColor(data.color);
+      console.log(data?.color);
+    }
+  }, [data, isFetched, isSuccess]);
 
   return (
     <S.Form onSubmit={handleSubmit}>
@@ -54,7 +57,6 @@ const DashboardInfoEditForm = ({ dashboardId }: DashboardInfoEditFormProps) => {
           <ColorSelectList shouldShowSelectedColorChipOnly={{ onMobile: true, onTablet: false, onPc: false }}>
             <ColorSelectList.Container>
               {CHIP_COLOR_LIST.map((color) => (
-                // <ColorSelectList.ColorChip key={color} chipColor={color} selected={color === 'rgba(118, 13, 222, 1)'} />
                 <ColorSelectList.ColorChip
                   onClick={({ selectedColor }) => setSelectedColor(selectedColor)}
                   key={color}

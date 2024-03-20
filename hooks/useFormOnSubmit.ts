@@ -1,3 +1,5 @@
+'use client';
+
 import { FieldValues, useForm, UseFormProps } from 'react-hook-form';
 
 interface UseFormOnSubmitProps<T extends FieldValues> extends UseFormProps<T> {

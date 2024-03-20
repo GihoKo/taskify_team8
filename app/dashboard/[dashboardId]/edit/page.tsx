@@ -17,7 +17,6 @@ const DashboardEditPage = ({ params }: { params: { dashboardId: string } }) => {
   return (
     <ContentsArea>
       <ArrowLeftIconButton>돌아가기</ArrowLeftIconButton>
-      {/* <HydrationBoundaryComponent FetchQueryOptions={{ queryKey: dashboardKeys.dashboardDetail(5023) }}> */}
       <HydrationBoundaryComponent FetchQueryOptions={dashboardQueryOptions.dashboardDetail(dashboardId)}>
         <DashboardInfoEditForm dashboardId={dashboardId} />
       </HydrationBoundaryComponent>

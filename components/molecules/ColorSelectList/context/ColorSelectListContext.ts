@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, Dispatch, SetStateAction } from 'react';
 
 import { ResponsiveBooleanUtility } from '@interface/style';

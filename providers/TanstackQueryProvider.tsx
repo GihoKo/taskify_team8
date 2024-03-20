@@ -49,7 +49,7 @@ import { getQueryClient } from '@utils/tanstack-query/getQueryClient';
 type ProviderProps = PropsWithChildren;
 
 // @see https://medium.com/jumpit/next-js-13-migration-from-jumpit-66e7493d0f17
-const queryClient = getQueryClient();
+// const queryClient = getQueryClient();
 
 export default function TanstackQueryProviders({ children }: ProviderProps) {
   // NOTE: Avoid useState when initializing the query client if you don't
@@ -60,6 +60,8 @@ export default function TanstackQueryProviders({ children }: ProviderProps) {
 
   // const [queryClient] = useState(() => new QueryClient());
   // const [queryClient] = useState(makeQueryClient);
+
+  const queryClient = getQueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
