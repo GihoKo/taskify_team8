@@ -1,15 +1,20 @@
 'use client';
 
-import { ButtonHTMLAttributes } from 'react';
+import { useParams } from 'next/navigation';
 
-import ButtonWithIcon from '../atoms/ButtonWithIcon';
+import ButtonWithIcon, { ButtonWithIconProps } from '../atoms/ButtonWithIcon';
 import Cogwheel from '../atoms/Cogwheel';
 
-type ManageButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+const ManageButton = (props: ButtonWithIconProps) => {
+  const { dashboardId } = useParams<{ dashboardId: string }>();
 
-const ManageButton = (props: ManageButtonProps) => {
   return (
-    <ButtonWithIcon Icon={<Cogwheel as='div' fixedSize='2rem' />} {...props}>
+    <ButtonWithIcon
+      as='a'
+      href={`/dashboard/${dashboardId}/edit`}
+      Icon={<Cogwheel as='div' fixedSize='2rem' />}
+      {...props}
+    >
       관리
     </ButtonWithIcon>
   );

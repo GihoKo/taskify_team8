@@ -13,6 +13,8 @@ export default Page;
 
 const S = {
   Page: styled.div`
+    display: flex;
+
     min-width: fit-content;
     width: 100%;
     min-height: 100vh;

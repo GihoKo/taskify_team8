@@ -21,6 +21,7 @@ const S = {
     width: 100%;
     height: 3.2rem;
     padding: 0;
+    flex-shrink: 0;
 
     display: flex;
     justify-content: center;
@@ -31,6 +32,10 @@ const S = {
     background: ${({ theme }) => theme.color.white_FFFFFF};
 
     cursor: pointer;
+
+    position: sticky;
+    top: 0;
+    z-index: ${({ theme }) => theme.zIndex.floatingButton};
 
     @media ${mediaBreakpoint.tablet} {
       height: 4rem;

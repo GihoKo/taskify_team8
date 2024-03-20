@@ -5,7 +5,7 @@
   font-size: 62.5%;
   /* 1rem = 10px */
   --root-z-index: 1;
-  --modal-z-index: 2;
+  --modal-z-index: 4;
 }
 
 * {
@@ -16,6 +16,17 @@ html,
 body {
   min-height: 100vh;
   height: fit-content;
+  overflow-x: auto;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  display: none;
 }
 
 #root {
