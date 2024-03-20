@@ -41,7 +41,7 @@ const ModalList = () => {
 
   return (
     <>
-      {modalList.length > 0 && (
+      {/* {modalList.length > 0 && (
         <PortalContainer>
           {modalList.map((modal) => {
             const { ModalComponent, props } = modal;
@@ -56,8 +56,23 @@ const ModalList = () => {
               />
             );
           })}
-        </PortalContainer>
-      )}
+        </PortalContainer> */}
+
+      <PortalContainer>
+        {modalList.map((modal) => {
+          const { ModalComponent, props } = modal;
+
+          return (
+            <ModalComponent
+              key={ModalComponent.name}
+              modalRef={props?.modalRef || null}
+              submitModal={onSubmitModal({ onSubmit: props?.onSubmit, ModalComponent })}
+              closeModal={onCloseModal({ ModalComponent })}
+              {...props}
+            />
+          );
+        })}
+      </PortalContainer>
     </>
   );
 };

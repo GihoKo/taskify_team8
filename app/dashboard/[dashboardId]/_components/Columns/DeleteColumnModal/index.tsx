@@ -6,19 +6,34 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColumnButton from '../commons/ColumnButton';
 import ColumnButtonsWrap from '../commons/ColumnButtonWrap';
-import ModalDimmed from '../commons/ModalDimmed';
 
-export default function DeleteColumnModal() {
+interface DeleteColumnModalProps {
+  isModalOpen: boolean;
+  toggleModal: () => void;
+  modalRef: React.MutableRefObject<HTMLElement | null>;
+}
+
+export default function DeleteColumnModal({ isModalOpen, modalRef, toggleModal }: DeleteColumnModalProps) {
+  const handleCloseModal = () => {
+    if (isModalOpen) {
+      toggleModal();
+    }
+  };
+
   return (
-    <ModalDimmed>
-      <S.DeleteColumnModalBox>
-        <S.DeleteColumnMessage>컬럼의 모든 카드를 삭제하시겠습니까?</S.DeleteColumnMessage>
-        <ColumnButtonsWrap>
-          <ColumnButton>취소</ColumnButton>
-          <ColumnButton>삭제</ColumnButton>
-        </ColumnButtonsWrap>
-      </S.DeleteColumnModalBox>
-    </ModalDimmed>
+    <S.DeleteColumnModalBox
+      ref={(node) => {
+        if (modalRef) {
+          modalRef.current = node;
+        }
+      }}
+    >
+      <S.DeleteColumnMessage>컬럼의 모든 카드를 삭제하시겠습니까?</S.DeleteColumnMessage>
+      <ColumnButtonsWrap>
+        <ColumnButton onClick={handleCloseModal}>취소</ColumnButton>
+        <ColumnButton>삭제</ColumnButton>
+      </ColumnButtonsWrap>
+    </S.DeleteColumnModalBox>
   );
 }
 
@@ -30,7 +45,6 @@ const S = {
     width: 32.7rem;
     height: 22rem;
     padding: 2.8rem 2rem;
-    z-index: 999;
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.color.white_FFFFFF};
 
