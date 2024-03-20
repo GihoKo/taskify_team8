@@ -1,14 +1,39 @@
+import { useEffect, useState } from 'react';
+
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
+import { getFirstDashboard } from '@/app/mydashboard/_components/apis/api';
 import LogoSvg from '@public/images/logos/logo-small-unfilled-w23-h37.svg?component';
 import LogoTextSvg from '@public/images/logos/taskify-text-small-unfilled-w80-h22.svg?component';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import SignButton from '../commons/SIgnButton';
-import { handleGotoSignInButtonClick, handleGotoSignUpButtonClick } from '../mock';
 
 export default function Navbar() {
+  const router = useRouter();
+  // eslint-disable-next-line
+  const [isLogin, setIsLogin] = useState(true);
+
+  // 로그인 상태면 첫번째 대시보드로 이동
+  useEffect(() => {
+    (async () => {
+      if (isLogin) {
+        const firstDashboardId = await getFirstDashboard();
+        router.push(`/dashboard/${firstDashboardId}`);
+      }
+    })();
+  });
+
+  const handleGotoLogInButtonClick = () => {
+    router.push('/login');
+  };
+
+  const handleGotoSignUpButtonClick = () => {
+    router.push('/signup');
+  };
+
   return (
     <S.Navbar>
       <S.Logo href='/'>
@@ -16,7 +41,7 @@ export default function Navbar() {
         <S.LogoText />
       </S.Logo>
       <S.ButtonWrapper>
-        <SignButton onClick={handleGotoSignInButtonClick}>로그인</SignButton>
+        <SignButton onClick={handleGotoLogInButtonClick}>로그인</SignButton>
         <SignButton onClick={handleGotoSignUpButtonClick}>회원가입</SignButton>
       </S.ButtonWrapper>
     </S.Navbar>
