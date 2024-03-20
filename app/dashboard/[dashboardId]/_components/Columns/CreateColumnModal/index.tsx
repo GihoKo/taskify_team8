@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
@@ -7,16 +9,18 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import ColumnButton from '../commons/ColumnButton';
 import ColumnButtonsWrap from '../commons/ColumnButtonWrap';
 import ColumnInput from '../commons/ColumnInput';
-import CreateModalTitle from '../commons/ColumnModalTitile';
+import CreateModalTitle from '../commons/ColumnModalTitle';
 
 export default function CreateColumnModal() {
+  const [inputValue, setInputValue] = useState('');
+
   return (
     <S.CreateColumnBox>
       <CreateModalTitle title='새 컬럼 생성' />
-      <ColumnInput />
+      <ColumnInput inputValue={inputValue} onChange={setInputValue} placeholder='컬럼 제목을 입력해주세요' />
       <ColumnButtonsWrap>
-        <ColumnButton text='취소' />
-        <ColumnButton text='생성' />
+        <ColumnButton>취소</ColumnButton>
+        <ColumnButton>생성</ColumnButton>
       </ColumnButtonsWrap>
     </S.CreateColumnBox>
   );

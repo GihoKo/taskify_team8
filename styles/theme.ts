@@ -1,3 +1,5 @@
+import { zIndex } from './z-index';
+
 const palette = {
   color: {
     black_000000: '#000000',
@@ -28,6 +30,7 @@ const palette = {
 
     purple_760DDE: '#760DDE',
   },
+  zIndex,
 } as const;
 
 export type Palette = typeof palette;
