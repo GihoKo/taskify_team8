@@ -21,7 +21,7 @@ interface ColorChipProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, '
   /**
    * custom onClick handler
    */
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: ({ event, selectedColor }: { event?: MouseEvent<HTMLButtonElement>; selectedColor: Color }) => void;
   /**
    * chip에 부여되는 색상
    */
@@ -39,7 +39,7 @@ const ColorChip = ({ chipColor, onClick, selected }: ColorChipProps) => {
     setSelectedColor(chipColor);
 
     if (typeof onClick === 'function') {
-      onClick(event);
+      onClick({ event, selectedColor: chipColor });
     }
   };
 
