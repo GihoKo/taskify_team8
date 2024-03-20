@@ -25,6 +25,14 @@ export const getDashboardList = async (currentPage: number) => {
   return data;
 };
 
+export const getFirstDashboard = async () => {
+  const { data } = await instanceAddedAccessToken.get<DashboardList>(
+    `/dashboards?navigationMethod=infiniteScroll&size=1`,
+  );
+
+  return data.dashboards[0].id;
+};
+
 export interface Inviter {
   nickname: string;
   email: string;
