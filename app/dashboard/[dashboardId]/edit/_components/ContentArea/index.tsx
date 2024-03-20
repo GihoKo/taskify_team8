@@ -20,7 +20,9 @@ const S = {
     width: 100%;
     min-width: 30.8rem;
     /* height: 100%; */
-    height: calc(100% - ${dashboardNavbarHeight.onMobile});
+    /* height: calc(100% - ${dashboardNavbarHeight.onMobile}); */
+    margin-top: ${dashboardNavbarHeight.onMobile};
+    height: 100%;
     flex-shrink: 0;
 
     display: flex;
@@ -30,12 +32,14 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       padding: 2rem 2rem 4.8rem;
-      height: calc(100% - ${dashboardNavbarHeight.onTablet});
+      /* height: calc(100% - ${dashboardNavbarHeight.onTablet}); */
+      margin-top: ${dashboardNavbarHeight.onTablet};
     }
 
     @media ${mediaBreakpoint.pc} {
       max-width: 62rem;
-      height: calc(100% - ${dashboardNavbarHeight.onPc});
+      /* height: calc(100% - ${dashboardNavbarHeight.onPc}); */
+      margin-top: ${dashboardNavbarHeight.onPc};
     }
   `,
 };

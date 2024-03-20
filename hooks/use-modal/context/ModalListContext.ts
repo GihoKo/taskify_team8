@@ -11,7 +11,7 @@ export const ModalListStateContext = createContext<TModalListStateContext>([]);
 export const useModalListDispatch = () => {
   const context = useContext(ModalListDispatchContext);
 
-  if (context === undefined) throw new Error('useModalsDispatch should be within ModalProvider');
+  if (context === undefined) throw new Error('useModalListDispatch should be within ModalListProvider');
 
   return context;
 };

@@ -1,4 +1,6 @@
 export const zIndex = {
   root: 1,
-  modal: 2,
+  floatingButton: 2,
+  nav: 3,
+  modal: 4,
 } as const;
