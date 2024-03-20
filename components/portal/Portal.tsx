@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 type TPotalProps = PropsWithChildren;
 
 const Portal = ({ children }: TPotalProps) => {
-  return ReactDOM.createPortal(children, document.getElementById('portal')!);
+  return ReactDOM.createPortal(children, document.getElementById('modal')!);
 };
 
 const PortalContainer = ({ children }: TPotalProps) => {

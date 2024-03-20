@@ -1,6 +1,7 @@
 import { ComponentProps, ComponentType, MutableRefObject, PropsWithChildren } from 'react';
 
 // export type Obj = Record<string | number | symbol, any>;
+// export type Obj = Record<string, any>;
 export type Obj = Record<string, any>;
 
 type Key = keyof Obj;
@@ -12,8 +13,8 @@ export type ValidModalProps = ModalHandler & Obj;
 export type SetPickedPropToRequired<T extends Obj, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
 
 export interface OptionalModalProps {
-  closeModal?: (callback?: VoidFunction) => void;
-  submitModal?: (callback?: VoidFunction) => void;
+  closeModal?: () => void;
+  submitModal?: () => void;
   modalRef?: MutableRefObject<HTMLElement | null> | null;
 }
 
@@ -111,7 +112,16 @@ export type Without<T extends ModalComponentOrObj, K extends Key> = T extends Mo
   : T extends Obj
     ? Omit<T, K>
     : never;
+// export type Without<T extends ModalComponentOrObj, K extends Key> = T extends ModalComponent
+//   ? Omit<InternalModalComponentProps<T>, K>
+//   : T extends Obj
+//     ? Omit<T, K>
+//     : never;
+// export type Without<T extends ModalComponentOrObj, K extends Key> = T extends ModalComponent
+//   ? Omit<InternalModalComponentProps<T>, K>
+//   : Omit<T, K>;
 
+// TODO: Union type would be more simple than multiple Without types
 export type ModalComponentPropsWithoutModalRef<T extends ModalComponentOrObj> = Without<T, 'modalRef'>;
 
 export type ModalComponentPropsWithoutCloseModal<T extends ModalComponentOrObj> = Without<T, 'closeModal'>;
@@ -120,11 +130,27 @@ export type ModalComponentPropsWithoutSubmitModal<T extends ModalComponentOrObj>
 
 export type ExposedModalProps<T extends ModalComponent> = ModalComponentPropsWithoutSubmitModal<
   ModalComponentPropsWithoutCloseModal<T>
->;
+> &
+  ModalHandler;
 
 export type ExposedModalPropsWithoutModalRef<T extends ModalComponent> = ModalComponentPropsWithoutModalRef<
   ExposedModalProps<T>
->;
+> &
+  Omit<ModalHandler, 'modalRef'>;
+
+// type Check1 = ExposedModalProps<ModalComponentHasAllRequiredProps<ModalComponent>>;
+// type Check2 = ExposedModalPropsWithoutModalRef<ModalComponentHasAllRequiredProps<ModalComponent>>;
+
+// type CheckType = ValidModalProps;
+// const a: CheckType = {
+//   // normal behavior
+//   // it recommends default props as expected
+// }
+// type CheckType2 = Omit<ValidModalProps, 'closeModal'>;
+// const a: CheckType2 = {
+//   // abnormal behavior
+//   // it doesn't recommend default props
+// }
 
 // export type ExposedModalProps<T extends ModalComponent> = ModalComponentPropsWithoutSubmitModal<
 //   ModalComponentPropsWithoutCloseModal<T>
@@ -145,7 +171,7 @@ export type Open = <VMC extends ModalComponent>({
   props,
 }: {
   ModalComponent: VMC;
-  props?: ExposedModalProps<VMC> | ExposedModalPropsWithoutModalRef<VMC>;
+  props?: ExposedModalProps<VMC> | ExposedModalPropsWithoutModalRef<VMC> | null;
 }) => void;
 
 export type Close = <VMC extends ModalComponent>({ ModalComponent }: { ModalComponent: VMC }) => void;
@@ -160,16 +186,19 @@ export type TModalListStateContext = Array<{
   props?: ValidModalProps;
 }>;
 
-export type OpenModalImpl = <VMC extends ModalComponent>(ModalComponent: VMC, props?: ExposedModalProps<VMC>) => void;
+export type OpenModalImpl = <VMC extends ModalComponent>(
+  ModalComponent: VMC,
+  props?: ExposedModalProps<VMC> | null,
+) => void;
 
 export type OpenModalWithoutModalRef = <VMC extends ModalComponent>(
   ModalComponent: ModalComponentHasAllRequiredProps<VMC>,
-  props?: ExposedModalPropsWithoutModalRef<VMC>,
+  props?: ExposedModalPropsWithoutModalRef<VMC> | null,
 ) => void;
 
 export type OpenModalWithModalRef = <VMC extends ModalComponent>(
   ModalComponent: ModalComponentHasAllRequiredProps<VMC>,
-  props?: ExposedModalProps<VMC>,
+  props?: ExposedModalProps<VMC> | null,
   options?: OpenModalOptions,
 ) => void;
 
@@ -192,7 +221,7 @@ export type TModalDispatchContext = {
     options,
   }: {
     ModalComponent: VMC;
-    props?: ExposedModalPropsWithoutModalRef<VMC>;
+    props?: ExposedModalPropsWithoutModalRef<VMC> | null;
     options?: OpenModalOptions;
   }) => void;
   close: () => void;
