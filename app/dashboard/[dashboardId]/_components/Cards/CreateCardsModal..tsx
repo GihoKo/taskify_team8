@@ -90,12 +90,12 @@ const S = {
     background-color: ${({ theme }) => theme.color.white_FFFFFF};
     border-radius: 0.8rem;
     width: 32.7rem;
-    height: 76.6rem;
+    height: auto;
     padding: 2.8rem 2rem 2rem 2rem;
     @media ${mediaBreakpoint.tablet} {
       padding: 3.2rem 2.8rem 2.8rem 2.8rem;
       width: 50.6rem;
-      height: 90.7rem;
+      height: auto;
     }
   `,
 
