@@ -2,6 +2,7 @@
 
 import styled from 'styled-components';
 
+import { deleteColumn } from '@apis/columns/deleteColumn';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColumnButton from '../commons/ColumnButton';
@@ -11,9 +12,27 @@ interface DeleteColumnModalProps {
   isModalOpen: boolean;
   toggleModal: () => void;
   modalRef: React.MutableRefObject<HTMLElement | null>;
+  columnId: number;
+  submitModal: () => void;
 }
 
-export default function DeleteColumnModal({ isModalOpen, modalRef, toggleModal }: DeleteColumnModalProps) {
+export default function DeleteColumnModal({
+  isModalOpen,
+  modalRef,
+  toggleModal,
+  columnId,
+  submitModal,
+}: DeleteColumnModalProps) {
+  const removeColumn = async () => {
+    try {
+      const numberTypeColumndId = Number(columnId);
+      await deleteColumn(numberTypeColumndId);
+      submitModal();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleCloseModal = () => {
     if (isModalOpen) {
       toggleModal();
@@ -31,7 +50,7 @@ export default function DeleteColumnModal({ isModalOpen, modalRef, toggleModal }
       <S.DeleteColumnMessage>컬럼의 모든 카드를 삭제하시겠습니까?</S.DeleteColumnMessage>
       <ColumnButtonsWrap>
         <ColumnButton onClick={handleCloseModal}>취소</ColumnButton>
-        <ColumnButton>삭제</ColumnButton>
+        <ColumnButton onClick={removeColumn}>삭제</ColumnButton>
       </ColumnButtonsWrap>
     </S.DeleteColumnModalBox>
   );

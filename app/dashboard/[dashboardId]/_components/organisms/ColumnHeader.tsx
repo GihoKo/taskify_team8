@@ -1,5 +1,7 @@
 'use client';
 
+import { PropsWithChildren } from 'react';
+
 import styled from 'styled-components';
 
 import Cogwheel from '@/app/dashboard/_components/atoms/Cogwheel';
@@ -8,13 +10,15 @@ import useMdoal from '@hooks/use-modal';
 
 import ColumnProgressBar from '../molecules/ColumnProgressBar';
 
-const ColumnHeader = () => {
+type ColumnHeaderProps = PropsWithChildren<{ dashboardId: number }>;
+
+const ColumnHeader = ({ dashboardId }: ColumnHeaderProps) => {
   const { openModal } = useMdoal();
 
   const handleUpdateColumnClick = async () => {
     const UpdateColumnModal = await import('../Columns/UpdateColumnModal').then((module) => module.default);
 
-    openModal(UpdateColumnModal, { currentColumnTitle: 'Done' });
+    openModal(UpdateColumnModal, { dashboardId, currentColumnTitle: 'Done' });
   };
 
   return (

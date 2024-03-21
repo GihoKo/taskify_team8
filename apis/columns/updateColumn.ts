@@ -11,7 +11,7 @@ interface UpdateColumnResponse {
 }
 
 export const updateColumn = async (title: string, columnId: number) => {
-  const { data } = await axiosToken.put<UpdateColumnResponse>(`/columns${columnId}`, {
+  const { data } = await axiosToken.put<UpdateColumnResponse>(`/columns/${columnId}`, {
     title,
   });
 

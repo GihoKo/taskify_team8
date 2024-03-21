@@ -14,7 +14,7 @@ const DashboardPage = ({ params }: { params: { dashboardId: string } }) => {
       <ColumnContainerGroup>
         {[1, 2, 3].map((v) => (
           <ColumnContainer key={v}>
-            <ColumnHeader />
+            <ColumnHeader dashboardId={dashboardId} />
             <CardColumn>
               <CardAppendButton />
               <Card />
