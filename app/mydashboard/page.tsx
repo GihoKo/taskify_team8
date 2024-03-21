@@ -1,8 +1,8 @@
 import SideBar from '@components/organisms/SideBar';
 
 import InvitationList from './_components/InvitationList';
+import Main from './_components/Main/Main';
 import MyDashboardList from './_components/MyDashboardList';
-import Main from './Main';
 import DashboardNav from '../../components/organisms/DashboardNav';
 
 export default function MyDashboardPage() {

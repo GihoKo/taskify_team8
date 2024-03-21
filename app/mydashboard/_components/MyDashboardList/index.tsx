@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -15,8 +16,14 @@ import { Dashboard, getDashboardList } from '../apis/api';
 import { handleCreateDashboardClick } from '../mock/mock';
 
 export default function MyDashboardList() {
+  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>();
+
+  const { data, isSuccess } = useQuery({
+    queryKey: ['dashboard', 'dashboardList', currentPage],
+    queryFn: () => getDashboardList(currentPage),
+  });
 
   const handleNextDashboardPageClick = () => {
     setCurrentPage((prev) => prev + 1);
@@ -26,15 +33,13 @@ export default function MyDashboardList() {
     setCurrentPage((prev) => prev - 1);
   };
 
-  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   // 대시보드 리스트 조회
   useEffect(() => {
-    (async () => {
-      const { dashboards, totalCount } = await getDashboardList(currentPage);
-      setDashboards(dashboards);
-      setTotalPage(Math.ceil(totalCount / 5));
-    })();
-  }, [currentPage]);
+    if (isSuccess) {
+      setDashboards(data?.dashboards);
+      setTotalPage(Math.ceil(data.totalCount / 5));
+    }
+  }, [data, isSuccess, currentPage]);
 
   return (
     <S.Box>
