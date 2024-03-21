@@ -67,15 +67,17 @@ export default function SideBar() {
         <S.DashboardContainer>
           {dashboards.map((dashboard) => {
             return (
-              <S.DashboardItem key={dashboard.id}>
-                <ColoredDot color={dashboard.color} />
-                <S.DashboardName $isMyDashboard={dashboard.createdByMe}>{dashboard.title}</S.DashboardName>
-                {dashboard.createdByMe ? (
-                  <S.ImageWrapper>
-                    <Image src={crown} alt='왕관 이미지' fill />
-                  </S.ImageWrapper>
-                ) : null}
-              </S.DashboardItem>
+              <Link href={`/dashboard/${dashboard.id}`} key={dashboard.id} style={{ textDecoration: 'none' }}>
+                <S.DashboardItem>
+                  <ColoredDot color={dashboard.color} />
+                  <S.DashboardName $isMyDashboard={dashboard.createdByMe}>{dashboard.title}</S.DashboardName>
+                  {dashboard.createdByMe ? (
+                    <S.ImageWrapper>
+                      <Image src={crown} alt='왕관 이미지' fill />
+                    </S.ImageWrapper>
+                  ) : null}
+                </S.DashboardItem>
+              </Link>
             );
           })}
         </S.DashboardContainer>
