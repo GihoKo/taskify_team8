@@ -1,4 +1,4 @@
-import { getCardList, GetCarListParams } from '@apis/cards/getCardList';
+import { getCardList, GetCardListParams } from '@apis/cards/getCardList';
 
 export const cardsKeys = {
   masterKey: () => ['cards'] as const,
@@ -9,7 +9,7 @@ export const cardsQueryOptions = {
   masterKey: () => ({
     queryKey: cardsKeys.masterKey(),
   }),
-  cardList: ({ columnId, size }: GetCarListParams) => ({
+  cardList: ({ columnId, size }: GetCardListParams) => ({
     queryKey: cardsKeys.cardList(columnId),
     // 0 이면 null
     queryFn: ({ pageParam }: { pageParam: number }) => getCardList({ columnId, cursorId: pageParam || null, size }),
