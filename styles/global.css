@@ -5,7 +5,7 @@
   font-size: 62.5%;
   /* 1rem = 10px */
   --root-z-index: 1;
-  --modal-z-index: 4;
+  --modal-z-index: 5;
 }
 
 * {

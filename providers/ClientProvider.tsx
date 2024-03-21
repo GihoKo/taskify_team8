@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { palette } from '@styles/theme';
 
-import StyledComponentsRegistry from '@utils/styled-components/registry';
+import StyledComponentsRegistry from '@lib/styled-components/registry';
 
 import TanstackQueryProviders from './TanstackQueryProvider';
 

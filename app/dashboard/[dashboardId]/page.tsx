@@ -1,32 +1,35 @@
-import CardColumn from './_components/atoms/CardColumn';
-import ColumnContainer from './_components/atoms/ColumnContainer';
-import ColumnContainerGroup from './_components/atoms/ColumnContainerGroup';
-import CardAppendButton from './_components/molecules/CardAppendButton';
-import ColumnAppendButton from './_components/molecules/ColumnAppendButton';
-import Card from './_components/organisms/Card';
-import ColumnHeader from './_components/organisms/ColumnHeader';
+import HydrationBoundaryComponent from '@components/server/HydrationBoundaryComponent';
 
-const DashboardPage = ({ params }: { params: { dashboardId: string } }) => {
-  const dashboardId = Number(params.dashboardId);
+import ColumnContainer from './_components/atoms/ColumnContainer';
+import DashboardContentsArea from './_components/atoms/DashboardContentsArea';
+import ColumnContainerGroup from './_components/ColumContainerGroup';
+import ColumnAppendButton from './_components/molecules/ColumnAppendButton';
+import { prefetchColumnList } from './_utils/prefetchColumnList.query';
+
+export interface DashboardPageParams {
+  params: {
+    dashboardId: string;
+  };
+}
+
+const DashboardPage = ({ params }: DashboardPageParams) => {
+  const { dashboardId } = params;
+  const NumericDashboardId = Number(dashboardId);
 
   return (
     <>
-      <ColumnContainerGroup>
-        {[1, 2, 3].map((v) => (
-          <ColumnContainer key={v}>
-            <ColumnHeader dashboardId={dashboardId} />
-            <CardColumn>
-              <CardAppendButton />
-              <Card />
-              <Card />
-              <Card />
-            </CardColumn>
-          </ColumnContainer>
-        ))}
+      <DashboardContentsArea>
+        <HydrationBoundaryComponent
+          prefetchFunctionArray={[
+            (queryClient) => prefetchColumnList({ dashboardId: NumericDashboardId, queryClient }),
+          ]}
+        >
+          <ColumnContainerGroup dashboardId={NumericDashboardId} />
+        </HydrationBoundaryComponent>
         <ColumnContainer isLastColumn>
-          <ColumnAppendButton dashboardId={dashboardId} />
+          <ColumnAppendButton dashboardId={NumericDashboardId} />
         </ColumnContainer>
-      </ColumnContainerGroup>
+      </DashboardContentsArea>
     </>
   );
 };

@@ -16,29 +16,29 @@ import { axiosToken } from '@apis/instance/axiosToken';
 //   "totalCount": 0
 // }
 
-interface Member {
+export interface Member {
   id: number;
   userId: number;
   email: string;
   nickname: string;
-  profileImageUrl: string;
+  profileImageUrl?: string;
   createdAt: string | Date;
   updatedAt: string | Date;
   isOwner: boolean;
 }
 
-interface GetDashboardMemberListResponse {
+export interface GetDashboardMemberListResponse {
   members: Member[];
   totalCount: number;
 }
 
-interface GetDashboardMemberList {
+interface GetDashboardMemberListParams {
   page: number;
   size: number;
   dashboardId: number;
 }
 
-export const getDashboardMemberList = async ({ page, size, dashboardId }: GetDashboardMemberList) => {
+export const getDashboardMemberList = async ({ page, size, dashboardId }: GetDashboardMemberListParams) => {
   const response = await axiosToken.get<GetDashboardMemberListResponse>('/members', {
     params: {
       page,

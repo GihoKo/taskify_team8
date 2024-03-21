@@ -1,7 +1,5 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
-
 import styled from 'styled-components';
 
 import Cogwheel from '@/app/dashboard/_components/atoms/Cogwheel';
@@ -10,9 +8,13 @@ import useMdoal from '@hooks/use-modal';
 
 import ColumnProgressBar from '../molecules/ColumnProgressBar';
 
-type ColumnHeaderProps = PropsWithChildren<{ dashboardId: number }>;
+export interface ColumnHeaderProps {
+  dashboardId?: number;
+  columnId: number;
+  columnTitle: string;
+}
 
-const ColumnHeader = ({ dashboardId }: ColumnHeaderProps) => {
+const ColumnHeader = ({ columnId, columnTitle, dashboardId }: ColumnHeaderProps) => {
   const { openModal } = useMdoal();
 
   const handleUpdateColumnClick = async () => {
@@ -23,7 +25,7 @@ const ColumnHeader = ({ dashboardId }: ColumnHeaderProps) => {
 
   return (
     <S.Box>
-      <ColumnProgressBar />
+      <ColumnProgressBar columnTitle={columnTitle} columnId={columnId} />
       <Cogwheel onClick={handleUpdateColumnClick} />
     </S.Box>
   );
