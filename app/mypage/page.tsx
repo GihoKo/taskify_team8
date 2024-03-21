@@ -12,7 +12,7 @@ import axios from '@apis/axios';
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
 import DashboardNav from '@components/organisms/DashboardNav';
-import SideBar from '@components/organisms/SideBar';
+import SideBar from '@components/organisms/SideBar/SideBar';
 
 import useUserStore from '@store/user';
 
