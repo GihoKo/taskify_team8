@@ -1,11 +1,14 @@
 import SideBar from '@components/organisms/SideBar';
 import HydrationBoundaryComponent from '@components/server/HydrationBoundaryComponent';
 
-import { getDashboardList, getInitialInvitionList } from './_components/apis/api';
 import InvitationList from './_components/InvitationList';
 import Main from './_components/Main/Main';
 import MyDashboardList from './_components/MyDashboardList';
 import DashboardNav from '../../components/organisms/DashboardNav';
+import {
+  prefetchDashboardList,
+  prefetchInvitationList,
+} from '../dashboard/[dashboardId]/_utils/prefetchDashboardList.query';
 
 export default function MyDashboardPage() {
   return (
@@ -14,19 +17,11 @@ export default function MyDashboardPage() {
       <div style={{ backgroundColor: '#FAFAFA', flexGrow: 1 }}>
         <DashboardNav />
         <Main>
-          <HydrationBoundaryComponent
-            FetchQueryOptions={{
-              queryKey: ['dashboard', 'dashboardList', 1],
-              queryFn: () => getDashboardList(1),
-            }}
-          >
+          <HydrationBoundaryComponent prefetchFunctionArray={[(queryClient) => prefetchDashboardList({ queryClient })]}>
             <MyDashboardList />
           </HydrationBoundaryComponent>
           <HydrationBoundaryComponent
-            FetchQueryOptions={{
-              queryKey: ['invitation', 'invitationList'],
-              queryFn: () => getInitialInvitionList(),
-            }}
+            prefetchFunctionArray={[(queryClient) => prefetchInvitationList({ queryClient })]}
           >
             <InvitationList />
           </HydrationBoundaryComponent>
