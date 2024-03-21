@@ -16,6 +16,8 @@ export default function Input({ id, inputType, placeHolder }: CardsInputProps) {
   switch (inputType) {
     case 'textarea':
       return <S.CardsTextarea id={id} placeholder={placeHolder} />;
+    case 'datetime-local':
+      return <S.CardsInput type={inputType} id={id} placeholder={placeHolder} />;
     default:
       return <S.CardsInput id={id} placeholder={placeHolder} />;
   }
