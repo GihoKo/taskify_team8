@@ -1,5 +1,7 @@
 import SideBar from '@components/organisms/SideBar';
+import HydrationBoundaryComponent from '@components/server/HydrationBoundaryComponent';
 
+import { getDashboardList } from './_components/apis/api';
 import InvitationList from './_components/InvitationList';
 import Main from './_components/Main/Main';
 import MyDashboardList from './_components/MyDashboardList';
@@ -12,7 +14,14 @@ export default function MyDashboardPage() {
       <div style={{ backgroundColor: '#FAFAFA', flexGrow: 1 }}>
         <DashboardNav />
         <Main>
-          <MyDashboardList />
+          <HydrationBoundaryComponent
+            FetchQueryOptions={{
+              queryKey: ['dashboard', 'dashboardList', 1],
+              queryFn: () => getDashboardList(1),
+            }}
+          >
+            <MyDashboardList />
+          </HydrationBoundaryComponent>
           <InvitationList />
         </Main>
       </div>

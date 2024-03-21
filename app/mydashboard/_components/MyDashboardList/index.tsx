@@ -16,7 +16,6 @@ import { Dashboard, getDashboardList } from '../apis/api';
 import { handleCreateDashboardClick } from '../mock/mock';
 
 export default function MyDashboardList() {
-  const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>();
 
@@ -24,6 +23,7 @@ export default function MyDashboardList() {
     queryKey: ['dashboard', 'dashboardList', currentPage],
     queryFn: () => getDashboardList(currentPage),
   });
+  const [dashboards, setDashboards] = useState<Dashboard[]>(data?.dashboards || []);
 
   const handleNextDashboardPageClick = () => {
     setCurrentPage((prev) => prev + 1);
