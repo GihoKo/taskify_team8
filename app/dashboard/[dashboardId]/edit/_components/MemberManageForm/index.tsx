@@ -15,27 +15,26 @@ interface MemberManageFormProps {
   dashboardId: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MemberManageForm = ({ dashboardId }: MemberManageFormProps) => {
   const sizePerPage = 4;
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isFetched, isSuccess, hasNextPage, hasPreviousPage, fetchNextPage, fetchPreviousPage } =
+  const { data, isFetched, isSuccess, hasNextPage, hasPreviousPage, fetchNextPage, fetchPreviousPage, isPending } =
     useGetDashboardMemberList({ dashboardId, size: sizePerPage });
-  const [_memberList, setMemberList] = useState<Member[]>(data?.pages || []);
+  const [memberList, setMemberList] = useState<Member[]>(data?.pages || []);
 
   const handleNextPage = async () => {
     if (hasNextPage) {
-      await fetchNextPage();
-      setCurrentPage((prev) => prev + 1);
+      const result = await fetchNextPage();
+      result.isSuccess && setCurrentPage((prev) => prev + 1);
     }
   };
 
   const handlePreviousPage = async () => {
     if (hasPreviousPage) {
-      await fetchPreviousPage();
-      setCurrentPage((prev) => prev - 1);
+      const result = await fetchPreviousPage();
+      result.isSuccess && setCurrentPage((prev) => prev - 1);
     }
   };
 
@@ -45,23 +44,24 @@ const MemberManageForm = ({ dashboardId }: MemberManageFormProps) => {
     }
   }, [isFetched, isSuccess, data]);
 
+  const currentPageMemberList = memberList.slice((currentPage - 1) * sizePerPage, currentPage * sizePerPage);
+
   return (
     <S.Form>
       <S.FormHeader>
         <S.FormName>구성원</S.FormName>
         <PageTurner>
           <PageTurner.Wrapper>
-            {/* <PageTurner.CurrentPageDescriber currentPage={1} totalPages={1} /> */}
             <PageTurner.CurrentPageDescriber currentPage={currentPage} totalPages={data?.totalPages || 1} />
             <PageTurner.ButtonContainer>
-              <PageTurner.LeftButton onClick={handlePreviousPage} />
-              <PageTurner.RightButton onClick={handleNextPage} />
+              <PageTurner.LeftButton disabled={isPending} onClick={handlePreviousPage} />
+              <PageTurner.RightButton disabled={isPending} onClick={handleNextPage} />
             </PageTurner.ButtonContainer>
           </PageTurner.Wrapper>
         </PageTurner>
       </S.FormHeader>
       <S.ColumnName>이름</S.ColumnName>
-      <MemberListTable />
+      <MemberListTable memberList={currentPageMemberList} />
     </S.Form>
   );
 };

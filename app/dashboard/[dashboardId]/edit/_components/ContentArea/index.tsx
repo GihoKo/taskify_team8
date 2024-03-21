@@ -39,7 +39,8 @@ const S = {
     @media ${mediaBreakpoint.pc} {
       max-width: 62rem;
       /* height: calc(100% - ${dashboardNavbarHeight.onPc}); */
-      margin-top: ${dashboardNavbarHeight.onPc};
+      /* margin-top: ${dashboardNavbarHeight.onPc}; */
+      margin-top: 0;
     }
   `,
 };

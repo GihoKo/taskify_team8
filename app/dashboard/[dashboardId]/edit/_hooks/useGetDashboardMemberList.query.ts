@@ -12,9 +12,9 @@ interface UseGetDashboardMemberListparams {
 // @see https://tanstack.com/query/latest/docs/framework/react/guides/infinite-queries#what-if-my-api-doesnt-return-a-cursor
 export const useGetDashboardMemberList = ({ dashboardId, size = 4 }: UseGetDashboardMemberListparams) => {
   return useInfiniteQuery({
-    ...membersQueryOptions.memberList({ dashboardId, size: 4 }),
-    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
-      if (lastPage.members.length < size) {
+    ...membersQueryOptions.memberList({ dashboardId, size }),
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      if (allPages.length >= lastPage.totalCount / size) {
         return undefined;
       }
 
@@ -27,7 +27,6 @@ export const useGetDashboardMemberList = ({ dashboardId, size = 4 }: UseGetDashb
 
       return firstPageParam - 1;
     },
-
     select: (data) => ({
       pages: data.pages.flatMap((page) => page.members),
       pageParams: data.pageParams,

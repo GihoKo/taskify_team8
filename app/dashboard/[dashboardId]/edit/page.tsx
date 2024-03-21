@@ -7,6 +7,7 @@ import DashboardInfoEditForm from './_components/DashboardInfoEditForm';
 import InviteeManageForm from './_components/InviteeManageForm';
 import MemberManageForm from './_components/MemberManageForm';
 import { prefetchDashboardDetail } from './_utils/prefetchDashboardDetail.query';
+import { prefetchDashboardInvitationList } from './_utils/prefetchDashboardInvitationList.query';
 import { prefetchDashboardMemberList } from './_utils/prefetchDashboardMemberList.query';
 import { DashboardPageParams } from '../page';
 
@@ -19,7 +20,7 @@ const DashboardEditPage = ({ params }: DashboardPageParams) => {
       <ArrowLeftIconButton>돌아가기</ArrowLeftIconButton>
       <HydrationBoundaryComponent
         prefetchFunctionArray={[
-          (queryClient) => prefetchDashboardDetail({ dashboardId: NumericDashboardId, queryClient }),
+          (queryClient) => prefetchDashboardDetail({ queryClient, dashboardId: NumericDashboardId }),
         ]}
       >
         <DashboardInfoEditForm dashboardId={NumericDashboardId} />
@@ -31,7 +32,13 @@ const DashboardEditPage = ({ params }: DashboardPageParams) => {
       >
         <MemberManageForm dashboardId={NumericDashboardId} />
       </HydrationBoundaryComponent>
-      <InviteeManageForm />
+      <HydrationBoundaryComponent
+        prefetchFunctionArray={[
+          (queryClient) => prefetchDashboardInvitationList({ queryClient, dashboardId: NumericDashboardId, size: 5 }),
+        ]}
+      >
+        <InviteeManageForm dashboardId={NumericDashboardId} />
+      </HydrationBoundaryComponent>
       <DashboardDeleteButton />
     </ContentsArea>
   );
