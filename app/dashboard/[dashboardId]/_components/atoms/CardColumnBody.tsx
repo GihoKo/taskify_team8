@@ -26,6 +26,7 @@ const CardColumnBody = ({ columnId }: CardColumnBodyProps) => {
   const { data, isFetched, isSuccess, isFetching, fetchNextPage, hasNextPage } = useGetCardListOnInfiniteScroll({
     columnId,
   });
+
   const [cardList, setCardList] = useState<ICard[]>(data?.pages.flatMap((page) => page) || []);
 
   useEffect(() => {
@@ -44,8 +45,6 @@ const CardColumnBody = ({ columnId }: CardColumnBodyProps) => {
     }
   }, [isIntersecting, isFetching, hasNextPage, fetchNextPage]);
 
-  console.log(cardList);
-
   return (
     <S.Container ref={rootRef}>
       <CardAppendButton />
@@ -55,14 +54,6 @@ const CardColumnBody = ({ columnId }: CardColumnBodyProps) => {
         })}
       <div ref={intersectionObserveTargetRef} />
     </S.Container>
-
-    // <S.Container ref={rootRef}>
-    //   <CardAppendButton />
-    //   {[1, 2, 3].map((v) => {
-    //     return <Card key={v} />;
-    //   })}
-    //   <div ref={intersectionObserveTargetRef} />
-    // </S.Container>
   );
 };
 
