@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
+import { Dashboard, getDashboardList } from '@apis/dashboards/getDashboardList';
 import createIcon from '@public/images/icons/add-filledViolet_5534DA-16w-16h.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
@@ -15,7 +16,6 @@ import PageNationButton from '@components/atoms/PageNationButton';
 import useModal from '@hooks/use-modal';
 
 import DashboardItem from './DashboardItem';
-import { Dashboard, getDashboardList } from '../apis/api';
 
 export default function MyDashboardList() {
   const [currentPage, setCurrentPage] = useState<number>(1);

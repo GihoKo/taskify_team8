@@ -8,14 +8,14 @@ import ColumnButton from '@/app/dashboard/[dashboardId]/_components/Columns/comm
 import ColumnButtonsWrap from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButtonWrap';
 import CreateModalTitle from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnModalTitile';
 import ModalDimmed from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ModalDimmed';
+import { axiosToken } from '@apis/instance/axiosToken';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColorSelectList from '@components/molecules/ColorSelectList';
 
 import { ModalComponentProps } from '@hooks/use-modal';
 
-import { instanceAddedAccessToken } from '../../app/mydashboard/_components/apis/instance';
-import { DASHBOARD_COLORS } from '../../app/mydashboard/_components/constants';
+import { DASHBOARD_COLORS } from '../../app/mydashboard/_constants';
 
 // eslint-disable-next-line
 export default function CreateDashboardModal({ closeModal, modalRef }: ModalComponentProps) {
@@ -32,7 +32,7 @@ export default function CreateDashboardModal({ closeModal, modalRef }: ModalComp
     }
 
     try {
-      const result = await instanceAddedAccessToken.post('/dashboards', {
+      const result = await axiosToken.post('/dashboards', {
         title: inputValue,
         color: selectedColor,
       });
