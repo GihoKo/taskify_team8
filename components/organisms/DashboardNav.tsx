@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+import { sidebarWidth } from '@styles/sidebarWidth';
 
 import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
 
@@ -86,11 +87,17 @@ export default DashboardNav;
 
 const S = {
   Wrapper: styled.nav<{ $pathname: string }>`
+    position: fixed;
+    top: 0;
+    z-index: ${({ theme }) => theme.zIndex.nav};
+    background: ${({ theme }) => theme.color.gray_FAFAFA};
+    backdrop-filter: blur(10px);
+
     display: flex;
     align-items: center;
     justify-content: ${({ $pathname }) => ($pathname === '/mydashboard' ? 'space-between' : 'flex-end')};
-    width: 100%;
     min-width: 30.8rem;
+    width: calc(100vw - ${sidebarWidth.onMobile});
     height: 6rem;
     flex-shrink: 0;
     border-bottom: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
@@ -99,14 +106,16 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       padding-inline: 4rem;
+      width: calc(100vw - ${sidebarWidth.onTablet});
       justify-content: ${({ $pathname }) => ($pathname === '/mydashboard' ? 'space-between' : 'flex-end')};
       height: 7rem;
     }
 
     @media ${mediaBreakpoint.pc} {
       padding-inline: 4rem;
-
+      width: 100%;
       justify-content: space-between;
+      position: static;
     }
   `,
 

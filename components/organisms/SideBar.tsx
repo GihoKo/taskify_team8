@@ -68,6 +68,10 @@ const S = {
   SideBarArea: styled.div`
     width: 6.7rem;
     border-right: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: ${({ theme }) => theme.zIndex.sidebar};
 
     @media ${mediaBreakpoint.tablet} {
       width: 16rem;
