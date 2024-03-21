@@ -7,13 +7,13 @@ import styled from 'styled-components';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import { dashboardNavbarHeight } from '@styles/navbarHeight';
 
-type ColumnContainerGroupProps = PropsWithChildren;
+type DashboardContentsAreaProps = PropsWithChildren;
 
-const ColumnContainerGroup = ({ children }: ColumnContainerGroupProps) => {
+const DashboardContentsArea = ({ children }: DashboardContentsAreaProps) => {
   return <S.Box>{children}</S.Box>;
 };
 
-export default ColumnContainerGroup;
+export default DashboardContentsArea;
 
 const S = {
   Box: styled.main`
@@ -37,6 +37,7 @@ const S = {
       flex-direction: row;
 
       width: fit-content;
+      padding-top: 0;
     }
   `,
 };

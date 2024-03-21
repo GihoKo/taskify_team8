@@ -13,7 +13,7 @@ import { axiosToken } from '@apis/instance/axiosToken';
 //   ]
 // }
 
-interface ColumnList {
+export interface ColumnList {
   id: number;
   title: string;
   teamId: string;
@@ -23,7 +23,7 @@ interface ColumnList {
 
 interface GetColumnListResponse {
   result: string;
-  data: ColumnList[] | null; // nullable true임.
+  data: ColumnList[]; // nullable true임. 근데 일단 null 빼둠.
 }
 
 export const getColumnList = async (dashboardId: number) => {

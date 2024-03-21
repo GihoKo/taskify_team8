@@ -8,7 +8,12 @@ import useMdoal from '@hooks/use-modal';
 
 import ColumnProgressBar from '../molecules/ColumnProgressBar';
 
-const ColumnHeader = () => {
+export interface ColumnHeaderProps {
+  columnId: number;
+  columnTitle: string;
+}
+
+const ColumnHeader = ({ columnId, columnTitle }: ColumnHeaderProps) => {
   const { openModal } = useMdoal();
 
   const handleUpdateColumnClick = async () => {
@@ -19,7 +24,7 @@ const ColumnHeader = () => {
 
   return (
     <S.Box>
-      <ColumnProgressBar />
+      <ColumnProgressBar columnTitle={columnTitle} columnId={columnId} />
       <Cogwheel onClick={handleUpdateColumnClick} />
     </S.Box>
   );

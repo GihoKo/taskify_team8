@@ -40,5 +40,7 @@ export const dashboardQueryOptions = {
   dashboardDetail: (dashboardId: number) => ({
     queryKey: dashboardKeys.dashboardDetail(dashboardId),
     queryFn: () => getDashboardDetailInfo(dashboardId),
+    gcTime: 1000 * 60 * 3, // 3분
+    staleTime: 1000 * 60 * 1, // 1분
   }),
 };
