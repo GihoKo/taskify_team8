@@ -4,11 +4,21 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import { useModal } from '@hooks/use-modal/useModal';
+
 import PlusShapeIcon from '../atoms/PlusShapeIcon';
 
 const CardAppendButton = () => {
+  const { openModal } = useModal();
+
+  const handleCardAppendButtonClick = async () => {
+    const CreateCardsModal = await import('../Cards/CreateCardsModal.').then((module) => module.default);
+
+    openModal(CreateCardsModal);
+  };
+
   return (
-    <S.Box type='button'>
+    <S.Box type='button' onClick={handleCardAppendButtonClick}>
       <PlusShapeIcon />
     </S.Box>
   );
