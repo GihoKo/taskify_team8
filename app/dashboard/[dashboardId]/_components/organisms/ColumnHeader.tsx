@@ -6,10 +6,15 @@ import Cogwheel from '@/app/dashboard/_components/atoms/Cogwheel';
 
 import ColumnProgressBar from '../molecules/ColumnProgressBar';
 
-const ColumnHeader = () => {
+export interface ColumnHeaderProps {
+  columnId: number;
+  columnTitle: string;
+}
+
+const ColumnHeader = ({ columnId, columnTitle }: ColumnHeaderProps) => {
   return (
     <S.Box>
-      <ColumnProgressBar />
+      <ColumnProgressBar columnTitle={columnTitle} columnId={columnId} />
       <Cogwheel />
     </S.Box>
   );
