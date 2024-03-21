@@ -63,14 +63,12 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
         >
           <CreateModalTitle title='할 일 생성' />
           <S.CardsForm>
-            <SelectInput title='카테고리' options={['카테고리1', '카테고리2', '카테고리3']} />
+            <SelectInput title='담당자' options={['카테고리1', '카테고리2', '카테고리3']} />
             <TextInput title='제목' inputType='text' placeHolder='제목을 입력해 주세요' required />
             <TextInput title='설명' inputType='textarea' placeHolder='설명을 입력해 주세요' required />
-            {/* <S.CardsInputWrap> */}
-            {/* <TextLabel inputTitle='마감일' /> */}
-            {/* <TextInput inputType='datetime-local' placeHolder='날짜를 입력해 주세요' /> */}
-            {/* </S.CardsInputWrap> */}
-            {/* https://upload.wikimedia.org/wikipedia/ko/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png */}
+
+            <TextInput inputType='datetime-local' placeHolder='날짜를 입력해 주세요' title={'마감일'} />
+
             <TextInput title='태그' inputType='text' placeHolder='입력후 엔터' />
             <ImageInput onClick={openImageColumnModal} title='이미지' imageUrl={imageUrl} />
             <ColumnButtonsWrap>
@@ -83,6 +81,8 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
     </ModalDimmed>
   );
 }
+
+/* https://upload.wikimedia.org/wikipedia/ko/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png */
 
 const S = {
   CardsModalBox: styled.div`
