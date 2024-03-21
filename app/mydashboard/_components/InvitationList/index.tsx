@@ -48,6 +48,7 @@ export default function InvitationList() {
     setInvitationList((prev) => prev.filter((item) => item.id !== id));
   };
 
+  // 검색 문자열을 모두 지웠을 때 다시 무한 스크롤을 사용하게 하기위해 함수로 만듬
   const infiniteScroll = async () => {
     if (currentLastInvitation.current) {
       const currentLastInvitationIo = new IntersectionObserver(
@@ -72,6 +73,7 @@ export default function InvitationList() {
     }
   };
 
+  // 무한 스크롤
   useEffect(() => {
     infiniteScroll();
     // eslint-disable-next-line
@@ -85,6 +87,7 @@ export default function InvitationList() {
   };
 
   useEffect(() => {
+    // 검색어가 없는 경우 초기 데이터를 불러오고 무한스크롤을 재시작
     if (searchKeyword === '') {
       (async () => {
         const data = await getInitialInvitionList();
