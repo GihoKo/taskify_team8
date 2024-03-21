@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import { getFirstDashboard } from '@/app/mydashboard/_components/apis/api';
+import { getFirstDashboard } from '@apis/dashboards/getFirstDashboard';
 import LogoSvg from '@public/images/logos/logo-small-unfilled-w23-h37.svg?component';
 import LogoTextSvg from '@public/images/logos/taskify-text-small-unfilled-w80-h22.svg?component';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
