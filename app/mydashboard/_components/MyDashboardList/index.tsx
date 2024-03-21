@@ -46,7 +46,9 @@ export default function MyDashboardList() {
   const { openModal } = useModal();
 
   const handleCreateDashboardButtonClick = async () => {
-    const CreateDashboardModal = await import('../CreateDashboardModal/index').then((module) => module.default);
+    const CreateDashboardModal = await import('../../../../components/organisms/CreateDashboardModal').then(
+      (module) => module.default,
+    );
 
     openModal(CreateDashboardModal);
   };

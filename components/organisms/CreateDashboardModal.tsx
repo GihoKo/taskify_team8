@@ -14,8 +14,8 @@ import ColorSelectList from '@components/molecules/ColorSelectList';
 
 import { ModalComponentProps } from '@hooks/use-modal';
 
-import { instanceAddedAccessToken } from '../apis/instance';
-import { DASHBOARD_COLORS } from '../constants';
+import { instanceAddedAccessToken } from '../../app/mydashboard/_components/apis/instance';
+import { DASHBOARD_COLORS } from '../../app/mydashboard/_components/constants';
 
 // eslint-disable-next-line
 export default function CreateDashboardModal({ closeModal, modalRef }: ModalComponentProps) {

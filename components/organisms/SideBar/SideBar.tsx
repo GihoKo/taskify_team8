@@ -16,7 +16,8 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColoredDot from '@components/atoms/ColoredDot';
 import { SIDE_BAR_PAGE_GROUP_NUMBER } from '@components/constants';
-import { handleCreateDashboardButtonClick } from '@components/mock/mock';
+
+import useModal from '@hooks/use-modal';
 
 import PageNationButton from '../../atoms/PageNationButton';
 
@@ -45,6 +46,17 @@ export default function SideBar() {
       setTotalPage(Math.ceil(data.totalCount / SIDE_BAR_PAGE_GROUP_NUMBER));
     }
   }, [data, isSuccess, currentPage]);
+
+  // 대시보드 생성 버튼 클릭
+  const { openModal } = useModal();
+
+  const handleCreateDashboardButtonClick = async () => {
+    const CreateDashboardModal = await import('@components/organisms/CreateDashboardModal').then(
+      (module) => module.default,
+    );
+
+    openModal(CreateDashboardModal);
+  };
 
   return (
     <S.Wrapper>
