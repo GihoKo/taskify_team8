@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 
 import createIcon from '@public/images/icons/add-filledViolet_5534DA-16w-16h.svg';
@@ -56,8 +57,10 @@ export default function MyDashboardList() {
   return (
     <S.Box>
       <S.DashboardContainer>
-        {dashboards.map((item) => (
-          <DashboardItem key={item.id} {...item} />
+        {dashboards.map((dashboard) => (
+          <Link href={`/dashboard/${dashboard.id}`} key={dashboard.id} style={{ textDecoration: 'none' }}>
+            <DashboardItem key={dashboard.id} {...dashboard} />
+          </Link>
         ))}
         <S.CreateDashboardButton onClick={handleCreateDashboardButtonClick}>
           <S.CreateDashboardButtonText>새로운 대시보드</S.CreateDashboardButtonText>

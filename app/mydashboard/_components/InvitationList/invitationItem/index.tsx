@@ -6,9 +6,9 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import { Invitation } from '../apis/api';
-import InvitationButton from '../commons/InvitationButton';
-import InvitationText from '../commons/InvitationText';
+import { Invitation } from '../../apis/api';
+import InvitationButton from '../../commons/InvitationButton';
+import InvitationText from '../../commons/InvitationText';
 
 type InvitationItemType = Pick<Invitation, 'id' | 'dashboard' | 'inviter'>;
 

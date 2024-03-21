@@ -7,7 +7,7 @@ import crownIcon from '@public/images/icons/crown-filledYellow-FDD446-w16-h12.sv
 import rightArrowIcon from '@public/images/icons/right-arrow-filled-black-333236-w18-h18.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import { Dashboard } from '../apis/api';
+import { Dashboard } from '../../apis/api';
 
 type DashboardItemType = Pick<Dashboard, 'title' | 'color' | 'createdByMe'>;
 
