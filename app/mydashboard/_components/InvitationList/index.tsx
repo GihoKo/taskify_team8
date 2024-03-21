@@ -10,7 +10,7 @@ import searchIcon from '@public/images/icons/search-filledBlack-333236-w22-h22.s
 import uninvitedSvg from '@public/images/logos/unInvited_filledGray_D9D9D9-w100-h100.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import InvitationItem from './InvitationItem';
+import InvitationItem from './invitationItem';
 import { getInitialInvitionList, getMoreInvitionList, Invitation, putInvitationAnswer } from '../apis/api';
 import InvitationText from '../commons/InvitationText';
 
