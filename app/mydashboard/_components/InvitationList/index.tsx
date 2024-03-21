@@ -11,7 +11,13 @@ import uninvitedSvg from '@public/images/logos/unInvited_filledGray_D9D9D9-w100-
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import InvitationItem from './invitationItem';
-import { getInitialInvitionList, getMoreInvitionList, Invitation, putInvitationAnswer } from '../apis/api';
+import {
+  getInitialInvitionList,
+  getMoreInvitionList,
+  getSearchedInvitationList,
+  Invitation,
+  putInvitationAnswer,
+} from '../apis/api';
 import InvitationText from '../commons/InvitationText';
 
 export default function InvitationList() {
@@ -23,6 +29,15 @@ export default function InvitationList() {
   const [cursorId, setCursorId] = useState<number | null>(null);
   const currentLastInvitation = useRef<HTMLDivElement>(null);
 
+  // 초대 리스트 초기값 조회
+  useEffect(() => {
+    (async () => {
+      const data = await getInitialInvitionList();
+      setInvitationList(data.invitations);
+      setCursorId(data.cursorId);
+    })();
+  }, []);
+
   const handleInvitationAcceptButtonClick = async (id: number) => {
     await putInvitationAnswer(id, true);
     setInvitationList((prev) => prev.filter((item) => item.id !== id));
@@ -33,7 +48,7 @@ export default function InvitationList() {
     setInvitationList((prev) => prev.filter((item) => item.id !== id));
   };
 
-  useEffect(() => {
+  const infiniteScroll = async () => {
     if (currentLastInvitation.current) {
       const currentLastInvitationIo = new IntersectionObserver(
         (entries) => {
@@ -55,27 +70,50 @@ export default function InvitationList() {
 
       currentLastInvitationIo.observe(currentLastInvitation.current);
     }
+  };
+
+  useEffect(() => {
+    infiniteScroll();
+    // eslint-disable-next-line
   }, [currentLastInvitation, cursorId]);
 
-  // 초대 리스트 조회
+  // 검색 기능
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
+  };
+
   useEffect(() => {
+    if (searchKeyword === '') {
+      (async () => {
+        const data = await getInitialInvitionList();
+        setInvitationList(data.invitations);
+      })();
+
+      infiniteScroll();
+
+      return;
+    }
+
     (async () => {
-      const data = await getInitialInvitionList();
+      const data = await getSearchedInvitationList(searchKeyword);
       setInvitationList(data.invitations);
-      setCursorId(data.cursorId);
     })();
-  }, []);
+    // eslint-disable-next-line
+  }, [searchKeyword]);
 
   return (
     <S.Box>
       <S.Title>초대받은 대시보드</S.Title>
-      {invitationList.length !== 0 ? (
+      {/* 초대 목록이 있는 경우와 검색바가 비어있지 않는 경우  */}
+      {invitationList.length || searchKeyword ? (
         <>
           <S.SearchBarWrapper>
             <S.SearchIconWrapper>
               <Image fill src={searchIcon} alt='돋보기 아이콘 이미지' />
             </S.SearchIconWrapper>
-            <S.SearchInput type='search' placeholder='검색' />
+            <S.SearchInput type='search' placeholder='검색' value={searchKeyword} onChange={onChangeSearchKeyword} />
           </S.SearchBarWrapper>
           <S.InvitationContainer>
             <S.InvitationHeaderWrapper>

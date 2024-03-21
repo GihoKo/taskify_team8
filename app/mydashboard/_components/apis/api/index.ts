@@ -64,6 +64,12 @@ export interface InvitationList {
   invitations: Invitation[];
 }
 
+export const getSearchedInvitationList = async (searchKeyword: string) => {
+  const { data } = await instanceAddedAccessToken.get<InvitationList>(`/invitations?title=${searchKeyword}`);
+
+  return data;
+};
+
 export const getInitialInvitionList = async () => {
   const { data } = await instanceAddedAccessToken.get<InvitationList>(`/invitations?size=6`);
 
