@@ -1,18 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
-// import { createColumn } from '@apis/columns/createColumns';
+import { createColumn } from '@apis/columns/createColumns';
 import { ColumnList, getColumnList } from '@apis/columns/getColumnList';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import { ModalComponentProps } from '@hooks/use-modal/types';
 
-import ColumnTitleInput from './ColumnTitleInput';
-import useCreateColumn from './useCreateColumn';
 import ColumnButton from '../commons/ColumnButton';
 import ColumnButtonsWrap from '../commons/ColumnButtonWrap';
 import CreateModalTitle from '../commons/ColumnModalTitle';
@@ -21,11 +18,14 @@ import ModalDimmed from '../commons/ModalDimmed';
 export default function CreateColumnModal({
   closeModal,
   modalRef,
-  // submitModal,
+  submitModal,
   dashboardId,
 }: ModalComponentProps<{ dashboardId: number }>) {
-  // const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [columnList, setColumnList] = useState<ColumnList[]>([]);
+  // const [isValid, setIsValid] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState('');
+  // const [onlyTitleArr, setOnlyTitleArr] = useState([]);
 
   useEffect(() => {
     const getColumns = async () => {
@@ -48,31 +48,35 @@ export default function CreateColumnModal({
     getColumns();
   }, [dashboardId]);
 
-  // const postColumn = async () => {
-  //   try {
-  //     const numberTypeDashboardId = Number(dashboardId);
-  //     await createColumn(inputValue, numberTypeDashboardId);
-  //     submitModal();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const postColumn = async () => {
+    try {
+      const numberTypeDashboardId = Number(dashboardId);
+      await createColumn(inputValue, numberTypeDashboardId);
+      submitModal();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // const checkColumnTitle = () => {
-  //   console.log(columnList);
-  //   const titles = columnList.map((item) => item.title);
-  //   console.log(titles);
-  // };
+  const checkColumnTitle = () => {
+    console.log(columnList);
+    const titles = columnList.map((item) => item.title);
+    console.log(titles);
+  };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setError,
-    formState: { errors },
-  } = useForm({ mode: 'onBlur' });
+  const handleOnChange = (e: { target: { value: string } }) => {
+    const curentValue = e.target.value;
+    console.log(curentValue);
+    setInputValue(curentValue);
 
-  const { handleRegisterSubmit, onSubmit } = useCreateColumn(watch, setError, columnList);
+    // if (curentValue !== '') {
+    //   setIsValid(true);
+    //   setErrorMessage('');
+    // } else {
+    //   setIsValid(false);
+    //   setErrorMessage('이름은 필수 입니다');
+    // }
+  };
 
   return (
     <ModalDimmed>
@@ -83,15 +87,23 @@ export default function CreateColumnModal({
       >
         <CreateModalTitle title='새 컬럼 생성' />
 
-        <S.ColumnForm onSubmit={handleSubmit(onSubmit)}>
+        <S.ColumnForm>
           <S.ColumnLabel htmlFor='title'>이름</S.ColumnLabel>
-          <ColumnTitleInput id='title' register={register} errors={errors} watch={watch} setError={setError} />
-
+          <S.ColumnInput
+            value={inputValue}
+            onChange={handleOnChange}
+            id='title'
+            type='text'
+            placeholder={'컬럼 제목을 입력해주세요'}
+          />
+          {/* <S.InputError>{errorMessage !== '' ? errorMessage : ''}</S.InputError> */}
           <ColumnButtonsWrap>
             <ColumnButton onClick={closeModal}>취소</ColumnButton>
-            <S.SubmitButton onClick={handleRegisterSubmit}>생성</S.SubmitButton>
+
+            <ColumnButton onClick={postColumn}>생성</ColumnButton>
           </ColumnButtonsWrap>
         </S.ColumnForm>
+        <S.Data onClick={checkColumnTitle}>ghkrdls</S.Data>
       </S.CreateColumnBox>
     </ModalDimmed>
   );
@@ -128,6 +140,28 @@ const S = {
     flex-direction: column;
   `,
 
+  ColumnInput: styled.input`
+    color: ${({ theme }) => theme.color.black_333236};
+    border: 0.1rem solid ${({ theme }) => theme.color.gray_D9D9D9};
+    border-radius: 0.6rem;
+    font-size: 1.4rem;
+    width: 28.7rem;
+    height: 4.2rem;
+    padding: 0 1.6rem;
+    margin-bottom: 0.8rem;
+
+    &:focus {
+      outline: none;
+      border: 0.1rem solid ${({ theme }) => theme.color.violet_5534DA};
+    }
+
+    @media ${mediaBreakpoint.tablet} {
+      font-size: 1.6rem;
+      width: 48.4rem;
+      height: 4.8rem;
+      margin-bottom: 0.8rem;
+    }
+  `,
   ColumnLabel: styled.label`
     font-size: 1.6rem;
     font-weight: 500;
@@ -138,24 +172,12 @@ const S = {
       font-size: 1.8rem;
     }
   `,
-
-  SubmitButton: styled.button`
-    background-color: ${({ theme }) => theme.color.violet_5534DA};
-    color: ${({ theme }) => theme.color.white_FFFFFF};
+  InputError: styled.span`
+    color: ${({ theme }) => theme.color.red_D6173A};
     font-size: 1.4rem;
-    font-weight: 500;
-    width: 13.8rem;
-    height: 4.2rem;
-    border-radius: 0.8rem;
-    border: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    @media ${mediaBreakpoint.tablet} {
-      font-size: 1.6rem;
-      width: 12rem;
-      height: 4.8rem;
-    }
+    margin-bottom: 2.4rem;
+  `,
+  Data: styled.div`
+    border: 1px solid black;
   `,
 };

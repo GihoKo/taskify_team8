@@ -6,7 +6,9 @@ import ColumnAppendButton from './_components/molecules/ColumnAppendButton';
 import Card from './_components/organisms/Card';
 import ColumnHeader from './_components/organisms/ColumnHeader';
 
-const DashboardPage = () => {
+const DashboardPage = ({ params }: { params: { dashboardId: string } }) => {
+  const dashboardId = Number(params.dashboardId);
+
   return (
     <>
       <ColumnContainerGroup>
@@ -22,7 +24,7 @@ const DashboardPage = () => {
           </ColumnContainer>
         ))}
         <ColumnContainer isLastColumn>
-          <ColumnAppendButton />
+          <ColumnAppendButton dashboardId={dashboardId} />
         </ColumnContainer>
       </ColumnContainerGroup>
     </>

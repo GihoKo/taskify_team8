@@ -13,7 +13,7 @@ import { axiosToken } from '@apis/instance/axiosToken';
 //   ]
 // }
 
-interface ColumnList {
+export interface ColumnList {
   id: number;
   title: string;
   teamId: string;
