@@ -15,7 +15,8 @@ const ColumnProgressBar = ({ columnId, columnTitle }: ColumnProgressBarProps) =>
   return (
     <S.Box>
       <ProgressChip>{columnTitle}</ProgressChip>
-      <NumberChip>{isSuccess && isFetched ? data.totalCount : 0}</NumberChip>
+      {/* api 요청해보면 totalcount보다 1개 적음. cursor 방식 */}
+      <NumberChip>{isSuccess && isFetched && data.totalCount ? data.totalCount - 1 : 0}</NumberChip>
     </S.Box>
   );
 };

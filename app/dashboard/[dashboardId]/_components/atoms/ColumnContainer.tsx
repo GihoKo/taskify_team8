@@ -5,6 +5,7 @@ import { PropsWithChildren } from 'react';
 import styled, { css } from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+import { dashboardNavbarHeight } from '@styles/navbarHeight';
 
 type ColumnContainerProps = PropsWithChildren<{
   /**
@@ -30,6 +31,7 @@ const hasBorder = css<{ $isLastColumn?: boolean }>`
 const S = {
   Container: styled.div<{ $isLastColumn?: boolean }>`
     min-width: 30.8rem;
+    height: 100%;
     width: 100%;
     padding-block: ${({ $isLastColumn }) => ($isLastColumn ? '1.2rem' : '1.7rem 1.2rem')};
     padding-inline: ${({ $isLastColumn }) => ($isLastColumn ? '0.9rem 1.5rem' : '1.2rem')};
@@ -52,6 +54,8 @@ const S = {
     @media ${mediaBreakpoint.pc} {
       width: 35.4rem;
       /* padding: 2.25rem 2rem 2rem; */
+      min-height: calc(100vh - ${dashboardNavbarHeight.onPc});
+      max-height: fit-content;
 
       padding: ${({ $isLastColumn }) => ($isLastColumn ? '6.8rem 2rem 2rem' : '2.25rem 2rem 2rem')};
     }

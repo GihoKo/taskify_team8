@@ -8,42 +8,20 @@ import { cardsQueryOptions } from '@queries/keys/cardsKeys';
 export const useGetCardListOnInfiniteScroll = ({ columnId, size = 5 }: GetCardListParams) => {
   return useInfiniteQuery({
     ...cardsQueryOptions.infiniteCardList({ columnId, size }),
-    // TODO: lastPage가 처음에 enabled false여서 없을 수도 있음.
-    // * 에러 발생 예상 지역
     initialPageParam: 1,
-    // TODO: 수정중
-    getNextPageParam: (lastPage, allPages, _pageParam, _allPageParams) => {
-      console.log(lastPage);
-
-      if (allPages.length && lastPage.cursorId) {
-        // if (lastPage.cursorId) {
-        return lastPage.cursorId;
-      }
-
-      return null;
+    getNextPageParam: (lastPage) => {
+      return lastPage.cursorId;
     },
     select: (data) => {
-      console.log('--------------- data ---------------');
-      console.log(data);
-
-      console.log('--------------- data.pages ---------------');
-      console.log(data.pages);
-
-      console.log('--------------- data.pageParams) ---------------');
-      console.log(data.pageParams);
-
-      // cards: Array(4)
-      // cursorId: null
-      // totalCount: 4
+      // pages 프롭은 data
+      // group은 pages의 인덱스(= 이전의 response 객체)
 
       return {
-        pages: data?.pages?.map((page) => {
+        pages: data?.pages?.flatMap((page) => {
           return page?.cards;
         }),
         pageParams: data?.pageParams,
       };
     },
-    // enabled: false,
-    enabled: !!columnId,
   });
 };

@@ -22,5 +22,7 @@ const S = {
 
     display: flex;
     flex-direction: column;
+
+    position: relative;
   `,
 };
