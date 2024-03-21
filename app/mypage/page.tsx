@@ -262,7 +262,7 @@ function MyPage() {
               <S.ChangeImg>
                 <S.ChangeImgInner htmlFor='file'>
                   <S.ImgEdit>
-                    <Image src={'/images/icons/profile-add.svg'} alt='이미지 변경' fill />
+                    <Image src={'/images/icons/profile-edit.svg'} alt='이미지 변경' fill />
                   </S.ImgEdit>
                 </S.ChangeImgInner>
 
