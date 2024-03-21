@@ -1,11 +1,19 @@
 import { FormEvent } from 'react';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 
+import { createColumn } from '@apis/columns/createColumns';
+
 interface ColumnTitleProps {
   title: string;
 }
 
-export default function useCreateColumn(watch: any, setError: any, columnList: any) {
+export default function useCreateColumn(
+  watch: any,
+  setError: any,
+  columnList: any,
+  submitModal: any,
+  dashboardId: number,
+) {
   // 컬럼 생성버튼 클릭
   const handleRegisterSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -17,6 +25,16 @@ export default function useCreateColumn(watch: any, setError: any, columnList: a
       const titles = columnList.map((item: any) => item.title);
       const isTaken = titles.includes(data.title);
 
+      const postColumn = async () => {
+        try {
+          const numberTypeDashboardId = Number(dashboardId);
+          await createColumn(data.title, numberTypeDashboardId);
+          submitModal();
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
       if (isTaken) {
         setError('title', {
           message: '중복 입니다',
@@ -24,7 +42,7 @@ export default function useCreateColumn(watch: any, setError: any, columnList: a
       } else if (data.title === '') {
         return false;
       } else {
-        console.log('얘는 무조거 ㄴ될걸?');
+        postColumn();
       }
     } catch (error) {
       console.log(error);

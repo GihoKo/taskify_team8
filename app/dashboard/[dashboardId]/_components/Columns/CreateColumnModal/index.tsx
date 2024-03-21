@@ -21,7 +21,7 @@ import ModalDimmed from '../commons/ModalDimmed';
 export default function CreateColumnModal({
   closeModal,
   modalRef,
-  // submitModal,
+  submitModal,
   dashboardId,
 }: ModalComponentProps<{ dashboardId: number }>) {
   // const [inputValue, setInputValue] = useState('');
@@ -58,12 +58,6 @@ export default function CreateColumnModal({
   //   }
   // };
 
-  // const checkColumnTitle = () => {
-  //   console.log(columnList);
-  //   const titles = columnList.map((item) => item.title);
-  //   console.log(titles);
-  // };
-
   const {
     register,
     handleSubmit,
@@ -72,7 +66,13 @@ export default function CreateColumnModal({
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
 
-  const { handleRegisterSubmit, onSubmit } = useCreateColumn(watch, setError, columnList);
+  const { handleRegisterSubmit, onSubmit } = useCreateColumn(
+    watch,
+    setError,
+    columnList,
+    submitModal,
+    Number(dashboardId),
+  );
 
   return (
     <ModalDimmed>
@@ -159,3 +159,9 @@ const S = {
     }
   `,
 };
+
+// const checkColumnTitle = () => {
+//   console.log(columnList);
+//   const titles = columnList.map((item) => item.title);
+//   console.log(titles);
+// };
