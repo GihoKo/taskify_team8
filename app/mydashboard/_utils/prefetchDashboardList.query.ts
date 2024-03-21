@@ -1,6 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 
-import { getDashboardList, getInitialInvitionList } from '@/app/mydashboard/_components/apis/api';
+import { getDashboardList } from '@apis/dashboards/getDashboardList';
+import { getInitialInvitionList } from '@apis/invitations/getInitialInvitionList';
 
 interface PrefetchDashboardListParam {
   queryClient: QueryClient;
