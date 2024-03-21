@@ -1,25 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import { getFirstDashboard } from '@/app/mydashboard/_components/apis/api';
+import { getFirstDashboard } from '@apis/dashboards/getFirstDashboard';
 import LogoSvg from '@public/images/logos/logo-small-unfilled-w23-h37.svg?component';
 import LogoTextSvg from '@public/images/logos/taskify-text-small-unfilled-w80-h22.svg?component';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+
+import { getAccessToken } from '@utils/token/getAccessToken';
 
 import SignButton from '../commons/SIgnButton';
 
 export default function Navbar() {
   const router = useRouter();
-  // eslint-disable-next-line
-  const [isLogin, setIsLogin] = useState(true);
-
   // 로그인 상태면 첫번째 대시보드로 이동
   useEffect(() => {
     (async () => {
-      if (isLogin) {
+      if (getAccessToken()) {
         const firstDashboardId = await getFirstDashboard();
         router.push(`/dashboard/${firstDashboardId}`);
       }
