@@ -3,13 +3,12 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { AxiosError } from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import axios from '@apis/axios';
+import { signUpUser } from '@apis/sign/axiosSignUp';
 
 import Input from '@components/molecules/Input';
 
@@ -57,21 +56,16 @@ function SignUp() {
   const handleSubmits = async (data: { email: string; nickname: string; password: string }) => {
     try {
       if (isChecked && !emailError && !passwordCheckError && !nicknameError) {
-        const response = await axios.post('/users', data);
+        const response = await signUpUser(data);
 
         if (response.status === 201) {
           setShowSuccessModal(true);
           router.push('/login');
         }
       }
-    } catch (error: unknown) {
-      const err = error as AxiosError;
-
-      if (err.response && err.response.status === 409) {
-        openModal();
-      } else {
-        console.error('회원가입 요청 오류!', error);
-      }
+    } catch (error) {
+      openModal();
+      console.error('회원가입 요청 오류:', error);
     }
   };
 

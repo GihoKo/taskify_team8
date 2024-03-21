@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import axios from '@apis/axios';
+import { getUserData, loginUser } from '@apis/sign/axiosSignIn';
 
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
@@ -30,7 +30,7 @@ export default function SignIn() {
   const [emailError, setEmailError] = useState<boolean>(false); // 각종 에러 문구
   const [passwordError, setPasswordError] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [showPwdError, setShowPwdError, showPwdToggle] = useToggle(false);
+  const [showPassError, setShowPassError, showPassToggle] = useToggle(false);
 
   const { register, handleSubmit, watch } = useForm<IFormInput>();
 
@@ -48,18 +48,18 @@ export default function SignIn() {
   const router = useRouter();
   useEffect(() => {
     // const LS = localStorage.getItem('login');
-    const LS = getAccessToken();
+    const AccessToken = getAccessToken();
 
-    if (LS !== null) {
+    // 왜 그러니..?
+    if (AccessToken !== null) {
       router.push(`/mydashboard`);
     }
   }, [router]);
 
   async function login(data: { email: string; password: string }) {
     try {
-      const res = await axios.post('/auth/login', data);
-      // localStorage.setItem('login', res.data.accessToken);
-      setAccessToken(res.data.accessToken);
+      const accessToken = await loginUser(data);
+      setAccessToken(accessToken);
 
       await setUserData();
       router.push('/mydashboard');
@@ -67,7 +67,7 @@ export default function SignIn() {
       setPasswordError(true);
 
       if (data.email !== '' && data.password !== '') {
-        showPwdToggle();
+        showPassToggle();
       }
 
       console.error('로그인 실패:', error);
@@ -76,8 +76,8 @@ export default function SignIn() {
 
   const setUserData = async () => {
     try {
-      const respons = await axios.get('/users/me');
-      setUser(respons.data);
+      const userData = await getUserData();
+      setUser(userData);
     } catch (error) {
       console.error('사용자 정보 가져오기 실패:', error);
     }
@@ -147,8 +147,8 @@ export default function SignIn() {
 
   return (
     <>
-      {showPwdError && (
-        <ModalCheckIt text='비밀번호가 일치하지 않습니다.' submitButtonText='확인' errorMessage={showPwdToggle} />
+      {showPassError && (
+        <ModalCheckIt text='비밀번호가 일치하지 않습니다.' submitButtonText='확인' errorMessage={showPassToggle} />
       )}
       <S.Signinback>
         <S.Signin>
@@ -176,7 +176,7 @@ export default function SignIn() {
               hookform={register('password')}
               title='비밀번호'
               placeholder='비밀번호를 입력해 주세요'
-              data='pwd'
+              data='Pass'
               errorMessage={passwordError}
               name='password'
               handleFocus={handleFocus('password')}
