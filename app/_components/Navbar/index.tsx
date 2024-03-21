@@ -27,7 +27,7 @@ export default function Navbar() {
   });
 
   const handleGotoLogInButtonClick = () => {
-    router.push('/login');
+    router.push('/signin');
   };
 
   const handleGotoSignUpButtonClick = () => {
