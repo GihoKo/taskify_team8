@@ -20,7 +20,7 @@ const ColumnHeader = ({ columnId, columnTitle, dashboardId }: ColumnHeaderProps)
   const handleUpdateColumnClick = async () => {
     const UpdateColumnModal = await import('../Columns/UpdateColumnModal').then((module) => module.default);
 
-    openModal(UpdateColumnModal, { dashboardId, currentColumnTitle: 'Done' });
+    openModal(UpdateColumnModal, { dashboardId, columnTitle, columnId });
   };
 
   return (

@@ -23,16 +23,19 @@ import DeleteColumnModal from '../DeleteColumnModal';
 // };
 
 // 수정용 id dashboardId=4989
-const columnId = 17851;
 
 export default function UpdateColumnModal({
   closeModal,
   modalRef,
   submitModal,
   dashboardId,
+  columnTitle,
+  columnId,
   // currentColumnTitle,
-}: ModalComponentProps<{ currentColumnTitle: string; dashboardId: number }>) {
+}: ModalComponentProps<{ columnTitle: string; dashboardId: number; columnId: number }>) {
   const [columnList, setColumnList] = useState<ColumnList[]>([]);
+  const [currentValue, setCurrentValue] = useState(columnTitle);
+
   /**
    * 1. useModal을 사용해서 context api를 사용하는 전역 모달을 열고
    * 2. 그 전역 모달 안에서 local state를 사용함(= useCloseModal이라는 훅을 사용해서 local state를 생성함)
@@ -84,16 +87,35 @@ export default function UpdateColumnModal({
     watch,
     setError,
     formState: { errors },
-  } = useForm({ mode: 'onBlur' });
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      title: currentValue,
+    },
+  });
 
-  const { handleRegisterSubmit, onSubmit } = useUpdateColumn(watch, setError, columnList, submitModal, columnId);
+  useEffect(() => {
+    const subscription = watch((value) => {
+      setCurrentValue(value.title);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  const { handleRegisterSubmit, onSubmit } = useUpdateColumn(
+    watch,
+    setError,
+    columnList,
+    submitModal,
+    Number(columnId),
+  );
 
   return (
     <>
       <ModalDimmed>
         {isDeleteColumnModalOpen ? (
           <DeleteColumnModal
-            columnId={columnId}
+            columnId={Number(columnId)}
             isModalOpen={isDeleteColumnModalOpen}
             modalRef={deleteColumnModalRef}
             toggleModal={toggleDeleModal}
@@ -115,6 +137,7 @@ export default function UpdateColumnModal({
                 errors={errors}
                 watch={watch}
                 setError={setError}
+                currentValue={currentValue}
               />
 
               {/* <ColumnInput

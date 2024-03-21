@@ -10,10 +10,11 @@ interface ColumnTitleInputProps {
   errors: any;
   watch: any;
   setError: any;
+  currentValue: string | undefined;
 }
 
 // export default function ColumnTitleInput({ id, register, errors, watch, setError }: ColumnTitleInputProps) {
-export default function UpdateColumnTitleInput({ id, register, errors }: ColumnTitleInputProps) {
+export default function UpdateColumnTitleInput({ id, register, errors, currentValue }: ColumnTitleInputProps) {
   //   const { isError, checkTitle } = useColumnTitleInput(errors, watch, setError);
   const { isError, checkTitle } = useColumnTitleInput(errors);
 
@@ -36,6 +37,7 @@ export default function UpdateColumnTitleInput({ id, register, errors }: ColumnT
   return (
     <>
       <S.Input
+        value={currentValue}
         id={id}
         type='text'
         placeholder='컬럼 제목을 입력해주세요.'
