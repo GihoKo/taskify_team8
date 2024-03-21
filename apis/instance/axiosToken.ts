@@ -1,8 +1,11 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, isAxiosError } from 'axios';
 
+import { ACCESS_TOKEN } from '@constants/token';
+
 import { logOnDev } from '@utils/logger/logOnDev';
 import { getAccessToken } from '@utils/token/getAccessToken';
-// import { getAccessToken } from '@utils/token/getAccessToken';
+
+const isServer = typeof window === 'undefined';
 
 /**
  * ### accessToken을 포함시킨 axios 인스턴스
@@ -18,7 +21,10 @@ axiosToken.interceptors.request.use(
   async (config) => {
     let accessToken;
 
-    if (typeof window !== 'undefined') {
+    if (isServer) {
+      const { cookies } = await import('next/headers');
+      accessToken = cookies().get(ACCESS_TOKEN)?.value;
+    } else {
       accessToken = getAccessToken();
     }
 

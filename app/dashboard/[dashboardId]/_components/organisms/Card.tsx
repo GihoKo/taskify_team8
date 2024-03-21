@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import cardMockImage from '@public/images/mocks/card-mock-image.png';
+import { type Card as ICard } from '@apis/cards/getCardList';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import CardTag from '@components/atoms/CardTag';
@@ -13,44 +13,23 @@ import { formatDateShorter } from '@utils/time/formatDateShorter';
 
 import DueDate from '../atoms/DueDate';
 
-type CardProps = {
-  title: string;
-  description: string;
-  tags: string[];
-  dueDate: string;
-  assignee: {
-    profileImageUrl: string;
-    nickname: string;
-    id: number;
-  };
-  imageUrl: string;
-  teamId: string;
-  columnId: number;
-  createdAt: string | Date;
-  updatedAt: string | Date;
-};
+type CardProps = ICard;
 
-// TODO: 들어오는 데이터에 맞춰서 나중에 로직 수정
-const Card = ({
-  title = '새로운 일정 관리 Taskify',
-  dueDate = '2024-03-12T09:52:06.381Z',
-  assignee,
-
-  // TODO: api 연결하면 Partial 제거하기
-}: Partial<CardProps>) => {
+const Card = ({ title, dueDate, assignee, tags, imageUrl }: CardProps) => {
   return (
     <S.Box>
-      {cardMockImage && (
+      {imageUrl && (
         <S.ImageBox>
-          <S.Image fill src={cardMockImage} alt='카드 이미지' />
+          <S.Image fill src={imageUrl} alt='카드 이미지' />
         </S.ImageBox>
       )}
       <S.TextContentsArea>
         <S.Title>{title}</S.Title>
         <S.TagsAndDateBox>
           <S.TagsContainer>
-            <CardTag>일반</CardTag>
-            <CardTag>백엔드</CardTag>
+            {tags.map((tag) => {
+              return <CardTag key={tag}>{tag}</CardTag>;
+            })}
           </S.TagsContainer>
           <S.DateAndProfileBox>
             <DueDate>{formatDateShorter(dueDate)}</DueDate>
@@ -65,7 +44,7 @@ const Card = ({
               }}
               backgroundColor='#a3c4a2'
             >
-              {assignee?.nickname ? assignee.nickname[0] : 'B'}
+              {assignee.nickname[0]}
             </FirstLetterProfile>
           </S.DateAndProfileBox>
         </S.TagsAndDateBox>
