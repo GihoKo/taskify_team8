@@ -46,14 +46,17 @@ export default function MyDashboardList() {
   const { openModal } = useModal();
 
   const handleCreateDashboardButtonClick = async () => {
-    const CreateColumnModal = await import('../CreateDashboardModal/index').then((module) => module.default);
+    const CreateDashboardModal = await import('../CreateDashboardModal/index').then((module) => module.default);
 
-    openModal(CreateColumnModal);
+    openModal(CreateDashboardModal);
   };
 
   return (
     <S.Box>
       <S.DashboardContainer>
+        {dashboards.map((item) => (
+          <DashboardItem key={item.id} {...item} />
+        ))}
         <S.CreateDashboardButton onClick={handleCreateDashboardButtonClick}>
           <S.CreateDashboardButtonText>새로운 대시보드</S.CreateDashboardButtonText>
           <S.CreateDashboardIconPositioner>
@@ -62,9 +65,6 @@ export default function MyDashboardList() {
             </S.CreateDashboardIconWrapper>
           </S.CreateDashboardIconPositioner>
         </S.CreateDashboardButton>
-        {dashboards.map((item) => (
-          <DashboardItem key={item.id} {...item} />
-        ))}
       </S.DashboardContainer>
       <S.PageNationWrapper>
         <S.PageNationText>

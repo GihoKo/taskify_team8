@@ -14,15 +14,35 @@ import ColorSelectList from '@components/molecules/ColorSelectList';
 
 import { ModalComponentProps } from '@hooks/use-modal';
 
+import { instanceAddedAccessToken } from '../apis/instance';
 import { DASHBOARD_COLORS } from '../constants';
 
 // eslint-disable-next-line
 export default function CreateDashboardModal({ closeModal, modalRef }: ModalComponentProps) {
-  // eslint-disable-next-line
   const [selectedColor, setSelectedColor] = useState(DASHBOARD_COLORS[0]);
+  const [inputValue, setInputValue] = useState('');
 
-  const handleCreateDashboardButtonClick = () => {
-    console.log('create dashboard');
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleCreateDashboardButtonClick = async () => {
+    if (!inputValue || inputValue.length > 8 || !selectedColor) {
+      return;
+    }
+
+    try {
+      const result = await instanceAddedAccessToken.post('/dashboards', {
+        title: inputValue,
+        color: selectedColor,
+      });
+
+      if (result.status === 201) {
+        closeModal();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -35,9 +55,13 @@ export default function CreateDashboardModal({ closeModal, modalRef }: ModalComp
         <CreateModalTitle title='새로운 대시보드' />
         <S.ColumnForm>
           <S.ColumnLabel htmlFor='dashboard-name'>대시보드 이름</S.ColumnLabel>
-          <S.ColumnInput id='dashboard-name' type='text' placeholder='뉴프로젝트' />
-        </S.ColumnForm>
-        <S.ColorSelectListWrapper>
+          <S.ColumnInput
+            id='dashboard-name'
+            type='text'
+            placeholder='뉴 프로젝트'
+            value={inputValue}
+            onChange={handleChange}
+          />
           <ColorSelectList shouldShowSelectedColorChipOnly={{ onMobile: true, onTablet: false, onPc: false }}>
             <ColorSelectList.Container>
               {DASHBOARD_COLORS.map((color) => (
@@ -50,11 +74,11 @@ export default function CreateDashboardModal({ closeModal, modalRef }: ModalComp
               ))}
             </ColorSelectList.Container>
           </ColorSelectList>
-        </S.ColorSelectListWrapper>
-        <ColumnButtonsWrap>
-          <ColumnButton onClick={closeModal}>취소</ColumnButton>
-          <ColumnButton onClick={handleCreateDashboardButtonClick}>생성</ColumnButton>
-        </ColumnButtonsWrap>
+          <ColumnButtonsWrap>
+            <ColumnButton onClick={closeModal}>취소</ColumnButton>
+            <ColumnButton onClick={handleCreateDashboardButtonClick}>생성</ColumnButton>
+          </ColumnButtonsWrap>
+        </S.ColumnForm>
       </S.Wrapper>
     </ModalDimmed>
   );
