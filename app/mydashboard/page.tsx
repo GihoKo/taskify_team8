@@ -1,7 +1,7 @@
 import SideBar from '@components/organisms/SideBar';
 import HydrationBoundaryComponent from '@components/server/HydrationBoundaryComponent';
 
-import { getDashboardList } from './_components/apis/api';
+import { getDashboardList, getInitialInvitionList } from './_components/apis/api';
 import InvitationList from './_components/InvitationList';
 import Main from './_components/Main/Main';
 import MyDashboardList from './_components/MyDashboardList';
@@ -22,7 +22,14 @@ export default function MyDashboardPage() {
           >
             <MyDashboardList />
           </HydrationBoundaryComponent>
-          <InvitationList />
+          <HydrationBoundaryComponent
+            FetchQueryOptions={{
+              queryKey: ['invitation', 'invitationList'],
+              queryFn: () => getInitialInvitionList(),
+            }}
+          >
+            <InvitationList />
+          </HydrationBoundaryComponent>
         </Main>
       </div>
     </div>
