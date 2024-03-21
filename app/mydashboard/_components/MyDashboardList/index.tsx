@@ -11,9 +11,10 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import PageNationButton from '@components/atoms/PageNationButton';
 
+import useModal from '@hooks/use-modal';
+
 import DashboardItem from './DashboardItem';
 import { Dashboard, getDashboardList } from '../apis/api';
-import { handleCreateDashboardClick } from '../mock/mock';
 
 export default function MyDashboardList() {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -41,10 +42,19 @@ export default function MyDashboardList() {
     }
   }, [data, isSuccess, currentPage]);
 
+  // 대시보드 생성 버튼 클릭
+  const { openModal } = useModal();
+
+  const handleCreateDashboardButtonClick = async () => {
+    const CreateColumnModal = await import('../CreateDashboardModal/index').then((module) => module.default);
+
+    openModal(CreateColumnModal);
+  };
+
   return (
     <S.Box>
       <S.DashboardContainer>
-        <S.CreateDashboardButton onClick={handleCreateDashboardClick}>
+        <S.CreateDashboardButton onClick={handleCreateDashboardButtonClick}>
           <S.CreateDashboardButtonText>새로운 대시보드</S.CreateDashboardButtonText>
           <S.CreateDashboardIconPositioner>
             <S.CreateDashboardIconWrapper>

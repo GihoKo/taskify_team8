@@ -12,34 +12,48 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColorSelectList from '@components/molecules/ColorSelectList';
 
+import { ModalComponentProps } from '@hooks/use-modal';
+
 import { DASHBOARD_COLORS } from '../constants';
 
-export default function CreateDashboardModal() {
+// eslint-disable-next-line
+export default function CreateDashboardModal({ closeModal, modalRef }: ModalComponentProps) {
   // eslint-disable-next-line
   const [selectedColor, setSelectedColor] = useState(DASHBOARD_COLORS[0]);
 
+  const handleCreateDashboardButtonClick = () => {
+    console.log('create dashboard');
+  };
+
   return (
     <ModalDimmed>
-      <S.Wrapper>
+      <S.Wrapper
+        ref={(node) => {
+          if (modalRef) modalRef.current = node;
+        }}
+      >
         <CreateModalTitle title='새로운 대시보드' />
         <S.ColumnForm>
           <S.ColumnLabel htmlFor='dashboard-name'>대시보드 이름</S.ColumnLabel>
           <S.ColumnInput id='dashboard-name' type='text' placeholder='뉴프로젝트' />
         </S.ColumnForm>
-        <ColorSelectList shouldShowSelectedColorChipOnly={{ onMobile: true, onTablet: false, onPc: false }}>
-          <ColorSelectList.Container>
-            {DASHBOARD_COLORS.map((color) => (
-              <ColorSelectList.ColorChip
-                onClick={({ selectedColor }) => setSelectedColor(selectedColor)}
-                key={color}
-                chipColor={color}
-              />
-            ))}
-          </ColorSelectList.Container>
-        </ColorSelectList>
+        <S.ColorSelectListWrapper>
+          <ColorSelectList shouldShowSelectedColorChipOnly={{ onMobile: true, onTablet: false, onPc: false }}>
+            <ColorSelectList.Container>
+              {DASHBOARD_COLORS.map((color) => (
+                <ColorSelectList.ColorChip
+                  onClick={({ selectedColor }) => setSelectedColor(selectedColor)}
+                  key={color}
+                  chipColor={color}
+                  selected={color === selectedColor}
+                />
+              ))}
+            </ColorSelectList.Container>
+          </ColorSelectList>
+        </S.ColorSelectListWrapper>
         <ColumnButtonsWrap>
-          <ColumnButton>취소</ColumnButton>
-          <ColumnButton>생성</ColumnButton>
+          <ColumnButton onClick={closeModal}>취소</ColumnButton>
+          <ColumnButton onClick={handleCreateDashboardButtonClick}>생성</ColumnButton>
         </ColumnButtonsWrap>
       </S.Wrapper>
     </ModalDimmed>
@@ -112,6 +126,13 @@ const S = {
     }
     @media ${mediaBreakpoint.pc} {
       gap: 0.63rem;
+    }
+  `,
+  ColorSelectListWrapper: styled.div`
+    margin-bottom: 1.5rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      margin-bottom: 1.75rem;
     }
   `,
 };

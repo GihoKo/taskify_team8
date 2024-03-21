@@ -1,7 +1,6 @@
 import SideBar from '@components/organisms/SideBar';
 import HydrationBoundaryComponent from '@components/server/HydrationBoundaryComponent';
 
-import CreateDashboardModal from './_components/CreateDashboardModal';
 import InvitationList from './_components/InvitationList';
 import Main from './_components/Main/Main';
 import MyDashboardList from './_components/MyDashboardList';
@@ -28,7 +27,6 @@ export default function MyDashboardPage() {
           </HydrationBoundaryComponent>
         </Main>
       </div>
-      <CreateDashboardModal />
     </div>
   );
 }
