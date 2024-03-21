@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 interface ModalCheckItProps {
-  submitButton: string;
+  submitButtonText: string;
   text: string;
   cancelButton?: string;
-  wrong: any;
+  errorMessage: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function ModalCheckIt({ submitButton, text, cancelButton, wrong }: ModalCheckItProps) {
+export default function ModalCheckIt({ submitButtonText, text, cancelButton, errorMessage }: ModalCheckItProps) {
   return (
     <>
       <S.background>
@@ -15,7 +15,7 @@ export default function ModalCheckIt({ submitButton, text, cancelButton, wrong }
           <S.description>{text}</S.description>
           <S.buttonFlex>
             {cancelButton && <S.cancelButton>{cancelButton}</S.cancelButton>}
-            <S.button onClick={wrong}>{submitButton}</S.button>
+            <S.button onClick={errorMessage}>{submitButtonText}</S.button>
           </S.buttonFlex>
         </S.container>
       </S.background>

@@ -1,26 +1,86 @@
 'use client';
 
+import { useState } from 'react';
+
 import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import { useCloseModal } from '@hooks/use-modal';
+import { ModalComponentProps } from '@hooks/use-modal/types';
+
 import ColumnButton from '../commons/ColumnButton';
 import ColumnInput from '../commons/ColumnInput';
-import CreateModalTitle from '../commons/ColumnModalTitile';
+import CreateModalTitle from '../commons/ColumnModalTitle';
+import ModalDimmed from '../commons/ModalDimmed';
+import DeleteColumnModal from '../DeleteColumnModal';
 
-export default function UpdateColumnModal() {
+type UpdateColumnModalProps = {
+  currentColumnTitle: string;
+};
+
+export default function UpdateColumnModal({
+  closeModal,
+  modalRef,
+  submitModal,
+  currentColumnTitle,
+}: ModalComponentProps<UpdateColumnModalProps>) {
+  /**
+   * 1. useModal을 사용해서 context api를 사용하는 전역 모달을 열고
+   * 2. 그 전역 모달 안에서 local state를 사용함(= useCloseModal이라는 훅을 사용해서 local state를 생성함)
+   * 3. local state는 local modal을 열고 닫는데 사용됨.
+   *
+   * 즉, UpdateColumnModal은 전역 모달인 것이고,
+   * UpdateColumnModal 내부에서 local state로 관리하는 DeleteColumnModal은 지역 모달인 것임.
+   * (* 스타일 변동사항 : Dimmed 영역은 공유되므로 DeleteColumnModal에서 제거하였음.)
+   */
+
+  const [inputValue, setInputValue] = useState(currentColumnTitle);
+
+  const {
+    isModalOpen: isDeleteColumnModalOpen,
+    modalRef: deleteColumnModalRef,
+    toggleModal: toggleDeleModal,
+  } = useCloseModal(false); // Core
+
+  const openDeleteColumnModal = () => {
+    if (!isDeleteColumnModalOpen) {
+      toggleDeleModal();
+    }
+  };
+
   return (
-    <S.UpdateColumnModalBox>
-      <CreateModalTitle title='컬럼 관리' />
-      <ColumnInput />
-      <S.ColumnButtonContainer>
-        <S.ColumnDeleteButton>삭제하기</S.ColumnDeleteButton>
-        <S.ColumnButtonsWrap>
-          <ColumnButton text='취소' />
-          <ColumnButton text='변경' />
-        </S.ColumnButtonsWrap>
-      </S.ColumnButtonContainer>
-    </S.UpdateColumnModalBox>
+    <>
+      <ModalDimmed>
+        {isDeleteColumnModalOpen ? (
+          <DeleteColumnModal
+            isModalOpen={isDeleteColumnModalOpen}
+            modalRef={deleteColumnModalRef}
+            toggleModal={toggleDeleModal}
+          />
+        ) : (
+          <S.UpdateColumnModalBox
+            ref={(node) => {
+              if (modalRef) modalRef.current = node;
+            }}
+          >
+            <CreateModalTitle title='컬럼 관리' />
+            <ColumnInput
+              inputValue={inputValue || ''}
+              onChange={setInputValue}
+              placeholder='컬럼 제목을 입력해주세요.'
+            />
+            <S.ColumnButtonContainer>
+              <S.ColumnDeleteButton onClick={openDeleteColumnModal}>삭제하기</S.ColumnDeleteButton>
+              <S.ColumnButtonsWrap>
+                <ColumnButton onClick={closeModal}>취소</ColumnButton>
+                <ColumnButton onClick={submitModal}>변경</ColumnButton>
+              </S.ColumnButtonsWrap>
+            </S.ColumnButtonContainer>
+          </S.UpdateColumnModalBox>
+        )}
+      </ModalDimmed>
+    </>
   );
 }
 

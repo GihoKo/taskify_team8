@@ -6,13 +6,23 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import { useModal } from '@hooks/use-modal/useModal';
+
 import PlusShapeIcon from '../atoms/PlusShapeIcon';
 
 type ColumnAppendButtonProps = PropsWithChildren;
 
 const ColumnAppendButton = ({ children }: ColumnAppendButtonProps) => {
+  const { openModal } = useModal();
+
+  const handleColumnAddButtonClick = async () => {
+    const CreateColumnModal = await import('../Columns/CreateColumnModal').then((module) => module.default);
+
+    openModal(CreateColumnModal);
+  };
+
   return (
-    <S.Box>
+    <S.Box onClick={handleColumnAddButtonClick}>
       {children || '새로운 컬럼 추가하기'}
       <PlusShapeIcon />
     </S.Box>

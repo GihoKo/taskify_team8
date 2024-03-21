@@ -1,24 +1,37 @@
 'use client';
 
+import { useState } from 'react';
+
 import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import { ModalComponentProps } from '@hooks/use-modal/types';
+
 import ColumnButton from '../commons/ColumnButton';
 import ColumnButtonsWrap from '../commons/ColumnButtonWrap';
 import ColumnInput from '../commons/ColumnInput';
-import CreateModalTitle from '../commons/ColumnModalTitile';
+import CreateModalTitle from '../commons/ColumnModalTitle';
+import ModalDimmed from '../commons/ModalDimmed';
 
-export default function CreateColumnModal() {
+export default function CreateColumnModal({ closeModal, modalRef, submitModal }: ModalComponentProps) {
+  const [inputValue, setInputValue] = useState('');
+
   return (
-    <S.CreateColumnBox>
-      <CreateModalTitle title='새 컬럼 생성' />
-      <ColumnInput />
-      <ColumnButtonsWrap>
-        <ColumnButton text='취소' />
-        <ColumnButton text='생성' />
-      </ColumnButtonsWrap>
-    </S.CreateColumnBox>
+    <ModalDimmed>
+      <S.CreateColumnBox
+        ref={(node) => {
+          if (modalRef) modalRef.current = node;
+        }}
+      >
+        <CreateModalTitle title='새 컬럼 생성' />
+        <ColumnInput inputValue={inputValue} onChange={setInputValue} placeholder='컬럼 제목을 입력해주세요' />
+        <ColumnButtonsWrap>
+          <ColumnButton onClick={closeModal}>취소</ColumnButton>
+          <ColumnButton onClick={submitModal}>생성</ColumnButton>
+        </ColumnButtonsWrap>
+      </S.CreateColumnBox>
+    </ModalDimmed>
   );
 }
 
