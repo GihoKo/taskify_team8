@@ -1,4 +1,4 @@
-import SideBar from '@components/organisms/SideBar';
+import SideBar from '@components/organisms/SideBar/SideBar';
 import HydrationBoundaryComponent from '@components/server/HydrationBoundaryComponent';
 
 import InvitationList from './_components/InvitationList';
