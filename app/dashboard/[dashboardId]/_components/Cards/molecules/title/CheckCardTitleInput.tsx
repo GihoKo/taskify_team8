@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function CheckCardTitleInput(errors: any, watch: any, setError: any) {
+export default function checkCardTitleInput(errors: any, watch: any, setError: any) {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {

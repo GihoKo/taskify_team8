@@ -10,6 +10,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import { useCloseModal } from '@hooks/use-modal';
 import { ModalComponentProps } from '@hooks/use-modal/types';
 
+import CardTextArea from './molecules/description/CardTextarea';
 import ImageInput from './molecules/ImageInput';
 import SelectInput from './molecules/SelectInput';
 import CardTagInput from './molecules/tag/CardTagInput';
@@ -28,6 +29,8 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
   // const switchModal = () => {
   //   setIsModalOpen(!isModalOpen);
   // };
+
+  // 모달 관련 구현
   const {
     isModalOpen: isImageModalOpen,
     modalRef: ImageModalRef,
@@ -40,17 +43,36 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
     }
   };
 
+  // 이미지 확인용
   useEffect(() => {
     console.log('imageUrl', imageUrl);
   }, [imageUrl]);
 
+  // 할일 - 구현 - api
+  // 담당자 - hard
+  // 제목 - v
+  // 설명 - v
+  // 마감일 - v
+  // 태그 - easy
+  // 이미지 - mid
+
+  // 인풋 관리
   const {
     register,
     // handleSubmit,
     watch,
     setError,
+    reset,
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
+
+  const {
+    register: registerOnChanage,
+    watch: watchOnChange,
+    setError: setErrorOnChange,
+    reset: resetOnChange,
+    formState: { errors: errorsOnChange },
+  } = useForm({ mode: 'onChange' });
 
   return (
     <ModalDimmed>
@@ -76,10 +98,23 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
           <S.CardsForm>
             <SelectInput title='담당자' options={['카테고리1', '카테고리2', '카테고리3']} />
             <CardTitleInput id='title' register={register} errors={errors} watch={watch} setError={setError} required />
-            <TextInput title='설명' inputType='textarea' placeHolder='설명을 입력해 주세요' required />
+            <CardTextArea
+              id='description'
+              register={register}
+              errors={errors}
+              watch={watch}
+              setError={setError}
+              required
+            />
             <TextInput inputType='datetime-local' placeHolder='날짜를 입력해 주세요' title={'마감일'} />
-            <CardTagInput id='tag' register={register} errors={errors} watch={watch} setError={setError} />
-            {/* <TextInput title='태그' inputType='text' placeHolder='입력후 엔터' /> */}
+            <CardTagInput
+              id='tag'
+              register={registerOnChanage}
+              errors={errorsOnChange}
+              watch={watchOnChange}
+              setError={setErrorOnChange}
+              reset={resetOnChange}
+            />
             <ImageInput onClick={openImageColumnModal} title='이미지' imageUrl={imageUrl} />
             <ColumnButtonsWrap>
               <ColumnButton onClick={closeModal}>취소</ColumnButton>
