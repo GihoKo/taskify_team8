@@ -1,4 +1,4 @@
-import { DashboardMemberListWithTotalCount } from '../_components/MemberManageForm';
+import { GetDashboardMemberListResponse } from '@apis/members/getDashboardMemberList';
 
 export const mockUserList = [
   {
@@ -42,13 +42,13 @@ export const mockEmailList = [
   },
 ];
 
-export const dashboardMemberList: DashboardMemberListWithTotalCount = {
+export const dashboardMemberList: GetDashboardMemberListResponse = {
   members: [
     {
       id: 6735,
       email: 'asfd123@gmail.com',
       nickname: 'asdf123',
-      profileImageUrl: null,
+      profileImageUrl: '',
       createdAt: '2024-03-16T01:55:37.592Z',
       updatedAt: '2024-03-16T01:55:37.592Z',
       isOwner: true,
@@ -58,7 +58,7 @@ export const dashboardMemberList: DashboardMemberListWithTotalCount = {
       id: 6741,
       email: 'asdf6@gmail.com',
       nickname: 'asdf6',
-      profileImageUrl: null,
+      profileImageUrl: '',
       createdAt: '2024-03-16T02:01:21.538Z',
       updatedAt: '2024-03-16T02:01:21.538Z',
       isOwner: false,
@@ -68,7 +68,7 @@ export const dashboardMemberList: DashboardMemberListWithTotalCount = {
       id: 6740,
       email: 'asdf5@gmail.com',
       nickname: 'asdf5',
-      profileImageUrl: null,
+      profileImageUrl: '',
       createdAt: '2024-03-16T02:01:15.764Z',
       updatedAt: '2024-03-16T02:01:15.764Z',
       isOwner: false,
@@ -78,7 +78,7 @@ export const dashboardMemberList: DashboardMemberListWithTotalCount = {
       id: 6739,
       email: 'asdf4@gmail.com',
       nickname: 'asdf4',
-      profileImageUrl: null,
+      profileImageUrl: '',
       createdAt: '2024-03-16T02:01:07.164Z',
       updatedAt: '2024-03-16T02:01:07.164Z',
       isOwner: false,

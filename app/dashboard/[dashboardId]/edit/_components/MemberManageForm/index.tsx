@@ -1,55 +1,61 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
+import { Member } from '@apis/members/getDashboardMemberList';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import { useGetDashboardMemberList } from '../../_hooks/useGetDashboardMemberList.query';
 import MemberListTable from '../MemberListTable';
 import { PageTurner } from '../PageTurner';
 
-/**
- * TOOD: api 연결 했을 때 옮길 거
- */
-type DashboardMember = {
-  id: number;
-  email: string; // email
-  nickname: string;
-  profileImageUrl: null | string;
-  createdAt: string | Date;
-  updatedAt: string | Date;
-  isOwner: boolean;
-  userId: number;
-};
-
-/**
- * TOOD: api 연결 했을 때 옮길 거
- */
-type DashboardMemberList = DashboardMember[];
-
-/**
- * TOOD: api 연결 했을 때 옮길 거
- */
-export type DashboardMemberListWithTotalCount = {
-  members: DashboardMemberList;
-  totalCount: number;
-};
-
-type MemberManageFormProps = PropsWithChildren<DashboardMemberListWithTotalCount>;
+interface MemberManageFormProps {
+  dashboardId: number;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MemberManageForm = ({ children, members, totalCount }: MemberManageFormProps) => {
+const MemberManageForm = ({ dashboardId }: MemberManageFormProps) => {
+  const sizePerPage = 4;
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, isFetched, isSuccess, hasNextPage, hasPreviousPage, fetchNextPage, fetchPreviousPage } =
+    useGetDashboardMemberList({ dashboardId, size: sizePerPage });
+  const [_memberList, setMemberList] = useState<Member[]>(data?.pages || []);
+
+  const handleNextPage = async () => {
+    if (hasNextPage) {
+      await fetchNextPage();
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePreviousPage = async () => {
+    if (hasPreviousPage) {
+      await fetchPreviousPage();
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (isFetched && isSuccess) {
+      setMemberList(data.pages);
+    }
+  }, [isFetched, isSuccess, data]);
+
   return (
     <S.Form>
       <S.FormHeader>
         <S.FormName>구성원</S.FormName>
         <PageTurner>
           <PageTurner.Wrapper>
-            <PageTurner.CurrentPageDescriber currentPage={1} totalPages={1} />
+            {/* <PageTurner.CurrentPageDescriber currentPage={1} totalPages={1} /> */}
+            <PageTurner.CurrentPageDescriber currentPage={currentPage} totalPages={data?.totalPages || 1} />
             <PageTurner.ButtonContainer>
-              <PageTurner.LeftButton />
-              <PageTurner.RightButton />
+              <PageTurner.LeftButton onClick={handlePreviousPage} />
+              <PageTurner.RightButton onClick={handleNextPage} />
             </PageTurner.ButtonContainer>
           </PageTurner.Wrapper>
         </PageTurner>

@@ -1,12 +1,12 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useState } from 'react';
 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { styled } from 'styled-components';
 
-import { getQueryClient } from '@utils/tanstack-query/getQueryClient';
+import { getQueryClient } from '@lib/tanstack-query/getQueryClient';
 
 /// ////////////////////////////////////////////////////////////
 /// //  🚨 주석 지우지 마세요
@@ -57,11 +57,9 @@ export default function TanstackQueryProviders({ children }: ProviderProps) {
   //       suspend because React will throw away the client on the initial
   //       render if it suspends and there is no boundary
   // const queryClient = getQueryClient();
-
   // const [queryClient] = useState(() => new QueryClient());
   // const [queryClient] = useState(makeQueryClient);
-
-  const queryClient = getQueryClient();
+  const [queryClient] = useState(getQueryClient);
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -26,7 +26,7 @@ import { axiosToken } from '@apis/instance/axiosToken';
 //   ]
 // }
 
-interface Card {
+export interface Card {
   id: number;
   title: string;
   description: string;
@@ -37,28 +37,32 @@ interface Card {
     nickname: string;
     id: number;
   };
-  imageUrl: string;
+  imageUrl?: string;
   teamId: string;
   columnId: number;
   createdAt: string | Date;
   updatedAt: string | Date;
 }
 
-interface GetCardListResponse {
-  cursorId: number;
+export interface GetCardListResponse {
+  cursorId: number | null;
   totalCount: number;
   cards: Card[];
 }
 
-interface GetCarListParams {
-  size: number;
+export interface GetCardListParams {
+  size?: number;
   columnId: number;
+  cursorId?: number | null;
 }
 
-export const getCardList = async ({ size, columnId }: GetCarListParams) => {
+export const getCardList = async ({ size = 10, columnId, cursorId }: GetCardListParams) => {
   const response = await axiosToken.get<GetCardListResponse>('/cards', {
+    // @see https://axios-http.com/docs/req_config
+    // NOTE: params that are null or undefined are not rendered in the URL.
     params: {
       size,
+      cursorId,
       columnId,
     },
   });
