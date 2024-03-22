@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import ColumnButton from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButton';
@@ -17,8 +18,8 @@ import { ModalComponentProps } from '@hooks/use-modal';
 
 import { DASHBOARD_COLORS } from '../../app/mydashboard/_constants';
 
-// eslint-disable-next-line
-export default function CreateDashboardModal({ closeModal, modalRef }: ModalComponentProps) {
+const CreateDashboardModal = ({ closeModal, modalRef }: ModalComponentProps) => {
+  const queryClient = useQueryClient();
   const [selectedColor, setSelectedColor] = useState(DASHBOARD_COLORS[0]);
   const [inputValue, setInputValue] = useState('');
 
@@ -38,6 +39,7 @@ export default function CreateDashboardModal({ closeModal, modalRef }: ModalComp
       });
 
       if (result.status === 201) {
+        queryClient.invalidateQueries({ queryKey: ['dashboard', 'dashboardList', 1] });
         closeModal();
       }
     } catch (error) {
@@ -82,7 +84,9 @@ export default function CreateDashboardModal({ closeModal, modalRef }: ModalComp
       </S.Wrapper>
     </ModalDimmed>
   );
-}
+};
+
+export default CreateDashboardModal;
 
 const S = {
   Wrapper: styled.div`
