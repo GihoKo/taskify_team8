@@ -26,6 +26,33 @@ export default function InvitationList() {
   const [cursorId, setCursorId] = useState<number | null>(null);
   const currentLastInvitation = useRef<HTMLDivElement>(null);
 
+  // 검색 기능
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  useEffect(() => {
+    // 검색어가 없는 경우 초기 데이터를 불러오고 무한스크롤을 재시작
+    if (searchKeyword === '') {
+      (async () => {
+        const data = await getInitialInvitionList();
+        setInvitationList(data.invitations);
+      })();
+
+      infiniteScroll();
+
+      return;
+    }
+
+    (async () => {
+      const data = await getSearchedInvitationList(searchKeyword);
+      setInvitationList(data.invitations);
+    })();
+    // eslint-disable-next-line
+  }, [searchKeyword]);
+
   // 초대 리스트 초기값 조회
   useEffect(() => {
     (async () => {
@@ -75,33 +102,6 @@ export default function InvitationList() {
     infiniteScroll();
     // eslint-disable-next-line
   }, [currentLastInvitation, cursorId]);
-
-  // 검색 기능
-  const [searchKeyword, setSearchKeyword] = useState('');
-
-  const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value);
-  };
-
-  useEffect(() => {
-    // 검색어가 없는 경우 초기 데이터를 불러오고 무한스크롤을 재시작
-    if (searchKeyword === '') {
-      (async () => {
-        const data = await getInitialInvitionList();
-        setInvitationList(data.invitations);
-      })();
-
-      infiniteScroll();
-
-      return;
-    }
-
-    (async () => {
-      const data = await getSearchedInvitationList(searchKeyword);
-      setInvitationList(data.invitations);
-    })();
-    // eslint-disable-next-line
-  }, [searchKeyword]);
 
   return (
     <S.Box>
