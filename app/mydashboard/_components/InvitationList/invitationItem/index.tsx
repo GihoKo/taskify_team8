@@ -4,9 +4,9 @@ import { forwardRef } from 'react';
 
 import styled from 'styled-components';
 
+import { Invitation } from '@apis/invitations/getInitialInvitionList';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import { Invitation } from '../../apis/api';
 import InvitationButton from '../../commons/InvitationButton';
 import InvitationText from '../../commons/InvitationText';
 
