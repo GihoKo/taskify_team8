@@ -1,8 +1,10 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import { deleteColumn } from '@apis/columns/deleteColumn';
+import { columnsQueryOptions } from '@queries/keys/columnskeys';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColumnButton from '../commons/ColumnButton';
@@ -14,6 +16,7 @@ interface DeleteColumnModalProps {
   modalRef: React.MutableRefObject<HTMLElement | null>;
   columnId: number;
   submitModal: () => void;
+  dashboardId: number;
 }
 
 export default function DeleteColumnModal({
@@ -21,12 +24,16 @@ export default function DeleteColumnModal({
   modalRef,
   toggleModal,
   columnId,
+  dashboardId,
   submitModal,
 }: DeleteColumnModalProps) {
+  const queryClient = useQueryClient();
+
   const removeColumn = async () => {
     try {
       const numberTypeColumndId = Number(columnId);
       await deleteColumn(numberTypeColumndId);
+      queryClient.invalidateQueries(columnsQueryOptions.columnList(dashboardId));
       submitModal();
     } catch (error) {
       console.log(error);

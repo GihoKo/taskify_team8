@@ -117,6 +117,7 @@ export default function UpdateColumnModal({
         {isDeleteColumnModalOpen ? (
           <DeleteColumnModal
             columnId={Number(columnId)}
+            dashboardId={Number(dashboardId)}
             isModalOpen={isDeleteColumnModalOpen}
             modalRef={deleteColumnModalRef}
             toggleModal={toggleDeleModal}
