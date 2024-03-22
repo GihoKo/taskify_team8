@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
-// import { createColumn } from '@apis/columns/createColumns';
 import { ColumnList, getColumnList } from '@apis/columns/getColumnList';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
@@ -24,7 +23,6 @@ export default function CreateColumnModal({
   submitModal,
   dashboardId,
 }: ModalComponentProps<{ dashboardId: number }>) {
-  // const [inputValue, setInputValue] = useState('');
   const [columnList, setColumnList] = useState<ColumnList[]>([]);
 
   useEffect(() => {
@@ -47,16 +45,6 @@ export default function CreateColumnModal({
 
     getColumns();
   }, [dashboardId]);
-
-  // const postColumn = async () => {
-  //   try {
-  //     const numberTypeDashboardId = Number(dashboardId);
-  //     await createColumn(inputValue, numberTypeDashboardId);
-  //     submitModal();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const {
     register,

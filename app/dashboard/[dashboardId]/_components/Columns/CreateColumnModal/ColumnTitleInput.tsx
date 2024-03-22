@@ -12,26 +12,8 @@ interface ColumnTitleInputProps {
   setError: any;
 }
 
-// export default function ColumnTitleInput({ id, register, errors, watch, setError }: ColumnTitleInputProps) {
 export default function ColumnTitleInput({ id, register, errors }: ColumnTitleInputProps) {
-  //   const { isError, checkTitle } = useColumnTitleInput(errors, watch, setError);
   const { isError, checkTitle } = useColumnTitleInput(errors);
-
-  //   useEffect(() => {
-  //     const subscription = watch((value: any) => {
-  //       if (value !== '') {
-  //         setError('title', {
-  //           message: '입력중임둥',
-  //         });
-  //       } else {
-  //         setError('title', {
-  //           message: 'dfsf',
-  //         });
-  //       }
-  //     });
-
-  //     return () => subscription.unsubscribe();
-  //   }, [watch]);
 
   return (
     <>

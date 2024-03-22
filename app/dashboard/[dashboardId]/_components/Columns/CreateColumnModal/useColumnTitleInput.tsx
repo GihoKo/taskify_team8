@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-// export default function useColumnTitleInput(errors: any, watch: any, setError: any) {
 export default function useColumnTitleInput(errors: any) {
   const [isError, setIsError] = useState(false);
 

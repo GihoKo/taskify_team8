@@ -3,6 +3,7 @@ import { FieldValues, SubmitHandler } from 'react-hook-form';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { ColumnList } from '@apis/columns/getColumnList';
 import { updateColumn } from '@apis/columns/updateColumn';
 import { columnsQueryOptions } from '@queries/keys/columnskeys';
 
@@ -13,8 +14,8 @@ interface ColumnTitleProps {
 export default function useUpdateColumn(
   watch: any,
   setError: any,
-  columnList: any,
-  submitModal: any,
+  columnList: ColumnList[],
+  submitModal: () => void,
   dashboardId: number,
   columnId: number,
 ) {
