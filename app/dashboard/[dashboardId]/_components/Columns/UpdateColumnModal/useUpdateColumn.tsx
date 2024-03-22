@@ -1,8 +1,10 @@
 import { FormEvent } from 'react';
 import { FieldValues, SubmitHandler } from 'react-hook-form';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { updateColumn } from '@apis/columns/updateColumn';
-// import { createColumn } from '@apis/columns/createColumns';
+import { columnsQueryOptions } from '@queries/keys/columnskeys';
 
 interface ColumnTitleProps {
   title: string;
@@ -13,8 +15,11 @@ export default function useUpdateColumn(
   setError: any,
   columnList: any,
   submitModal: any,
+  dashboardId: number,
   columnId: number,
 ) {
+  const queryClient = useQueryClient();
+
   // 컬럼 생성버튼 클릭
   const handleRegisterSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -31,6 +36,7 @@ export default function useUpdateColumn(
           const numberTypeColumndId = Number(columnId);
           const result = await updateColumn(data.title, numberTypeColumndId);
           console.log(result);
+          queryClient.invalidateQueries(columnsQueryOptions.columnList(dashboardId));
           submitModal();
         } catch (error) {
           console.log(error);

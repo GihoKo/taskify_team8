@@ -107,6 +107,7 @@ export default function UpdateColumnModal({
     setError,
     columnList,
     submitModal,
+    Number(dashboardId),
     Number(columnId),
   );
 
