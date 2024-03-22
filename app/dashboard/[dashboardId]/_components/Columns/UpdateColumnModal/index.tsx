@@ -18,12 +18,6 @@ import CreateModalTitle from '../commons/ColumnModalTitle';
 import ModalDimmed from '../commons/ModalDimmed';
 import DeleteColumnModal from '../DeleteColumnModal';
 
-// type UpdateColumnModalProps = {
-//   currentColumnTitle: string;
-// };
-
-// 수정용 id dashboardId=4989
-
 export default function UpdateColumnModal({
   closeModal,
   modalRef,
@@ -107,6 +101,7 @@ export default function UpdateColumnModal({
     setError,
     columnList,
     submitModal,
+    Number(dashboardId),
     Number(columnId),
   );
 
@@ -116,6 +111,7 @@ export default function UpdateColumnModal({
         {isDeleteColumnModalOpen ? (
           <DeleteColumnModal
             columnId={Number(columnId)}
+            dashboardId={Number(dashboardId)}
             isModalOpen={isDeleteColumnModalOpen}
             modalRef={deleteColumnModalRef}
             toggleModal={toggleDeleModal}
