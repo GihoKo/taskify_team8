@@ -1,8 +1,13 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 
+import { Dashboard, getDashboardList } from '@/app/mydashboard/_components/apis/api';
 import createDashboardIcon from '@public/images/icons/add-filledGray_787486-w20-w20.svg';
 import crown from '@public/images/icons/crown-filledYellow-FDD446-w16-h12.svg';
 import LogoSvg from '@public/images/logos/logo-small-filledViolet-w28.82-h33.07.svg?component';
@@ -10,21 +15,54 @@ import TaskifySvg from '@public/images/logos/taskify-text-small-filledViolet-w80
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColoredDot from '@components/atoms/ColoredDot';
-import {
-  dashboardMock,
-  handleCreateDashboardButtonClick,
-  handlePagenationNextButtonClick,
-  handlePagenationPreviousButtonClick,
-} from '@components/mock/mock';
+import { SIDE_BAR_PAGE_GROUP_NUMBER } from '@components/constants';
 
-import PageNationButton from '../atoms/PageNationButton';
+import useModal from '@hooks/use-modal';
+
+import PageNationButton from '../../atoms/PageNationButton';
 
 export default function SideBar() {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>();
+
+  const { data, isSuccess } = useQuery({
+    queryKey: ['dashboard', 'dashboardList', currentPage, SIDE_BAR_PAGE_GROUP_NUMBER],
+    queryFn: () => getDashboardList(currentPage, SIDE_BAR_PAGE_GROUP_NUMBER),
+  });
+  const [dashboards, setDashboards] = useState<Dashboard[]>(data?.dashboards || []);
+
+  const handleNextDashboardPageClick = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+
+  const handlePreviousDashboardPageClick = () => {
+    setCurrentPage((prev) => prev - 1);
+  };
+
+  // 대시보드 리스트 조회
+  useEffect(() => {
+    if (isSuccess) {
+      setDashboards(data?.dashboards);
+      setTotalPage(Math.ceil(data.totalCount / SIDE_BAR_PAGE_GROUP_NUMBER));
+    }
+  }, [data, isSuccess, currentPage]);
+
+  // 대시보드 생성 버튼 클릭
+  const { openModal } = useModal();
+
+  const handleCreateDashboardButtonClick = async () => {
+    const CreateDashboardModal = await import('@components/organisms/CreateDashboardModal').then(
+      (module) => module.default,
+    );
+
+    openModal(CreateDashboardModal);
+  };
+
   return (
-    <>
+    <S.Wrapper>
       <S.SideBarArea>
         {/* 로고 */}
-        <S.TitleSvgWrap>
+        <S.TitleSvgWrap href='/'>
           <S.PencilLogoSvg />
           <S.TextLogoSvg />
         </S.TitleSvgWrap>
@@ -39,35 +77,48 @@ export default function SideBar() {
 
         {/* 대시보드 아이템 리스트 */}
         <S.DashboardContainer>
-          {dashboardMock.map((dashboard) => {
+          {dashboards.map((dashboard) => {
             return (
-              <S.DashboardItem key={dashboard.id}>
-                <ColoredDot color={dashboard.color} />
-                <S.DashboardName $isMyDashboard={dashboard.isMyDashboard}>{dashboard.name}</S.DashboardName>
-                {dashboard.isMyDashboard ? (
-                  <S.ImageWrapper>
-                    <Image src={crown} alt='왕관 이미지' fill />
-                  </S.ImageWrapper>
-                ) : null}
-              </S.DashboardItem>
+              <Link href={`/dashboard/${dashboard.id}`} key={dashboard.id} style={{ textDecoration: 'none' }}>
+                <S.DashboardItem>
+                  <ColoredDot color={dashboard.color} />
+                  <S.DashboardName $isMyDashboard={dashboard.createdByMe}>{dashboard.title}</S.DashboardName>
+                  {dashboard.createdByMe ? (
+                    <S.ImageWrapper>
+                      <Image src={crown} alt='왕관 이미지' fill />
+                    </S.ImageWrapper>
+                  ) : null}
+                </S.DashboardItem>
+              </Link>
             );
           })}
         </S.DashboardContainer>
-
         {/* 페이지 네이션 버튼 */}
         <S.PageNationButtonWrapper>
-          <PageNationButton status='previous' onClick={handlePagenationPreviousButtonClick} disabled />
-          <PageNationButton status='next' onClick={handlePagenationNextButtonClick} disabled={false} />
+          <PageNationButton status='previous' disabled={currentPage === 1} onClick={handlePreviousDashboardPageClick} />
+          <PageNationButton status='next' disabled={currentPage === totalPage} onClick={handleNextDashboardPageClick} />
         </S.PageNationButtonWrapper>
       </S.SideBarArea>
-    </>
+    </S.Wrapper>
   );
 }
 
 const S = {
+  Wrapper: styled.div`
+    margin-right: 6.7rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      margin-right: 16rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      margin-right: 30rem;
+    }
+  `,
   SideBarArea: styled.div`
     width: 6.7rem;
+    height: 100vh;
     border-right: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
+    position: fixed;
 
     @media ${mediaBreakpoint.tablet} {
       width: 16rem;
@@ -95,7 +146,7 @@ const S = {
     }
   `,
 
-  TitleSvgWrap: styled.div`
+  TitleSvgWrap: styled(Link)`
     display: flex;
     align-items: center;
     margin: 2rem 2.24rem 3.89rem 2.2rem;
@@ -149,6 +200,7 @@ const S = {
     flex-direction: column;
     padding-left: 1.4rem;
     padding-right: 1.3rem;
+    position: relative;
 
     @media ${mediaBreakpoint.tablet} {
       padding-right: 1.2rem;
@@ -183,6 +235,9 @@ const S = {
 
   DashboardName: styled.div<{ $isMyDashboard: boolean }>`
     display: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 
     @media ${mediaBreakpoint.tablet} {
       display: block;
@@ -200,9 +255,12 @@ const S = {
   `,
 
   ImageWrapper: styled.div`
+    width: 1.5rem;
+    height: 1.2rem;
     display: none;
     position: relative;
     align-self: normal;
+    flex-shrink: 0;
 
     @media ${mediaBreakpoint.tablet} {
       display: block;
@@ -211,7 +269,7 @@ const S = {
     }
 
     @media ${mediaBreakpoint.pc} {
-      width: 1.75rem;
+      width: 1.76rem;
       height: 1.4rem;
     }
   `,
@@ -219,11 +277,11 @@ const S = {
   PageNationButtonWrapper: styled.div`
     display: none;
     position: absolute;
+    left: 0.75rem;
+    bottom: 0.94rem;
 
     @media ${mediaBreakpoint.tablet} {
       display: flex;
-      left: 1.2rem;
-      bottom: 1.5rem;
     }
   `,
 };

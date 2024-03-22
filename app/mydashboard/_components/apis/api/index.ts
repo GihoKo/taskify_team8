@@ -17,9 +17,9 @@ export interface DashboardList {
   dashboards: Dashboard[];
 }
 
-export const getDashboardList = async (currentPage: number) => {
+export const getDashboardList = async (currentPage: number, size = 5) => {
   const { data } = await instanceAddedAccessToken.get<DashboardList>(
-    `/dashboards?navigationMethod=pagination&page=${currentPage}&size=5`,
+    `/dashboards?navigationMethod=pagination&page=${currentPage}&size=${size}`,
   );
 
   return data;
