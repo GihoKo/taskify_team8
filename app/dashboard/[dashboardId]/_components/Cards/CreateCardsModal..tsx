@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
@@ -11,7 +12,9 @@ import { ModalComponentProps } from '@hooks/use-modal/types';
 
 import ImageInput from './molecules/ImageInput';
 import SelectInput from './molecules/SelectInput';
+import CardTagInput from './molecules/tag/CardTagInput';
 import TextInput from './molecules/TextInput';
+import CardTitleInput from './molecules/title/CardTitleInput';
 import ColumnModalTemplates from '../Columns/ColumnModalTemplate';
 import ColumnButton from '../Columns/commons/ColumnButton';
 import ColumnButtonsWrap from '../Columns/commons/ColumnButtonWrap';
@@ -41,6 +44,14 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
     console.log('imageUrl', imageUrl);
   }, [imageUrl]);
 
+  const {
+    register,
+    // handleSubmit,
+    watch,
+    setError,
+    formState: { errors },
+  } = useForm({ mode: 'onBlur' });
+
   return (
     <ModalDimmed>
       {isImageModalOpen ? (
@@ -64,12 +75,11 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
           <CreateModalTitle title='할 일 생성' />
           <S.CardsForm>
             <SelectInput title='담당자' options={['카테고리1', '카테고리2', '카테고리3']} />
-            <TextInput title='제목' inputType='text' placeHolder='제목을 입력해 주세요' required />
+            <CardTitleInput id='title' register={register} errors={errors} watch={watch} setError={setError} required />
             <TextInput title='설명' inputType='textarea' placeHolder='설명을 입력해 주세요' required />
-
             <TextInput inputType='datetime-local' placeHolder='날짜를 입력해 주세요' title={'마감일'} />
-
-            <TextInput title='태그' inputType='text' placeHolder='입력후 엔터' />
+            <CardTagInput id='tag' register={register} errors={errors} watch={watch} setError={setError} />
+            {/* <TextInput title='태그' inputType='text' placeHolder='입력후 엔터' /> */}
             <ImageInput onClick={openImageColumnModal} title='이미지' imageUrl={imageUrl} />
             <ColumnButtonsWrap>
               <ColumnButton onClick={closeModal}>취소</ColumnButton>
