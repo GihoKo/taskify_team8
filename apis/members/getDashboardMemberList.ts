@@ -1,19 +1,10 @@
 import { axiosToken } from '@apis/instance/axiosToken';
 
+// 404
+// Not Found
+
 // {
-//   "members": [
-//     {
-//       "id": 0,
-//       "userId": 0,
-//       "email": "string",
-//       "nickname": "string",
-//       "profileImageUrl": "string",
-//       "createdAt": "2024-03-19T17:00:39.373Z",
-//       "updatedAt": "2024-03-19T17:00:39.373Z",
-//       "isOwner": true
-//     }
-//   ],
-//   "totalCount": 0
+//   "message": "대시보드의 멤버가 아닙니다."
 // }
 
 export interface Member {
