@@ -45,6 +45,4 @@ export const PageNationNextButtonMock = {
   disabled: false,
 };
 
-export const handleCreateDashboardClick = () => {};
-
 export const handleDashboardClick = () => {};

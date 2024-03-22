@@ -14,5 +14,6 @@ const S = {
     height: 0.8rem;
     border-radius: 50%;
     background: ${({ theme, $color }) => $color || theme.color.gray_787486};
+    flex-shrink: 0;
   `,
 };

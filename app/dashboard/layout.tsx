@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react';
 
 import DashboardNav from '@components/organisms/DashboardNav';
-import SideBar from '@components/organisms/SideBar';
+import SideBar from '@components/organisms/SideBar/SideBar';
 
 import Page from './_components/atoms/Page';
 import ContentsArea from './_components/molecules/ContentsArea';
