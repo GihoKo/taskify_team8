@@ -12,7 +12,6 @@ type DashboardItemType = Pick<Dashboard, 'title' | 'color' | 'createdByMe'>;
 
 interface DashboardItemProps extends DashboardItemType {}
 
-// 주석
 export default function DashboardItem({ title, color, createdByMe }: DashboardItemProps) {
   return (
     <S.Button onClick={() => {}}>
