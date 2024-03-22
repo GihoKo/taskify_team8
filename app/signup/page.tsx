@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import { signUpUser } from '@apis/sign/axiosSignUp';
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import Input from '@components/molecules/Input';
 
@@ -262,29 +263,31 @@ const S = {
   Form: styled.form`
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 3rem;
     padding: 0 1rem;
   `,
+
   Signupback: styled.div`
     display: flex;
     flex-direction: column;
   `,
   Container: styled.div`
-    width: 100%;
-    max-width: 52rem;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    background: ${({ theme }) => theme.color.gray_FAFAFA};
   `,
   Logo: styled.div`
     position: relative;
-    margin: 1rem auto;
-    width: 20rem;
-    height: 27.9rem;
-
-    @media (max-width: 767px) {
-      margin: 30rem auto 0.8rem;
+    margin: 0 auto;
+    width: 14rem;
+    height: 19.5rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 20rem;
+      height: 27.9rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 20rem;
+      height: 27.9rem;
     }
   `,
   Text: styled.p`
@@ -309,7 +312,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 35.1rem;
     height: 5rem;
     border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.gray_9FA6B2};
@@ -317,13 +320,15 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
 
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 52rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 52rem;
     }
   `,
   Button: styled.button`
-    width: 100%;
+    width: 35.1rem;
     height: 5rem;
     border: none;
     border-radius: 0.8rem;
@@ -333,9 +338,11 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
 
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 52rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 52rem;
     }
   `,
   Logintext: styled.div`

@@ -1,7 +1,6 @@
-// api.ts
-
 import axios from '@apis/localAxios';
 
+// 분리 작업중
 export const fetchCurrentUser = async () => {
   try {
     const response = await axios.get('/users/me');

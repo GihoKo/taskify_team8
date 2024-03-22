@@ -113,6 +113,7 @@ function MyPage() {
 
   const router = useRouter();
 
+  // api 분리 필요
   // -- 이미지 / 닉네임 변경 시작
   const fetchProfileImage = useCallback(async () => {
     try {
@@ -195,7 +196,7 @@ function MyPage() {
     }
   };
 
-  const handleDeleteImg = () => {
+  const handleDeleteImage = () => {
     setProfileValue((prev) => ({
       ...prev,
       profileImageUrl: null,
@@ -220,7 +221,7 @@ function MyPage() {
 
         router.push('/mypage');
       } catch (err) {
-        setModalText('error'); // 에러가 발생했을 때 'error' 메시지를 표시합니다. 못된 타입에러를 물리치기 위해 텍스트로 대체하였습니다.
+        setModalText('error');
         showPasswordToggle();
       }
     }
@@ -250,21 +251,21 @@ function MyPage() {
         <S.Box onSubmit={handleSubmit1(onSubmit1)}>
           <S.BoxTitle>프로필</S.BoxTitle>
           <S.InputBox>
-            <S.BoxImg>
+            <S.BoxImage>
               <Image
                 key={previewUrl}
                 src={previewUrl}
                 alt='이미지 추가'
                 fill
                 placeholder='blur'
-                blurDataURL={'/images/icons/profile-add.svg'} // Todo: 이미지가 있었는데 없어진다.. 수정 필요
+                blurDataURL={'/images/icons/profile-add.svg'}
               />
-              <S.ChangeImg>
-                <S.ChangeImgInner htmlFor='file'>
-                  <S.ImgEdit>
+              <S.ChangeImage>
+                <S.ChangeImageInner htmlFor='file'>
+                  <S.ImageEdit>
                     <Image src={'/images/icons/profile-edit.svg'} alt='이미지 변경' fill />
-                  </S.ImgEdit>
-                </S.ChangeImgInner>
+                  </S.ImageEdit>
+                </S.ChangeImageInner>
 
                 <input
                   {...register1('profileImageUrl')}
@@ -273,8 +274,8 @@ function MyPage() {
                   id='file'
                   onChange={handleFileChange}
                 />
-              </S.ChangeImg>
-            </S.BoxImg>
+              </S.ChangeImage>
+            </S.BoxImage>
             <S.Inputs>
               {currentUser && (
                 <>
@@ -292,7 +293,7 @@ function MyPage() {
             </S.Inputs>
           </S.InputBox>
           <S.ButtonBox>
-            <S.DeleteImg onClick={handleDeleteImg}>이미지 삭제</S.DeleteImg>
+            <S.DeleteImage onClick={handleDeleteImage}>이미지 삭제</S.DeleteImage>
             <S.Submit type='submit' value={'저장'} null={profileButton} disabled={!!profileButton} />
           </S.ButtonBox>
         </S.Box>
@@ -379,7 +380,7 @@ const S = {
       font-size: 2rem;
     }
   `,
-  BoxImg: styled.div`
+  BoxImage: styled.div`
     width: 18.2rem;
     height: 18.2rem;
     position: relative;
@@ -391,7 +392,7 @@ const S = {
       height: 10rem;
     }
   `,
-  ChangeImg: styled.div`
+  ChangeImage: styled.div`
     width: 18.2rem;
     height: 18.2rem;
     position: relative;
@@ -411,7 +412,7 @@ const S = {
       height: 10rem;
     }
   `,
-  ChangeImgInner: styled.label`
+  ChangeImageInner: styled.label`
     width: 18.2rem;
     height: 18.2rem;
     position: relative;
@@ -424,7 +425,7 @@ const S = {
       height: 10rem;
     }
   `,
-  ImgEdit: styled.div`
+  ImageEdit: styled.div`
     width: 2rem;
     height: 2rem;
     position: relative;
@@ -453,7 +454,7 @@ const S = {
     border: none;
     margin: 3.2rem 0 0 auto;
   `,
-  DeleteImg: styled.div`
+  DeleteImage: styled.div`
     width: 8.4rem;
     height: 3.2rem;
     border-radius: 4px;

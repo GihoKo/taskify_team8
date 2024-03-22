@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import { getUserData, loginUser } from '@apis/sign/axiosSignIn';
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
@@ -183,7 +184,7 @@ export default function SignIn() {
               handleBlur={handleBlur('password')}
             />
 
-            {lastCheck ? <S.Button type='submit'>가입하기</S.Button> : <S.NoneButton>가입하기</S.NoneButton>}
+            {lastCheck ? <S.Button type='submit'>로그인</S.Button> : <S.NoneButton>로그인</S.NoneButton>}
           </S.LoginForm>
           <S.Signup>
             회원이 아니신가요?
@@ -201,6 +202,7 @@ const S = {
   Signinback: styled.div`
     width: 100%;
     height: 100vh;
+    align-items: center;
     background: ${({ theme }) => theme.color.gray_FAFAFA};
   `,
   Signin: styled.div`
@@ -225,7 +227,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 35.1rem;
     height: 5rem;
     border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.gray_9FA6B2};
@@ -233,13 +235,15 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
 
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 52rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 52rem;
     }
   `,
   Button: styled.button`
-    width: 100%;
+    width: 35.1rem;
     height: 5rem;
     border: none;
     border-radius: 0.8rem;
@@ -249,9 +253,11 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
 
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 52rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 52rem;
     }
   `,
   Logo: styled.div`
@@ -268,10 +274,8 @@ const S = {
   LoginForm: styled.form`
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 3rem;
-    @media all and (max-width: 767px) {
-      padding: 0 1.2rem;
-    }
   `,
   Submit: styled.input`
     display: flex;
