@@ -4,9 +4,13 @@ import React, { FC } from 'react';
 
 import { usePathname } from 'next/navigation';
 
+import { returnBasedOnPathName } from './returnBaseOnPathName';
+
+export type CallableMappedComponent = (pathName: string) => React.ReactElement;
+
 export interface ComponentMappedToPath {
   path: string | string[] | RegExp;
-  component: React.ReactElement;
+  component: ((pathName: string) => React.ReactElement) | React.ReactElement | null;
 }
 
 export interface ComponentListMappedToPath {
@@ -30,26 +34,10 @@ const withFunnel = <FunnelConsumerProps,>(FunnelConsumer: FC<FunnelConsumerProps
   }: FunnelProps & T) => {
     const pathName = usePathname();
 
-    for (const { path, component } of componentListMappedToPath) {
-      if (path instanceof RegExp) {
-        if (path.test(pathName)) {
-          return <>{component}</>;
-        }
-      }
+    const returnedComponent = returnBasedOnPathName(componentListMappedToPath, pathName);
 
-      if (Array.isArray(path)) {
-        for (const p of path) {
-          if (p === pathName) {
-            return <>{component}</>;
-          }
-        }
-      }
-
-      if (typeof path === 'string') {
-        if (path === pathName) {
-          return <>{component}</>;
-        }
-      }
+    if (returnedComponent) {
+      return returnedComponent;
     }
 
     return <FunnelConsumer {...(rest as T)} />;
