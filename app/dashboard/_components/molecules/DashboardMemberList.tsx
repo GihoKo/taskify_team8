@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { useParams, useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
@@ -18,10 +20,12 @@ const DashboardMemberList = () => {
   const { resizeInfo } = useResizeObserver();
   const router = useRouter();
 
-  // eslint-disable-next-line eqeqeq
-  if (dashboardId == undefined) {
-    router.replace('/mydashboard');
-  }
+  useEffect(() => {
+    // eslint-disable-next-line eqeqeq
+    if (dashboardId == undefined) {
+      router.replace('/mydashboard');
+    }
+  }, [router, dashboardId]);
 
   // TODO: dashboard id 없을 때 리다이렉트 시키는 로직 있어야 할 듯
   // TODO: dashboard edit에서 사용하는 useGetDashboardMemberList와 겹치는 부분이 있을 지 확인해야 함.
@@ -29,7 +33,7 @@ const DashboardMemberList = () => {
   // dashboard 거쳐서 edit 페이지 진입: 여기서 csr로 먼저 쿼리 데이터를 채워놓음.
   // dashboard 거치지 않고 edit 페이지 바로 진입: edit 페이지에서 프리 패치로 쿼리 데이터를 채워넣음.
   // 서로의 페이지에서 이미 query data가 채워져 있는 지 확인을 해서 중복으로 요청하는 것을 막을 필요가 있어보임.
-  const { data, isSuccess } = useGetDashboardMemberList({ dashboardId: Number(dashboardId), size: 5 });
+  const { data, isSuccess } = useGetDashboardMemberList({ dashboardId: Number(dashboardId), size: 5, currentPage: 1 });
 
   const profileListCount = data?.totalMemberCount || 0;
   const members: Member[] = data?.pages || [];
