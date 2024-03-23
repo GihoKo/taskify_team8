@@ -1,4 +1,4 @@
-import { instanceAddedAccessToken } from '../instance';
+import { axiosToken } from '@apis/instance/axiosToken';
 
 // 대시보드 리스트 조회
 export interface Dashboard {
@@ -18,7 +18,7 @@ export interface DashboardList {
 }
 
 export const getDashboardList = async (currentPage: number, size = 5) => {
-  const { data } = await instanceAddedAccessToken.get<DashboardList>(
+  const { data } = await axiosToken.get<DashboardList>(
     `/dashboards?navigationMethod=pagination&page=${currentPage}&size=${size}`,
   );
 
@@ -26,9 +26,7 @@ export const getDashboardList = async (currentPage: number, size = 5) => {
 };
 
 export const getFirstDashboard = async () => {
-  const { data } = await instanceAddedAccessToken.get<DashboardList>(
-    `/dashboards?navigationMethod=infiniteScroll&size=1`,
-  );
+  const { data } = await axiosToken.get<DashboardList>(`/dashboards?navigationMethod=infiniteScroll&size=1`);
 
   return data.dashboards[0].id;
 };
@@ -65,13 +63,13 @@ export interface InvitationList {
 }
 
 export const getInitialInvitionList = async () => {
-  const { data } = await instanceAddedAccessToken.get<InvitationList>(`/invitations?size=6`);
+  const { data } = await axiosToken.get<InvitationList>(`/invitations?size=6`);
 
   return data;
 };
 
 export const getMoreInvitionList = async (cursorId: number | null) => {
-  const { data } = await instanceAddedAccessToken.get<InvitationList>(`/invitations?cursorId=${cursorId}&size=6`);
+  const { data } = await axiosToken.get<InvitationList>(`/invitations?cursorId=${cursorId}&size=6`);
 
   return data;
 };
@@ -82,7 +80,7 @@ interface InvitationAnswer {
 }
 
 export const putInvitationAnswer = async (invitationId: number, answer: boolean) => {
-  const { data } = await instanceAddedAccessToken.put<InvitationAnswer>(`/invitations/${invitationId}`, {
+  const { data } = await axiosToken.put<InvitationAnswer>(`/invitations/${invitationId}`, {
     inviteAccepted: answer,
   });
 
