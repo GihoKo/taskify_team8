@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import heroImage from '@public/images/mocks/hero.png';
@@ -7,9 +8,14 @@ import TodoFeatureImage from '@public/images/mocks/todo-feature.png';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import { LANDING_PAGE_VARIOUS_SETTING_ITEMS } from '../constants';
-import { handleGotoSignInButtonClick } from '../mock';
 
 export default function Main() {
+  const router = useRouter();
+
+  const handleGotoSignInButtonClick = () => {
+    router.push('/signin');
+  };
+
   return (
     <S.MainArea>
       <S.HeroBox>
@@ -196,6 +202,7 @@ const S = {
     border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.violet_5534DA};
     margin-bottom: 8rem;
+    cursor: pointer;
 
     @media ${mediaBreakpoint.tablet} {
       width: 28rem;
@@ -298,8 +305,11 @@ const S = {
   TodoDescriptionWrapper: styled.div`
     display: flex;
     flex-direction: column;
-    padding-left: 6rem;
     gap: 6.1rem;
+
+    @media ${mediaBreakpoint.tablet} {
+      padding-left: 6rem;
+    }
 
     @media ${mediaBreakpoint.pc} {
       padding-left: 0;
