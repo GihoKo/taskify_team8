@@ -118,9 +118,7 @@ const S = {
     width: 6.7rem;
     height: 100vh;
     border-right: 1px solid ${({ theme }) => theme.color.gray_D9D9D9};
-    position: relative;
-    left: 0;
-    top: 0;
+    position: fixed;
     z-index: ${({ theme }) => theme.zIndex.sidebar};
 
     @media ${mediaBreakpoint.tablet} {

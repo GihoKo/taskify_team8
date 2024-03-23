@@ -1,44 +1,53 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import { useEffect } from 'react';
 
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import { sidebarWidth } from '@styles/sidebarWidth';
 
 import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
+import NonNullableFunnel from '@components/util/NonNullableFunnel';
 
+import { useUserStore } from '@store/store/userStore';
+
+import DashboardNameWithValidId from './DashboardNameWithValidId';
 import DashboardMemberList from '../../app/dashboard/_components/molecules/DashboardMemberList';
 import InviteButton from '../../app/dashboard/_components/molecules/InviteButton';
 import ManageButton from '../../app/dashboard/_components/molecules/ManageButton';
-import { mockDashboardMemberList } from '../../app/dashboard/_constants/mockDashboardMemberList';
 
-type DashboardNavProps = PropsWithChildren;
-
-// TODO: api 연결되면 프롭 수정
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const DashboardNav = ({ children }: DashboardNavProps) => {
+const DashboardNav = () => {
   const pathname = usePathname();
+  // * dashboardId가 없는 곳이면, null이 될 수도 있음.
+  const { dashboardId } = useParams<{ dashboardId?: string }>();
+
+  const { user, getUser } = useUserStore();
+
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
 
   return (
     <S.Wrapper $pathname={pathname}>
       <S.DashBoardNameBox $pathname={pathname}>
-        {pathname === '/mydashboard' ? (
-          <S.DashBoardName>내 대시보드</S.DashBoardName>
-        ) : (
-          <>
-            <S.DashBoardName>비브리지</S.DashBoardName>
-            <S.CrownIcon
-              src={'/images/icons/crown-filledYellow-FDD446-w16-h12.svg'}
-              alt='왕관 이미지'
-              width={20.103}
-              height={16}
-            />
-          </>
-        )}
+        <NonNullableFunnel
+          condition={{ dashboardId }}
+          componentListMappedToPath={[
+            {
+              path: '/mydashboard',
+              component: <S.DashBoardName>내 대시보드</S.DashBoardName>,
+            },
+            {
+              path: '/mypage',
+              component: <S.DashBoardName>계정관리</S.DashBoardName>,
+            },
+          ]}
+        >
+          {({ dashboardId }) => <DashboardNameWithValidId dashboardId={Number(dashboardId)} />}
+        </NonNullableFunnel>
       </S.DashBoardNameBox>
 
       <S.RightContentsBox>
@@ -52,7 +61,7 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
           {/* 멤버 프로필 정보 */}
           {pathname === '/mydashboard' ? null : (
             <>
-              <DashboardMemberList members={mockDashboardMemberList} />
+              <DashboardMemberList />
               <S.Stick />
             </>
           )}
@@ -72,10 +81,11 @@ const DashboardNav = ({ children }: DashboardNavProps) => {
               borderWidth={{
                 onMobile: '2px',
               }}
+              profileImageUrl={user.profileImageUrl}
             >
-              B
+              {user.nickname[0]}
             </FirstLetterProfile>
-            <S.MyName>배유철</S.MyName>
+            <S.MyName>{user.nickname}</S.MyName>
           </S.MyInfoBox>
         </S.ProfileBox>
       </S.RightContentsBox>
@@ -113,7 +123,7 @@ const S = {
 
     @media ${mediaBreakpoint.pc} {
       padding-inline: 4rem;
-      width: 100%;
+      width: calc(100vw - ${sidebarWidth.onPc});
       justify-content: space-between;
       position: static;
     }

@@ -8,7 +8,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 const InviteButton = () => {
   return (
-    <S.Button>
+    <S.Button type='button'>
       <S.IconBox>
         <Image alt='초대하기 아이콘' src={tableInviteIcon} />
       </S.IconBox>
