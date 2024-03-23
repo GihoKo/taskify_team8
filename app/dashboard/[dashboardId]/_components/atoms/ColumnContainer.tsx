@@ -56,6 +56,7 @@ const S = {
       /* padding: 2.25rem 2rem 2rem; */
       min-height: calc(100vh - ${dashboardNavbarHeight.onPc});
       max-height: fit-content;
+      flex-shrink: 0;
 
       padding: ${({ $isLastColumn }) => ($isLastColumn ? '6.8rem 2rem 2rem' : '2.25rem 2rem 2rem')};
     }
