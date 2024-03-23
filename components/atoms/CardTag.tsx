@@ -1,6 +1,6 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -14,7 +14,7 @@ const getRandomPickedColorSet = () => {
 };
 
 const CardTag = ({ children }: CardTagProps) => {
-  const [randomBackgroundColor, randomFontColor] = getRandomPickedColorSet();
+  const [[randomBackgroundColor, randomFontColor]] = useState(getRandomPickedColorSet);
 
   return (
     <S.Tag $randomBackgroundColor={randomBackgroundColor} $randomFontColor={randomFontColor}>

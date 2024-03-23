@@ -27,7 +27,7 @@ const DashboardPage = ({ params }: DashboardPageParams) => {
           <ColumnContainerGroup dashboardId={NumericDashboardId} />
         </HydrationBoundaryComponent>
         <ColumnContainer isLastColumn>
-          <ColumnAppendButton />
+          <ColumnAppendButton dashboardId={NumericDashboardId} />
         </ColumnContainer>
       </DashboardContentsArea>
     </>

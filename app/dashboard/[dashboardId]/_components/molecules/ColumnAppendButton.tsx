@@ -10,15 +10,15 @@ import { useModal } from '@hooks/use-modal/useModal';
 
 import PlusShapeIcon from '../atoms/PlusShapeIcon';
 
-type ColumnAppendButtonProps = PropsWithChildren;
+type ColumnAppendButtonProps = PropsWithChildren<{ dashboardId: number }>;
 
-const ColumnAppendButton = ({ children }: ColumnAppendButtonProps) => {
+const ColumnAppendButton = ({ children, dashboardId }: ColumnAppendButtonProps) => {
   const { openModal } = useModal();
 
   const handleColumnAddButtonClick = async () => {
     const CreateColumnModal = await import('../Columns/CreateColumnModal').then((module) => module.default);
 
-    openModal(CreateColumnModal);
+    openModal(CreateColumnModal, { dashboardId });
   };
 
   return (
