@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ACCESS_TOKEN } from '@constants/token';
 
 import { getCookie } from '@utils/cookie';

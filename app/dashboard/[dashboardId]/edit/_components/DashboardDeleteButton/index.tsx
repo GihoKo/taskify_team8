@@ -22,7 +22,7 @@ const S = {
   DeleteButton: styled.button`
     cursor: pointer;
 
-    margin-top: 3.2rem;
+    margin-block: 3.2rem 2.4rem;
     width: 28.4rem;
     height: 5.2rem;
 
@@ -44,7 +44,7 @@ const S = {
     align-self: center;
 
     @media ${mediaBreakpoint.tablet} {
-      margin-top: 4.8rem;
+      margin-block: 4.8rem;
       width: 32rem;
       height: 6.2rem;
 
@@ -53,7 +53,7 @@ const S = {
     }
 
     @media ${mediaBreakpoint.pc} {
-      margin-top: 4rem;
+      margin-block: 4rem 5.6rem;
     }
   `,
 };

@@ -1,19 +1,50 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
+import { Invitation } from '@apis/dashboards/getInvitationList';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import { useGetInvitationList } from '../../_hooks/useGetInvitationList.query';
 import InviteButton from '../InviteButton';
 import InviteeListTable from '../InviteeListTable';
 import { PageTurner } from '../PageTurner';
 
-type InviteeManageFormProps = PropsWithChildren;
+type InviteeManageFormProps = {
+  dashboardId: number;
+};
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const InviteeManageForm = ({ children }: InviteeManageFormProps) => {
+const InviteeManageForm = ({ dashboardId }: InviteeManageFormProps) => {
+  const sizePerPage = 5;
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, isSuccess, hasNextPage, hasPreviousPage, fetchNextPage, fetchPreviousPage, isPending } =
+    useGetInvitationList({ dashboardId, size: sizePerPage, currentPage });
+  const [invitationList, setInvitationList] = useState<Invitation[]>(data?.pages || []);
+
+  const handleNextPage = async () => {
+    if (hasNextPage) {
+      const result = await fetchNextPage();
+      result.isSuccess && setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePreviousPage = async () => {
+    if (hasPreviousPage) {
+      const result = await fetchPreviousPage();
+      result.isSuccess && setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setInvitationList(data.pages);
+    }
+  }, [isSuccess, data]);
+
   return (
     <S.Form>
       <S.FormHeader>
@@ -21,10 +52,10 @@ const InviteeManageForm = ({ children }: InviteeManageFormProps) => {
         <S.FormHeaderRightArea>
           <PageTurner>
             <PageTurner.Wrapper>
-              <PageTurner.CurrentPageDescriber currentPage={1} totalPages={1} />
+              <PageTurner.CurrentPageDescriber currentPage={currentPage} totalPages={data?.totalPages || 1} />
               <PageTurner.ButtonContainer>
-                <PageTurner.LeftButton />
-                <PageTurner.RightButton />
+                <PageTurner.LeftButton disabled={isPending} onClick={handlePreviousPage} />
+                <PageTurner.RightButton disabled={isPending} onClick={handleNextPage} />
               </PageTurner.ButtonContainer>
             </PageTurner.Wrapper>
           </PageTurner>
@@ -41,7 +72,7 @@ const InviteeManageForm = ({ children }: InviteeManageFormProps) => {
         </S.MiddleAreaInviteButtonBox>
       </S.MiddleArea>
 
-      <InviteeListTable />
+      <InviteeListTable invitationList={invitationList} />
     </S.Form>
   );
 };

@@ -192,7 +192,11 @@ const S = {
   TagsContainer: styled.div`
     display: flex;
     flex-shrink: 0;
-    column-gap: 0.6rem;
+    /* column-gap: 0.6rem; */
+    gap: 0.6rem;
+
+    max-width: 100%;
+    flex-wrap: wrap;
   `,
 
   DateAndProfileBox: styled.div`
