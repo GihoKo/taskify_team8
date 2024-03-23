@@ -15,7 +15,6 @@ import CardTextArea from './molecules/description/CardTextarea';
 import ImageInput from './molecules/ImageInput';
 import SelectInput from './molecules/SelectInput';
 import CardTagInput from './molecules/tag/CardTagInput';
-import TextInput from './molecules/TextInput';
 import CardTitleInput from './molecules/title/CardTitleInput';
 import ColumnModalTemplates from '../Columns/ColumnModalTemplate';
 import ColumnButton from '../Columns/commons/ColumnButton';
@@ -141,6 +140,9 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
               setError={setErrorOnChange}
               reset={resetOnChange}
             />
+
+            {/* <TextInput title='태그' inputType='text' placeHolder='입력후 엔터' /> */}
+
             <ImageInput onClick={openImageColumnModal} title='이미지' imageUrl={imageUrl} />
             <ColumnButtonsWrap>
               <ColumnButton onClick={closeModal}>취소</ColumnButton>
