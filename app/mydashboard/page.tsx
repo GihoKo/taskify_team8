@@ -4,11 +4,8 @@ import HydrationBoundaryComponent from '@components/server/HydrationBoundaryComp
 import InvitationList from './_components/InvitationList';
 import Main from './_components/Main/Main';
 import MyDashboardList from './_components/MyDashboardList';
+import { prefetchDashboardList, prefetchInvitationList } from './_utils/prefetchDashboardList.query';
 import DashboardNav from '../../components/organisms/DashboardNav';
-import {
-  prefetchDashboardList,
-  prefetchInvitationList,
-} from '../dashboard/[dashboardId]/_utils/prefetchDashboardList.query';
 
 export default function MyDashboardPage() {
   return (

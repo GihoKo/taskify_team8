@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { Dashboard, getDashboardList } from '@/app/mydashboard/_components/apis/api';
+import { Dashboard, getDashboardList } from '@apis/dashboards/getDashboardList';
 import createDashboardIcon from '@public/images/icons/add-filledGray_787486-w20-w20.svg';
 import crown from '@public/images/icons/crown-filledYellow-FDD446-w16-h12.svg';
 import LogoSvg from '@public/images/logos/logo-small-filledViolet-w28.82-h33.07.svg?component';
