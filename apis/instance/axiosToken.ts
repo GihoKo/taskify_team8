@@ -5,6 +5,8 @@ import { ACCESS_TOKEN } from '@constants/token';
 import { logOnDev } from '@utils/logger/logOnDev';
 import { getAccessToken } from '@utils/token/getAccessToken';
 
+import { useUserStore } from '@store/store/userStore';
+
 const isServer = typeof window === 'undefined';
 
 /**
@@ -51,6 +53,21 @@ axiosToken.interceptors.response.use(
   },
 
   (error: AxiosError | Error): Promise<AxiosError> => {
+    if (isAxiosError(error)) {
+      console.log('1');
+
+      if (error.response?.status === 401) {
+        console.log(2);
+
+        // 서버에서 스토어 리셋해도 persist 스토어라 브라우저 로컬 스토리지에서 상태 다시 읽어와서 상태가 불일치 됨. -> Nextjs 상태 불일치 에러
+        if (!isServer) {
+          // 그래서 브라우저인지 확인하고 해야 함
+          console.log(3);
+          useUserStore.getState().resetUser();
+        }
+      }
+    }
+
     if (isAxiosError(error) && error.code === AxiosError.ECONNABORTED) {
       const { method, url } = error.config as InternalAxiosRequestConfig;
       logOnDev(`☢️ [API] ${method?.toUpperCase()} ${url} | Response`);
