@@ -6,12 +6,15 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import { getInitialInvitionList, Invitation } from '@apis/invitations/getInitialInvitionList';
 import searchIcon from '@public/images/icons/search-filledBlack-333236-w22-h22.svg';
 import uninvitedSvg from '@public/images/logos/unInvited_filledGray_D9D9D9-w100-h100.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import InvitationItem from './InvitationItem';
-import { getInitialInvitionList, getMoreInvitionList, Invitation, putInvitationAnswer } from '../apis/api';
+import InvitationItem from './invitationItem';
+import { getMoreInvitionList } from '../../../../apis/invitations/getMoreInvitionList';
+import { getSearchedInvitationList } from '../../../../apis/invitations/getSearchedInvitationList';
+import { putInvitationAnswer } from '../../../../apis/invitations/putInvitationAnswer';
 import InvitationText from '../commons/InvitationText';
 
 export default function InvitationList() {
@@ -23,6 +26,42 @@ export default function InvitationList() {
   const [cursorId, setCursorId] = useState<number | null>(null);
   const currentLastInvitation = useRef<HTMLDivElement>(null);
 
+  // 검색 기능
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  useEffect(() => {
+    // 검색어가 없는 경우 초기 데이터를 불러오고 무한스크롤을 재시작
+    if (searchKeyword === '') {
+      (async () => {
+        const data = await getInitialInvitionList();
+        setInvitationList(data.invitations);
+      })();
+
+      infiniteScroll();
+
+      return;
+    }
+
+    (async () => {
+      const data = await getSearchedInvitationList(searchKeyword);
+      setInvitationList(data.invitations);
+    })();
+    // eslint-disable-next-line
+  }, [searchKeyword]);
+
+  // 초대 리스트 초기값 조회
+  useEffect(() => {
+    (async () => {
+      const data = await getInitialInvitionList();
+      setInvitationList(data.invitations);
+      setCursorId(data.cursorId);
+    })();
+  }, []);
+
   const handleInvitationAcceptButtonClick = async (id: number) => {
     await putInvitationAnswer(id, true);
     setInvitationList((prev) => prev.filter((item) => item.id !== id));
@@ -33,7 +72,8 @@ export default function InvitationList() {
     setInvitationList((prev) => prev.filter((item) => item.id !== id));
   };
 
-  useEffect(() => {
+  // 검색 문자열을 모두 지웠을 때 다시 무한 스크롤을 사용하게 하기위해 함수로 만듬
+  const infiniteScroll = async () => {
     if (currentLastInvitation.current) {
       const currentLastInvitationIo = new IntersectionObserver(
         (entries) => {
@@ -55,27 +95,25 @@ export default function InvitationList() {
 
       currentLastInvitationIo.observe(currentLastInvitation.current);
     }
-  }, [currentLastInvitation, cursorId]);
+  };
 
-  // 초대 리스트 조회
+  // 무한 스크롤
   useEffect(() => {
-    (async () => {
-      const data = await getInitialInvitionList();
-      setInvitationList(data.invitations);
-      setCursorId(data.cursorId);
-    })();
-  }, []);
+    infiniteScroll();
+    // eslint-disable-next-line
+  }, [currentLastInvitation, cursorId]);
 
   return (
     <S.Box>
       <S.Title>초대받은 대시보드</S.Title>
-      {invitationList.length !== 0 ? (
+      {/* 초대 목록이 있는 경우와 검색바가 비어있지 않는 경우  */}
+      {invitationList.length || searchKeyword ? (
         <>
           <S.SearchBarWrapper>
             <S.SearchIconWrapper>
               <Image fill src={searchIcon} alt='돋보기 아이콘 이미지' />
             </S.SearchIconWrapper>
-            <S.SearchInput type='search' placeholder='검색' />
+            <S.SearchInput type='search' placeholder='검색' value={searchKeyword} onChange={onChangeSearchKeyword} />
           </S.SearchBarWrapper>
           <S.InvitationContainer>
             <S.InvitationHeaderWrapper>
