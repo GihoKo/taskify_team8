@@ -199,7 +199,6 @@ const S = {
   CardsInputWrapper: styled.div`
     display: flex;
     flex-direction: column;
-
     @media ${mediaBreakpoint.tablet} {
       margin-bottom: 3.2rem;
     }
