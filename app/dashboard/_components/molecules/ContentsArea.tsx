@@ -4,6 +4,9 @@ import { PropsWithChildren } from 'react';
 
 import styled from 'styled-components';
 
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+import { sidebarWidth } from '@styles/sidebarWidth';
+
 type ContentsAreaProps = PropsWithChildren;
 
 const ContentsArea = ({ children }: ContentsAreaProps) => {
@@ -22,5 +25,11 @@ const S = {
 
     display: flex;
     flex-direction: column;
+
+    position: relative;
+
+    @media ${mediaBreakpoint.pc} {
+      width: calc(100% - ${sidebarWidth.onPc});
+    }
   `,
 };

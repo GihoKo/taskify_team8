@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import { dashboardNavbarHeight } from '@styles/navbarHeight';
+import { sidebarWidth } from '@styles/sidebarWidth';
 
 type DashboardContentsAreaProps = PropsWithChildren;
 
@@ -17,6 +18,10 @@ export default DashboardContentsArea;
 
 const S = {
   Box: styled.main`
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
     display: flex;
     flex-direction: column;
 
@@ -36,8 +41,11 @@ const S = {
     @media ${mediaBreakpoint.pc} {
       flex-direction: row;
 
-      width: fit-content;
+      max-width: calc(100vw - ${sidebarWidth.onPc});
+      width: 100%;
       padding-top: 0;
+
+      overflow-x: scroll;
     }
   `,
 };
