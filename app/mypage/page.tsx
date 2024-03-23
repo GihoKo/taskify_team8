@@ -9,6 +9,7 @@ import styled from 'styled-components';
 
 import axios from '@apis/axios';
 import { UserInfo } from '@apis/users/getUserInfo';
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
@@ -33,7 +34,7 @@ interface PasswordChange {
 function MyPage() {
   const { user, setUser } = useUserStore();
   const [currentUser, setCurrentUser] = useState<UserInfo | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('/images/more.svg');
+  const [previewUrl, setPreviewUrl] = useState<string>('/images/icons/profile-add.svg');
   const [PasswordWrong, setPasswordWrong] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [profileButton, setProfileButton] = useState<boolean>(false);
@@ -103,7 +104,6 @@ function MyPage() {
 
   const router = useRouter();
 
-  // api 분리 필요
   // -- 이미지 / 닉네임 변경 시작
   const fetchProfileImage = useCallback(async () => {
     try {
@@ -119,11 +119,10 @@ function MyPage() {
     } catch (error) {
       console.error(error);
     }
-  }, [previewUrl]); // previewUrl을 종속성으로 사용합니다.
-
+  }, [previewUrl]);
   useEffect(() => {
     fetchProfileImage();
-  }, [fetchProfileImage]); // fetchProfileImage 함수를 종속성으로 사용합니다.
+  }, [fetchProfileImage]);
 
   useEffect(() => {
     setCurrentUser(user);
@@ -335,17 +334,9 @@ const S = {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+    /* padding: 2rem; */
     background-color: ${({ theme }) => theme.color.gray_FAFAFA};
     gap: 1.2rem;
-    @media all and (max-width: 1199px) {
-      width: calc(100% - 16rem);
-      margin-left: 16rem;
-    }
-    @media all and (max-width: 767px) {
-      width: calc(100% - 7rem);
-      margin-left: 7rem;
-    }
   `,
   Back: styled.div`
     color: ${({ theme }) => theme.color.black_333236};
@@ -363,28 +354,35 @@ const S = {
   `,
   BoxTitle: styled.div`
     color: ${({ theme }) => theme.color.black_333236};
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 3.2rem;
-    @media all and (max-width: 767px) {
-      font-size: 2rem;
+    @media ${mediaBreakpoint.tablet} {
+      font-size: 2.4rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      font-size: 2.4rem;
     }
   `,
   BoxImage: styled.div`
-    width: 18.2rem;
-    height: 18.2rem;
+    width: 10rem;
+    height: 10rem;
     position: relative;
     border-radius: 6px;
     overflow: hidden;
     display: table;
-    @media all and (max-width: 767px) {
-      width: 10rem;
-      height: 10rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 18.2rem;
+      height: 18.2rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 18.2rem;
+      height: 18.2rem;
     }
   `,
   ChangeImage: styled.div`
-    width: 18.2rem;
-    height: 18.2rem;
+    width: 10rem;
+    height: 10rem;
     position: relative;
     &:hover label {
       display: block;
@@ -397,22 +395,30 @@ const S = {
       overflow: hidden;
       border: 0;
     }
-    @media all and (max-width: 767px) {
-      width: 10rem;
-      height: 10rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 18.2rem;
+      height: 18.2rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 18.2rem;
+      height: 18.2rem;
     }
   `,
   ChangeImageInner: styled.label`
-    width: 18.2rem;
-    height: 18.2rem;
+    width: 10rem;
+    height: 10rem;
     position: relative;
     background-color: rgba(0, 0, 0, 0.3);
     border: none;
     display: none;
     cursor: pointer;
-    @media all and (max-width: 767px) {
-      width: 10rem;
-      height: 10rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 18.2rem;
+      height: 18.2rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 18.2rem;
+      height: 18.2rem;
     }
   `,
   ImageEdit: styled.div`
@@ -431,8 +437,7 @@ const S = {
     width: 8.4rem;
     height: 3.2rem;
     border-radius: 4px;
-    background: ${(props) =>
-      props.null ? 'var(--gray-9FA6B2, #9fa6b2)' : 'var(--violet-5534DA, #5534DA)'}; //Todo: 테마로 바꿔야해용
+    background: ${(props) => (props.null ? 'var(--gray-9FA6B2, #9fa6b2)' : 'var(--violet-5534DA, #5534DA)')};
     margin-top: 3.2rem;
     color: ${({ theme }) => theme.color.white_FFFFFF};
     text-align: center;

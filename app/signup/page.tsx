@@ -25,10 +25,10 @@ interface Inputs {
 
 function SignUp() {
   const router = useRouter();
-  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false); // 회원가입 성공
-  const [isModalOpen, openModal, toggleModal] = useModalToggle(false); // 회원가입 실패
-  const [isChecked, setIsChecked] = useState<boolean>(false); // 이용약관 체크
-  const [emailError, setemailError] = useState<boolean>(false); // 각종 에러 문구
+  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+  const [isModalOpen, openModal, toggleModal] = useModalToggle(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [emailError, setemailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
   const [passwordCheckError, setPasswordCheckError] = useState<boolean>(false);
   const [nicknameError, setNicknameError] = useState<boolean>(false);
@@ -48,12 +48,10 @@ function SignUp() {
   const password = watch('password');
   const passwordCheck = watch('passwordCheck');
 
-  // 이용약관 체크 확인
   const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   };
 
-  // 회원가입 실행
   const handleSubmits = async (data: { email: string; nickname: string; password: string }) => {
     try {
       if (isChecked && !emailError && !passwordCheckError && !nicknameError) {
@@ -74,7 +72,6 @@ function SignUp() {
     toggleModal();
   };
 
-  // 유효성검사 true 나오게끔
   const validateEmail = (email: string) => {
     const isvalidateEmail = /\S+@\S+\.\S+/.test(email);
     setemailError(!isvalidateEmail);
@@ -127,7 +124,6 @@ function SignUp() {
     }
   }, [passwordCheck, password]);
 
-  // foucs out
   const handleBlur = (field: string) => {
     return () => {
       switch (field) {
@@ -149,7 +145,6 @@ function SignUp() {
     };
   };
 
-  // foucs in
   const handleFocus = (field: string) => {
     return () => {
       switch (field) {
@@ -171,7 +166,6 @@ function SignUp() {
     };
   };
 
-  // 에러메세지가 없고 모든값이 빈값이 아닐때 버튼 활성화
   const lastCheck =
     isChecked &&
     !emailError &&

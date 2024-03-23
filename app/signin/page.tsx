@@ -31,7 +31,7 @@ export default function SignIn() {
   const [emailError, setEmailError] = useState<boolean>(false); // 각종 에러 문구
   const [passwordError, setPasswordError] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [showPassError, setShowPassError, showPassToggle] = useToggle(false);
+  const [showPasswordError, setShowPasswordError, showPasswordToggle] = useToggle(false);
 
   const { register, handleSubmit, watch } = useForm<IFormInput>();
 
@@ -48,10 +48,8 @@ export default function SignIn() {
 
   const router = useRouter();
   useEffect(() => {
-    // const LS = localStorage.getItem('login');
     const AccessToken = getAccessToken();
 
-    // 왜 그러니..?
     if (AccessToken !== null) {
       router.push(`/mydashboard`);
     }
@@ -68,7 +66,7 @@ export default function SignIn() {
       setPasswordError(true);
 
       if (data.email !== '' && data.password !== '') {
-        showPassToggle();
+        showPasswordToggle();
       }
 
       console.error('로그인 실패:', error);
@@ -84,7 +82,6 @@ export default function SignIn() {
     }
   };
 
-  // 유효성검사 true 나오게끔
   const validateEmail = (email: string) => {
     const isvalidateEmail = /\S+@\S+\.\S+/.test(email);
     setEmailError(!isvalidateEmail);
@@ -111,7 +108,6 @@ export default function SignIn() {
     }
   }, [password]);
 
-  // foucs out
   const handleBlur = (field: string) => {
     return () => {
       switch (field) {
@@ -127,7 +123,6 @@ export default function SignIn() {
     };
   };
 
-  // foucs in
   const handleFocus = (field: string) => {
     return () => {
       switch (field) {
@@ -143,13 +138,12 @@ export default function SignIn() {
     };
   };
 
-  // 에러메세지가 없고 모든값이 빈값이 아닐때 버튼 활성화
   const lastCheck = !emailError && !passwordError && email !== '' && password !== '';
 
   return (
     <>
-      {showPassError && (
-        <ModalCheckIt text='비밀번호가 일치하지 않습니다.' submitButtonText='확인' errorMessage={showPassToggle} />
+      {showPasswordError && (
+        <ModalCheckIt text='비밀번호가 일치하지 않습니다.' submitButtonText='확인' errorMessage={showPasswordToggle} />
       )}
       <S.Signinback>
         <S.Signin>
