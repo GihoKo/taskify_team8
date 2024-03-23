@@ -26,8 +26,18 @@ export default function InvitationList() {
   const [cursorId, setCursorId] = useState<number | null>(null);
   const currentLastInvitation = useRef<HTMLDivElement>(null);
 
+  // 초대 리스트 초기값 조회
+  useEffect(() => {
+    (async () => {
+      const data = await getInitialInvitionList();
+      setInvitationList(data.invitations);
+      setCursorId(data.cursorId);
+    })();
+  }, []);
+
   // 검색 기능
   const [searchKeyword, setSearchKeyword] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(e.target.value);
@@ -53,15 +63,6 @@ export default function InvitationList() {
     // eslint-disable-next-line
   }, [searchKeyword]);
 
-  // 초대 리스트 초기값 조회
-  useEffect(() => {
-    (async () => {
-      const data = await getInitialInvitionList();
-      setInvitationList(data.invitations);
-      setCursorId(data.cursorId);
-    })();
-  }, []);
-
   const handleInvitationAcceptButtonClick = async (id: number) => {
     await putInvitationAnswer(id, true);
     setInvitationList((prev) => prev.filter((item) => item.id !== id));
@@ -82,7 +83,7 @@ export default function InvitationList() {
               const data = await getMoreInvitionList(cursorId);
               setInvitationList((prev) => [...prev, ...data.invitations]);
 
-              if (data.cursorId !== null) {
+              if (data.cursorId) {
                 setCursorId(data.cursorId);
               }
 
@@ -113,7 +114,13 @@ export default function InvitationList() {
             <S.SearchIconWrapper>
               <Image fill src={searchIcon} alt='돋보기 아이콘 이미지' />
             </S.SearchIconWrapper>
-            <S.SearchInput type='search' placeholder='검색' value={searchKeyword} onChange={onChangeSearchKeyword} />
+            <S.SearchInput
+              type='search'
+              placeholder='검색'
+              value={searchKeyword}
+              onChange={onChangeSearchKeyword}
+              ref={inputRef}
+            />
           </S.SearchBarWrapper>
           <S.InvitationContainer>
             <S.InvitationHeaderWrapper>

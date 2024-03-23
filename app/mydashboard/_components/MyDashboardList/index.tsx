@@ -21,11 +21,18 @@ export default function MyDashboardList() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPage, setTotalPage] = useState<number>();
 
-  const { data, isSuccess } = useQuery({
+  const { data: dashboardData, isSuccess } = useQuery({
     queryKey: ['dashboard', 'dashboardList', currentPage],
     queryFn: () => getDashboardList(currentPage),
   });
-  const [dashboards, setDashboards] = useState<Dashboard[]>(data?.dashboards || []);
+  const [dashboards, setDashboards] = useState<Dashboard[]>(dashboardData?.dashboards || []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setDashboards(dashboardData?.dashboards);
+      setTotalPage(Math.ceil(dashboardData.totalCount / 5));
+    }
+  }, [dashboardData, isSuccess, currentPage]);
 
   const handleNextDashboardPageClick = () => {
     setCurrentPage((prev) => prev + 1);
@@ -34,14 +41,6 @@ export default function MyDashboardList() {
   const handlePreviousDashboardPageClick = () => {
     setCurrentPage((prev) => prev - 1);
   };
-
-  // 대시보드 리스트 조회
-  useEffect(() => {
-    if (isSuccess) {
-      setDashboards(data?.dashboards);
-      setTotalPage(Math.ceil(data.totalCount / 5));
-    }
-  }, [data, isSuccess, currentPage]);
 
   // 대시보드 생성 버튼 클릭
   const { openModal } = useModal();
@@ -59,7 +58,7 @@ export default function MyDashboardList() {
       <S.DashboardContainer>
         {dashboards.map((dashboard) => (
           <Link href={`/dashboard/${dashboard.id}`} key={dashboard.id} style={{ textDecoration: 'none' }}>
-            <DashboardItem key={dashboard.id} {...dashboard} />
+            <DashboardItem {...dashboard} />
           </Link>
         ))}
         <S.CreateDashboardButton onClick={handleCreateDashboardButtonClick}>
