@@ -2,38 +2,83 @@
 
 import { Fragment } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { isAxiosError } from 'axios';
+import { useParams, useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
+import { Member } from '@apis/members/getDashboardMemberList';
+import { membersKeys } from '@queries/keys/membersKeys';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
 
-import { mockUserList } from '../../_constants/mocks';
+import { useDeleteDashboardMember } from '../../_hooks/useDeleteDashboardMember.query';
 
-const MemberListTable = () => {
+type MemberListTableProps = {
+  memberList: Member[];
+};
+
+const MemberListTable = ({ memberList }: MemberListTableProps) => {
+  const { dashboardId } = useParams<{ dashboardId: string }>();
+  const { mutate } = useDeleteDashboardMember();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const deleteMember = ({ memberId, isOwner }: { memberId: number; isOwner: boolean }) => {
+    mutate(memberId, {
+      onError: (error) => {
+        if (isAxiosError(error)) {
+          switch (error.response?.status) {
+            case 403:
+              console.log('대시보드 삭제 권한이 없습니다.');
+
+              return;
+            case 404:
+              console.log('대시보드가 존재하지 않습니다.');
+
+              return;
+            default:
+              console.log('알 수 없는 에러가 발생했습니다.');
+          }
+        }
+      },
+      onSuccess: async (_data) => {
+        await queryClient.invalidateQueries({ queryKey: membersKeys.memberList(Number(dashboardId)) });
+
+        if (isOwner) {
+          router.replace('/mydashboard');
+        }
+      },
+    });
+  };
+
   return (
     <S.Wrapper>
-      {mockUserList.map(({ id, nickname }, index) => (
-        <Fragment key={id}>
-          <S.Row>
-            <S.LeftColumn>
-              <FirstLetterProfile
-                backgroundColor='rgba(196, 177, 162, 1)'
-                fontSize='1.4rem'
-                profileSize={{
-                  onMobile: '3.4rem',
-                  onTablet: '3.8rem',
-                }}
-              >
-                J
-              </FirstLetterProfile>
-              {nickname}
-            </S.LeftColumn>
-            <S.DeleteButton type='button'>삭제</S.DeleteButton>
-          </S.Row>
-          <S.Border $isLastIndex={index === mockUserList.length - 1} />
-        </Fragment>
-      ))}
+      {Boolean(memberList.length) &&
+        memberList.map(({ id, nickname, isOwner }, index) => (
+          <Fragment key={id}>
+            <S.Row>
+              <S.LeftColumn>
+                <FirstLetterProfile
+                  backgroundColor='rgba(196, 177, 162, 1)'
+                  fontSize='1.4rem'
+                  profileSize={{
+                    onMobile: '3.4rem',
+                    onTablet: '3.8rem',
+                  }}
+                >
+                  J
+                </FirstLetterProfile>
+                {nickname}
+              </S.LeftColumn>
+              <S.DeleteButton type='button' onClick={() => deleteMember({ memberId: id, isOwner })}>
+                삭제
+              </S.DeleteButton>
+            </S.Row>
+            <S.Border $isLastIndex={index === memberList.length - 1} />
+          </Fragment>
+        ))}
     </S.Wrapper>
   );
 };

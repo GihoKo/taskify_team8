@@ -16,7 +16,7 @@ import ModalCheckIt from '@components/molecules/ModalCheckIt';
 import { getAccessToken } from '@utils/token/getAccessToken';
 import { setAccessToken } from '@utils/token/setAccessToken';
 
-import useUserStore from '@store/user';
+import { useUserStore } from '@store/store/userStore';
 
 import useToggle from './_hooks/useToggle';
 

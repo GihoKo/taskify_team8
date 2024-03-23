@@ -47,7 +47,7 @@ export interface Card {
 export interface GetCardListResponse {
   cursorId: number | null;
   totalCount: number;
-  cards: Card[];
+  cards: Card[] | [];
 }
 
 export interface GetCardListParams {

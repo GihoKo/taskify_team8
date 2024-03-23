@@ -1,12 +1,15 @@
 import { FetchQueryOptions } from '@tanstack/react-query';
 
 import { getDashboardDetailInfo } from '@apis/dashboards/getDashboardDetailInfo';
+import { getInvitationList } from '@apis/dashboards/getInvitationList';
 
 export const dashboardKeys = {
   masterKey: () => ['dashboard'] as const,
   dashboardList: () => [...dashboardKeys.masterKey(), 'dashboardList'] as const,
   currentPage: (currentPage: number) => [...dashboardKeys.dashboardList(), currentPage] as const,
   dashboardDetail: (dashboardId: number) => [...dashboardKeys.masterKey(), dashboardId] as const,
+  dashboardInvitationList: (dashboardId: number) =>
+    [...dashboardKeys.masterKey(), dashboardId, 'invitationList'] as const,
 };
 
 type DashboardKeys = typeof dashboardKeys;
@@ -40,6 +43,21 @@ export const dashboardQueryOptions = {
   dashboardDetail: (dashboardId: number) => ({
     queryKey: dashboardKeys.dashboardDetail(dashboardId),
     queryFn: () => getDashboardDetailInfo(dashboardId),
+    gcTime: 1000 * 60 * 3, // 3분
+    staleTime: 1000 * 60 * 1, // 1분
+  }),
+  dashboardInvitationList: ({
+    dashboardId,
+    page = 1,
+    size,
+  }: {
+    dashboardId: number;
+    page?: number;
+    size?: number;
+  }) => ({
+    queryKey: dashboardKeys.dashboardInvitationList(dashboardId),
+    queryFn: ({ pageParam }: { pageParam: number }) => getInvitationList({ dashboardId, page: pageParam, size }),
+    initialPageParam: page,
     gcTime: 1000 * 60 * 3, // 3분
     staleTime: 1000 * 60 * 1, // 1분
   }),
