@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useParams, usePathname } from 'next/navigation';
 import styled from 'styled-components';
 
+import DashboardMemberListWithFunnel from '@/app/dashboard/_components/molecules/DashboardMemberListWithFunnel';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import { sidebarWidth } from '@styles/sidebarWidth';
 
@@ -15,7 +16,6 @@ import NonNullableFunnel from '@components/util/NonNullableFunnel';
 import { useUserStore } from '@store/store/userStore';
 
 import DashboardNameWithValidId from './DashboardNameWithValidId';
-import DashboardMemberList from '../../app/dashboard/_components/molecules/DashboardMemberList';
 import InviteButton from '../../app/dashboard/_components/molecules/InviteButton';
 import ManageButton from '../../app/dashboard/_components/molecules/ManageButton';
 
@@ -59,12 +59,20 @@ const DashboardNav = () => {
         )}
         <S.ProfileBox>
           {/* 멤버 프로필 정보 */}
-          {pathname === '/mydashboard' ? null : (
+          {/* {pathname === '/mydashboard' ? null : (
             <>
               <DashboardMemberList />
               <S.Stick />
             </>
-          )}
+          )} */}
+          <DashboardMemberListWithFunnel
+            componentListMappedToPath={[
+              {
+                path: ['/mydashboard', '/mypage'],
+                component: <></>,
+              },
+            ]}
+          />
           {/* 내 프로필 정보 */}
           <S.MyInfoBox>
             <FirstLetterProfile
@@ -202,17 +210,6 @@ const S = {
 
     @media ${mediaBreakpoint.pc} {
       column-gap: 3.2rem;
-    }
-  `,
-
-  Stick: styled.div`
-    width: 0.1rem;
-    height: 3.4rem;
-    flex-shrink: 0;
-    background-color: ${({ theme }) => theme.color.gray_D9D9D9};
-
-    @media ${mediaBreakpoint.tablet} {
-      height: 3.8rem;
     }
   `,
 
