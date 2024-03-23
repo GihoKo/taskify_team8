@@ -7,7 +7,7 @@ import { cardsQueryOptions } from '@queries/keys/cardsKeys';
 
 export const useGetCardListOnInfiniteScroll = ({ columnId, size = 5 }: GetCardListParams) => {
   return useInfiniteQuery({
-    ...cardsQueryOptions.infiniteCardList({ columnId, size }),
+    ...cardsQueryOptions.cardList({ columnId, size }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       return lastPage.cursorId;

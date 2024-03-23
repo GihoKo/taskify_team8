@@ -19,10 +19,10 @@ type InviteeManageFormProps = {
 const InviteeManageForm = ({ dashboardId }: InviteeManageFormProps) => {
   const sizePerPage = 5;
 
-  const { data, isSuccess, hasNextPage, hasPreviousPage, fetchNextPage, fetchPreviousPage, isPending } =
-    useGetInvitationList({ dashboardId, size: sizePerPage });
-
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, isSuccess, hasNextPage, hasPreviousPage, fetchNextPage, fetchPreviousPage, isPending } =
+    useGetInvitationList({ dashboardId, size: sizePerPage, currentPage });
   const [invitationList, setInvitationList] = useState<Invitation[]>(data?.pages || []);
 
   const handleNextPage = async () => {
@@ -44,8 +44,6 @@ const InviteeManageForm = ({ dashboardId }: InviteeManageFormProps) => {
       setInvitationList(data.pages);
     }
   }, [isSuccess, data]);
-
-  const currentPageInvitationList = invitationList.slice((currentPage - 1) * sizePerPage, currentPage * sizePerPage);
 
   return (
     <S.Form>
@@ -74,7 +72,7 @@ const InviteeManageForm = ({ dashboardId }: InviteeManageFormProps) => {
         </S.MiddleAreaInviteButtonBox>
       </S.MiddleArea>
 
-      <InviteeListTable invitationList={currentPageInvitationList} />
+      <InviteeListTable invitationList={invitationList} />
     </S.Form>
   );
 };

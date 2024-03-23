@@ -5,20 +5,22 @@ import { dashboardQueryOptions } from '@queries/keys/dashboardKeys';
 interface UseGetInvitationListParam {
   dashboardId: number;
   size?: number;
+  currentPage: number;
 }
 
-export const useGetInvitationList = ({ dashboardId, size = 5 }: UseGetInvitationListParam) => {
+// TODO: useQuery랑 prefetchQuery, placholderData로 바꾸기
+export const useGetInvitationList = ({ dashboardId, size = 5, currentPage }: UseGetInvitationListParam) => {
   return useInfiniteQuery({
     ...dashboardQueryOptions.dashboardInvitationList({ dashboardId, size }),
-    getNextPageParam: (lastPage, allPages, lastPageParam, _allPageParams) => {
-      if (allPages.length >= lastPage.totalCount / size) {
+    getNextPageParam: (lastPage, _allPages, lastPageParam, _allPageParams) => {
+      if (currentPage >= lastPage.totalCount / size) {
         return undefined;
       }
 
       return lastPageParam + 1;
     },
     getPreviousPageParam: (_firstPage, _allPages, firstPageParam, _allPageParams) => {
-      if (firstPageParam <= 1) {
+      if (currentPage <= 1) {
         return undefined;
       }
 
@@ -29,5 +31,6 @@ export const useGetInvitationList = ({ dashboardId, size = 5 }: UseGetInvitation
       pageParams: data.pageParams,
       totalPages: Math.ceil(data.pages[data.pages.length - 1].totalCount / size),
     }),
+    maxPages: 1,
   });
 };

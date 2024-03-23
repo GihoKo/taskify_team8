@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Member } from '@apis/members/getDashboardMemberList';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import { useGetDashboardMemberList } from '../../_hooks/useGetDashboardMemberList.query';
+import { useGetDashboardMemberList } from '../../../../_hooks/useGetDashboardMemberList.query';
 import MemberListTable from '../MemberListTable';
 import { PageTurner } from '../PageTurner';
 
@@ -21,7 +21,7 @@ const MemberManageForm = ({ dashboardId }: MemberManageFormProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isFetched, isSuccess, hasNextPage, hasPreviousPage, fetchNextPage, fetchPreviousPage, isPending } =
-    useGetDashboardMemberList({ dashboardId, size: sizePerPage });
+    useGetDashboardMemberList({ dashboardId, size: sizePerPage, currentPage });
   const [memberList, setMemberList] = useState<Member[]>(data?.pages || []);
 
   const handleNextPage = async () => {
@@ -44,8 +44,6 @@ const MemberManageForm = ({ dashboardId }: MemberManageFormProps) => {
     }
   }, [isFetched, isSuccess, data]);
 
-  const currentPageMemberList = memberList.slice((currentPage - 1) * sizePerPage, currentPage * sizePerPage);
-
   return (
     <S.Form>
       <S.FormHeader>
@@ -61,7 +59,7 @@ const MemberManageForm = ({ dashboardId }: MemberManageFormProps) => {
         </PageTurner>
       </S.FormHeader>
       <S.ColumnName>이름</S.ColumnName>
-      <MemberListTable memberList={currentPageMemberList} />
+      <MemberListTable memberList={memberList} />
     </S.Form>
   );
 };
