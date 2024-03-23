@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { AxiosError } from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import axios from '@apis/axios';
+import { signUpUser } from '@apis/sign/axiosSignUp';
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import Input from '@components/molecules/Input';
 
@@ -25,10 +25,10 @@ interface Inputs {
 
 function SignUp() {
   const router = useRouter();
-  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false); // 회원가입 성공
-  const [isModalOpen, openModal, toggleModal] = useModalToggle(false); // 회원가입 실패
-  const [isChecked, setIsChecked] = useState<boolean>(false); // 이용약관 체크
-  const [emailError, setemailError] = useState<boolean>(false); // 각종 에러 문구
+  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+  const [isModalOpen, openModal, toggleModal] = useModalToggle(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [emailError, setemailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
   const [passwordCheckError, setPasswordCheckError] = useState<boolean>(false);
   const [nicknameError, setNicknameError] = useState<boolean>(false);
@@ -48,30 +48,23 @@ function SignUp() {
   const password = watch('password');
   const passwordCheck = watch('passwordCheck');
 
-  // 이용약관 체크 확인
   const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
   };
 
-  // 회원가입 실행
   const handleSubmits = async (data: { email: string; nickname: string; password: string }) => {
     try {
       if (isChecked && !emailError && !passwordCheckError && !nicknameError) {
-        const response = await axios.post('/users', data);
+        const response = await signUpUser(data);
 
         if (response.status === 201) {
           setShowSuccessModal(true);
           router.push('/login');
         }
       }
-    } catch (error: unknown) {
-      const err = error as AxiosError;
-
-      if (err.response && err.response.status === 409) {
-        openModal();
-      } else {
-        console.error('회원가입 요청 오류!', error);
-      }
+    } catch (error) {
+      openModal();
+      console.error('회원가입 요청 오류:', error);
     }
   };
 
@@ -79,7 +72,6 @@ function SignUp() {
     toggleModal();
   };
 
-  // 유효성검사 true 나오게끔
   const validateEmail = (email: string) => {
     const isvalidateEmail = /\S+@\S+\.\S+/.test(email);
     setemailError(!isvalidateEmail);
@@ -132,7 +124,6 @@ function SignUp() {
     }
   }, [passwordCheck, password]);
 
-  // foucs out
   const handleBlur = (field: string) => {
     return () => {
       switch (field) {
@@ -154,7 +145,6 @@ function SignUp() {
     };
   };
 
-  // foucs in
   const handleFocus = (field: string) => {
     return () => {
       switch (field) {
@@ -176,7 +166,6 @@ function SignUp() {
     };
   };
 
-  // 에러메세지가 없고 모든값이 빈값이 아닐때 버튼 활성화
   const lastCheck =
     isChecked &&
     !emailError &&
@@ -268,29 +257,31 @@ const S = {
   Form: styled.form`
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 3rem;
     padding: 0 1rem;
   `,
+
   Signupback: styled.div`
     display: flex;
     flex-direction: column;
   `,
   Container: styled.div`
-    width: 100%;
-    max-width: 52rem;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    background: ${({ theme }) => theme.color.gray_FAFAFA};
   `,
   Logo: styled.div`
     position: relative;
-    margin: 1rem auto;
-    width: 20rem;
-    height: 27.9rem;
-
-    @media (max-width: 767px) {
-      margin: 30rem auto 0.8rem;
+    margin: 0 auto;
+    width: 14rem;
+    height: 19.5rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 20rem;
+      height: 27.9rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 20rem;
+      height: 27.9rem;
     }
   `,
   Text: styled.p`
@@ -315,7 +306,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 35.1rem;
     height: 5rem;
     border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.gray_9FA6B2};
@@ -323,13 +314,15 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
 
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 52rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 52rem;
     }
   `,
   Button: styled.button`
-    width: 100%;
+    width: 35.1rem;
     height: 5rem;
     border: none;
     border-radius: 0.8rem;
@@ -339,9 +332,11 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
 
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 52rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 52rem;
     }
   `,
   Logintext: styled.div`
