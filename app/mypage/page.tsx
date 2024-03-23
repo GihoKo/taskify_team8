@@ -7,27 +7,17 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import axios from '@apis/localAxios';
+import axios from '@apis/axios';
+import { UserInfo } from '@apis/users/getUserInfo';
 
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
 import DashboardNav from '@components/organisms/DashboardNav';
-import SideBar from '@components/organisms/SideBar';
+import SideBar from '@components/organisms/SideBar/SideBar';
 
-import useUserStore from '@store/user';
+import { useUserStore } from '@store/store/userStore';
 
 import useToggle from '../signin/_hooks/useToggle';
-
-interface Member {
-  id: number;
-  userId: number;
-  email: string;
-  nickname: string;
-  profileImageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-  isOwner: boolean;
-}
 
 interface IFormInput {
   nickname: string;
@@ -42,7 +32,7 @@ interface PasswordChange {
 
 function MyPage() {
   const { user, setUser } = useUserStore();
-  const [currentUser, setCurrentUser] = useState<Member | null>(null);
+  const [currentUser, setCurrentUser] = useState<UserInfo | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('/images/more.svg');
   const [PasswordWrong, setPasswordWrong] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
@@ -162,7 +152,7 @@ function MyPage() {
 
   const handleChangeProfile = async (data: { nickname: string; profileImageUrl: null }) => {
     try {
-      const res = await axios.put(`users/me`, data);
+      const res = await axios.put<UserInfo>(`users/me`, data);
       setUser(res.data);
 
       if (!res.data.profileImageUrl) {

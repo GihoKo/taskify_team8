@@ -1,4 +1,4 @@
-import axios from '@apis/localAxios';
+import axios from '@apis/axios';
 
 // 분리 작업중
 export const fetchCurrentUser = async () => {

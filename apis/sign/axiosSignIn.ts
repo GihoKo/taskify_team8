@@ -1,4 +1,4 @@
-import axios from '@apis/localAxios';
+import axios from '@apis/axios';
 
 export async function loginUser(data: { email: string; password: string }) {
   try {

@@ -16,7 +16,7 @@ const ContentsArea = ({ children }: ContentsAreaProps) => {
 export default ContentsArea;
 
 const S = {
-  Area: styled.article`
+  Area: styled.main`
     width: 100%;
     min-width: 30.8rem;
     /* height: 100%; */
@@ -38,8 +38,9 @@ const S = {
 
     @media ${mediaBreakpoint.pc} {
       max-width: 62rem;
-      /* height: calc(100% - ${dashboardNavbarHeight.onPc}); */
-      margin-top: ${dashboardNavbarHeight.onPc};
+      height: calc(100vh - ${dashboardNavbarHeight.onPc});
+      /* margin-top: ${dashboardNavbarHeight.onPc}; */
+      margin-top: 0;
     }
   `,
 };

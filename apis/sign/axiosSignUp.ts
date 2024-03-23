@@ -1,4 +1,4 @@
-import axios from '@apis/localAxios';
+import axios from '@apis/axios';
 
 export const signUpUser = async (data: { email: string; nickname: string; password: string }) => {
   try {

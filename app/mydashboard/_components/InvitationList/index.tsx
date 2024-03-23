@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -14,7 +15,11 @@ import { getInitialInvitionList, getMoreInvitionList, Invitation, putInvitationA
 import InvitationText from '../commons/InvitationText';
 
 export default function InvitationList() {
-  const [invitationList, setInvitationList] = useState<Invitation[]>([]);
+  const { data } = useQuery({
+    queryKey: ['invitation', 'invitationList'],
+    queryFn: () => getInitialInvitionList(),
+  });
+  const [invitationList, setInvitationList] = useState<Invitation[]>(data?.invitations || []);
   const [cursorId, setCursorId] = useState<number | null>(null);
   const currentLastInvitation = useRef<HTMLDivElement>(null);
 

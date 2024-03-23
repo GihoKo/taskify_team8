@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 interface ColumnButtonProps {
-  onClick?: () => void;
+  onClick?: () => any;
+  // isVaild?: boolean;
 }
 
 // isColorButton prop에 버튼이름을 주면 됨.
@@ -17,14 +18,19 @@ export default function ColumnButton({ children, onClick }: PropsWithChildren<Co
       {children}
     </S.CreateButton>
   );
+  //   <S.CreateButton $isVailid={isVaild} disabled={isVaild} onClick={onClick} $isColorButton={isColorButton}>
+  //     {children}
+  //   </S.CreateButton>
+  // );
 }
 
 interface StyledColumnButtonProps {
   $isColorButton: boolean;
+  // $isVailid: boolean;
 }
 
 const S = {
-  CreateButton: styled.div<StyledColumnButtonProps>`
+  CreateButton: styled.button<StyledColumnButtonProps>`
     background-color: ${({ $isColorButton, theme }) =>
       $isColorButton ? theme.color.white_FFFFFF : theme.color.violet_5534DA};
     color: ${({ $isColorButton, theme }) => ($isColorButton ? theme.color.gray_787486 : theme.color.white_FFFFFF)};
@@ -45,3 +51,6 @@ const S = {
     }
   `,
 };
+
+/* color: ${({ $isVailid }) => ($isVailid ? '' : 'tomato')}; */
+/* cursor: ${({ $isVailid }) => ($isVailid ? 'pointer' : '')}; */

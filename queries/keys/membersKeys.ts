@@ -2,7 +2,7 @@ import { getDashboardMemberList } from '@apis/members/getDashboardMemberList';
 
 export const membersKeys = {
   masterKey: () => ['members'] as const,
-  memberList: (dashboardId: number) => [...membersKeys.masterKey(), 'memberList', dashboardId] as const,
+  memberList: (dashboardId: number) => [...membersKeys.masterKey(), dashboardId, 'memberList'] as const,
 };
 
 export const membersQueryOptions = {
