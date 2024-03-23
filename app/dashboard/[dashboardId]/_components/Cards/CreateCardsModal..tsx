@@ -10,10 +10,11 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import { useCloseModal } from '@hooks/use-modal';
 import { ModalComponentProps } from '@hooks/use-modal/types';
 
+import { mockUserData } from './mock';
 import CardDateInput from './molecules/date/CardDateInput';
 import CardTextArea from './molecules/description/CardTextarea';
-import ImageInput from './molecules/ImageInput';
-import SelectInput from './molecules/SelectInput';
+import ImageFileInput from './molecules/ImageFileInput';
+import SelectInput from './molecules/person/SelectInput';
 import CardTagInput from './molecules/tag/CardTagInput';
 import CardTitleInput from './molecules/title/CardTitleInput';
 import ColumnModalTemplates from '../Columns/ColumnModalTemplate';
@@ -53,7 +54,7 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
   // 제목 - v
   // 설명 - v
   // 마감일 - v
-  // 태그 - easy
+  // 태그 - V
   // 이미지 - mid
 
   // 인풋 관리
@@ -71,7 +72,6 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
     // handleSubmit,
     watch,
     setError,
-    reset,
     getValues,
     setValue,
     formState: { errors },
@@ -87,6 +87,7 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
     watch: watchOnChange,
     setError: setErrorOnChange,
     reset: resetOnChange,
+    setValue: setValueOnChange,
     formState: { errors: errorsOnChange },
   } = useForm({ mode: 'onChange' });
 
@@ -112,7 +113,15 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
         >
           <CreateModalTitle title='할 일 생성' />
           <S.CardsForm>
-            <SelectInput title='담당자' options={['카테고리1', '카테고리2', '카테고리3']} />
+            <SelectInput
+              options={mockUserData.members}
+              id='person'
+              register={registerOnChanage}
+              errors={errors}
+              watch={watchOnChange}
+              setError={setErrorOnChange}
+              setValue={setValueOnChange}
+            />
             <CardTitleInput id='title' register={register} errors={errors} watch={watch} setError={setError} required />
             <CardTextArea
               id='description'
@@ -140,10 +149,16 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
               setError={setErrorOnChange}
               reset={resetOnChange}
             />
+            <ImageFileInput
+              id='image'
+              register={register}
+              errors={errors}
+              setError={setError}
+              setValue={setValue}
+              getValues={getValues}
+            />
 
-            {/* <TextInput title='태그' inputType='text' placeHolder='입력후 엔터' /> */}
-
-            <ImageInput onClick={openImageColumnModal} title='이미지' imageUrl={imageUrl} />
+            {/* <ImageInput onClick={openImageColumnModal} title='이미지' imageUrl={imageUrl} /> */}
             <ColumnButtonsWrap>
               <ColumnButton onClick={closeModal}>취소</ColumnButton>
               <ColumnButton onClick={submitModal}>업로드</ColumnButton>
