@@ -17,25 +17,23 @@ export default function CardTextArea({ id, register, errors, required, setError,
   const { isError, checkTextArea } = CheckCardTextArea(errors, watch, setError);
 
   return (
-    <>
-      <S.CardsInputWrapper>
-        <S.CardsLabel htmlFor={id}>
-          설명
-          {required ? <S.Star> *</S.Star> : null}
-        </S.CardsLabel>
-        <S.CardsTextarea
-          id={id}
-          placeholder='설명을 입력해 주세요'
-          $isError={isError}
-          {...register(id, {
-            required: '설명은 필수입니다.',
-          })}
-          onBlur={checkTextArea}
-          watch
-        />
-        {errors.description && <S.ErrorMessage>{errors.description.message}</S.ErrorMessage>}
-      </S.CardsInputWrapper>
-    </>
+    <S.CardsInputWrapper $isError={isError}>
+      <S.CardsLabel htmlFor={id}>
+        설명
+        {required ? <S.Star> *</S.Star> : null}
+      </S.CardsLabel>
+      <S.CardsTextarea
+        id={id}
+        placeholder='설명을 입력해 주세요'
+        $isError={isError}
+        {...register(id, {
+          required: '설명은 필수입니다.',
+        })}
+        onBlur={checkTextArea}
+        watch
+      />
+      {errors.description && <S.ErrorMessage>{errors.description.message}</S.ErrorMessage>}
+    </S.CardsInputWrapper>
   );
 }
 
@@ -99,10 +97,10 @@ const S = {
     color: ${({ theme }) => theme.color.violet_5534DA};
   `,
 
-  CardsInputWrapper: styled.div`
+  CardsInputWrapper: styled.div<{ $isError: boolean }>`
     display: flex;
     flex-direction: column;
-    margin-bottom: 2.4rem;
+    margin-bottom: ${({ $isError }) => ($isError === true ? `2.4rem` : '')};
     @media ${mediaBreakpoint.tablet} {
       margin-bottom: 3.2rem;
     }
