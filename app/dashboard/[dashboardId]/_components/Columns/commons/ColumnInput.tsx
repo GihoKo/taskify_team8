@@ -1,17 +1,19 @@
 import { PropsWithChildren, useId } from 'react';
+import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
-
-// Todo: validate 했을 때 디자인 추가 필요
-// 기본적인 디자인, 틀만 완성
 
 interface ColumnInputProps {
   placeholder: string;
   inputValue: string;
   onChange: (value: string) => void;
 }
+
+type FormValues = {
+  title: string;
+};
 
 export default function ColumnInput({
   children,
@@ -21,17 +23,31 @@ export default function ColumnInput({
 }: PropsWithChildren<ColumnInputProps>) {
   const id = useId();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = (data: FormValues) => {
+    onChange(data.title);
+    console.log('Form submitted.', data);
+  };
+
   return (
     <>
-      <S.ColumnForm>
+      <S.ColumnForm onSubmit={handleSubmit(onSubmit)} noValidate>
         <S.ColumnLabel htmlFor={id}>{children}</S.ColumnLabel>
         <S.ColumnInput
           value={inputValue}
-          onChange={(e) => onChange(e.target.value)}
           id={id}
           type='text'
           placeholder={placeholder}
+          {...register('title', {
+            required: '제목을 입력해주세요',
+          })}
         />
+        <S.InputError>{errors.title?.message}</S.InputError>
       </S.ColumnForm>
     </>
   );
@@ -74,5 +90,9 @@ const S = {
     @media ${mediaBreakpoint.tablet} {
       font-size: 1.8rem;
     }
+  `,
+  InputError: styled.span`
+    color: ${({ theme }) => theme.color.red_D6173A};
+    border: 1px solid black;
   `,
 };
