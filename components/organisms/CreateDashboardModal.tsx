@@ -20,6 +20,7 @@ import { DASHBOARD_COLORS } from '../../app/mydashboard/_constants';
 
 const CreateDashboardModal = ({ closeModal, modalRef }: ModalComponentProps) => {
   const queryClient = useQueryClient();
+
   const [selectedColor, setSelectedColor] = useState(DASHBOARD_COLORS[0]);
   const [inputValue, setInputValue] = useState('');
 

@@ -32,7 +32,6 @@ const DashboardInfoEditForm = ({ dashboardId }: DashboardInfoEditFormProps) => {
       dashboardName: dashboardInfo?.title || '',
     },
     onSubmit: async (inputs) => {
-      console.log(inputs);
       mutate({ color: selectedColor || '', title: inputs.dashboardName, dashboardId });
 
       if (isSuccessbyMutate) {
@@ -45,7 +44,6 @@ const DashboardInfoEditForm = ({ dashboardId }: DashboardInfoEditFormProps) => {
     if (isFetched && isSuccess) {
       setDashboardInfo(data);
       setSelectedColor(data.color);
-      console.log(data?.color);
     }
   }, [data, isFetched, isSuccess]);
 
