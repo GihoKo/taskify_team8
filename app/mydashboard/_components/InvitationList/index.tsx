@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -17,6 +17,7 @@ import { getSearchedInvitationList } from '../../../../apis/invitations/getSearc
 import { putInvitationAnswer } from '../../../../apis/invitations/putInvitationAnswer';
 import InvitationText from '../commons/InvitationText';
 
+// @Todo 초기 데이터만 tanstack query로 가져오고, 나머지는 나중에 리팩토링하기
 export default function InvitationList() {
   const { data } = useQuery({
     queryKey: ['invitation', 'invitationList'],
@@ -24,13 +25,12 @@ export default function InvitationList() {
   });
   const [invitationList, setInvitationList] = useState<Invitation[]>(data?.invitations || []);
   const [cursorId, setCursorId] = useState<number | null>(null);
-  const currentLastInvitation = useRef<HTMLDivElement>(null);
+  const infiniteScrollSpinnerRef = useRef<HTMLDivElement>(null);
 
   // 초대 리스트 초기값 조회
   useEffect(() => {
     (async () => {
       const data = await getInitialInvitionList();
-      setInvitationList(data.invitations);
       setCursorId(data.cursorId);
     })();
   }, []);
@@ -46,12 +46,8 @@ export default function InvitationList() {
   useEffect(() => {
     // 검색어가 없는 경우 초기 데이터를 불러오고 무한스크롤을 재시작
     if (searchKeyword === '') {
-      (async () => {
-        const data = await getInitialInvitionList();
-        setInvitationList(data.invitations);
-      })();
-
-      infiniteScroll();
+      setInvitationList(data?.invitations || []);
+      setCursorId(data?.cursorId || null);
 
       return;
     }
@@ -75,17 +71,14 @@ export default function InvitationList() {
 
   // 검색 문자열을 모두 지웠을 때 다시 무한 스크롤을 사용하게 하기위해 함수로 만듬
   const infiniteScroll = async () => {
-    if (currentLastInvitation.current) {
+    if (infiniteScrollSpinnerRef.current) {
       const currentLastInvitationIo = new IntersectionObserver(
         (entries) => {
           entries.forEach(async (entry) => {
-            if (entry.isIntersecting && currentLastInvitation.current) {
+            if (entry.isIntersecting && infiniteScrollSpinnerRef.current && cursorId) {
               const data = await getMoreInvitionList(cursorId);
               setInvitationList((prev) => [...prev, ...data.invitations]);
-
-              if (data.cursorId) {
-                setCursorId(data.cursorId);
-              }
+              setCursorId(data.cursorId);
 
               currentLastInvitationIo.disconnect();
             }
@@ -94,7 +87,7 @@ export default function InvitationList() {
         { threshold: 1 }, // entry.isIntersecting이 성립하지만 threshold가 1이 아닐 때는 콜백이 실행되지 않음
       );
 
-      currentLastInvitationIo.observe(currentLastInvitation.current);
+      currentLastInvitationIo.observe(infiniteScrollSpinnerRef.current);
     }
   };
 
@@ -102,7 +95,7 @@ export default function InvitationList() {
   useEffect(() => {
     infiniteScroll();
     // eslint-disable-next-line
-  }, [currentLastInvitation, cursorId]);
+  }, [cursorId]);
 
   return (
     <S.Box>
@@ -134,10 +127,10 @@ export default function InvitationList() {
                 {...item}
                 onAcceptClick={handleInvitationAcceptButtonClick}
                 onRefuseClick={handleInvitationRefuseButtonClick}
-                ref={currentLastInvitation}
-                cursorId={cursorId}
               />
             ))}
+
+            {cursorId === null ? null : <div ref={infiniteScrollSpinnerRef} />}
           </S.InvitationContainer>
         </>
       ) : (
