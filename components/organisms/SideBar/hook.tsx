@@ -4,25 +4,19 @@ import { useQuery } from '@tanstack/react-query';
 
 import { Dashboard, getDashboardList } from '@apis/dashboards/getDashboardList';
 
+import { SIDE_BAR_PAGE_GROUP_NUMBER } from '@components/constants';
+
 import useModal from '@hooks/use-modal';
 
-export default function useDashboardList() {
+const useSideBar = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-
-  const { data: dashboardData, isSuccess } = useQuery({
-    queryKey: ['dashboard', 'dashboardList', currentPage],
-    queryFn: () => getDashboardList(currentPage),
-  });
-
   const [totalPage, setTotalPage] = useState<number>();
-  const [dashboards, setDashboards] = useState<Dashboard[]>(dashboardData?.dashboards || []);
 
-  useEffect(() => {
-    if (isSuccess) {
-      setDashboards(dashboardData?.dashboards);
-      setTotalPage(Math.ceil(dashboardData.totalCount / 5));
-    }
-  }, [dashboardData, isSuccess, currentPage]);
+  const { data, isSuccess } = useQuery({
+    queryKey: ['dashboard', 'dashboardList', currentPage, SIDE_BAR_PAGE_GROUP_NUMBER],
+    queryFn: () => getDashboardList(currentPage, SIDE_BAR_PAGE_GROUP_NUMBER),
+  });
+  const [dashboards, setDashboards] = useState<Dashboard[]>(data?.dashboards || []);
 
   const handleNextDashboardPageClick = () => {
     setCurrentPage((prev) => prev + 1);
@@ -32,11 +26,19 @@ export default function useDashboardList() {
     setCurrentPage((prev) => prev - 1);
   };
 
-  // 대시보드 생성 버튼 클릭시 모달 오픈
+  // 대시보드 리스트 조회
+  useEffect(() => {
+    if (isSuccess) {
+      setDashboards(data?.dashboards);
+      setTotalPage(Math.ceil(data.totalCount / SIDE_BAR_PAGE_GROUP_NUMBER));
+    }
+  }, [data, isSuccess, currentPage]);
+
+  // 대시보드 생성 버튼 클릭
   const { openModal } = useModal();
 
   const handleCreateDashboardButtonClick = async () => {
-    const CreateDashboardModal = await import('@/components/organisms/CreateDashboardModal').then(
+    const CreateDashboardModal = await import('@components/organisms/CreateDashboardModal').then(
       (module) => module.default,
     );
 
@@ -51,4 +53,6 @@ export default function useDashboardList() {
     handlePreviousDashboardPageClick,
     handleCreateDashboardButtonClick,
   };
-}
+};
+
+export default useSideBar;

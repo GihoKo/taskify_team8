@@ -1,57 +1,26 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { Dashboard, getDashboardList } from '@apis/dashboards/getDashboardList';
 import createIcon from '@public/images/icons/add-filledViolet_5534DA-16w-16h.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import PageNationButton from '@components/atoms/PageNationButton';
 
-import useModal from '@hooks/use-modal';
-
 import DashboardItem from './DashboardItem';
+import useDashboardList from './hook';
 
 export default function MyDashboardList() {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPage, setTotalPage] = useState<number>();
-
-  const { data: dashboardData, isSuccess } = useQuery({
-    queryKey: ['dashboard', 'dashboardList', currentPage],
-    queryFn: () => getDashboardList(currentPage),
-  });
-  const [dashboards, setDashboards] = useState<Dashboard[]>(dashboardData?.dashboards || []);
-
-  useEffect(() => {
-    if (isSuccess) {
-      setDashboards(dashboardData?.dashboards);
-      setTotalPage(Math.ceil(dashboardData.totalCount / 5));
-    }
-  }, [dashboardData, isSuccess, currentPage]);
-
-  const handleNextDashboardPageClick = () => {
-    setCurrentPage((prev) => prev + 1);
-  };
-
-  const handlePreviousDashboardPageClick = () => {
-    setCurrentPage((prev) => prev - 1);
-  };
-
-  // 대시보드 생성 버튼 클릭
-  const { openModal } = useModal();
-
-  const handleCreateDashboardButtonClick = async () => {
-    const CreateDashboardModal = await import('@/components/organisms/CreateDashboardModal').then(
-      (module) => module.default,
-    );
-
-    openModal(CreateDashboardModal);
-  };
+  const {
+    dashboards,
+    totalPage,
+    currentPage,
+    handleNextDashboardPageClick,
+    handlePreviousDashboardPageClick,
+    handleCreateDashboardButtonClick,
+  } = useDashboardList();
 
   return (
     <S.Box>
