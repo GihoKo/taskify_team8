@@ -10,6 +10,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import { useCloseModal } from '@hooks/use-modal';
 import { ModalComponentProps } from '@hooks/use-modal/types';
 
+import CardDateInput from './molecules/date/CardDateInput';
 import CardTextArea from './molecules/description/CardTextarea';
 import ImageInput from './molecules/ImageInput';
 import SelectInput from './molecules/SelectInput';
@@ -57,14 +58,30 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
   // 이미지 - mid
 
   // 인풋 관리
+
+  const offset = new Date().getTimezoneOffset() * 60000;
+  const timeValue = new Date(Date.now() - offset);
+
+  const todayCurrentTime = new Date(timeValue.setMinutes(timeValue.getMinutes()));
+  const todayCurrentTimePlusThirty = new Date(timeValue.setMinutes(timeValue.getMinutes() + 30));
+  const defaultTimeValue = todayCurrentTime.toISOString().slice(0, 16);
+  const defaultTimePlusThirtyValue = todayCurrentTimePlusThirty.toISOString().slice(0, 16);
+
   const {
     register,
     // handleSubmit,
     watch,
     setError,
     reset,
+    getValues,
+    setValue,
     formState: { errors },
-  } = useForm({ mode: 'onBlur' });
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      date: defaultTimePlusThirtyValue,
+    },
+  });
 
   const {
     register: registerOnChanage,
@@ -106,7 +123,16 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
               setError={setError}
               required
             />
-            <TextInput inputType='datetime-local' placeHolder='날짜를 입력해 주세요' title={'마감일'} />
+            <CardDateInput
+              id='date'
+              register={register}
+              errors={errors}
+              watch={watch}
+              setError={setError}
+              defaultTimeValue={defaultTimeValue}
+              getValues={getValues}
+              setValue={setValue}
+            />
             <CardTagInput
               id='tag'
               register={registerOnChanage}

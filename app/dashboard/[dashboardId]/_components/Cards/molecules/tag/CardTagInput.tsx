@@ -129,12 +129,17 @@ const S = {
   CalculatingWidth: styled.div`
     position: absolute;
     width: fit-content;
-    max-width: 20rem;
+    max-width: 18rem;
     left: 1.6rem;
-    top: 1.4rem;
+    top: 1.1rem;
     overflow: hidden;
     display: flex;
     justify-content: flex-end;
+
+    @media ${mediaBreakpoint.tablet} {
+      top: 1.4rem;
+      max-width: 25rem;
+    }
   `,
 
   Input: styled.input<{ $isError: boolean; $addPadding: number }>`
@@ -150,7 +155,7 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       font-size: 1.6rem;
-      width: 48.4rem;
+      width: 100%;
       height: 4.8rem;
       margin-bottom: 0.8rem;
     }
@@ -194,7 +199,7 @@ const S = {
   CardsInputWrapper: styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 2.4rem;
+
     @media ${mediaBreakpoint.tablet} {
       margin-bottom: 3.2rem;
     }
