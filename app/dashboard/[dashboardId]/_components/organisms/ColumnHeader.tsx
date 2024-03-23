@@ -9,17 +9,18 @@ import useMdoal from '@hooks/use-modal';
 import ColumnProgressBar from '../molecules/ColumnProgressBar';
 
 export interface ColumnHeaderProps {
+  dashboardId?: number;
   columnId: number;
   columnTitle: string;
 }
 
-const ColumnHeader = ({ columnId, columnTitle }: ColumnHeaderProps) => {
+const ColumnHeader = ({ columnId, columnTitle, dashboardId }: ColumnHeaderProps) => {
   const { openModal } = useMdoal();
 
   const handleUpdateColumnClick = async () => {
     const UpdateColumnModal = await import('../Columns/UpdateColumnModal').then((module) => module.default);
 
-    openModal(UpdateColumnModal, { currentColumnTitle: 'Done' });
+    openModal(UpdateColumnModal, { dashboardId, columnTitle, columnId });
   };
 
   return (

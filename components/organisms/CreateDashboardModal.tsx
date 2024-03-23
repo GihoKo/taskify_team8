@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 import ColumnButton from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButton';
 import ColumnButtonsWrap from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButtonWrap';
-import CreateModalTitle from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnModalTitile';
+import CreateModalTitle from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnModalTitle';
 import ModalDimmed from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ModalDimmed';
 import { axiosToken } from '@apis/instance/axiosToken';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
