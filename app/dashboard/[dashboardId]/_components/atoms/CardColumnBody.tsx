@@ -1,10 +1,9 @@
 'use client';
 
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useEffect, useRef } from 'react';
 
 import styled from 'styled-components';
 
-import { type Card as ICard } from '@apis/cards/getCardList';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import { useInView } from '@hooks/useInView';
@@ -20,39 +19,28 @@ const CardColumnBody = ({ columnId }: CardColumnBodyProps) => {
 
   const { intersectionObserveTargetRef, isIntersecting } = useInView<HTMLDivElement>({
     root: rootRef.current,
-    rootMargin: '50px 0px',
+    rootMargin: '0px 0px 500px 0px',
   });
 
-  const { data, isFetched, isSuccess, isFetching, fetchNextPage, hasNextPage } = useGetCardListOnInfiniteScroll({
+  const { data, fetchNextPage, hasNextPage } = useGetCardListOnInfiniteScroll({
     columnId,
   });
 
-  const [cardList, setCardList] = useState<ICard[]>(data?.pages.flatMap((page) => page) || []);
-
   useEffect(() => {
-    console.dir(data);
-
-    if (isFetched && isSuccess) {
-      console.dir(data);
-
-      setCardList(data.pages.flatMap((page) => page));
-    }
-  }, [data, isFetched, isSuccess]);
-
-  useEffect(() => {
-    if (isIntersecting && !isFetching && hasNextPage) {
+    if (isIntersecting && hasNextPage) {
       fetchNextPage();
     }
-  }, [isIntersecting, isFetching, hasNextPage, fetchNextPage]);
+  }, [isIntersecting, hasNextPage, fetchNextPage]);
 
   return (
     <S.Container ref={rootRef}>
       <CardAppendButton />
-      {Boolean(cardList?.length) &&
-        cardList.map((card) => {
+      {data &&
+        data.pages.length > 0 &&
+        data.pages.map((card) => {
           return <Card key={card.id} {...card} />;
         })}
-      <div ref={intersectionObserveTargetRef} />
+      <S.Threshold ref={intersectionObserveTargetRef} />
     </S.Container>
   );
 };
@@ -101,5 +89,9 @@ const S = {
       /* max-height: calc(100vh - 13.8rem); */
       max-height: calc(100vh - 13.8rem - 3rem); /* 30rem: bottom scroll-bar width */
     }
+  `,
+  Threshold: styled.div`
+    flex-shrink: 0;
+    height: 1px;
   `,
 };

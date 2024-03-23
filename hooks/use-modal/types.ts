@@ -1,7 +1,5 @@
 import { ComponentProps, ComponentType, MutableRefObject, PropsWithChildren } from 'react';
 
-// export type Obj = Record<string | number | symbol, any>;
-// export type Obj = Record<string, any>;
 export type Obj = Record<string, any>;
 
 type Key = keyof Obj;
@@ -112,14 +110,6 @@ export type Without<T extends ModalComponentOrObj, K extends Key> = T extends Mo
   : T extends Obj
     ? Omit<T, K>
     : never;
-// export type Without<T extends ModalComponentOrObj, K extends Key> = T extends ModalComponent
-//   ? Omit<InternalModalComponentProps<T>, K>
-//   : T extends Obj
-//     ? Omit<T, K>
-//     : never;
-// export type Without<T extends ModalComponentOrObj, K extends Key> = T extends ModalComponent
-//   ? Omit<InternalModalComponentProps<T>, K>
-//   : Omit<T, K>;
 
 // TODO: Union type would be more simple than multiple Without types
 export type ModalComponentPropsWithoutModalRef<T extends ModalComponentOrObj> = Without<T, 'modalRef'>;
@@ -137,30 +127,6 @@ export type ExposedModalPropsWithoutModalRef<T extends ModalComponent> = ModalCo
   ExposedModalProps<T>
 > &
   Omit<ModalHandler, 'modalRef'>;
-
-// type Check1 = ExposedModalProps<ModalComponentHasAllRequiredProps<ModalComponent>>;
-// type Check2 = ExposedModalPropsWithoutModalRef<ModalComponentHasAllRequiredProps<ModalComponent>>;
-
-// type CheckType = ValidModalProps;
-// const a: CheckType = {
-//   // normal behavior
-//   // it recommends default props as expected
-// }
-// type CheckType2 = Omit<ValidModalProps, 'closeModal'>;
-// const a: CheckType2 = {
-//   // abnormal behavior
-//   // it doesn't recommend default props
-// }
-
-// export type ExposedModalProps<T extends ModalComponent> = ModalComponentPropsWithoutSubmitModal<
-//   ModalComponentPropsWithoutCloseModal<T>
-// > &
-//   SetPickedPropToRequired<ModalHandler, 'modalRef'>;
-
-// export type ExposedModalPropsWithoutModalRef<T extends ModalComponent> = ModalComponentPropsWithoutModalRef<
-//   ExposedModalProps<T>
-// > &
-//   Omit<ModalHandler, 'modalRef'>;
 
 /// ////////////////////////////////////////////////////////////////////////////////////
 /// for multi layer modals
