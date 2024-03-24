@@ -29,7 +29,7 @@ const ColumContainerGroup = ({ dashboardId }: ColumContainerGroupProps) => {
         columnList.map((column) => (
           <ColumnContainer key={column.id}>
             <ColumnHeader columnTitle={column.title} columnId={column.id} dashboardId={dashboardId} />
-            <CardColumnBody columnId={column.id} />
+            <CardColumnBody dashboardId={dashboardId} columnId={column.id} />
           </ColumnContainer>
         ))}
     </>
