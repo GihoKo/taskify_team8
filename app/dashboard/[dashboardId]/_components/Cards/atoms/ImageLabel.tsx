@@ -9,7 +9,6 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 interface ImageLabelProps {
   imageUrl: string;
-  onClick?: () => void;
   id: string;
 }
 
