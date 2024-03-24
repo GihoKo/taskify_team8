@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
+import { Comment } from '@apis/comments/getComments';
 import { postCommentList, postCommentListParams } from '@apis/comments/postComments';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
@@ -10,7 +11,7 @@ interface Props {
   dashboardId: number;
   columnId: number;
   cardId: number;
-  onCreate: React.Dispatch<React.SetStateAction<Comment[]>>;
+  setCommentList: Dispatch<SetStateAction<Comment[]>>;
 }
 
 interface InputParams {
@@ -18,11 +19,10 @@ interface InputParams {
 }
 
 // TODO: 입력버튼이 textarea를 가리는 문제.
-export default function ReplyInputForm({ dashboardId, columnId, cardId, onCreate }: Props) {
+export default function ReplyInputForm({ dashboardId, columnId, cardId, setCommentList }: Props) {
   const { reset, register, handleSubmit } = useForm<InputParams>();
 
   const onSubmit: SubmitHandler<InputParams> = async (input) => {
-    console.log(input.content);
     const newComment: postCommentListParams = {
       content: input.content,
       dashboardId,
@@ -38,10 +38,7 @@ export default function ReplyInputForm({ dashboardId, columnId, cardId, onCreate
       return;
     }
 
-    // @ts-ignore
-    onCreate((previous) => {
-      return [response, ...previous];
-    });
+    setCommentList((previous: Comment[]) => [response, ...previous]);
 
     reset();
   };

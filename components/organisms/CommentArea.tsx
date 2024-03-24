@@ -19,7 +19,7 @@ export default function CommentArea({ cardId, comments, dashboardId, columnId }:
 
   return (
     <>
-      <ReplyInputForm dashboardId={dashboardId} columnId={columnId} cardId={cardId} onCreate={setCommentList} />
+      <ReplyInputForm dashboardId={dashboardId} columnId={columnId} cardId={cardId} setCommentList={setCommentList} />
       <S.Container>
         {commentList.map((comment) => (
           <CommentItem key={comment.id} comment={comment} setCommentList={setCommentList} />

@@ -1,7 +1,5 @@
 import HydrationBoundaryComponent from '@components/server/HydrationBoundaryComponent';
 
-import { useModalList } from '@hooks/use-modal';
-
 import ColumnContainer from './_components/atoms/ColumnContainer';
 import DashboardContentsArea from './_components/atoms/DashboardContentsArea';
 import ColumnContainerGroup from './_components/ColumContainerGroup';

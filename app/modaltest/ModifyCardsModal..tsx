@@ -6,6 +6,17 @@ import { useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
+import CardDateInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/date/CardDateInput';
+import CardTextArea from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/description/CardTextarea';
+import ImageFileInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/ImageFileInput';
+import SelectInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/person/SelectInput';
+import CardTagInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/tag/CardTagInput';
+import CardTitleInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/title/CardTitleInput';
+import ColumnButton from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButton';
+import ColumnButtonsWrap from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButtonWrap';
+import CreateModalTitle from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnModalTitle';
+import ModalDimmed from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ModalDimmed';
+import { dateTimeFormatter } from '@/app/dashboard/[dashboardId]/_utils/GenerateTimeStamp';
 import { postCreateCard, postCreateCardRequest } from '@apis/cards/postCreateCard';
 import { getDashboardMemberList, GetDashboardMemberListResponse, Member } from '@apis/members/getDashboardMemberList';
 import { cardsQueryOptions } from '@queries/keys/cardsKeys';
@@ -14,17 +25,6 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import { BadgeProps } from '@components/atoms/TagBadge';
 
 import { ModalComponentProps } from '@hooks/use-modal/types';
-import ModalDimmed from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ModalDimmed';
-import CreateModalTitle from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnModalTitle';
-import SelectInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/person/SelectInput';
-import CardTitleInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/title/CardTitleInput';
-import CardTextArea from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/description/CardTextarea';
-import CardDateInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/date/CardDateInput';
-import CardTagInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/tag/CardTagInput';
-import ImageFileInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/ImageFileInput';
-import ColumnButtonsWrap from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButtonWrap';
-import ColumnButton from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButton';
-import { dateTimeFormatter } from '@/app/dashboard/[dashboardId]/_utils/GenerateTimeStamp';
 
 export default function ModifyCardsModal({
   closeModal,
@@ -105,8 +105,10 @@ export default function ModifyCardsModal({
       dueDate: formattedDate,
       tags: tagList as string[],
     };
+
     if (image.length > 0) {
       console.log('image', image);
+
       return {
         ...payloadDto,
         imageUrl: image,
@@ -136,6 +138,7 @@ export default function ModifyCardsModal({
     if (!columnId) {
       return;
     }
+
     await queryClient.invalidateQueries(cardsQueryOptions.masterKey());
     submitModal();
   };

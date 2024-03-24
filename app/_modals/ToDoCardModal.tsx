@@ -76,8 +76,6 @@ export default function ToDoCardModal({
 
   console.log('card', card);
 
-  // @ts-ignore
-
   return (
     <S.ModalTestDimmed>
       <S.ModalPage
