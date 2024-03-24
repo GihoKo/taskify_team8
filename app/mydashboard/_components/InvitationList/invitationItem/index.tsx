@@ -1,5 +1,7 @@
 'use client';
 
+import { forwardRef } from 'react';
+
 import styled from 'styled-components';
 
 import { Invitation } from '@apis/invitations/getInitialInvitionList';
@@ -13,34 +15,39 @@ type InvitationItemType = Pick<Invitation, 'id' | 'dashboard' | 'inviter'>;
 interface InvitationItemProps extends InvitationItemType {
   onAcceptClick: (id: number) => void;
   onRefuseClick: (id: number) => void;
+  cursorId: number | null;
 }
 
-const InvitationItem = ({ id, dashboard, inviter, onAcceptClick, onRefuseClick }: InvitationItemProps) => {
-  return (
-    <S.Wrapper>
-      <S.NameWrapper>
-        <S.DashboardNameWrapper>
-          <S.InvitationNamePositioner>
-            <InvitationText status='label'>이름</InvitationText>
-          </S.InvitationNamePositioner>
-          <InvitationText status='content'>{dashboard.title}</InvitationText>
-        </S.DashboardNameWrapper>
-        <S.InviterNameWrapper>
-          <InvitationText status='label'>초대자</InvitationText>
-          <InvitationText status='content'>{inviter.nickname}</InvitationText>
-        </S.InviterNameWrapper>
-      </S.NameWrapper>
-      <S.ButtonWrapper>
-        <InvitationButton status='accept' onClick={() => onAcceptClick(id)}>
-          수락
-        </InvitationButton>
-        <InvitationButton status='refuse' onClick={() => onRefuseClick(id)}>
-          거절
-        </InvitationButton>
-      </S.ButtonWrapper>
-    </S.Wrapper>
-  );
-};
+const InvitationItem = forwardRef<HTMLDivElement, InvitationItemProps>(
+  ({ id, dashboard, inviter, onAcceptClick, onRefuseClick, cursorId }, ref) => {
+    return (
+      <S.Wrapper ref={cursorId === id ? ref : null}>
+        <S.NameWrapper>
+          <S.DashboardNameWrapper>
+            <S.InvitationNamePositioner>
+              <InvitationText status='label'>이름</InvitationText>
+            </S.InvitationNamePositioner>
+            <InvitationText status='content'>{dashboard.title}</InvitationText>
+          </S.DashboardNameWrapper>
+          <S.InviterNameWrapper>
+            <InvitationText status='label'>초대자</InvitationText>
+            <InvitationText status='content'>{inviter.nickname}</InvitationText>
+          </S.InviterNameWrapper>
+        </S.NameWrapper>
+        <S.ButtonWrapper>
+          <InvitationButton status='accept' onClick={() => onAcceptClick(id)}>
+            수락
+          </InvitationButton>
+          <InvitationButton status='refuse' onClick={() => onRefuseClick(id)}>
+            거절
+          </InvitationButton>
+        </S.ButtonWrapper>
+      </S.Wrapper>
+    );
+  },
+);
+
+InvitationItem.displayName = 'InvitationItem';
 
 export default InvitationItem;
 

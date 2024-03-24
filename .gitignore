@@ -34,3 +34,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.idea/aws.xml
+.idea/fileColors.xml
+.idea/jpa-buddy.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/prettier.xml
+.idea/taskify.iml
+.idea/vcs.xml
+.idea/codeStyles/codeStyleConfig.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/jsLinters/eslint.xml
+app/dashboard/[dashboardId]/_components/Cards/mock.ts
+public/images/mock.png
+app/dashboard/[dashboardId]/_components/Cards/mock.ts
+.gitignore
+app/dashboard/[dashboardId]/_components/Cards/mock.ts

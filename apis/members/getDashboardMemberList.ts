@@ -29,7 +29,9 @@ interface GetDashboardMemberListParams {
   dashboardId: number;
 }
 
-export const getDashboardMemberList = async ({ page, size, dashboardId }: GetDashboardMemberListParams) => {
+// sp-taskify-api.vercel.app/3-8/members?page=1&size=20&dashboardId=4989
+
+export const getDashboardMemberList = async ({ page = 1, size = 20, dashboardId }: GetDashboardMemberListParams) => {
   const response = await axiosToken.get<GetDashboardMemberListResponse>('/members', {
     params: {
       page,
