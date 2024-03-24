@@ -11,7 +11,6 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import { BadgeProps } from '@components/atoms/TagBadge';
 
-import { useCloseModal } from '@hooks/use-modal';
 import { ModalComponentProps } from '@hooks/use-modal/types';
 
 import CardDateInput from './molecules/date/CardDateInput';
