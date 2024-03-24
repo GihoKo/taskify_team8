@@ -2,60 +2,52 @@
 
 import { useState } from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 import styled from 'styled-components';
 
 import ColumnButton from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButton';
 import ColumnButtonsWrap from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButtonWrap';
 import CreateModalTitle from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnModalTitle';
 import ModalDimmed from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ModalDimmed';
-import { axiosToken } from '@apis/instance/axiosToken';
+import { postInvitation } from '@apis/dashboards/postInvitation';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
-
-import ColorSelectList from '@components/molecules/ColorSelectList';
 
 import { ModalComponentProps } from '@hooks/use-modal';
 
-import { DASHBOARD_COLORS } from '../../app/mydashboard/_constants';
+const InvitationModal = ({ closeModal, modalRef }: ModalComponentProps) => {
+  const { dashboardId } = useParams<{ dashboardId?: string }>();
 
-const CreateDashboardModal = ({ closeModal, modalRef }: ModalComponentProps) => {
-  const queryClient = useQueryClient();
-
-  const [selectedColor, setSelectedColor] = useState(DASHBOARD_COLORS[0]);
   const [inputValue, setInputValue] = useState('');
   const [inputErrorMessage, setInputErrorMessage] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleCreateDashboardButtonClick();
-  };
 
-  const handleCreateDashboardButtonClick = async () => {
-    if (inputValue.length > 10) {
-      return setInputErrorMessage('10자 이하로 입력해주세요.');
+    if (inputValue === '') {
+      return setInputErrorMessage('이메일을 입력해주세요');
     }
 
-    if (inputValue.length === 0) {
-      return setInputErrorMessage('대시보드 이름을 입력해주세요.');
+    if (/\S+@\S+\.\S+/.test(inputValue) === false) {
+      return setInputErrorMessage('이메일 형식이 올바르지 않습니다');
     }
+
+    const body = {
+      email: inputValue,
+    };
 
     try {
-      const result = await axiosToken.post('/dashboards', {
-        title: inputValue,
-        color: selectedColor,
-      });
-
-      if (result.status === 201) {
-        queryClient.invalidateQueries({ queryKey: ['dashboard', 'dashboardList', 1] });
+      (async () => {
+        const data = await postInvitation(Number(dashboardId), body);
+        console.log(data);
         closeModal();
-      }
+      })();
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
   return (
@@ -65,34 +57,22 @@ const CreateDashboardModal = ({ closeModal, modalRef }: ModalComponentProps) => 
           if (modalRef) modalRef.current = node;
         }}
       >
-        <CreateModalTitle title='새로운 대시보드' />
+        <CreateModalTitle title='초대하기' />
         <S.Form onSubmit={handleSubmit}>
-          <S.Label htmlFor='dashboard-name'>대시보드 이름</S.Label>
+          <S.Label htmlFor='invitaition-email'>이메일</S.Label>
           <S.Input
-            id='dashboard-name'
-            type='text'
-            placeholder='뉴 프로젝트'
+            id='invitaition-email'
+            type='email'
+            placeholder='이메일을 입력해주세요'
             value={inputValue}
             onChange={handleChange}
           />
           {inputErrorMessage ? <S.ErrorMessage>{inputErrorMessage}</S.ErrorMessage> : null}
-          <ColorSelectList shouldShowSelectedColorChipOnly={{ onMobile: true, onTablet: false, onPc: false }}>
-            <ColorSelectList.Container>
-              {DASHBOARD_COLORS.map((color) => (
-                <ColorSelectList.ColorChip
-                  onClick={({ selectedColor }) => setSelectedColor(selectedColor)}
-                  key={color}
-                  chipColor={color}
-                  selected={color === selectedColor}
-                />
-              ))}
-            </ColorSelectList.Container>
-          </ColorSelectList>
           <S.ButtonWrapper>
             <S.Button type='button' onClick={closeModal}>
               취소
             </S.Button>
-            <S.Button type='submit'>생성</S.Button>
+            <S.Button type='submit'>초대</S.Button>
           </S.ButtonWrapper>
         </S.Form>
       </S.Wrapper>
@@ -100,12 +80,13 @@ const CreateDashboardModal = ({ closeModal, modalRef }: ModalComponentProps) => 
   );
 };
 
-export default CreateDashboardModal;
+export default InvitationModal;
 
 const S = {
   Wrapper: styled.div`
     width: 32.7rem;
-    height: 29.3rem;
+    height: 24.1rem;
+    flex-shrink: 0;
     border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.white_FFFFFF};
     padding: 2.8rem 2rem;
@@ -113,11 +94,7 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       width: 54rem;
-      height: 33.4rem;
-    }
-    @media ${mediaBreakpoint.pc} {
-      width: 54rem;
-      height: 33.4rem;
+      height: 27.6rem;
     }
   `,
 
@@ -154,25 +131,6 @@ const S = {
 
     @media ${mediaBreakpoint.tablet} {
       font-size: 1.8rem;
-    }
-  `,
-
-  ColorPickerContainer: styled.div`
-    display: flex;
-    gap: 0.81rem;
-
-    @media ${mediaBreakpoint.tablet} {
-      gap: 0.62rem;
-    }
-    @media ${mediaBreakpoint.pc} {
-      gap: 0.63rem;
-    }
-  `,
-  ColorSelectListWrapper: styled.div`
-    margin-bottom: 1.5rem;
-
-    @media ${mediaBreakpoint.tablet} {
-      margin-bottom: 1.75rem;
     }
   `,
   ButtonWrapper: styled(ColumnButtonsWrap)``,
