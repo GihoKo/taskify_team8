@@ -103,7 +103,7 @@ const DashboardMemberList = () => {
 
 export default DashboardMemberList;
 
-const S = {
+export const S = {
   Container: styled.section`
     display: flex;
     justify-content: center;
