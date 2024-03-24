@@ -61,7 +61,7 @@ export default function Input({
             placeholder={placeholder}
             value={value}
             onFocus={handleFocus}
-            errorMessage={!!errorMessage}
+            $errorMessage={!!errorMessage}
             name={name}
             disabled={disabled}
             defaultValue={defaultValue}
@@ -81,7 +81,7 @@ export default function Input({
               onBlur={handleBlur}
               value={value}
               onFocus={handleFocus}
-              errorMessage={!!errorMessage}
+              $errorMessage={!!errorMessage}
               name={name}
             />
             <S.imageWrap onClick={handlepassword}>
@@ -121,12 +121,12 @@ const S = {
     font-size: 1.6rem;
     font-weight: 400;
   `,
-  input: styled.input<{ errorMessage: boolean }>`
-    width: 35.1rem;
-    padding: 1.5rem 1.6rem;
+  input: styled.input<{ $errorMessage: boolean }>`
+    width: 100%;
+    padding: 15px 16px;
     border-radius: 8px;
     border: ${(props) =>
-      props.errorMessage ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
+      props.$errorMessage ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
     background: ${({ theme }) => theme.color.white_FFFFFF};
     font-size: 1.6rem;
     font-weight: 400;

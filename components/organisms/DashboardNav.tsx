@@ -6,18 +6,24 @@ import Image from 'next/image';
 import { useParams, usePathname } from 'next/navigation';
 import styled from 'styled-components';
 
+import DashboardMemberListWithFunnel from '@/app/dashboard/_components/molecules/DashboardMemberListWithFunnel';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import { sidebarWidth } from '@styles/sidebarWidth';
 
 import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
 import NonNullableFunnel from '@components/util/NonNullableFunnel';
+import { CallableMappedComponent } from '@components/util/withFunnel';
 
 import { useUserStore } from '@store/store/userStore';
 
 import DashboardNameWithValidId from './DashboardNameWithValidId';
-import DashboardMemberList from '../../app/dashboard/_components/molecules/DashboardMemberList';
 import InviteButton from '../../app/dashboard/_components/molecules/InviteButton';
 import ManageButton from '../../app/dashboard/_components/molecules/ManageButton';
+
+// https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unstable-nested-components.md
+const DashBoardName: CallableMappedComponent = (pathName) => (
+  <S.DashBoardName>{pathName === '/mydashboard' ? '내 대시보드' : '계정관리'}</S.DashBoardName>
+);
 
 const DashboardNav = () => {
   const pathname = usePathname();
@@ -37,12 +43,8 @@ const DashboardNav = () => {
           condition={{ dashboardId }}
           componentListMappedToPath={[
             {
-              path: '/mydashboard',
-              component: <S.DashBoardName>내 대시보드</S.DashBoardName>,
-            },
-            {
-              path: '/mypage',
-              component: <S.DashBoardName>계정관리</S.DashBoardName>,
+              path: ['/mydashboard', '/mypage'],
+              component: DashBoardName,
             },
           ]}
         >
@@ -59,12 +61,14 @@ const DashboardNav = () => {
         )}
         <S.ProfileBox>
           {/* 멤버 프로필 정보 */}
-          {pathname === '/mydashboard' ? null : (
-            <>
-              <DashboardMemberList />
-              <S.Stick />
-            </>
-          )}
+          <DashboardMemberListWithFunnel
+            componentListMappedToPath={[
+              {
+                path: ['/mydashboard', '/mypage'],
+                component: null,
+              },
+            ]}
+          />
           {/* 내 프로필 정보 */}
           <S.MyInfoBox>
             <FirstLetterProfile
@@ -202,17 +206,6 @@ const S = {
 
     @media ${mediaBreakpoint.pc} {
       column-gap: 3.2rem;
-    }
-  `,
-
-  Stick: styled.div`
-    width: 0.1rem;
-    height: 3.4rem;
-    flex-shrink: 0;
-    background-color: ${({ theme }) => theme.color.gray_D9D9D9};
-
-    @media ${mediaBreakpoint.tablet} {
-      height: 3.8rem;
     }
   `,
 
