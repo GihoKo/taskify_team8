@@ -40,7 +40,7 @@ const DashboardEditPage = ({ params }: DashboardPageParams) => {
         >
           <InviteeManageForm dashboardId={NumericDashboardId} />
         </HydrationBoundaryComponent>
-        <DashboardDeleteButton />
+        <DashboardDeleteButton dashboardId={NumericDashboardId} />
       </ContentsArea>
     </EditPageWrapper>
   );

@@ -150,7 +150,7 @@ export default function SignIn() {
           <S.LogoWrap>
             <S.Logo>
               <Link href={'/'}>
-                <Image src={'/images/icons/logoLogin.svg'} alt='로고' fill />
+                <Image src={'/images/icons/logoLogin-filledViolet_5544DA-200w-279h.svg'} alt='로고' fill />
               </Link>
             </S.Logo>
             <p>오늘도 만나서 반가워요!</p>
@@ -171,7 +171,7 @@ export default function SignIn() {
               hookform={register('password')}
               title='비밀번호'
               placeholder='비밀번호를 입력해 주세요'
-              data='Pass'
+              data='password'
               errorMessage={passwordError}
               name='password'
               handleFocus={handleFocus('password')}
@@ -246,7 +246,7 @@ const S = {
     text-align: center;
     font-size: 1.8rem;
     font-weight: 500;
-
+    cursor: pointer;
     @media ${mediaBreakpoint.tablet} {
       width: 52rem;
     }
