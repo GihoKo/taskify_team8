@@ -9,6 +9,7 @@ import styled from 'styled-components';
 
 import axios from '@apis/axios';
 import { UserInfo } from '@apis/users/getUserInfo';
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
@@ -33,7 +34,7 @@ interface PasswordChange {
 function MyPage() {
   const { user, setUser } = useUserStore();
   const [currentUser, setCurrentUser] = useState<UserInfo | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('/images/more.svg');
+  const [previewUrl, setPreviewUrl] = useState<string>('/images/icons/profile-add.svg');
   const [PasswordWrong, setPasswordWrong] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [profileButton, setProfileButton] = useState<boolean>(false);
@@ -118,11 +119,10 @@ function MyPage() {
     } catch (error) {
       console.error(error);
     }
-  }, [previewUrl]); // previewUrl을 종속성으로 사용합니다.
-
+  }, [previewUrl]);
   useEffect(() => {
     fetchProfileImage();
-  }, [fetchProfileImage]); // fetchProfileImage 함수를 종속성으로 사용합니다.
+  }, [fetchProfileImage]);
 
   useEffect(() => {
     setCurrentUser(user);
@@ -185,7 +185,7 @@ function MyPage() {
     }
   };
 
-  const handleDeleteImg = () => {
+  const handleDeleteImage = () => {
     setProfileValue((prev) => ({
       ...prev,
       profileImageUrl: null,
@@ -210,7 +210,7 @@ function MyPage() {
 
         router.push('/mypage');
       } catch (err) {
-        setModalText('error'); // 에러가 발생했을 때 'error' 메시지를 표시합니다. 못된 타입에러를 물리치기 위해 텍스트로 대체하였습니다.
+        setModalText('error');
         showPasswordToggle();
       }
     }
@@ -240,21 +240,21 @@ function MyPage() {
         <S.Box onSubmit={handleSubmit1(onSubmit1)}>
           <S.BoxTitle>프로필</S.BoxTitle>
           <S.InputBox>
-            <S.BoxImg>
+            <S.BoxImage>
               <Image
                 key={previewUrl}
                 src={previewUrl}
                 alt='이미지 추가'
                 fill
                 placeholder='blur'
-                blurDataURL={'/images/icons/profile-add.svg'} // Todo: 이미지가 있었는데 없어진다.. 수정 필요
+                blurDataURL={'/images/icons/profile-add.svg'}
               />
-              <S.ChangeImg>
-                <S.ChangeImgInner htmlFor='file'>
-                  <S.ImgEdit>
-                    <Image src={'/images/icons/profile-add.svg'} alt='이미지 변경' fill />
-                  </S.ImgEdit>
-                </S.ChangeImgInner>
+              <S.ChangeImage>
+                <S.ChangeImageInner htmlFor='file'>
+                  <S.ImageEdit>
+                    <Image src={'/images/icons/profile-edit.svg'} alt='이미지 변경' fill />
+                  </S.ImageEdit>
+                </S.ChangeImageInner>
 
                 <input
                   {...register1('profileImageUrl')}
@@ -263,8 +263,8 @@ function MyPage() {
                   id='file'
                   onChange={handleFileChange}
                 />
-              </S.ChangeImg>
-            </S.BoxImg>
+              </S.ChangeImage>
+            </S.BoxImage>
             <S.Inputs>
               {currentUser && (
                 <>
@@ -282,7 +282,7 @@ function MyPage() {
             </S.Inputs>
           </S.InputBox>
           <S.ButtonBox>
-            <S.DeleteImg onClick={handleDeleteImg}>이미지 삭제</S.DeleteImg>
+            <S.DeleteImage onClick={handleDeleteImage}>이미지 삭제</S.DeleteImage>
             <S.Submit type='submit' value={'저장'} null={profileButton} disabled={!!profileButton} />
           </S.ButtonBox>
         </S.Box>
@@ -334,17 +334,9 @@ const S = {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+    /* padding: 2rem; */
     background-color: ${({ theme }) => theme.color.gray_FAFAFA};
     gap: 1.2rem;
-    @media all and (max-width: 1199px) {
-      width: calc(100% - 16rem);
-      margin-left: 16rem;
-    }
-    @media all and (max-width: 767px) {
-      width: calc(100% - 7rem);
-      margin-left: 7rem;
-    }
   `,
   Back: styled.div`
     color: ${({ theme }) => theme.color.black_333236};
@@ -362,28 +354,35 @@ const S = {
   `,
   BoxTitle: styled.div`
     color: ${({ theme }) => theme.color.black_333236};
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 3.2rem;
-    @media all and (max-width: 767px) {
-      font-size: 2rem;
+    @media ${mediaBreakpoint.tablet} {
+      font-size: 2.4rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      font-size: 2.4rem;
     }
   `,
-  BoxImg: styled.div`
-    width: 18.2rem;
-    height: 18.2rem;
+  BoxImage: styled.div`
+    width: 10rem;
+    height: 10rem;
     position: relative;
     border-radius: 6px;
     overflow: hidden;
     display: table;
-    @media all and (max-width: 767px) {
-      width: 10rem;
-      height: 10rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 18.2rem;
+      height: 18.2rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 18.2rem;
+      height: 18.2rem;
     }
   `,
-  ChangeImg: styled.div`
-    width: 18.2rem;
-    height: 18.2rem;
+  ChangeImage: styled.div`
+    width: 10rem;
+    height: 10rem;
     position: relative;
     &:hover label {
       display: block;
@@ -396,25 +395,33 @@ const S = {
       overflow: hidden;
       border: 0;
     }
-    @media all and (max-width: 767px) {
-      width: 10rem;
-      height: 10rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 18.2rem;
+      height: 18.2rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 18.2rem;
+      height: 18.2rem;
     }
   `,
-  ChangeImgInner: styled.label`
-    width: 18.2rem;
-    height: 18.2rem;
+  ChangeImageInner: styled.label`
+    width: 10rem;
+    height: 10rem;
     position: relative;
     background-color: rgba(0, 0, 0, 0.3);
     border: none;
     display: none;
     cursor: pointer;
-    @media all and (max-width: 767px) {
-      width: 10rem;
-      height: 10rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 18.2rem;
+      height: 18.2rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 18.2rem;
+      height: 18.2rem;
     }
   `,
-  ImgEdit: styled.div`
+  ImageEdit: styled.div`
     width: 2rem;
     height: 2rem;
     position: relative;
@@ -430,8 +437,7 @@ const S = {
     width: 8.4rem;
     height: 3.2rem;
     border-radius: 4px;
-    background: ${(props) =>
-      props.null ? 'var(--gray-9FA6B2, #9fa6b2)' : 'var(--violet-5534DA, #5534DA)'}; //Todo: 테마로 바꿔야해용
+    background: ${(props) => (props.null ? 'var(--gray-9FA6B2, #9fa6b2)' : 'var(--violet-5534DA, #5534DA)')};
     margin-top: 3.2rem;
     color: ${({ theme }) => theme.color.white_FFFFFF};
     text-align: center;
@@ -443,7 +449,7 @@ const S = {
     border: none;
     margin: 3.2rem 0 0 auto;
   `,
-  DeleteImg: styled.div`
+  DeleteImage: styled.div`
     width: 8.4rem;
     height: 3.2rem;
     border-radius: 4px;

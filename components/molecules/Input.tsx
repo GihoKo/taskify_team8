@@ -4,6 +4,8 @@ import { UseFormRegister } from 'react-hook-form';
 import Image from 'next/image';
 import styled from 'styled-components';
 
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+
 interface FormValues {
   email: string;
   nickname: string;
@@ -40,15 +42,15 @@ export default function Input({
   defaultValue,
   handleFocus,
 }: InputProps) {
-  const [pwd, setPwd] = useState<boolean>(true);
+  const [password, setPassword] = useState<boolean>(true);
 
-  const handlePwd = () => {
-    setPwd((prev) => !prev);
+  const handlepassword = () => {
+    setPassword((prev) => !prev);
   };
 
   return (
     <>
-      {data !== 'pwd' ? (
+      {data !== 'password' ? (
         <S.inputWrap>
           <S.label htmlFor={data}>{title}</S.label>
           <S.input
@@ -59,7 +61,7 @@ export default function Input({
             placeholder={placeholder}
             value={value}
             onFocus={handleFocus}
-            errorMessage={!!errorMessage}
+            $errorMessage={!!errorMessage}
             name={name}
             disabled={disabled}
             defaultValue={defaultValue}
@@ -73,17 +75,17 @@ export default function Input({
           <S.inputInner>
             <S.input
               {...hookform}
-              type={pwd ? 'password' : 'text'}
+              type={password ? 'password' : 'text'}
               id={data + title}
               placeholder={placeholder}
               onBlur={handleBlur}
               value={value}
               onFocus={handleFocus}
-              errorMessage={!!errorMessage}
+              $errorMessage={!!errorMessage}
               name={name}
             />
-            <S.imageWrap onClick={handlePwd}>
-              {pwd ? (
+            <S.imageWrap onClick={handlepassword}>
+              {password ? (
                 <Image src={'/images/icons/icon-eyesOff.svg'} alt='off' fill />
               ) : (
                 <Image src={'/images/icons/icon-eyesOn.svg'} alt='on' fill />
@@ -119,20 +121,26 @@ const S = {
     font-size: 1.6rem;
     font-weight: 400;
   `,
-  input: styled.input<{ errorMessage: boolean }>`
+  input: styled.input<{ $errorMessage: boolean }>`
     width: 100%;
     padding: 15px 16px;
     border-radius: 8px;
     border: ${(props) =>
-      props.errorMessage ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
+      props.$errorMessage ? '1px solid var(--red-D6173A, #D6173A)' : '1px solid var(--violet-5534DA), #5534DA'};
     background: ${({ theme }) => theme.color.white_FFFFFF};
     font-size: 1.6rem;
     font-weight: 400;
     line-height: normal;
+    @media ${mediaBreakpoint.tablet} {
+      width: 52rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 52rem;
+    }
   `,
   imageWrap: styled.div`
-    width: 20px;
-    height: 20px;
+    width: 2rem;
+    height: 2rem;
     position: absolute;
     top: 1.2rem;
     right: 1.6rem;

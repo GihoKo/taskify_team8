@@ -4,7 +4,8 @@ import { usePathname } from 'next/navigation';
 
 import { Obj, TransformOptionalToNonNullableProps } from '@interface/util';
 
-import { ComponentListMappedToPath } from './Funnel';
+import { returnBasedOnPathName } from './returnBaseOnPathName';
+import { ComponentListMappedToPath } from './withFunnel';
 
 interface NonNullableFunnelProps<T extends Obj>
   extends ComponentListMappedToPath,
@@ -21,10 +22,10 @@ const NonNullableFunnel = <T extends Obj>({
     return <>{children(condition)}</>;
   }
 
-  for (const { path, component } of componentListMappedToPath) {
-    if (pathName === path) {
-      return <>{component}</>;
-    }
+  const returnedComponent = returnBasedOnPathName(componentListMappedToPath, pathName);
+
+  if (returnedComponent) {
+    return returnedComponent;
   }
 
   for (const key in condition) {

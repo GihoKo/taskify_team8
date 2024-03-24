@@ -8,7 +8,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import axios from '@apis/axios';
+import { getUserData, loginUser } from '@apis/sign/axiosSignIn';
+import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import Input from '@components/molecules/Input';
 import ModalCheckIt from '@components/molecules/ModalCheckIt';
@@ -30,7 +31,7 @@ export default function SignIn() {
   const [emailError, setEmailError] = useState<boolean>(false); // 각종 에러 문구
   const [passwordError, setPasswordError] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [showPwdError, setShowPwdError, showPwdToggle] = useToggle(false);
+  const [showPasswordError, setShowPasswordError, showPasswordToggle] = useToggle(false);
 
   const { register, handleSubmit, watch } = useForm<IFormInput>();
 
@@ -47,19 +48,17 @@ export default function SignIn() {
 
   const router = useRouter();
   useEffect(() => {
-    // const LS = localStorage.getItem('login');
-    const LS = getAccessToken();
+    const AccessToken = getAccessToken();
 
-    if (LS !== null) {
+    if (AccessToken !== null) {
       router.push(`/mydashboard`);
     }
   }, [router]);
 
   async function login(data: { email: string; password: string }) {
     try {
-      const res = await axios.post('/auth/login', data);
-      // localStorage.setItem('login', res.data.accessToken);
-      setAccessToken(res.data.accessToken);
+      const accessToken = await loginUser(data);
+      setAccessToken(accessToken);
 
       await setUserData();
       router.push('/mydashboard');
@@ -67,7 +66,7 @@ export default function SignIn() {
       setPasswordError(true);
 
       if (data.email !== '' && data.password !== '') {
-        showPwdToggle();
+        showPasswordToggle();
       }
 
       console.error('로그인 실패:', error);
@@ -76,14 +75,13 @@ export default function SignIn() {
 
   const setUserData = async () => {
     try {
-      const respons = await axios.get('/users/me');
-      setUser(respons.data);
+      const userData = await getUserData();
+      setUser(userData);
     } catch (error) {
       console.error('사용자 정보 가져오기 실패:', error);
     }
   };
 
-  // 유효성검사 true 나오게끔
   const validateEmail = (email: string) => {
     const isvalidateEmail = /\S+@\S+\.\S+/.test(email);
     setEmailError(!isvalidateEmail);
@@ -110,7 +108,6 @@ export default function SignIn() {
     }
   }, [password]);
 
-  // foucs out
   const handleBlur = (field: string) => {
     return () => {
       switch (field) {
@@ -126,7 +123,6 @@ export default function SignIn() {
     };
   };
 
-  // foucs in
   const handleFocus = (field: string) => {
     return () => {
       switch (field) {
@@ -142,13 +138,12 @@ export default function SignIn() {
     };
   };
 
-  // 에러메세지가 없고 모든값이 빈값이 아닐때 버튼 활성화
   const lastCheck = !emailError && !passwordError && email !== '' && password !== '';
 
   return (
     <>
-      {showPwdError && (
-        <ModalCheckIt text='비밀번호가 일치하지 않습니다.' submitButtonText='확인' errorMessage={showPwdToggle} />
+      {showPasswordError && (
+        <ModalCheckIt text='비밀번호가 일치하지 않습니다.' submitButtonText='확인' errorMessage={showPasswordToggle} />
       )}
       <S.Signinback>
         <S.Signin>
@@ -176,14 +171,14 @@ export default function SignIn() {
               hookform={register('password')}
               title='비밀번호'
               placeholder='비밀번호를 입력해 주세요'
-              data='pwd'
+              data='Pass'
               errorMessage={passwordError}
               name='password'
               handleFocus={handleFocus('password')}
               handleBlur={handleBlur('password')}
             />
 
-            {lastCheck ? <S.Button type='submit'>가입하기</S.Button> : <S.NoneButton>가입하기</S.NoneButton>}
+            {lastCheck ? <S.Button type='submit'>로그인</S.Button> : <S.NoneButton>로그인</S.NoneButton>}
           </S.LoginForm>
           <S.Signup>
             회원이 아니신가요?
@@ -201,6 +196,7 @@ const S = {
   Signinback: styled.div`
     width: 100%;
     height: 100vh;
+    align-items: center;
     background: ${({ theme }) => theme.color.gray_FAFAFA};
   `,
   Signin: styled.div`
@@ -225,7 +221,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 35.1rem;
     height: 5rem;
     border-radius: 0.8rem;
     background: ${({ theme }) => theme.color.gray_9FA6B2};
@@ -233,13 +229,15 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
 
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 52rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 52rem;
     }
   `,
   Button: styled.button`
-    width: 100%;
+    width: 35.1rem;
     height: 5rem;
     border: none;
     border-radius: 0.8rem;
@@ -249,9 +247,11 @@ const S = {
     font-size: 1.8rem;
     font-weight: 500;
 
-    @media (max-width: 767px) {
-      height: 5rem;
-      gap: 1rem;
+    @media ${mediaBreakpoint.tablet} {
+      width: 52rem;
+    }
+    @media ${mediaBreakpoint.pc} {
+      width: 52rem;
     }
   `,
   Logo: styled.div`
@@ -268,10 +268,8 @@ const S = {
   LoginForm: styled.form`
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 3rem;
-    @media all and (max-width: 767px) {
-      padding: 0 1.2rem;
-    }
   `,
   Submit: styled.input`
     display: flex;
