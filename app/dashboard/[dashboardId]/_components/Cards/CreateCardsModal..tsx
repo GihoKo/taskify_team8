@@ -178,10 +178,8 @@ export default function CreateCardsModal({
             id='image'
             columnId={columnId as number}
             register={register}
-            errors={errors}
             setError={setError}
             setValue={setValue}
-            getValues={getValues}
           />
           <ColumnButtonsWrap>
             <ColumnButton onClick={closeModal}>취소</ColumnButton>

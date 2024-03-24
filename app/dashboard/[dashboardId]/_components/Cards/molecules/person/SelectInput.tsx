@@ -18,8 +18,8 @@ interface CardSelectInputProps {
   setError: any;
   options: any;
   setValue?: any;
-  assignedMemberId: number | null;
-  setAssignedMemberId: React.Dispatch<React.SetStateAction<number>>;
+  assignedMemberId: number | undefined;
+  setAssignedMemberId: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
 export default function SelectInput({
@@ -41,7 +41,7 @@ export default function SelectInput({
     setInitialList(options);
   }, [options]);
 
-  const handleClickButton = (event: SyntheticEvent<HTMLLIElement>) => {
+  const handleClickButton: React.MouseEventHandler<SVGSVGElement> = (event) => {
     event.preventDefault();
     setIsListOpen(!isListOpen);
   };
@@ -49,16 +49,31 @@ export default function SelectInput({
   const handleClickListItem = (event: React.MouseEvent<HTMLLIElement>) => {
     event.preventDefault();
 
-    const id = event.target.value;
+    const id = Number((event.currentTarget as HTMLLIElement).getAttribute('value'));
     setAssignedMemberId(id);
     setIsListOpen(!isListOpen);
     setValue('person', options.find((option: any) => option.userId === id).nickname || null);
   };
 
-  const handleInputChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  // const handleInputChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   event.preventDefault();
+
+  //   // const searchInput = Number((event.currentTarget as HTMLLIElement).getAttribute('value'));
+  //   // const searchInput: string = event.target.value;
+  //   setAssignedMemberId(null);
+  //   setIsListOpen(true);
+  //   const filteredList = options.filter((option: { nickname: string }) => {
+  //     const item = option.nickname.toLowerCase();
+
+  //     return item.includes(searchInput.toLowerCase());
+  //   });
+  //   setInitialList(filteredList);
+  // };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    const searchInput: string = event.target.value;
-    setAssignedMemberId(null);
+    const searchInput: string = (event.target as HTMLInputElement).value;
+    setAssignedMemberId(undefined);
     setIsListOpen(true);
     const filteredList = options.filter((option: { nickname: string }) => {
       const item = option.nickname.toLowerCase();
@@ -129,7 +144,7 @@ const S = {
     position: relative;
     width: 2rem;
     height: 2rem;
-    border: 1px solid ${({ theme }) => theme.color.gray_9B9B9B};
+    border: 1px solid ${({ theme }) => theme.color.gray_9FA6B2};
     border-radius: 100%;
   `,
   PositioningWrapper: styled.div`
