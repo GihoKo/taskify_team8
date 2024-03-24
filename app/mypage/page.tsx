@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import axios from '@apis/axios';
+import { axiosToken } from '@apis/instance/axiosToken';
 import { UserInfo } from '@apis/users/getUserInfo';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
@@ -107,7 +107,7 @@ function MyPage() {
   // -- 이미지 / 닉네임 변경 시작
   const fetchProfileImage = useCallback(async () => {
     try {
-      const response = await axios.get('users/me');
+      const response = await axiosToken.get('users/me');
 
       if (response.data.profileImageUrl !== null && response.data.profileImageUrl !== previewUrl) {
         setPreviewUrl(response.data.profileImageUrl);
@@ -120,6 +120,7 @@ function MyPage() {
       console.error(error);
     }
   }, [previewUrl]);
+
   useEffect(() => {
     fetchProfileImage();
   }, [fetchProfileImage]);
@@ -133,7 +134,7 @@ function MyPage() {
     formData.append('image', file);
 
     try {
-      const response = await axios.post(`/users/me/image`, formData, {
+      const response = await axiosToken.post(`/users/me/image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -151,7 +152,7 @@ function MyPage() {
 
   const handleChangeProfile = async (data: { nickname: string; profileImageUrl: null }) => {
     try {
-      const res = await axios.put<UserInfo>(`users/me`, data);
+      const res = await axiosToken.put<UserInfo>(`/users/me`, data);
       setUser(res.data);
 
       if (!res.data.profileImageUrl) {
@@ -205,7 +206,7 @@ function MyPage() {
   const passwordChange = async (data: { password: string; newPassword: string }) => {
     if (!PasswordWrong && data.password !== '' && data.newPassword !== '') {
       try {
-        const res = await axios.put('/auth/password', data);
+        const res = await axiosToken.put('/auth/password', data);
 
         if (res.status === 201) {
           setModalText('비밀번호가 변경 되었습니다');
