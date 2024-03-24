@@ -34,7 +34,7 @@ interface PasswordChange {
 function MyPage() {
   const { user, setUser } = useUserStore();
   const [currentUser, setCurrentUser] = useState<UserInfo | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>('/images/icons/profile-add.svg');
+  const [previewUrl, setPreviewUrl] = useState<string>('/images/icons/profile-add-filledViolet_5544DA-w182-h183.svg');
   const [PasswordWrong, setPasswordWrong] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [profileButton, setProfileButton] = useState<boolean>(false);
@@ -155,7 +155,7 @@ function MyPage() {
       setUser(res.data);
 
       if (!res.data.profileImageUrl) {
-        setPreviewUrl('/images/icons/profile-add.svg');
+        setPreviewUrl('/images/icons/profile-add-filledViolet_5544DA-w182-h183.svg');
       } else {
         setPreviewUrl(res.data.profileImageUrl);
       }
@@ -190,7 +190,7 @@ function MyPage() {
       ...prev,
       profileImageUrl: null,
     }));
-    setPreviewUrl('/images/icons/profile-add.svg');
+    setPreviewUrl('/images/icons/profile-add-filledViolet_5544DA-w182-h183.svg');
   };
 
   useEffect(() => {
@@ -247,12 +247,12 @@ function MyPage() {
                 alt='이미지 추가'
                 fill
                 placeholder='blur'
-                blurDataURL={'/images/icons/profile-add.svg'}
+                blurDataURL={'/images/icons/profile-add-filledViolet_5544DA-w182-h183.svg'}
               />
               <S.ChangeImage>
                 <S.ChangeImageInner htmlFor='file'>
                   <S.ImageEdit>
-                    <Image src={'/images/icons/profile-edit.svg'} alt='이미지 변경' fill />
+                    <Image src={'/images/icons/profile-edit-filledGray_9FA6B2-w182-h183.svg'} alt='이미지 변경' fill />
                   </S.ImageEdit>
                 </S.ChangeImageInner>
 
