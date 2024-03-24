@@ -1,21 +1,7 @@
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
-  extends: [
-    'airbnb',
-    'airbnb-typescript',
-    'airbnb/hooks',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:jsx-a11y/recommended',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:prettier/recommended',
-    // @see https://nextjs.org/docs/pages/building-your-application/configuring/eslint#migrating-existing-config
-    'plugin:@next/next/recommended',
-    'plugin:compat/recommended',
-  ],
+  extends: ['airbnb', 'airbnb-typescript', 'airbnb/hooks', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'plugin:react-hooks/recommended', 'plugin:jsx-a11y/recommended', 'plugin:import/errors', 'plugin:import/warnings', 'plugin:prettier/recommended', 'plugin:@next/next/recommended', 'plugin:compat/recommended', 'plugin:storybook/recommended'],
   ignorePatterns: [
     'build',
     'dist',
