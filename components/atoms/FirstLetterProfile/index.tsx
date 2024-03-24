@@ -7,14 +7,50 @@ import { Color, ResponsiveBooleanUtility, ResponsiveUnitUtility } from '@interfa
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 type FirstLetterProfileProps = {
+  /**
+   * 프로필 크기
+   */
   profileSize: ResponsiveUnitUtility;
+
+  /**
+   * 폰트 크기
+   */
   fontSize: ResponsiveUnitUtility;
+
+  /**
+   * 테두리 두께
+   */
   borderWidth?: ResponsiveUnitUtility;
+
+  /**
+   * 겹치는지 여부
+   */
   isOverlapping?: ResponsiveBooleanUtility;
+
+  /**
+   * 배경색
+   */
   backgroundColor: Color;
+
+  /**
+   * 프로필 이미지 URL
+   */
   profileImageUrl?: string | null;
+
+  /**
+   * div로 렌더링할지 button으로 렌더링할지
+   * @default 'div'
+   */
   as?: 'div' | 'button';
+
+  /**
+   * 클릭 이벤트
+   */
   onClick?: VoidFunction;
+
+  /**
+   * 자식 요소. 첫 글자를 표시함.
+   */
   children?: string;
 };
 
