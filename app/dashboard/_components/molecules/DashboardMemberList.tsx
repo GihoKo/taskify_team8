@@ -31,7 +31,6 @@ const DashboardMemberList = () => {
   const { data, isSuccess, isError, error } = useGetDashboardMemberList({
     dashboardId: Number(dashboardId),
     size: 5,
-    currentPage: 1,
   });
 
   useEffect(() => {
@@ -47,8 +46,8 @@ const DashboardMemberList = () => {
     }
   }, [router, isError, error]);
 
-  const profileListCount = data?.totalMemberCount || 0;
-  const members: Member[] = data?.pages || [];
+  const profileListCount = data?.totalCount || 0;
+  const members: Member[] = data?.members || [];
 
   const visibleProfileListCount = getVisibleProfileListCount({ membersCount: profileListCount, resizeInfo });
   const remainingProfileListCount = members.length - visibleProfileListCount;
