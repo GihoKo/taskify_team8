@@ -4,8 +4,6 @@ import { UseFormRegister } from 'react-hook-form';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { mediaBreakpoint } from '@styles/mediaBreakpoint';
-
 interface FormValues {
   email: string;
   nickname: string;
@@ -86,9 +84,9 @@ export default function Input({
             />
             <S.imageWrap onClick={handlepassword}>
               {password ? (
-                <Image src={'/images/icons/icon-eyesOff.svg'} alt='off' fill />
+                <Image src={'/images/icons/icon-eyesOff-filledGray_9FA6B2-w24-h24.svg'} alt='off' fill />
               ) : (
-                <Image src={'/images/icons/icon-eyesOn.svg'} alt='on' fill />
+                <Image src={'/images/icons/icon-eyesOn-filledGray_9FA6B2-w24-h24.svg'} alt='on' fill />
               )}
             </S.imageWrap>
           </S.inputInner>
@@ -131,12 +129,6 @@ const S = {
     font-size: 1.6rem;
     font-weight: 400;
     line-height: normal;
-    @media ${mediaBreakpoint.tablet} {
-      width: 52rem;
-    }
-    @media ${mediaBreakpoint.pc} {
-      width: 52rem;
-    }
   `,
   imageWrap: styled.div`
     width: 2rem;

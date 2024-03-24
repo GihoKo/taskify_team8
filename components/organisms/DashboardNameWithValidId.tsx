@@ -1,8 +1,10 @@
 'use client';
 
-import { Fragment } from 'react';
+import { useEffect } from 'react';
 
+import { isAxiosError } from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { styled } from 'styled-components';
 
 import { useGetDashboardDetailInfo } from '@/app/dashboard/[dashboardId]/edit/_hooks/useGetDashboardDetailInfo.query';
@@ -13,7 +15,30 @@ interface DashboardNameProps {
 }
 
 const DashboardNameWithValidId = ({ dashboardId }: DashboardNameProps) => {
-  const { data, isSuccess } = useGetDashboardDetailInfo(dashboardId);
+  const router = useRouter();
+  const { data, isSuccess, isError, error } = useGetDashboardDetailInfo(dashboardId);
+
+  useEffect(() => {
+    if (isError) {
+      if (isAxiosError(error)) {
+        switch (error.response?.status) {
+          case 404:
+            console.error('대시보드가 존재하지 않습니다.');
+            router.replace('/mydashboard');
+
+            return;
+          default:
+            console.error('알 수 없는 에러가 발생했습니다.');
+
+            return;
+        }
+      }
+
+      console.error('알 수 없는 에러가 발생했습니다.');
+    }
+  }, [isError, router, error]);
+
+  if (isError) return null;
 
   return (
     <>
