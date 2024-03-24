@@ -10,22 +10,18 @@ interface Props {
   // ref?: React.RefObject<HTMLDivElement>;
 }
 
-<<<<<<< HEAD
-export default function TagBadgeContainer({ list }: Props) {
+export default function TagBadgeContainer({ list, position = 'relative' }: Props) {
   console.log('list', list);
 
-  if (list.length === 0) return <p>등록된 태그가 없습니다.</p>;
+  // if (list.length === 0) return <p>등록된 태그가 없습니다.</p>;
 
   // const tagList = list.map((item) => item.color);
 
-=======
-export default function TagBadgeContainer({ list, position = 'relative' }: Props) {
->>>>>>> 41c04d2 (Co-authored-by: Duke <Dev-Duke-Seo@users.noreply.github.com>)
   return (
     <S.Container $position={position}>
       {list.map((item, index) => (
         <TagBadge key={index} color={item.color}>
-          {item}
+          {item.children || item}
         </TagBadge>
       ))}
     </S.Container>

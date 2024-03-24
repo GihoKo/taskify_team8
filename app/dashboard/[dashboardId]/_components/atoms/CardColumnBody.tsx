@@ -23,7 +23,7 @@ const CardColumnBody = ({ columnId, dashboardId }: CardColumnBodyProps) => {
     rootMargin: '0px 0px 500px 0px',
   });
 
-  const { data, fetchNextPage, hasNextPage } = useGetCardListOnInfiniteScroll({
+  const { data, fetchNextPage, hasNextPage, isSuccess, isFetched } = useGetCardListOnInfiniteScroll({
     columnId,
   });
 
@@ -33,7 +33,7 @@ const CardColumnBody = ({ columnId, dashboardId }: CardColumnBodyProps) => {
     if (isIntersecting && hasNextPage) {
       fetchNextPage();
     }
-  }, [isIntersecting, hasNextPage, fetchNextPage]);
+  }, [isIntersecting, hasNextPage, fetchNextPage, isSuccess, isFetched]);
 
   return (
     <S.Container ref={rootRef}>

@@ -24,9 +24,9 @@ const Card = ({ title, dueDate, assignee, tags, imageUrl, columnId, openModal, i
   const { dashboardId } = useParams<{ dashboardId: string }>();
 
   const handleOpenModal = async () => {
-    const { default: Modal } = await import('@/app/modaltest/page');
+    const { default: TodoCardModal } = await import('@/app/modaltest/ToDoModalndex');
 
-    openModal(Modal, { columnId, cardId: id, dashboardId: Number(dashboardId) });
+    openModal(TodoCardModal, { columnId, cardId: id, dashboardId: Number(dashboardId) });
   };
 
   return (
@@ -40,6 +40,7 @@ const Card = ({ title, dueDate, assignee, tags, imageUrl, columnId, openModal, i
         <S.Title>{title}</S.Title>
         <S.TagsAndDateBox>
           <S.TagsContainer>
+            {/* tag 이름이 왜 똑같은 게 생성이 돼서 오지 */}
             {tags.map((tag) => {
               return <CardTag key={tag}>{tag}</CardTag>;
             })}

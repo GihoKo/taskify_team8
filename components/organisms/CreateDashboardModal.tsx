@@ -16,7 +16,7 @@ import ColorSelectList from '@components/molecules/ColorSelectList';
 
 import { ModalComponentProps } from '@hooks/use-modal';
 
-import { DASHBOARD_COLORS } from '../../app/mydashboard/_constants';
+import { DASHBOARD_COLORS } from '@/app/mydashboard/_constants';
 
 const CreateDashboardModal = ({ closeModal, modalRef }: ModalComponentProps) => {
   const queryClient = useQueryClient();
@@ -50,7 +50,7 @@ const CreateDashboardModal = ({ closeModal, modalRef }: ModalComponentProps) => 
       });
 
       if (result.status === 201) {
-        queryClient.invalidateQueries({ queryKey: ['dashboard', 'dashboardList', 1] });
+        await queryClient.invalidateQueries({ queryKey: ['dashboard', 'dashboardList', 1] });
         closeModal();
       }
     } catch (error) {

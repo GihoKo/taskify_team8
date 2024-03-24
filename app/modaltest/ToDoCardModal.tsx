@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, MutableRefObject } from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -19,6 +19,8 @@ import AssigneeInformation from '@components/molecules/AssigneeInformation';
 import ListGroup from '@components/molecules/ListGroup';
 import TagBadgeContainer from '@components/molecules/TagBadgeContainer';
 import CommentArea from '@components/organisms/CommentArea';
+import { useQueryClient } from '@tanstack/react-query';
+import { cardsKeys } from '@queries/keys/cardsKeys';
 
 interface ToDoModalProps {
   id: number;
@@ -26,12 +28,23 @@ interface ToDoModalProps {
   comments?: Comment[];
   columnId: number;
   dashboardId: number;
+  closeModal: () => void;
+  modalRef: MutableRefObject<HTMLElement | null> | null;
 }
 
-export default function ToDoCardModal({ id, card, comments, columnId, dashboardId }: ToDoModalProps): JSX.Element {
+export default function ToDoCardModal({
+  id,
+  card,
+  comments,
+  columnId,
+  dashboardId,
+  closeModal,
+  modalRef,
+}: ToDoModalProps): JSX.Element {
   const [isListGroupOpen, setIsListGroupOpen] = useState(false);
   const [listGroupPosition, setListGroupPosition] = useState({ x: 0, y: 0 });
-  const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const handleListGroupClose = () => {
     setIsListGroupOpen(false);
@@ -45,7 +58,8 @@ export default function ToDoCardModal({ id, card, comments, columnId, dashboardI
   const onDeleteCard = async () => {
     try {
       await deleteCardItem(id);
-      router.push(`/dashboard/${dashboardId}`);
+      await queryClient.invalidateQueries({ queryKey: cardsKeys.cardList(columnId) });
+      closeModal();
     } catch (error) {
       console.error(error);
     }
@@ -61,12 +75,21 @@ export default function ToDoCardModal({ id, card, comments, columnId, dashboardI
     { children: '삭제하기', onClick: onDeleteCard },
   ];
 
+  console.log('card', card);
+
+  // @ts-ignore
   return (
     <S.ModalTestDimmed>
-      <S.ModalPage>
+      <S.ModalPage
+        ref={(node) => {
+          if (modalRef) {
+            modalRef.current = node;
+          }
+        }}
+      >
         <S.ButtonBox>
           <S.KebabIcon onClick={handleClickKebabButton} />
-          <S.CloseIcon />
+          <S.CloseIcon onClick={closeModal} />
           {isListGroupOpen && (
             <ListGroup itemList={kebabList} onClose={handleListGroupClose} position={listGroupPosition} />
           )}
@@ -79,12 +102,12 @@ export default function ToDoCardModal({ id, card, comments, columnId, dashboardI
             <S.BadgeBox>
               <ColumnNameBadge>To Do</ColumnNameBadge>
               <Divider />
+              {/*ts-ignore*/}
               <TagBadgeContainer list={card.tags} />
             </S.BadgeBox>
             <S.Content>{card.description}</S.Content>
             {card.imageUrl ? (
               <S.ImageWrapper>
-                {' '}
                 <Image src={card.imageUrl} alt='image' fill />{' '}
               </S.ImageWrapper>
             ) : null}
@@ -112,7 +135,10 @@ const iconCss = css`
 const S = {
   // TODO: Test영역 삭제 필요.
   ModalTestDimmed: styled.div`
+    position: fixed;
+    top: 0;
     height: 1554px;
+    width: 100%;
     flex-shrink: 0;
     background: rgba(0, 0, 0, 0.7);
     display: flex;

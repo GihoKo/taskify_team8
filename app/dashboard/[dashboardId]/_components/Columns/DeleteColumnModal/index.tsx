@@ -33,7 +33,7 @@ export default function DeleteColumnModal({
     try {
       const numberTypeColumndId = Number(columnId);
       await deleteColumn(numberTypeColumndId);
-      queryClient.invalidateQueries(columnsQueryOptions.columnList(dashboardId));
+      await queryClient.invalidateQueries(columnsQueryOptions.columnList(dashboardId));
       submitModal();
     } catch (error) {
       console.log(error);
