@@ -21,35 +21,35 @@ export interface Card {
 export type postCreateCardResponse = Card;
 
 export interface postCreateCardRequest {
-  assigneeUsersId?: number;
+  assigneeUserId?: number;
   dashboardId: number;
   columnId: number;
   title: string;
   description: string;
   dueDate: string;
   tags?: string[];
-  imageUrl?: string;
+  imageUrl?: string | null;
 }
 
 export const postCreateCard = async ({
-  assigneeUsersId,
+  assigneeUserId,
   dashboardId,
   columnId,
   title,
   description,
   dueDate,
   tags,
-  imageUrl,
+  ...args
 }: postCreateCardRequest) => {
   const response = await axiosToken.post<postCreateCardResponse>('/cards', {
-    assigneeUsersId,
+    assigneeUserId,
     dashboardId,
     columnId,
     title,
     description,
     dueDate,
     tags,
-    imageUrl,
+    ...args,
   });
 
   return response.data;

@@ -34,7 +34,7 @@ export default function useCreateColumn(
         try {
           const numberTypeDashboardId = Number(dashboardId);
           await createColumn(data.title, numberTypeDashboardId);
-          queryClient.invalidateQueries(columnsQueryOptions.columnList(dashboardId));
+          await queryClient.invalidateQueries(columnsQueryOptions.columnList(dashboardId));
           submitModal();
         } catch (error) {
           console.log(error);

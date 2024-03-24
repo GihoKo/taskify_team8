@@ -18,7 +18,7 @@ const ColumContainerGroup = ({ dashboardId }: ColumContainerGroupProps) => {
   const [columnList, setColumnList] = useState<ColumnList[]>(data?.data || []);
 
   useEffect(() => {
-    if (isFetched && isSuccess) {
+    if (isSuccess) {
       setColumnList(data.data);
     }
   }, [data, isFetched, isSuccess]);

@@ -5,7 +5,7 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 export interface BadgeProps {
   color: BadgeColors;
-  children?: string;
+  children: any;
 }
 
 export default function TagBadge({ color = 'green', children = '' }: BadgeProps) {
