@@ -1,14 +1,12 @@
 'use client';
 
-import { PropsWithChildren } from 'react';
-
 import Image from 'next/image';
 import { css, styled } from 'styled-components';
 
 import { Color, ResponsiveBooleanUtility, ResponsiveUnitUtility } from '@interface/style';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-type FirstLetterProfileProps = PropsWithChildren<{
+type FirstLetterProfileProps = {
   profileSize: ResponsiveUnitUtility;
   fontSize: ResponsiveUnitUtility;
   borderWidth?: ResponsiveUnitUtility;
@@ -17,7 +15,8 @@ type FirstLetterProfileProps = PropsWithChildren<{
   profileImageUrl?: string | null;
   as?: 'div' | 'button';
   onClick?: VoidFunction;
-}>;
+  children?: string;
+};
 
 /**
  * TODO: random color 받도록 해야 함.
@@ -33,6 +32,8 @@ const FirstLetterProfile = ({
   as = 'div',
   onClick,
 }: FirstLetterProfileProps) => {
+  const firstLetter = children ? children[0] : '';
+
   return (
     <S.Box
       as={as}
@@ -43,7 +44,7 @@ const FirstLetterProfile = ({
       $borderWidth={borderWidth}
       $backgroundColor={backgroundColor}
     >
-      {profileImageUrl ? <S.ProfileImage alt='유저 프로필' fill src={profileImageUrl} /> : children}
+      {profileImageUrl ? <S.ProfileImage alt='유저 프로필' fill src={profileImageUrl} /> : firstLetter}
     </S.Box>
   );
 };

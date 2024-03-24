@@ -1,5 +1,20 @@
 import { FC } from 'react';
 
+export type NoInfer<T> = [T][T extends any ? 0 : never];
+
+export type OmitNever<T> = {
+  [K in keyof T as T[K] extends never ? never : K]: T[K];
+};
+
+export type FastOmit<T extends object, U extends string | number | symbol> = {
+  [K in keyof T as K extends U ? never : K]: T[K];
+};
+
+/**
+ * same as {}
+ */
+export type BaseObject = NonNullable<unknown>;
+
 /**
  * use for type extending only
  */
@@ -12,11 +27,6 @@ export type Serializable = string | number | bigint | boolean | object;
 export type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends <T>() => T extends B ? 1 : 2 ? true : false;
 
 export type SetPickedPropToRequired<T extends Obj, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
-
-/**
- * same as {}
- */
-export type ValidTypes = NonNullable<unknown>;
 
 type MinimalPropCondition<T> = T extends Obj ? T : never;
 
