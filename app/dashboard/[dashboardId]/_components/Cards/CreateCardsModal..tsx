@@ -5,27 +5,50 @@ import { useForm } from 'react-hook-form';
 
 import styled from 'styled-components';
 
+import { postCreateCard, postCreateCardRequest } from '@apis/cards/postCreateCard';
+import { getDashboardMemberList, GetDashboardMemberListResponse, Member } from '@apis/members/getDashboardMemberList';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
+
+import { BadgeProps } from '@components/atoms/TagBadge';
 
 import { useCloseModal } from '@hooks/use-modal';
 import { ModalComponentProps } from '@hooks/use-modal/types';
 
-import { mockUserData } from './mock';
 import CardDateInput from './molecules/date/CardDateInput';
 import CardTextArea from './molecules/description/CardTextarea';
 import ImageFileInput from './molecules/ImageFileInput';
 import SelectInput from './molecules/person/SelectInput';
 import CardTagInput from './molecules/tag/CardTagInput';
 import CardTitleInput from './molecules/title/CardTitleInput';
+import { dateTimeFormatter } from '../../_utils/GenerateTimeStamp';
 import ColumnModalTemplates from '../Columns/ColumnModalTemplate';
 import ColumnButton from '../Columns/commons/ColumnButton';
 import ColumnButtonsWrap from '../Columns/commons/ColumnButtonWrap';
 import CreateModalTitle from '../Columns/commons/ColumnModalTitle';
 import ModalDimmed from '../Columns/commons/ModalDimmed';
 
-export default function CreateCardsModal({ closeModal, modalRef, submitModal }: ModalComponentProps) {
+export default function CreateCardsModal({
+  closeModal,
+  modalRef,
+  submitModal,
+  dashboardId,
+  columnId,
+}: ModalComponentProps<{ dashboardId: number; columnId: number }>) {
   // const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  const [memberList, setMemberList] = useState<Member[]>([]);
+  const [tags, setTags] = useState<BadgeProps[]>([]);
+  const [assignedMemberId, setAssignedMemberId] = useState<number>(null);
+
+  useEffect(() => {
+    initilizeMemberList();
+  }, []);
+
+  const initilizeMemberList = async () => {
+    const result: GetDashboardMemberListResponse = await getDashboardMemberList({ dashboardId });
+    const memberList = result.members;
+    setMemberList(memberList);
+  };
 
   // const switchModal = () => {
   //   setIsModalOpen(!isModalOpen);
@@ -44,19 +67,6 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
     }
   };
 
-  // 이미지 확인용
-  useEffect(() => {
-    console.log('imageUrl', imageUrl);
-  }, [imageUrl]);
-
-  // 할일 - 구현 - api
-  // 담당자 - hard
-  // 제목 - v
-  // 설명 - v
-  // 마감일 - v
-  // 태그 - V
-  // 이미지 - mid
-
   // 인풋 관리
 
   const offset = new Date().getTimezoneOffset() * 60000;
@@ -69,7 +79,7 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
 
   const {
     register,
-    // handleSubmit,
+    handleSubmit,
     watch,
     setError,
     getValues,
@@ -87,9 +97,43 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
     watch: watchOnChange,
     setError: setErrorOnChange,
     reset: resetOnChange,
+    getValues: getValuesOnChnage,
     setValue: setValueOnChange,
     formState: { errors: errorsOnChange },
   } = useForm({ mode: 'onChange' });
+
+  // this function  return postCreateCardRequest
+  function createNewCardDto(): postCreateCardRequest {
+    const { title, date, image, description } = getValues();
+    const tagList = tags.map((tag) => tag.children);
+    const formattedDate = dateTimeFormatter(date);
+    const numDash = Number(dashboardId);
+
+    return {
+      assigneeUsersId: assignedMemberId,
+      dashboardId: numDash,
+      columnId,
+      title,
+      description,
+      dueDate: formattedDate,
+      tags: tagList,
+      // imageUrl: image,
+    };
+  }
+
+  const onSubmit = async (data: any) => {
+    const params = createNewCardDto();
+    // console.log('params', params);
+    console.log('dateTIme', params);
+    const result = await postCreateCard(params);
+    console.log('result', result);
+
+    if (!result) {
+      alert('카드 생성에 실패했습니다.');
+    }
+
+    // submitModal();
+  };
 
   return (
     <ModalDimmed>
@@ -114,13 +158,15 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
           <CreateModalTitle title='할 일 생성' />
           <S.CardsForm>
             <SelectInput
-              options={mockUserData.members}
+              options={memberList}
               id='person'
               register={registerOnChanage}
               errors={errors}
               watch={watchOnChange}
               setError={setErrorOnChange}
               setValue={setValueOnChange}
+              assignedMemberId={assignedMemberId}
+              setAssignedMemberId={setAssignedMemberId}
             />
             <CardTitleInput id='title' register={register} errors={errors} watch={watch} setError={setError} required />
             <CardTextArea
@@ -148,6 +194,8 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
               watch={watchOnChange}
               setError={setErrorOnChange}
               reset={resetOnChange}
+              tags={tags}
+              setTags={setTags}
             />
             <ImageFileInput
               id='image'
@@ -161,7 +209,7 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
             {/* <ImageInput onClick={openImageColumnModal} title='이미지' imageUrl={imageUrl} /> */}
             <ColumnButtonsWrap>
               <ColumnButton onClick={closeModal}>취소</ColumnButton>
-              <ColumnButton onClick={submitModal}>업로드</ColumnButton>
+              <ColumnButton onClick={handleSubmit(onSubmit)}>업로드</ColumnButton>
             </ColumnButtonsWrap>
           </S.CardsForm>
         </S.CardsModalBox>
@@ -169,8 +217,6 @@ export default function CreateCardsModal({ closeModal, modalRef, submitModal }: 
     </ModalDimmed>
   );
 }
-
-/* https://upload.wikimedia.org/wikipedia/ko/4/4a/%EC%8B%A0%EC%A7%B1%EA%B5%AC.png */
 
 const S = {
   CardsModalBox: styled.div`

@@ -18,6 +18,8 @@ interface CardSelectInputProps {
   setError: any;
   options: any;
   setValue?: any;
+  assignedMemberId: number | null;
+  setAssignedMemberId: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function SelectInput({
@@ -28,12 +30,16 @@ export default function SelectInput({
   watch,
   options,
   setValue,
+  assignedMemberId,
+  setAssignedMemberId,
 }: CardSelectInputProps): JSX.Element {
   const { isError, checkPerson } = checkCardSelectInput(errors, watch, setError);
-
   const [isListOpen, setIsListOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<number | null>(null);
-  const [initialList, setInitialList] = useState(options);
+  const [initialList, setInitialList] = useState([]);
+
+  useEffect(() => {
+    setInitialList(options);
+  }, [options]);
 
   const handleClickButton = (event: SyntheticEvent<HTMLLIElement>) => {
     event.preventDefault();
@@ -44,7 +50,7 @@ export default function SelectInput({
     event.preventDefault();
 
     const id = event.target.value;
-    setSelectedItem(id);
+    setAssignedMemberId(id);
     setIsListOpen(!isListOpen);
     setValue('person', options.find((option: any) => option.id === id).nickname || null);
   };
@@ -52,7 +58,7 @@ export default function SelectInput({
   const handleInputChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
     event.preventDefault();
     const searchInput: string = event.target.value;
-    setSelectedItem(null);
+    setAssignedMemberId(null);
     setIsListOpen(true);
     const filteredList = options.filter((option: { nickname: string }) => {
       const item = option.nickname.toLowerCase();
@@ -63,7 +69,7 @@ export default function SelectInput({
   };
 
   useEffect(() => {
-    if (!isListOpen && selectedItem === null) {
+    if (!isListOpen && assignedMemberId === null) {
       setValue('person', null);
     }
   }, [isListOpen]);
@@ -94,7 +100,7 @@ export default function SelectInput({
                 <S.UserListItem
                   key={item.id}
                   value={item.id}
-                  $isSelected={item.id === selectedItem}
+                  $isSelected={item.id === assignedMemberId}
                   onClick={handleClickListItem}
                 >
                   <ProfileImage defaultName={item.nickname} imgUrl={item.profileImageUrl || null} />

@@ -17,11 +17,23 @@ interface CardTagInputProps {
   reset: any;
   setError: any;
   required?: boolean;
+  tags: any;
+  setTags: any;
 }
 
-export default function CardTagInput({ id, register, errors, required, watch, reset, setError }: CardTagInputProps) {
+export default function CardTagInput({
+  id,
+  register,
+  errors,
+  required,
+  watch,
+  reset,
+  setError,
+  tags,
+  setTags,
+}: CardTagInputProps) {
   const { isError, checkTag } = CheckCardTagInput(errors, watch, setError);
-  const [tags, setTags] = useState<BadgeProps[]>([]);
+  // const [tags, setTags] = useState<BadgeProps[]>([]);
   const [inputPadding, setInputPadding] = useState<number>(1.6);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +50,6 @@ export default function CardTagInput({ id, register, errors, required, watch, re
     if (containerRef.current) {
       const newWidth = containerRef.current?.offsetWidth;
       setInputPadding(((1.6 + newWidth / 10) as number) || 1.6);
-      console.log(inputPadding);
     }
 
     if (tags.length === 0) {
@@ -46,11 +57,16 @@ export default function CardTagInput({ id, register, errors, required, watch, re
     }
   }, [tags]);
 
-  const onPressEnter = (event: Event<HTMLInputElement>) => {
+  const onPressEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const pressedKey = event.key;
+
+    if (event.nativeEvent.isComposing) {
+      return;
+    }
 
     if (pressedKey === 'Enter') {
       event.preventDefault();
+
       const inputValue: string = event.target.value;
 
       if (!inputValue) return;
@@ -62,14 +78,14 @@ export default function CardTagInput({ id, register, errors, required, watch, re
 
       setTags((prev) => [...prev, newTag]);
 
-      reset();
+      reset({ [id]: '' });
     }
   };
 
   // 백스페이스를 누르면 일어나는일.
   // input 이 없고 태그가 있으면 마지막 태그가 지워짐.
   // input이 있으면 input이 지워짐
-  const onPressBackspace = (event: Event<HTMLInputElement>) => {
+  const onPressBackspace = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const pressedKey = event.key;
     const input = event.target.value;
 
@@ -85,8 +101,8 @@ export default function CardTagInput({ id, register, errors, required, watch, re
   };
 
   const onKeyDown = (event: Event<HTMLInputElement>) => {
-    onPressBackspace(event);
     onPressEnter(event);
+    onPressBackspace(event);
   };
 
   return (
@@ -99,7 +115,6 @@ export default function CardTagInput({ id, register, errors, required, watch, re
         <S.InputWrpper>
           <S.Input
             $addPadding={inputPadding}
-            id={id}
             type='text'
             placeholder='입력 후 Enter'
             $isError={isError}

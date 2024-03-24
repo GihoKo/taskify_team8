@@ -28,13 +28,15 @@ export default function ImageFileInput({
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('imgUrl', file);
+      setValue(id, formData);
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.onload = () => {
         const base64 = reader.result;
-        setValue(id, base64);
         setImageUrl(base64 as string);
       };
 
@@ -52,7 +54,7 @@ export default function ImageFileInput({
     <S.CardsInputWrapper>
       <S.ImageTitle>이미지</S.ImageTitle>
       <ImageLabel id={id} imageUrl={imageUrl} />
-      <S.InvisibleInput id={id} type='file' {...register(id)} onChange={handleChangeInput} />
+      <S.InvisibleInput id={id} type='file' accept='image/*' {...register(id)} onChange={handleChangeInput} />
     </S.CardsInputWrapper>
   );
 }
