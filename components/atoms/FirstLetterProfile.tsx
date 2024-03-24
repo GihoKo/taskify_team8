@@ -35,17 +35,21 @@ const FirstLetterProfile = ({
   const firstLetter = children ? children[0] : '';
 
   return (
-    <S.Box
-      as={as}
-      onClick={onClick}
-      $isOverlapping={isOverlapping}
-      $profileSize={profileSize}
-      $fontSize={fontSize}
-      $borderWidth={borderWidth}
-      $backgroundColor={backgroundColor}
-    >
-      {profileImageUrl ? <S.ProfileImage alt='유저 프로필' fill src={profileImageUrl} /> : firstLetter}
-    </S.Box>
+    <>
+      {!profileImageUrl && !firstLetter ? null : (
+        <S.Box
+          as={as}
+          onClick={onClick}
+          $isOverlapping={isOverlapping}
+          $profileSize={profileSize}
+          $fontSize={fontSize}
+          $borderWidth={borderWidth}
+          $backgroundColor={backgroundColor}
+        >
+          {profileImageUrl ? <S.ProfileImage alt='유저 프로필' fill src={profileImageUrl} /> : firstLetter}
+        </S.Box>
+      )}
+    </>
   );
 };
 
