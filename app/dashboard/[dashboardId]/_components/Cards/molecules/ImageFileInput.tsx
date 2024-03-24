@@ -27,7 +27,7 @@ export default function ImageFileInput({
   getValues,
   columnId,
 }: ImageFileInputProps): JSX.Element {
-  const [imageUrl, setImageUrl] = useState<string>(null);
+  const [imageUrl, setImageUrl] = useState<string>('');
 
   const handleChangeInput = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
