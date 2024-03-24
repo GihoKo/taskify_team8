@@ -1,65 +1,33 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { Dashboard, getDashboardList } from '@apis/dashboards/getDashboardList';
 import createIcon from '@public/images/icons/add-filledViolet_5534DA-16w-16h.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import PageNationButton from '@components/atoms/PageNationButton';
 
-import useModal from '@hooks/use-modal';
-
 import DashboardItem from './DashboardItem';
+import useDashboardList from './hook';
 
 export default function MyDashboardList() {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPage, setTotalPage] = useState<number>();
-
-  const { data, isSuccess } = useQuery({
-    queryKey: ['dashboard', 'dashboardList', currentPage],
-    queryFn: () => getDashboardList(currentPage),
-  });
-  const [dashboards, setDashboards] = useState<Dashboard[]>(data?.dashboards || []);
-
-  const handleNextDashboardPageClick = () => {
-    setCurrentPage((prev) => prev + 1);
-  };
-
-  const handlePreviousDashboardPageClick = () => {
-    setCurrentPage((prev) => prev - 1);
-  };
-
-  // 대시보드 리스트 조회
-  useEffect(() => {
-    if (isSuccess) {
-      setDashboards(data?.dashboards);
-      setTotalPage(Math.ceil(data.totalCount / 5));
-    }
-  }, [data, isSuccess, currentPage]);
-
-  // 대시보드 생성 버튼 클릭
-  const { openModal } = useModal();
-
-  const handleCreateDashboardButtonClick = async () => {
-    const CreateDashboardModal = await import('@/components/organisms/CreateDashboardModal').then(
-      (module) => module.default,
-    );
-
-    openModal(CreateDashboardModal);
-  };
+  const {
+    dashboards,
+    totalPage,
+    currentPage,
+    handleNextDashboardPageClick,
+    handlePreviousDashboardPageClick,
+    handleCreateDashboardButtonClick,
+  } = useDashboardList();
 
   return (
     <S.Box>
       <S.DashboardContainer>
         {dashboards.map((dashboard) => (
           <Link href={`/dashboard/${dashboard.id}`} key={dashboard.id} style={{ textDecoration: 'none' }}>
-            <DashboardItem key={dashboard.id} {...dashboard} />
+            <DashboardItem {...dashboard} />
           </Link>
         ))}
         <S.CreateDashboardButton onClick={handleCreateDashboardButtonClick}>
