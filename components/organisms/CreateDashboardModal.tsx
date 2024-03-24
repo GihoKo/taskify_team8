@@ -135,7 +135,6 @@ const S = {
     width: 100%;
     height: 4.2rem;
     padding: 0 1.6rem;
-    margin-bottom: 1.6rem;
 
     &:focus {
       outline: none;
@@ -179,7 +178,11 @@ const S = {
   ButtonWrapper: styled(ColumnButtonsWrap)``,
   Button: styled(ColumnButton)``,
   ErrorMessage: styled.p`
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     color: ${({ theme }) => theme.color.red_D6173A};
+
+    @media ${mediaBreakpoint.tablet} {
+      font-size: 1.8rem;
+    }
   `,
 };

@@ -18,10 +18,18 @@ const InvitationModal = ({ closeModal, modalRef }: ModalComponentProps) => {
   const { dashboardId } = useParams<{ dashboardId?: string }>();
 
   const [inputValue, setInputValue] = useState('');
-  const [inputErrorMessage] = useState('');
+  const [inputErrorMessage, setInputErrorMessage] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (inputValue === '') {
+      return setInputErrorMessage('이메일을 입력해주세요');
+    }
+
+    if (/\S+@\S+\.\S+/.test(inputValue) === false) {
+      return setInputErrorMessage('이메일 형식이 올바르지 않습니다');
+    }
 
     const body = {
       email: inputValue,
@@ -104,7 +112,6 @@ const S = {
     width: 100%;
     height: 4.2rem;
     padding: 0 1.6rem;
-    margin-bottom: 1.6rem;
 
     &:focus {
       outline: none;
@@ -129,7 +136,11 @@ const S = {
   ButtonWrapper: styled(ColumnButtonsWrap)``,
   Button: styled(ColumnButton)``,
   ErrorMessage: styled.p`
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     color: ${({ theme }) => theme.color.red_D6173A};
+
+    @media ${mediaBreakpoint.tablet} {
+      font-size: 1.8rem;
+    }
   `,
 };
