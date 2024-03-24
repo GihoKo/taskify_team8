@@ -6,11 +6,21 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-type DashboardDeleteButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+import { useDeleteDashboard } from '../../_hooks/useDeleteDashboard.query';
 
-const DashboardDeleteButton = ({ type = 'button', ...rest }: DashboardDeleteButtonProps) => {
+interface DashboardDeleteButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  dashboardId: number;
+}
+
+const DashboardDeleteButton = ({ type = 'button', dashboardId, ...rest }: DashboardDeleteButtonProps) => {
+  const { mutate, status } = useDeleteDashboard();
+
+  const deleteDashboard = (dashboardId: number) => {
+    mutate(dashboardId);
+  };
+
   return (
-    <S.DeleteButton type={type} {...rest}>
+    <S.DeleteButton disabled={status === 'pending'} onClick={() => deleteDashboard(dashboardId)} type={type} {...rest}>
       대시보드 삭제하기
     </S.DeleteButton>
   );

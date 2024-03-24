@@ -26,6 +26,11 @@ const MemberListTable = ({ memberList }: MemberListTableProps) => {
   const router = useRouter();
 
   const deleteMember = ({ memberId, isOwner }: { memberId: number; isOwner: boolean }) => {
+    if (isOwner) {
+      // 관리자 자기자신 삭제 불가능
+      return;
+    }
+
     mutate(memberId, {
       onError: (error) => {
         if (isAxiosError(error)) {
@@ -43,7 +48,7 @@ const MemberListTable = ({ memberList }: MemberListTableProps) => {
           }
         }
       },
-      onSuccess: async (_data) => {
+      onSuccess: async () => {
         await queryClient.invalidateQueries({ queryKey: membersKeys.memberList(Number(dashboardId)) });
 
         if (isOwner) {
@@ -72,9 +77,11 @@ const MemberListTable = ({ memberList }: MemberListTableProps) => {
                 </FirstLetterProfile>
                 {nickname}
               </S.LeftColumn>
-              <S.DeleteButton type='button' onClick={() => deleteMember({ memberId: id, isOwner })}>
-                삭제
-              </S.DeleteButton>
+              {!isOwner && (
+                <S.DeleteButton type='button' onClick={() => deleteMember({ memberId: id, isOwner })}>
+                  삭제
+                </S.DeleteButton>
+              )}
             </S.Row>
             <S.Border $isLastIndex={index === memberList.length - 1} />
           </Fragment>
