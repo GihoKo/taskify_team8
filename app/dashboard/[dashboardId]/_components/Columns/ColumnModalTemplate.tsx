@@ -10,13 +10,14 @@ import ColumnInput from './commons/ColumnInput';
 import CreateModalTitle from './commons/ColumnModalTitle';
 
 interface ColumnModalTemplatesProps {
+  isModalOpen: boolean;
+  toggleModal: () => void;
+  modalRef: React.MutableRefObject<HTMLElement | null>;
   title: string;
   cancelString: string;
   submitString: string;
   inputTitle: string;
   placeholder: string;
-  isModalOpen: boolean;
-  onClickCancel: () => void;
   featureFunction: (url: string) => void;
 }
 
@@ -26,15 +27,17 @@ export default function ColumnModalTemplates({
   submitString,
   inputTitle,
   featureFunction,
-  isModalOpen,
-  onClickCancel,
   placeholder,
+  isModalOpen,
+  modalRef,
+  toggleModal,
 }: ColumnModalTemplatesProps) {
+  const handleCloseModal = () => {
+    if (isModalOpen) {
+      toggleModal();
+    }
+  };
   const [inputValue, setInputValue] = useState('');
-
-  if (!isModalOpen) {
-    return null;
-  }
 
   const postImageUrl = (url: string) => {
     console.log('url', url);
@@ -47,32 +50,27 @@ export default function ColumnModalTemplates({
   };
 
   return (
-    <S.MockDimmedArea>
-      <S.CreateColumnBox>
-        <CreateModalTitle title={title} />
-        <ColumnInput onChange={setInputValue} placeholder={placeholder} inputValue={inputValue}>
-          {inputTitle}
-        </ColumnInput>
-        <ColumnButtonsWrap>
-          <ColumnButton onClick={onClickCancel}>{cancelString}</ColumnButton>
-          <ColumnButton onClick={onClickSubmit}>{submitString}</ColumnButton>
-        </ColumnButtonsWrap>
-      </S.CreateColumnBox>
-    </S.MockDimmedArea>
+    <S.CreateColumnBox
+      ref={(node) => {
+        if (modalRef) {
+          modalRef.current = node;
+        }
+      }}
+    >
+      <CreateModalTitle title={title} />
+      <ColumnInput onChange={setInputValue} placeholder={placeholder} inputValue={inputValue}>
+        {inputTitle}
+      </ColumnInput>
+      <ColumnButtonsWrap>
+        <ColumnButton onClick={handleCloseModal}>{cancelString}</ColumnButton>
+        <ColumnButton onClick={onClickSubmit}>{submitString}</ColumnButton>
+      </ColumnButtonsWrap>
+    </S.CreateColumnBox>
   );
 }
+
 // TODO : mockWrapper 삭제
 const S = {
-  MockDimmedArea: styled.div`
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.5);
-    top: 0;
-  `,
-
   CreateColumnBox: styled.div`
     display: flex;
     flex-direction: column;

@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
-import axios from '@apis/axios';
+import { axiosToken } from '@apis/instance/axiosToken';
 import { UserInfo } from '@apis/users/getUserInfo';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
@@ -38,7 +38,7 @@ function MyPage() {
   const [PasswordWrong, setPasswordWrong] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [profileButton, setProfileButton] = useState<boolean>(false);
-  const [PasswordButton, setPasswordButton] = useState<boolean>(false);
+  const [passwordButton, setPasswordButton] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showPasswordError, setShowPasswordError, showPasswordToggle] = useToggle(false);
 
@@ -70,7 +70,7 @@ function MyPage() {
       setPasswordWrong(true);
     } else {
       setPasswordWrong(false);
-      PasswordChange(PasswordValue);
+      passwordChange(PasswordValue);
     }
   };
 
@@ -107,7 +107,7 @@ function MyPage() {
   // -- 이미지 / 닉네임 변경 시작
   const fetchProfileImage = useCallback(async () => {
     try {
-      const response = await axios.get('users/me');
+      const response = await axiosToken.get('users/me');
 
       if (response.data.profileImageUrl !== null && response.data.profileImageUrl !== previewUrl) {
         setPreviewUrl(response.data.profileImageUrl);
@@ -120,6 +120,7 @@ function MyPage() {
       console.error(error);
     }
   }, [previewUrl]);
+
   useEffect(() => {
     fetchProfileImage();
   }, [fetchProfileImage]);
@@ -133,7 +134,7 @@ function MyPage() {
     formData.append('image', file);
 
     try {
-      const response = await axios.post(`/users/me/image`, formData, {
+      const response = await axiosToken.post(`/users/me/image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -151,7 +152,7 @@ function MyPage() {
 
   const handleChangeProfile = async (data: { nickname: string; profileImageUrl: null }) => {
     try {
-      const res = await axios.put<UserInfo>(`users/me`, data);
+      const res = await axiosToken.put<UserInfo>(`/users/me`, data);
       setUser(res.data);
 
       if (!res.data.profileImageUrl) {
@@ -202,11 +203,15 @@ function MyPage() {
   // -- 이미지 / 닉네임 변경 끝
 
   // 비밀번호 변경 시작
-  const PasswordChange = async (data: { password: string; newPassword: string }) => {
+  const passwordChange = async (data: { password: string; newPassword: string }) => {
     if (!PasswordWrong && data.password !== '' && data.newPassword !== '') {
       try {
-        setModalText('비밀번호가 변경 되었습니다');
-        showPasswordToggle();
+        const res = await axiosToken.put('/auth/password', data);
+
+        if (res.status === 201) {
+          setModalText('비밀번호가 변경 되었습니다');
+          showPasswordToggle();
+        }
 
         router.push('/mypage');
       } catch (err) {
@@ -237,93 +242,99 @@ function MyPage() {
         )}
       </S.passwordErrorText>
       <SideBar />
-      <S.Mypage>
+      <S.MypageWrapper>
         <DashboardNav />
-        <S.Back onClick={() => router.back()}>{'<'} 뒤로가기</S.Back>
+        <S.MyPage>
+          <S.Back onClick={() => router.back()}>{'<'} 뒤로가기</S.Back>
 
-        <S.Box onSubmit={handleSubmit1(onSubmit1)}>
-          <S.BoxTitle>프로필</S.BoxTitle>
-          <S.InputBox>
-            <S.BoxImage>
-              <Image
-                key={previewUrl}
-                src={previewUrl}
-                alt='이미지 추가'
-                fill
-                placeholder='blur'
-                blurDataURL={'/images/icons/profile-add-filledViolet_5544DA-w182-h183.svg'}
-              />
-              <S.ChangeImage>
-                <S.ChangeImageInner htmlFor='file'>
-                  <S.ImageEdit>
-                    <Image src={'/images/icons/profile-edit-filledGray_9FA6B2-w182-h183.svg'} alt='이미지 변경' fill />
-                  </S.ImageEdit>
-                </S.ChangeImageInner>
-
-                <input
-                  {...register1('profileImageUrl')}
-                  type='file'
-                  name='profileImageUrl'
-                  id='file'
-                  onChange={handleFileChange}
+          <S.Box onSubmit={handleSubmit1(onSubmit1)}>
+            <S.BoxTitle>프로필</S.BoxTitle>
+            <S.InputBox>
+              <S.BoxImage>
+                <Image
+                  key={previewUrl}
+                  src={previewUrl}
+                  alt='이미지 추가'
+                  fill
+                  placeholder='blur'
+                  blurDataURL={'/images/icons/profile-add-filledViolet_5544DA-w182-h183.svg'}
                 />
-              </S.ChangeImage>
-            </S.BoxImage>
-            <S.Inputs>
-              {currentUser && (
-                <>
-                  <Input title='이메일' placeholder={currentUser.email} data='이메일' disabled />
-                  <Input
-                    hookform={register1('nickname')}
-                    title='닉네임'
-                    placeholder={currentUser.nickname}
-                    defaultValue={currentUser.nickname}
-                    data='닉네임'
-                    name='nickname'
-                  />
-                </>
-              )}
-            </S.Inputs>
-          </S.InputBox>
-          <S.ButtonBox>
-            <S.DeleteImage onClick={handleDeleteImage}>이미지 삭제</S.DeleteImage>
-            <S.Submit type='submit' value={'저장'} null={profileButton} disabled={!!profileButton} />
-          </S.ButtonBox>
-        </S.Box>
+                <S.ChangeImage>
+                  <S.ChangeImageInner htmlFor='file'>
+                    <S.ImageEdit>
+                      <Image
+                        src={'/images/icons/profile-edit-filledGray_9FA6B2-w182-h183.svg'}
+                        alt='이미지 변경'
+                        fill
+                      />
+                    </S.ImageEdit>
+                  </S.ChangeImageInner>
 
-        <S.Box onSubmit={handleSubmit2(onSubmit2)}>
-          <S.BoxTitle>비밀번호 변경</S.BoxTitle>
-          <S.InputBox>
-            <S.Inputs>
-              <Input
-                hookform={register2('password')}
-                title='현재 비밀번호'
-                placeholder='현재 비밀번호 입력'
-                data='Password'
-                name='password'
-              />
-              <Input
-                hookform={register2('newPassword')}
-                title='새 비밀번호'
-                placeholder='새 비밀번호 입력'
-                data='Password'
-                name='newPassword'
-                handleBlur={handleNewPasswordBlur}
-              />
-              <Input
-                hookform={register2('newPasswordCheck')}
-                title='새 비밀번호 확인'
-                placeholder='새 비밀번호 입력'
-                data='Password'
-                errorMessage={PasswordWrong}
-                name='newPasswordCheck'
-                handleBlur={handleNewPasswordBlur}
-              />
-            </S.Inputs>
-          </S.InputBox>
-          <S.Submit type='submit' value='변경' null={PasswordButton} disabled={!!PasswordButton} />
-        </S.Box>
-      </S.Mypage>
+                  <input
+                    {...register1('profileImageUrl')}
+                    type='file'
+                    name='profileImageUrl'
+                    id='file'
+                    onChange={handleFileChange}
+                  />
+                </S.ChangeImage>
+              </S.BoxImage>
+              <S.Inputs>
+                {currentUser && (
+                  <>
+                    <Input title='이메일' placeholder={currentUser.email} data='이메일' disabled />
+                    <Input
+                      hookform={register1('nickname')}
+                      title='닉네임'
+                      placeholder={currentUser.nickname}
+                      defaultValue={currentUser.nickname}
+                      data='닉네임'
+                      name='nickname'
+                    />
+                  </>
+                )}
+              </S.Inputs>
+            </S.InputBox>
+            <S.ButtonBox>
+              <S.DeleteImage onClick={handleDeleteImage}>이미지 삭제</S.DeleteImage>
+              <S.Submit type='submit' value={'저장'} null={profileButton} disabled={!!profileButton} />
+            </S.ButtonBox>
+          </S.Box>
+
+          <S.Box onSubmit={handleSubmit2(onSubmit2)}>
+            <S.BoxTitle>비밀번호 변경</S.BoxTitle>
+            <S.InputBox>
+              <S.Inputs>
+                <Input
+                  hookform={register2('password')}
+                  title='현재 비밀번호'
+                  placeholder='현재 비밀번호 입력'
+                  data='password'
+                  name='password'
+                />
+                <Input
+                  hookform={register2('newPassword')}
+                  title='새 비밀번호'
+                  placeholder='새 비밀번호 입력'
+                  data='password'
+                  name='newPassword'
+                  handleBlur={handleNewPasswordBlur}
+                />
+                <Input
+                  hookform={register2('newPasswordCheck')}
+                  title='새 비밀번호 확인'
+                  placeholder='새 비밀번호 입력'
+                  data='password'
+                  errorMessage={PasswordWrong}
+                  name='newPasswordCheck'
+                  handleBlur={handleNewPasswordBlur}
+                />
+              </S.Inputs>
+            </S.InputBox>
+            <S.Submit type='submit' value='변경' null={passwordButton} disabled={!!passwordButton} />
+          </S.Box>
+        </S.MyPage>
+      </S.MypageWrapper>
     </S.Wrap>
   );
 }
@@ -334,11 +345,13 @@ const S = {
   Wrap: styled.div`
     display: flex;
   `,
-  Mypage: styled.div`
+  MypageWrapper: styled.div`
     flex-grow: 1;
+  `,
+  MyPage: styled.div`
     display: flex;
     flex-direction: column;
-    /* padding: 2rem; */
+    padding: 2rem;
     background-color: ${({ theme }) => theme.color.gray_FAFAFA};
     gap: 1.2rem;
   `,
