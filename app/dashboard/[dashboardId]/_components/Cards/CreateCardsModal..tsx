@@ -21,7 +21,6 @@ import SelectInput from './molecules/person/SelectInput';
 import CardTagInput from './molecules/tag/CardTagInput';
 import CardTitleInput from './molecules/title/CardTitleInput';
 import { dateTimeFormatter } from '../../_utils/GenerateTimeStamp';
-import ColumnModalTemplates from '../Columns/ColumnModalTemplate';
 import ColumnButton from '../Columns/commons/ColumnButton';
 import ColumnButtonsWrap from '../Columns/commons/ColumnButtonWrap';
 import CreateModalTitle from '../Columns/commons/ColumnModalTitle';
@@ -34,41 +33,12 @@ export default function CreateCardsModal({
   dashboardId,
   columnId,
 }: ModalComponentProps<{ dashboardId: number; columnId: number }>) {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  const [imageUrl, setImageUrl] = useState('');
+  // state
   const [memberList, setMemberList] = useState<Member[]>([]);
   const [tags, setTags] = useState<BadgeProps[]>([]);
   const [assignedMemberId, setAssignedMemberId] = useState<number>(null);
 
-  useEffect(() => {
-    initilizeMemberList();
-  }, []);
-
-  const initilizeMemberList = async () => {
-    const result: GetDashboardMemberListResponse = await getDashboardMemberList({ dashboardId });
-    const memberList = result.members;
-    setMemberList(memberList);
-  };
-
-  // const switchModal = () => {
-  //   setIsModalOpen(!isModalOpen);
-  // };
-
-  // 모달 관련 구현
-  const {
-    isModalOpen: isImageModalOpen,
-    modalRef: ImageModalRef,
-    toggleModal: toggleImageModal,
-  } = useCloseModal(false); // Core
-
-  const openImageColumnModal = () => {
-    if (!isImageModalOpen) {
-      toggleImageModal();
-    }
-  };
-
-  // 인풋 관리
-
+  // date variables
   const offset = new Date().getTimezoneOffset() * 60000;
   const timeValue = new Date(Date.now() - offset);
 
@@ -77,6 +47,7 @@ export default function CreateCardsModal({
   const defaultTimeValue = todayCurrentTime.toISOString().slice(0, 16);
   const defaultTimePlusThirtyValue = todayCurrentTimePlusThirty.toISOString().slice(0, 16);
 
+  // form variables
   const {
     register,
     handleSubmit,
@@ -102,12 +73,23 @@ export default function CreateCardsModal({
     formState: { errors: errorsOnChange },
   } = useForm({ mode: 'onChange' });
 
-  // this function  return postCreateCardRequest
+  // initilize member list
+  const initilizeMemberList = async () => {
+    const result: GetDashboardMemberListResponse = await getDashboardMemberList({ dashboardId });
+    const memberList = result.members;
+    setMemberList(memberList);
+  };
+  useEffect(() => {
+    initilizeMemberList();
+  }, []);
+
+  // manage form data
   function createNewCardDto(): postCreateCardRequest {
     const { title, date, image, description } = getValues();
     const tagList = tags.map((tag) => tag.children);
     const formattedDate = dateTimeFormatter(date);
     const numDash = Number(dashboardId);
+    console.log(image);
 
     return {
       assigneeUsersId: assignedMemberId,
@@ -117,103 +99,85 @@ export default function CreateCardsModal({
       description,
       dueDate: formattedDate,
       tags: tagList,
-      // imageUrl: image,
+      imageUrl: image,
     };
   }
 
   const onSubmit = async (data: any) => {
     const params = createNewCardDto();
-    // console.log('params', params);
-    console.log('dateTIme', params);
     const result = await postCreateCard(params);
-    console.log('result', result);
 
     if (!result) {
       alert('카드 생성에 실패했습니다.');
     }
 
-    // submitModal();
+    submitModal();
   };
 
   return (
     <ModalDimmed>
-      {isImageModalOpen ? (
-        <ColumnModalTemplates
-          title={'이미지 업로드하기'}
-          cancelString={'취소'}
-          submitString={'이미지 업로드'}
-          inputTitle={'URL'}
-          placeholder={'이미지 URL을 입력해 주세요.'}
-          featureFunction={setImageUrl}
-          isModalOpen={isImageModalOpen}
-          modalRef={ImageModalRef}
-          toggleModal={toggleImageModal}
-        />
-      ) : (
-        <S.CardsModalBox
-          ref={(node) => {
-            if (modalRef) modalRef.current = node;
-          }}
-        >
-          <CreateModalTitle title='할 일 생성' />
-          <S.CardsForm>
-            <SelectInput
-              options={memberList}
-              id='person'
-              register={registerOnChanage}
-              errors={errors}
-              watch={watchOnChange}
-              setError={setErrorOnChange}
-              setValue={setValueOnChange}
-              assignedMemberId={assignedMemberId}
-              setAssignedMemberId={setAssignedMemberId}
-            />
-            <CardTitleInput id='title' register={register} errors={errors} watch={watch} setError={setError} required />
-            <CardTextArea
-              id='description'
-              register={register}
-              errors={errors}
-              watch={watch}
-              setError={setError}
-              required
-            />
-            <CardDateInput
-              id='date'
-              register={register}
-              errors={errors}
-              watch={watch}
-              setError={setError}
-              defaultTimeValue={defaultTimeValue}
-              getValues={getValues}
-              setValue={setValue}
-            />
-            <CardTagInput
-              id='tag'
-              register={registerOnChanage}
-              errors={errorsOnChange}
-              watch={watchOnChange}
-              setError={setErrorOnChange}
-              reset={resetOnChange}
-              tags={tags}
-              setTags={setTags}
-            />
-            <ImageFileInput
-              id='image'
-              register={register}
-              errors={errors}
-              setError={setError}
-              setValue={setValue}
-              getValues={getValues}
-            />
-
-            {/* <ImageInput onClick={openImageColumnModal} title='이미지' imageUrl={imageUrl} /> */}
-            <ColumnButtonsWrap>
-              <ColumnButton onClick={closeModal}>취소</ColumnButton>
-              <ColumnButton onClick={handleSubmit(onSubmit)}>업로드</ColumnButton>
-            </ColumnButtonsWrap>
-          </S.CardsForm>
-        </S.CardsModalBox>
-      )}
+      <S.CardsModalBox
+        ref={(node) => {
+          if (modalRef) modalRef.current = node;
+        }}
+      >
+        <CreateModalTitle title='할 일 생성' />
+        <S.CardsForm>
+          <SelectInput
+            options={memberList}
+            id='person'
+            register={registerOnChanage}
+            errors={errors}
+            watch={watchOnChange}
+            setError={setErrorOnChange}
+            setValue={setValueOnChange}
+            assignedMemberId={assignedMemberId}
+            setAssignedMemberId={setAssignedMemberId}
+          />
+          <CardTitleInput id='title' register={register} errors={errors} watch={watch} setError={setError} required />
+          <CardTextArea
+            id='description'
+            register={register}
+            errors={errors}
+            watch={watch}
+            setError={setError}
+            required
+          />
+          <CardDateInput
+            id='date'
+            register={register}
+            errors={errors}
+            watch={watch}
+            setError={setError}
+            defaultTimeValue={defaultTimeValue}
+            getValues={getValues}
+            setValue={setValue}
+          />
+          <CardTagInput
+            id='tag'
+            register={registerOnChanage}
+            errors={errorsOnChange}
+            watch={watchOnChange}
+            setError={setErrorOnChange}
+            reset={resetOnChange}
+            tags={tags}
+            setTags={setTags}
+          />
+          <ImageFileInput
+            id='image'
+            columnId={columnId}
+            register={register}
+            errors={errors}
+            setError={setError}
+            setValue={setValue}
+            getValues={getValues}
+          />
+          <ColumnButtonsWrap>
+            <ColumnButton onClick={closeModal}>취소</ColumnButton>
+            <ColumnButton onClick={handleSubmit(onSubmit)}>업로드</ColumnButton>
+          </ColumnButtonsWrap>
+        </S.CardsForm>
+      </S.CardsModalBox>
     </ModalDimmed>
   );
 }
@@ -232,7 +196,6 @@ const S = {
       height: auto;
     }
   `,
-
   CardsForm: styled.form`
     display: flex;
     flex-direction: column;
@@ -247,12 +210,3 @@ const S = {
     }
   `,
 };
-
-/* <ColumnModalTemplates
-        title={'이미지 업로드하기'}
-        cancelString={'취소'}
-        submitString={'이미지 업로드'}
-        inputTitle={'URL'}
-        placeholder={'이미지 URL을 입력해 주세요.'}
-        featureFunction={setImageUrl}
-      /> */

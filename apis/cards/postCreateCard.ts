@@ -1,5 +1,4 @@
 import { axiosToken } from '@apis/instance/axiosToken';
-import { axiosTokenMultipart } from '@apis/instance/axiosTokenMultipart';
 
 export interface Card {
   id: number;
@@ -42,7 +41,7 @@ export const postCreateCard = async ({
   tags,
   imageUrl,
 }: postCreateCardRequest) => {
-  const response = await axiosTokenMultipart.post<postCreateCardResponse>('/cards', {
+  const response = await axiosToken.post<postCreateCardResponse>('/cards', {
     assigneeUsersId,
     dashboardId,
     columnId,
