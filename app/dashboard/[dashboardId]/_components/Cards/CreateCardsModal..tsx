@@ -3,10 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import { postCreateCard, postCreateCardRequest } from '@apis/cards/postCreateCard';
 import { getDashboardMemberList, GetDashboardMemberListResponse, Member } from '@apis/members/getDashboardMemberList';
+import { cardsQueryOptions } from '@queries/keys/cardsKeys';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import { BadgeProps } from '@components/atoms/TagBadge';
@@ -32,6 +34,8 @@ export default function CreateCardsModal({
   dashboardId,
   columnId,
 }: ModalComponentProps<{ dashboardId: number; columnId: number }>) {
+  const queryClient = useQueryClient();
+
   // state
   const [memberList, setMemberList] = useState<Member[]>([]);
   const [tags, setTags] = useState<BadgeProps[]>([]);
@@ -110,6 +114,7 @@ export default function CreateCardsModal({
       alert('카드 생성에 실패했습니다.');
     }
 
+    queryClient.invalidateQueries(cardsQueryOptions.cardList({ columnId }));
     submitModal();
   };
 
