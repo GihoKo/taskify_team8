@@ -13,6 +13,8 @@
 | **조형민** | https://github.com/Vegatality | 잠을 못 이루는 사람, 정성 PR리뷰러 | 나를 죽이지 못하는 고통은 x나 아프다 |
 
 # Skills & Tools
+![image](https://github.com/GihoKo/taskify_team8/assets/109282547/a7de8418-eb50-4e8c-bf4d-c4d81daf486a)
+
 ## 🛠️ Core
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
 
@@ -40,7 +42,7 @@
   - 앱의 진입점 역할을 합니다.
 ### 마이 대시보드
   - 나의 대시보드 목록을 보여주고, 생성 모달을 이용해 생성할 수 있습니다.
-  - 초대된 대시보드의 목록을 보여주고, 수락, 거절을 할 수 있습니다..
+  - 초대된 대시보드의 목록을 보여주고, 수락, 거절을 할 수 있습니다.
   - 검색바로 초대된 대시보드를 필터링 할 수 있습니다.
   - 대시보드를 클릭시 해당 대시보드 페이지로 이동합니다.
 ### 사이드바
