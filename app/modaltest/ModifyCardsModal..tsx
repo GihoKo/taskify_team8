@@ -6,6 +6,17 @@ import { useForm } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
+import CardDateInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/date/CardDateInput';
+import CardTextArea from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/description/CardTextarea';
+import ImageFileInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/ImageFileInput';
+import SelectInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/person/SelectInput';
+import CardTagInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/tag/CardTagInput';
+import CardTitleInput from '@/app/dashboard/[dashboardId]/_components/Cards/molecules/title/CardTitleInput';
+import ColumnButton from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButton';
+import ColumnButtonsWrap from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButtonWrap';
+import CreateModalTitle from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnModalTitle';
+import ModalDimmed from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ModalDimmed';
+import { dateTimeFormatter } from '@/app/dashboard/[dashboardId]/_utils/GenerateTimeStamp';
 import { postCreateCard, postCreateCardRequest } from '@apis/cards/postCreateCard';
 import { getDashboardMemberList, GetDashboardMemberListResponse, Member } from '@apis/members/getDashboardMemberList';
 import { cardsQueryOptions } from '@queries/keys/cardsKeys';
@@ -15,19 +26,7 @@ import { BadgeProps } from '@components/atoms/TagBadge';
 
 import { ModalComponentProps } from '@hooks/use-modal/types';
 
-import CardDateInput from './molecules/date/CardDateInput';
-import CardTextArea from './molecules/description/CardTextarea';
-import ImageFileInput from './molecules/ImageFileInput';
-import SelectInput from './molecules/person/SelectInput';
-import CardTagInput from './molecules/tag/CardTagInput';
-import CardTitleInput from './molecules/title/CardTitleInput';
-import { dateTimeFormatter } from '../../_utils/GenerateTimeStamp';
-import ColumnButton from '../Columns/commons/ColumnButton';
-import ColumnButtonsWrap from '../Columns/commons/ColumnButtonWrap';
-import CreateModalTitle from '../Columns/commons/ColumnModalTitle';
-import ModalDimmed from '../Columns/commons/ModalDimmed';
-
-export default function CreateCardsModal({
+export default function ModifyCardsModal({
   closeModal,
   modalRef,
   submitModal,
@@ -90,7 +89,6 @@ export default function CreateCardsModal({
   }, []);
 
   // manage form data
-
   const createNewCardDto = (): postCreateCardRequest => {
     const { title, date, image, description } = getValues();
     const tagList = tags.map((tag) => tag.children);
@@ -152,7 +150,7 @@ export default function CreateCardsModal({
           if (modalRef) modalRef.current = node;
         }}
       >
-        <CreateModalTitle title='할 일 생성' />
+        <CreateModalTitle title='할 일 수정' />
         <S.CardsForm onSubmit={handleSubmit(onSubmit)}>
           <SelectInput
             options={memberList}
@@ -203,7 +201,7 @@ export default function CreateCardsModal({
           />
           <ColumnButtonsWrap>
             <ColumnButton onClick={closeModal}>취소</ColumnButton>
-            <ColumnButton type='submit'>업로드</ColumnButton>
+            <ColumnButton type='submit'>수정완료</ColumnButton>
           </ColumnButtonsWrap>
         </S.CardsForm>
       </S.CardsModalBox>

@@ -1,5 +1,7 @@
-![hero](https://github.com/GihoKo/taskify_team8/assets/109282547/5108111f-5d5c-46eb-ab65-6d3d910c4940)
-zxcasfdg
+<div align="center">
+  <img src="https://github.com/GihoKo/taskify_team8/assets/109282547/5108111f-5d5c-46eb-ab65-6d3d910c4940" />
+</div>
+
 # 👀 프로젝트 소개
 작업 관리, 팀과의 협업, 일정 관리를 위한 올인원 솔루션
 
@@ -16,20 +18,83 @@ zxcasfdg
 ![image](https://github.com/GihoKo/taskify_team8/assets/109282547/a7de8418-eb50-4e8c-bf4d-c4d81daf486a)
 
 ## 🛠️ Core
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
 
+
+<div align="center">
+  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+  <img src="https://img.shields.io/badge/nextjs-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TanstackQuery-FF4154?style=for-the-badge&logo=reactquery&logoColor=black">
+  <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
+  <div align="center">
+    <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
+    <img src="https://img.shields.io/badge/gitActions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white"/>  
+    <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white"/>
+  </div>  
+</div>
+<div align="center">
+    <img src="https://img.shields.io/badge/vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"/>
+</div>
+
+
+<br />
+<br />
+
+  
 ## ✨ Style
-dd
+<div align="left">
+  <img src="https://img.shields.io/badge/StyledComponent-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"/>
+    <img src="https://img.shields.io/badge/stylelint-263238?style=for-the-badge&logo=stylelint&logoColor=white"/>
+  <img src="https://img.shields.io/badge/browserlistrc-263238?style=for-the-badge&logo=browserlistrc&logoColor=white"/>
+</div>
+
+
+<br />
+<br />
+
 
 ## 🔎 Stability
+<div align="left">
+  <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white"/>
+  <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=white"/>
+  <img src="https://img.shields.io/badge/husky-F7B93E?style=for-the-badge&logo=husky&logoColor=white"/>
+  <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"/>
+</div>
+
+
+<br />
+<br />
+
 
 
 ## 📚 Utility
 
+<div align="left">
+  <img src="https://img.shields.io/badge/storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white"/>
+  <img src="https://img.shields.io/badge/reacthookform-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white"/>
+  <img src="https://img.shields.io/badge/@svgr-3E7FC1?style=for-the-badge&logo=svgo&logoColor=white"/>
+</div>
+
+
+<br />
+<br />
+
+
 
 ## 💬 Collaboration 
- 
-    
+<div align="left">
+  <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"/>
+  <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"/>
+  <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white"/>
+  <img src="https://img.shields.io/badge/gather-5A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
+  <img src="https://img.shields.io/badge/gather-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
+  <img src="https://img.shields.io/badge/excalidraw-6965DB?style=for-the-badge&logo=excalidraw&logoColor=white"/>
+</div>
+
+
+<br />
+<br />
+
+
 ## 🎞 Duration
 2024.03.07(목) ~ 2024.03.24(일)
 
