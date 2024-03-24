@@ -33,7 +33,7 @@ export interface InvitationList {
 }
 
 export const getInitialInvitionList = async () => {
-  const { data } = await axiosToken.get<InvitationList>(`/invitations?size=6`);
+  const { data } = await axiosToken.get<InvitationList>(`/invitations?size=8`);
 
   return data;
 };
