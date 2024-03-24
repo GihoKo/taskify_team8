@@ -34,12 +34,12 @@ export default function CreateCardsModal({
   dashboardId,
   columnId,
 }: ModalComponentProps<{ dashboardId: number; columnId: number }>) {
+  const [tags, setTags] = useState<BadgeProps[]>([]);
   const queryClient = useQueryClient();
 
   // state
   const [memberList, setMemberList] = useState<Member[]>([]);
-  const [tags, setTags] = useState<BadgeProps[]>([]);
-  const [assignedMemberId, setAssignedMemberId] = useState<number>(null);
+  const [assignedMemberId, setAssignedMemberId] = useState<number>();
 
   // date variables
   const offset = new Date().getTimezoneOffset() * 60000;
@@ -59,7 +59,7 @@ export default function CreateCardsModal({
     getValues,
     setValue,
     formState: { errors },
-  } = useForm({
+  } = useForm<{ date: string; title: string; image: string; description: string }>({
     mode: 'onBlur',
     defaultValues: {
       date: defaultTimePlusThirtyValue,
@@ -78,6 +78,10 @@ export default function CreateCardsModal({
 
   // initilize member list
   const initilizeMemberList = async () => {
+    if (!dashboardId) {
+      return;
+    }
+
     const result: GetDashboardMemberListResponse = await getDashboardMemberList({ dashboardId });
     const memberList = result.members;
     setMemberList(memberList);
@@ -87,24 +91,26 @@ export default function CreateCardsModal({
   }, []);
 
   // manage form data
-  function createNewCardDto(): postCreateCardRequest {
+
+  const createNewCardDto = (): postCreateCardRequest => {
     const { title, date, image, description } = getValues();
     const tagList = tags.map((tag) => tag.children);
     const formattedDate = dateTimeFormatter(date);
-    const numDash = Number(dashboardId);
-    console.log(image);
+    const numDashboardId = Number(dashboardId);
+    const numColumnId = Number(columnId);
+    const tagListType: string[] = tagList;
 
     return {
       assigneeUsersId: assignedMemberId,
-      dashboardId: numDash,
-      columnId,
+      dashboardId: numDashboardId,
+      columnId: numColumnId,
       title,
       description,
       dueDate: formattedDate,
-      tags: tagList,
+      tags: tagListType,
       imageUrl: image,
     };
-  }
+  };
 
   const onSubmit = async (data: any) => {
     const params = createNewCardDto();
@@ -126,7 +132,7 @@ export default function CreateCardsModal({
         }}
       >
         <CreateModalTitle title='할 일 생성' />
-        <S.CardsForm>
+        <S.CardsForm onSubmit={handleSubmit(onSubmit)}>
           <SelectInput
             options={memberList}
             id='person'
@@ -178,7 +184,7 @@ export default function CreateCardsModal({
           />
           <ColumnButtonsWrap>
             <ColumnButton onClick={closeModal}>취소</ColumnButton>
-            <ColumnButton onClick={handleSubmit(onSubmit)}>업로드</ColumnButton>
+            <ColumnButton type='submit'>업로드</ColumnButton>
           </ColumnButtonsWrap>
         </S.CardsForm>
       </S.CardsModalBox>
