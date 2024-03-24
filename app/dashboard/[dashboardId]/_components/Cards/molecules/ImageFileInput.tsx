@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { set } from 'react-hook-form';
 
 import { styled } from 'styled-components';
 
@@ -11,20 +10,18 @@ import ImageLabel from '../atoms/ImageLabel';
 interface ImageFileInputProps {
   id: any;
   register: any;
-  errors: any;
   setError: any;
   setValue: any;
-  getValues: any;
+
   columnId: number;
 }
 
 export default function ImageFileInput({
   id,
   register,
-  errors,
   setError,
   setValue,
-  getValues,
+
   columnId,
 }: ImageFileInputProps): JSX.Element {
   const [imageUrl, setImageUrl] = useState<string>('');

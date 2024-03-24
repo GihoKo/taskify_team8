@@ -13,7 +13,7 @@ interface ImageLabelProps {
   id: string;
 }
 
-export default function ImageLabel({ imageUrl, onClick, id }: ImageLabelProps) {
+export default function ImageLabel({ imageUrl, id }: ImageLabelProps) {
   return (
     <>
       {imageUrl ? (

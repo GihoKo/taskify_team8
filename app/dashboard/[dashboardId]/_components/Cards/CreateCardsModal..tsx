@@ -71,7 +71,6 @@ export default function CreateCardsModal({
     watch: watchOnChange,
     setError: setErrorOnChange,
     reset: resetOnChange,
-    getValues: getValuesOnChnage,
     setValue: setValueOnChange,
     formState: { errors: errorsOnChange },
   } = useForm({ mode: 'onChange' });
@@ -111,7 +110,7 @@ export default function CreateCardsModal({
     };
   };
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async () => {
     const params = createNewCardDto();
     const result = await postCreateCard(params);
 

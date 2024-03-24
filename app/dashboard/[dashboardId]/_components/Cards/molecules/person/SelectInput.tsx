@@ -33,7 +33,7 @@ export default function SelectInput({
   assignedMemberId,
   setAssignedMemberId,
 }: CardSelectInputProps): JSX.Element {
-  const { isError, checkPerson } = checkCardSelectInput(errors, watch, setError);
+  const { isError } = checkCardSelectInput(errors, watch, setError);
   const [isListOpen, setIsListOpen] = useState(false);
   const [initialList, setInitialList] = useState([]);
 
