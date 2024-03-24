@@ -2,22 +2,40 @@
 
 import { useState } from 'react';
 
+import { useParams } from 'next/navigation';
 import styled from 'styled-components';
 
 import ColumnButton from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButton';
 import ColumnButtonsWrap from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButtonWrap';
 import CreateModalTitle from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnModalTitle';
 import ModalDimmed from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ModalDimmed';
+import { postInvitation } from '@apis/dashboards/postInvitation';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import { ModalComponentProps } from '@hooks/use-modal';
 
 const InvitationModal = ({ closeModal, modalRef }: ModalComponentProps) => {
+  const { dashboardId } = useParams<{ dashboardId?: string }>();
+
   const [inputValue, setInputValue] = useState('');
   const [inputErrorMessage] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const body = {
+      email: inputValue,
+    };
+
+    try {
+      (async () => {
+        const data = await postInvitation(Number(dashboardId), body);
+        console.log(data);
+        closeModal();
+      })();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -6,9 +6,19 @@ import styled from 'styled-components';
 import tableInviteIcon from '@public/images/icons/table-invitelist-add-box-filledWhite-w16-h16.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import useModal from '@hooks/use-modal';
+
 const InviteButton = () => {
+  const { openModal } = useModal();
+
+  const handleInvitationButtonClick = async () => {
+    const InvitationModal = await import('@components/organisms/InvitationModal').then((module) => module.default);
+
+    openModal(InvitationModal);
+  };
+
   return (
-    <S.Button type='button'>
+    <S.Button type='button' onClick={handleInvitationButtonClick}>
       <S.IconBox>
         <Image alt='초대하기 아이콘' src={tableInviteIcon} />
       </S.IconBox>
