@@ -207,15 +207,16 @@ function MyPage() {
     if (!PasswordWrong && data.password !== '' && data.newPassword !== '') {
       try {
         const res = await axiosToken.put('/auth/password', data);
+        console.log(res);
 
-        if (res.status === 201) {
+        if (res.status === 204) {
           setModalText('비밀번호가 변경 되었습니다');
           showPasswordToggle();
         }
 
         router.push('/mypage');
       } catch (err) {
-        setModalText('error');
+        setModalText('현재 비밀번호가 틀렸습니다.');
         showPasswordToggle();
       }
     }
