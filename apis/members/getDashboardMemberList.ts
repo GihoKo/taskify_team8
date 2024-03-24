@@ -24,8 +24,8 @@ export interface GetDashboardMemberListResponse {
 }
 
 interface GetDashboardMemberListParams {
-  page: number;
-  size: number;
+  page?: number;
+  size?: number;
   dashboardId: number;
 }
 

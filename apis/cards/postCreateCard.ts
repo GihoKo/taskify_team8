@@ -22,8 +22,8 @@ export type postCreateCardResponse = Card;
 
 export interface postCreateCardRequest {
   assigneeUsersId?: number;
-  dashboardId: 0;
-  columnId: 0;
+  dashboardId: number;
+  columnId: number;
   title: string;
   description: string;
   dueDate: string;
