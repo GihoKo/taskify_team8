@@ -1,6 +1,10 @@
 'use client';
 
+<<<<<<<< HEAD:app/modaltest/ToDoCardModal.tsx
 import React, { useState, MutableRefObject } from 'react';
+========
+import React, { useState } from 'react';
+>>>>>>>> 6e995f0 (Conflict: merge commit):app/_modals/ToDoCardModal.tsx
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -19,8 +23,11 @@ import AssigneeInformation from '@components/molecules/AssigneeInformation';
 import ListGroup from '@components/molecules/ListGroup';
 import TagBadgeContainer from '@components/molecules/TagBadgeContainer';
 import CommentArea from '@components/organisms/CommentArea';
+<<<<<<<< HEAD:app/modaltest/ToDoCardModal.tsx
 import { useQueryClient } from '@tanstack/react-query';
 import { cardsKeys } from '@queries/keys/cardsKeys';
+========
+>>>>>>>> 6e995f0 (Conflict: merge commit):app/_modals/ToDoCardModal.tsx
 
 interface ToDoModalProps {
   id: number;
@@ -28,6 +35,7 @@ interface ToDoModalProps {
   comments?: Comment[];
   columnId: number;
   dashboardId: number;
+<<<<<<<< HEAD:app/modaltest/ToDoCardModal.tsx
   closeModal: () => void;
   modalRef: MutableRefObject<HTMLElement | null> | null;
 }
@@ -78,6 +86,43 @@ export default function ToDoCardModal({
   console.log('card', card);
 
   // @ts-ignore
+========
+}
+
+export default function ToDoCardModal({ id, card, comments, columnId, dashboardId }: ToDoModalProps): JSX.Element {
+  const [isListGroupOpen, setIsListGroupOpen] = useState(false);
+  const [listGroupPosition, setListGroupPosition] = useState({ x: 0, y: 0 });
+  const router = useRouter();
+
+  const handleListGroupClose = () => {
+    setIsListGroupOpen(false);
+  };
+
+  const handleClickKebabButton = (event: React.MouseEvent<SVGSVGElement>) => {
+    setIsListGroupOpen(true);
+    setListGroupPosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const onDeleteCard = async () => {
+    try {
+      await deleteCardItem(id);
+      router.push(`/dashboard/${dashboardId}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const kebabList = [
+    {
+      children: '수정하기',
+      onClick: () => {
+        console.log('');
+      },
+    },
+    { children: '삭제하기', onClick: onDeleteCard },
+  ];
+
+>>>>>>>> 6e995f0 (Conflict: merge commit):app/_modals/ToDoCardModal.tsx
   return (
     <S.ModalTestDimmed>
       <S.ModalPage
@@ -89,7 +134,11 @@ export default function ToDoCardModal({
       >
         <S.ButtonBox>
           <S.KebabIcon onClick={handleClickKebabButton} />
+<<<<<<<< HEAD:app/modaltest/ToDoCardModal.tsx
           <S.CloseIcon onClick={closeModal} />
+========
+          <S.CloseIcon />
+>>>>>>>> 6e995f0 (Conflict: merge commit):app/_modals/ToDoCardModal.tsx
           {isListGroupOpen && (
             <ListGroup itemList={kebabList} onClose={handleListGroupClose} position={listGroupPosition} />
           )}
@@ -102,12 +151,19 @@ export default function ToDoCardModal({
             <S.BadgeBox>
               <ColumnNameBadge>To Do</ColumnNameBadge>
               <Divider />
+<<<<<<<< HEAD:app/modaltest/ToDoCardModal.tsx
               {/*ts-ignore*/}
+========
+>>>>>>>> 6e995f0 (Conflict: merge commit):app/_modals/ToDoCardModal.tsx
               <TagBadgeContainer list={card.tags} />
             </S.BadgeBox>
             <S.Content>{card.description}</S.Content>
             {card.imageUrl ? (
               <S.ImageWrapper>
+<<<<<<<< HEAD:app/modaltest/ToDoCardModal.tsx
+========
+                {' '}
+>>>>>>>> 6e995f0 (Conflict: merge commit):app/_modals/ToDoCardModal.tsx
                 <Image src={card.imageUrl} alt='image' fill />{' '}
               </S.ImageWrapper>
             ) : null}
