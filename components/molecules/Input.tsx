@@ -86,9 +86,9 @@ export default function Input({
             />
             <S.imageWrap onClick={handlepassword}>
               {password ? (
-                <Image src={'/images/icons/icon-eyesOff.svg'} alt='off' fill />
+                <Image src={'/images/icons/icon-eyesOff-filledGray_9FA6B2-w24-h24.svg'} alt='off' fill />
               ) : (
-                <Image src={'/images/icons/icon-eyesOn.svg'} alt='on' fill />
+                <Image src={'/images/icons/icon-eyesOn-filledGray_9FA6B2-w24-h24.svg'} alt='on' fill />
               )}
             </S.imageWrap>
           </S.inputInner>
