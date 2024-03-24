@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useState, MutableRefObject } from 'react';
+import React, { MutableRefObject, useState } from 'react';
 
-
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import styled, { css } from 'styled-components';
 
 import { deleteCardItem } from '@apis/cards/deleteCardItem';
@@ -13,6 +12,7 @@ import { Comment } from '@apis/comments/getComments';
 import CloseIcon from '@public/images/icons/close-icon.svg?component';
 import Divider from '@public/images/icons/horizontal-divder.svg?component';
 import KebabIcon from '@public/images/icons/kebab-icon.svg?component';
+import { cardsKeys } from '@queries/keys/cardsKeys';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColumnNameBadge from '@components/atoms/ColumnNameBadge';
@@ -20,8 +20,6 @@ import AssigneeInformation from '@components/molecules/AssigneeInformation';
 import ListGroup from '@components/molecules/ListGroup';
 import TagBadgeContainer from '@components/molecules/TagBadgeContainer';
 import CommentArea from '@components/organisms/CommentArea';
-import { useQueryClient } from '@tanstack/react-query';
-import { cardsKeys } from '@queries/keys/cardsKeys';
 
 interface ToDoModalProps {
   id: number;
@@ -105,7 +103,6 @@ export default function ToDoCardModal({
             <S.BadgeBox>
               <ColumnNameBadge>To Do</ColumnNameBadge>
               <Divider />
-              {/*ts-ignore*/}
               <TagBadgeContainer list={card.tags} />
             </S.BadgeBox>
             <S.Content>{card.description}</S.Content>

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import TagBadge, { BadgeProps } from '@components/atoms/TagBadge';
 
 interface Props {
-  list: BadgeProps[];
+  list: BadgeProps[] | string[];
   position?: 'absolute' | 'relative';
   // ref?: React.RefObject<HTMLDivElement>;
 }
@@ -19,10 +19,9 @@ export default function TagBadgeContainer({ list, position = 'relative' }: Props
 
   return (
     <S.Container $position={position}>
-      {list.map((item, index) => (
-        <TagBadge key={index} color={item.color}>
-          {item.children || item}
-        </TagBadge>
+      {list.map((item, _index) => (
+        // eslint-disable-next-line react/jsx-key
+        <TagBadge color={item.color}>{item.children || item}</TagBadge>
       ))}
     </S.Container>
   );

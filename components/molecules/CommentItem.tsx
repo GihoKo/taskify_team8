@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -8,7 +8,6 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ProfileImage from '@components/atoms/ProfileImage';
 import ReplyModifyForm from '@components/molecules/ReplyEditForm';
-import ReplyInputForm from '@components/molecules/ReplyInputForm';
 
 import { formatDateWithTime } from '@utils/time/formatDateShorter';
 
@@ -18,8 +17,8 @@ interface CommentItemProps {
 }
 
 export default function CommentItem({ comment, setCommentList }: CommentItemProps) {
-  const { author, cardId, createdAt, updatedAt, content, id: commentId } = comment;
-  const { id: authorId, nickname: authorNickname, profileImageUrl: authorProfileImageUrl } = author;
+  const { author, createdAt, content, id: commentId } = comment;
+  const { nickname: authorNickname } = author;
 
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -39,7 +38,7 @@ export default function CommentItem({ comment, setCommentList }: CommentItemProp
         return;
       }
 
-      setCommentList((prev) => prev.filter((comment) => comment.id !== commentId));
+      setCommentList((prev: Comment[]) => prev.filter((comment) => comment.id !== commentId));
     }
   };
 

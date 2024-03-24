@@ -24,7 +24,7 @@ const Card = ({ title, dueDate, assignee, tags, imageUrl, columnId, openModal, i
   const { dashboardId } = useParams<{ dashboardId: string }>();
 
   const handleOpenModal = async () => {
-    const { default: TodoCardModal } = await import('@/app/modaltest/ToDoModalndex');
+    const { default: TodoCardModal } = await import('@/app/modaltest/modalindex');
 
     openModal(TodoCardModal, { columnId, cardId: id, dashboardId: Number(dashboardId) });
   };

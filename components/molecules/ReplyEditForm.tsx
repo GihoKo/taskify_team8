@@ -19,13 +19,13 @@ interface InputParams {
 
 // TODO: 입력버튼이 textarea를 가리는 문제.
 export default function ReplyModifyForm({ commentId, initialContent, onClickCancel, setCommentList }: Props) {
-  const { reset, register, handleSubmit, getValues } = useForm<InputParams>({
+  const { register, handleSubmit, getValues } = useForm<InputParams>({
     defaultValues: {
       content: initialContent,
     },
   });
 
-  const onSubmit: SubmitHandler<InputParams> = async (input) => {
+  const onSubmit: SubmitHandler<InputParams> = async () => {
     const newContent = getValues('content');
 
     const newComment: putCommentParams = {
