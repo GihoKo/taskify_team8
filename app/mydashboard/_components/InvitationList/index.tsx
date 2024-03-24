@@ -1,107 +1,28 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { getInitialInvitionList, Invitation } from '@apis/invitations/getInitialInvitionList';
 import searchIcon from '@public/images/icons/search-filledBlack-333236-w22-h22.svg';
 import uninvitedSvg from '@public/images/logos/unInvited_filledGray_D9D9D9-w100-h100.svg';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import useInvitationList from './hook';
 import InvitationItem from './invitationItem';
-import { getMoreInvitionList } from '../../../../apis/invitations/getMoreInvitionList';
-import { getSearchedInvitationList } from '../../../../apis/invitations/getSearchedInvitationList';
-import { putInvitationAnswer } from '../../../../apis/invitations/putInvitationAnswer';
 import InvitationText from '../commons/InvitationText';
 
+// @Todo 초기 데이터만 tanstack query로 가져오고, 나머지는 나중에 리팩토링하기
 export default function InvitationList() {
-  const { data } = useQuery({
-    queryKey: ['invitation', 'invitationList'],
-    queryFn: () => getInitialInvitionList(),
-  });
-  const [invitationList, setInvitationList] = useState<Invitation[]>(data?.invitations || []);
-  const [cursorId, setCursorId] = useState<number | null>(null);
-  const currentLastInvitation = useRef<HTMLDivElement>(null);
-
-  // 검색 기능
-  const [searchKeyword, setSearchKeyword] = useState('');
-
-  const onChangeSearchKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchKeyword(e.target.value);
-  };
-
-  useEffect(() => {
-    // 검색어가 없는 경우 초기 데이터를 불러오고 무한스크롤을 재시작
-    if (searchKeyword === '') {
-      (async () => {
-        const data = await getInitialInvitionList();
-        setInvitationList(data.invitations);
-      })();
-
-      infiniteScroll();
-
-      return;
-    }
-
-    (async () => {
-      const data = await getSearchedInvitationList(searchKeyword);
-      setInvitationList(data.invitations);
-    })();
-    // eslint-disable-next-line
-  }, [searchKeyword]);
-
-  // 초대 리스트 초기값 조회
-  useEffect(() => {
-    (async () => {
-      const data = await getInitialInvitionList();
-      setInvitationList(data.invitations);
-      setCursorId(data.cursorId);
-    })();
-  }, []);
-
-  const handleInvitationAcceptButtonClick = async (id: number) => {
-    await putInvitationAnswer(id, true);
-    setInvitationList((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  const handleInvitationRefuseButtonClick = async (id: number) => {
-    await putInvitationAnswer(id, false);
-    setInvitationList((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  // 검색 문자열을 모두 지웠을 때 다시 무한 스크롤을 사용하게 하기위해 함수로 만듬
-  const infiniteScroll = async () => {
-    if (currentLastInvitation.current) {
-      const currentLastInvitationIo = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(async (entry) => {
-            if (entry.isIntersecting && currentLastInvitation.current) {
-              const data = await getMoreInvitionList(cursorId);
-              setInvitationList((prev) => [...prev, ...data.invitations]);
-
-              if (data.cursorId !== null) {
-                setCursorId(data.cursorId);
-              }
-
-              currentLastInvitationIo.disconnect();
-            }
-          });
-        },
-        { threshold: 1 }, // entry.isIntersecting이 성립하지만 threshold가 1이 아닐 때는 콜백이 실행되지 않음
-      );
-
-      currentLastInvitationIo.observe(currentLastInvitation.current);
-    }
-  };
-
-  // 무한 스크롤
-  useEffect(() => {
-    infiniteScroll();
-    // eslint-disable-next-line
-  }, [currentLastInvitation, cursorId]);
+  const {
+    invitationList,
+    inputRef,
+    cursorId,
+    searchKeyword,
+    onChangeSearchKeyword,
+    handleInvitationAcceptButtonClick,
+    handleInvitationRefuseButtonClick,
+    infiniteScrollSpinnerRef,
+  } = useInvitationList();
 
   return (
     <S.Box>
@@ -113,7 +34,13 @@ export default function InvitationList() {
             <S.SearchIconWrapper>
               <Image fill src={searchIcon} alt='돋보기 아이콘 이미지' />
             </S.SearchIconWrapper>
-            <S.SearchInput type='search' placeholder='검색' value={searchKeyword} onChange={onChangeSearchKeyword} />
+            <S.SearchInput
+              type='search'
+              placeholder='검색'
+              value={searchKeyword}
+              onChange={onChangeSearchKeyword}
+              ref={inputRef}
+            />
           </S.SearchBarWrapper>
           <S.InvitationContainer>
             <S.InvitationHeaderWrapper>
@@ -127,10 +54,10 @@ export default function InvitationList() {
                 {...item}
                 onAcceptClick={handleInvitationAcceptButtonClick}
                 onRefuseClick={handleInvitationRefuseButtonClick}
-                ref={currentLastInvitation}
-                cursorId={cursorId}
               />
             ))}
+
+            {cursorId === null ? null : <div ref={infiniteScrollSpinnerRef} />}
           </S.InvitationContainer>
         </>
       ) : (
