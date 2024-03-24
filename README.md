@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![hero](https://github.com/GihoKo/taskify_team8/assets/109282547/5108111f-5d5c-46eb-ab65-6d3d910c4940)
 
-## Getting Started
+# 👀 프로젝트 소개
+작업 관리, 팀과의 협업, 일정 관리를 위한 올인원 솔루션
 
-First, run the development server:
+# 🔥 Members
+| Name | Github | Alias | Quote |
+|   ---    | --- | --- | --- |
+| **고기호** | https://github.com/GihoKo | 바지사장, 제주도민 | 구현... 구현 먼저 합시다…!!!… |
+| **김민교** | https://github.com/INKmin9 | 말하는 감자 | 못된 타입에러를 모두 주겼습니다 |
+| **장은진** | https://github.com/eundin | MZ호소인 | null 사랑하지않아 |
+| **서인덕** | https://github.com/Dev-Duke-Seo | 해가 지지 않는 나라 | MY LOVE any타입 |
+| **조형민** | https://github.com/Vegatality | 잠을 못 이루는 사람, 정성 PR리뷰러 | 나를 죽이지 못하는 고통은 x나 아프다 |
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Skills & Tools
+## 🛠️ Core
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Style
+ 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔎 Stability
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## 📚 Utility
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 💬 Collaboration 
+ 
+    
+## 🎞 Duration
+2024.03.07(목) ~ 2024.03.24(일)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+# 📑 Feature
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 기호
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 랜딩 페이지
+  - 앱의 진입점 역할을 합니다.
+### 마이 대시보드
+  - 나의 대시보드 목록을 보여주고, 생성 모달을 이용해 생성할 수 있습니다.
+  - 초대된 대시보드의 목록을 보여주고, 수락, 거절을 할 수 있습니다..
+  - 검색바로 초대된 대시보드를 필터링 할 수 있습니다.
+  - 대시보드를 클릭시 해당 대시보드 페이지로 이동합니다.
+### 사이드바
+  - 나의 대시보드 목록을 보여주고, 생성 모달을 이용해 생성할 수 있습니다.
+  - 대시보드를 클릭시 해당 대시보드 페이지로 이동합니다.
+
+## 민교
+
+### 로그인/회원가입
+  - input창에 맞지 않는 내용 입력 시 로그인/회원가입 버튼이 활성화되지 않습니다.
+### 마이페이지
+  - 프로필 사진을 변경할 수 있습니다.
+  - 비밀번호를 변경할 수 있습니다.
+
+## 인덕
+
+### 할일카드 보기
+  - 만들어진 ‘할 일’의 상세정보를 카드형태로 보여준다.
+    - 해당 카드 안에서 유저들이 코멘트를 달 수 있다.
+### 할일카드 수정
+  - 기존 ‘할 일 카드’의 데이터를 수정할 수 있다.
+
+## 은진
+
+### 컬럼 생성
+  - 컬럼을 생성할 수 있습니다.
+  - 중복된 컬럼 이름인지 확인합니다.
+### 컬럼 수정
+  - 컬럼 수정 모달에서 기존의 컬럼 이름을 가져옵니다.
+  - 컬럼이름을 수정 할 수 있습니다.
+  - 컬럼 이름 중복을 확인합니다.
+  - 삭제하기버튼을 누르면 삭제 모달이 나타납니다.
+  - 컬럼 삭제를 할 수 있습니다.
+### 할일 생성
+  - 할일을 생성할 수 있습니다.
+  - 할일 생성 모달에서 할일 담당자, 제목, 설명, 마감일, 태그, 이미지를 설정할 수 있습니다.
+ 
+## 형민
+
+### 대시보드 페이지
+  - 컬럼에 카드 불러오기
+    - 무한스크롤 적용
+### 대시보드, 마이페이지, 마이대시보드 페이지 공용 네비게이션 바
+  - 대시보드 경로에서는 대시보드별로 다른 멤버의 정보를 확인할 수 있습니다.
+  - Funnel HOC사용
+### 대시보드 수정 페이지
+  - 대시보드 수정
+    - 대시보드의 정보를 수정할 수 있습니다.
+    - 성공시 현재 상태 무효화 업데이트를 통해 변경사항을 새로 반영하여 서버상태와 동기화를 시킵니다.
+  - 대시보드 멤버 삭제, 초대 취소
+    - 대시보드 멤버 테이블과 멤버 초대 테이블을 통해 관리할 수 있습니다.
+### 어플리케이션 전체 모달 창 상태 관리
+  - 어플리케이션에서 유저 플로우에 따라 생성되는 모달을 context api를 통해 한 번에 관리
+### 어플리케이션 Protected Route 설정
+  - 토큰 없이 접근 불가능한 페이지("/mydashboard”, “/mypage”, “/dashboard/*”)에 진입하면 로그인 페이지로 리다이렉트 됩니다.
+  - middleware로 구현
