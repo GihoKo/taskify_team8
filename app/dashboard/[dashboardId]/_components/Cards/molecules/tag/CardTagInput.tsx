@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -32,7 +32,7 @@ export default function CardTagInput({
   tags,
   setTags,
 }: CardTagInputProps) {
-  const { isError, checkTag } = CheckCardTagInput(errors, watch, setError);
+  const { isError } = CheckCardTagInput(errors, watch, setError);
   // const [tags, setTags] = useState<BadgeProps[]>([]);
   const [inputPadding, setInputPadding] = useState<number>(1.6);
   const containerRef = useRef<HTMLDivElement>(null);
