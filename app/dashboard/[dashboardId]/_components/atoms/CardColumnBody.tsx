@@ -12,9 +12,9 @@ import { useGetCardListOnInfiniteScroll } from '../../_hooks/useGetCardListOnInf
 import CardAppendButton from '../molecules/CardAppendButton';
 import Card from '../organisms/Card';
 
-type CardColumnBodyProps = PropsWithChildren<{ columnId: number }>;
+type CardColumnBodyProps = PropsWithChildren<{ columnId: number; dashboardId: number }>;
 
-const CardColumnBody = ({ columnId }: CardColumnBodyProps) => {
+const CardColumnBody = ({ columnId, dashboardId }: CardColumnBodyProps) => {
   const rootRef = useRef<HTMLElement>(null);
 
   const { intersectionObserveTargetRef, isIntersecting } = useInView<HTMLDivElement>({
@@ -34,7 +34,7 @@ const CardColumnBody = ({ columnId }: CardColumnBodyProps) => {
 
   return (
     <S.Container ref={rootRef}>
-      <CardAppendButton />
+      <CardAppendButton columnId={columnId} dashboardId={dashboardId} />
       {data &&
         data.pages.length > 0 &&
         data.pages.map((card) => {

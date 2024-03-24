@@ -60,6 +60,7 @@ const S = {
       width: 48.4rem;
       height: 4.8rem;
       margin-bottom: 0.8rem;
+      margin-bottom: ${({ $isError }) => ($isError ? `0.8rem` : `2.8rem`)};
     }
   `,
 
