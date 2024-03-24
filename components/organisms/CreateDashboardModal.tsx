@@ -50,7 +50,7 @@ const CreateDashboardModal = ({ closeModal, modalRef }: ModalComponentProps) => 
       });
 
       if (result.status === 201) {
-        queryClient.invalidateQueries({ queryKey: ['dashboard', 'dashboardList', 1] });
+        await queryClient.invalidateQueries({ queryKey: ['dashboard', 'dashboardList', 1] });
         closeModal();
       }
     } catch (error) {

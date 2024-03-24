@@ -41,7 +41,7 @@ const DashboardInfoEditForm = ({ dashboardId }: DashboardInfoEditFormProps) => {
   });
 
   useEffect(() => {
-    if (isFetched && isSuccess) {
+    if (isSuccess) {
       setDashboardInfo(data);
       setSelectedColor(data.color);
     }
