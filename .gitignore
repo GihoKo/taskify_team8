@@ -50,3 +50,5 @@ public/images/mock.png
 app/dashboard/[dashboardId]/_components/Cards/mock.ts
 .gitignore
 app/dashboard/[dashboardId]/_components/Cards/mock.ts
+
+*storybook.log
