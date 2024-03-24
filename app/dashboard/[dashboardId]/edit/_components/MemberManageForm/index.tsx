@@ -39,7 +39,7 @@ const MemberManageForm = ({ dashboardId }: MemberManageFormProps) => {
   };
 
   useEffect(() => {
-    if (isFetched && isSuccess) {
+    if (isSuccess) {
       setMemberList(data.pages);
     }
   }, [isFetched, isSuccess, data]);

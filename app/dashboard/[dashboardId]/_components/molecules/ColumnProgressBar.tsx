@@ -19,6 +19,8 @@ const ColumnProgressBar = ({ columnId, columnTitle }: ColumnProgressBarProps) =>
     cardsKeys.cardList(columnId),
   );
 
+  console.log(cardListData);
+
   return (
     <S.Box>
       <ProgressChip>{columnTitle}</ProgressChip>

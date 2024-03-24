@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 import styled from 'styled-components';
 
 import { type Card as ICard } from '@apis/cards/getCardList';
@@ -9,15 +10,27 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 import CardTag from '@components/atoms/CardTag';
 import FirstLetterProfile from '@components/atoms/FirstLetterProfile';
 
+import useModal from '@hooks/use-modal';
 import { formatDateShorter } from '@utils/time/formatDateShorter';
 
 import DueDate from '../atoms/DueDate';
 
-type CardProps = ICard;
+interface CardProps extends ICard {
+  columnId: number;
+  openModal: ReturnType<typeof useModal>['openModal'];
+}
 
-const Card = ({ title, dueDate, assignee, tags, imageUrl }: CardProps) => {
+const Card = ({ title, dueDate, assignee, tags, imageUrl, columnId, openModal, id }: CardProps) => {
+  const { dashboardId } = useParams<{ dashboardId: string }>();
+
+  const handleOpenModal = async () => {
+    const { default: TodoCardModal } = await import('@/app/modaltest/modalindex');
+
+    openModal(TodoCardModal, { columnId, cardId: id, dashboardId: Number(dashboardId) });
+  };
+
   return (
-    <S.Box>
+    <S.Box onClick={handleOpenModal}>
       {imageUrl && (
         <S.ImageBox>
           <S.Image fill src={imageUrl} alt='카드 이미지' />
@@ -27,6 +40,7 @@ const Card = ({ title, dueDate, assignee, tags, imageUrl }: CardProps) => {
         <S.Title>{title}</S.Title>
         <S.TagsAndDateBox>
           <S.TagsContainer>
+            {/* tag 이름이 왜 똑같은 게 생성이 돼서 오지 */}
             {tags.map((tag) => {
               return <CardTag key={tag}>{tag}</CardTag>;
             })}
