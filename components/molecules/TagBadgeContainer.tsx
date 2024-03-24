@@ -20,8 +20,9 @@ export default function TagBadgeContainer({ list, position = 'relative' }: Props
   return (
     <S.Container $position={position}>
       {list.map((item, _index) => (
-        // eslint-disable-next-line react/jsx-key
-        <TagBadge color={item.color}>{item.children || item}</TagBadge>
+        <TagBadge key={new Date().toString()} color='orange'>
+          {(item as BadgeProps).children! || item!}
+        </TagBadge>
       ))}
     </S.Container>
   );

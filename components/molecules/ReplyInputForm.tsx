@@ -38,7 +38,15 @@ export default function ReplyInputForm({ dashboardId, columnId, cardId, setComme
       return;
     }
 
-    setCommentList((previous: Comment[]) => [response, ...previous]);
+    setCommentList((prev: Comment[]) => {
+      const newList = [response, ...prev];
+
+      return newList;
+    });
+
+    // setCommentList((previous: Comment[]) => { previous.
+    //   [response, ...previous];
+    // });
 
     reset();
   };
