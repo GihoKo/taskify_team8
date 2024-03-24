@@ -44,7 +44,7 @@ const Card = ({ title, dueDate, assignee, tags, imageUrl }: CardProps) => {
               }}
               backgroundColor='#a3c4a2'
             >
-              {assignee.nickname[0]}
+              {assignee?.nickname[0]}
             </FirstLetterProfile>
           </S.DateAndProfileBox>
         </S.TagsAndDateBox>
