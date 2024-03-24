@@ -52,7 +52,7 @@ export default function SelectInput({
     const id = event.target.value;
     setAssignedMemberId(id);
     setIsListOpen(!isListOpen);
-    setValue('person', options.find((option: any) => option.id === id).nickname || null);
+    setValue('person', options.find((option: any) => option.userId === id).nickname || null);
   };
 
   const handleInputChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -99,8 +99,8 @@ export default function SelectInput({
               {initialList.map((item: any) => (
                 <S.UserListItem
                   key={item.id}
-                  value={item.id}
-                  $isSelected={item.id === assignedMemberId}
+                  value={item.userId}
+                  $isSelected={item.userId === assignedMemberId}
                   onClick={handleClickListItem}
                 >
                   <ProfileImage defaultName={item.nickname} imgUrl={item.profileImageUrl || null} />

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { set } from 'react-hook-form';
 
 import { styled } from 'styled-components';
 
+import { postCreateCardImage } from '@apis/cards/postCardImage';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ImageLabel from '../atoms/ImageLabel';
@@ -13,6 +15,7 @@ interface ImageFileInputProps {
   setError: any;
   setValue: any;
   getValues: any;
+  columnId: number;
 }
 
 export default function ImageFileInput({
@@ -22,15 +25,15 @@ export default function ImageFileInput({
   setError,
   setValue,
   getValues,
+  columnId,
 }: ImageFileInputProps): JSX.Element {
   const [imageUrl, setImageUrl] = useState<string>(null);
 
-  const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const file = event.target.files[0];
       const formData = new FormData();
-      formData.append('imgUrl', file);
-      setValue(id, formData);
+      formData.append('image', file);
 
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -40,7 +43,10 @@ export default function ImageFileInput({
         setImageUrl(base64 as string);
       };
 
-      setValue(id, file);
+      const result = await postCreateCardImage(columnId, formData);
+      console.log('result', result);
+
+      setValue(id, result.imageUrl as string);
 
       return;
     }
