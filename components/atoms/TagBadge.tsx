@@ -23,6 +23,8 @@ const S = {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    white-space: nowrap;
+
     border-radius: 4px;
     background: ${(props) => `${BadgeColor[props.$colorType].background}`};
 

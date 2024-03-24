@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
-import checkCardTitleInput from './CheckCardTitleInput';
+import CheckCardTextArea from './CheckCardTextarea';
 
-interface CardTitleInputProps {
+interface CardTextAreaProps {
   id: string;
   register: any;
   errors: any;
@@ -13,28 +13,27 @@ interface CardTitleInputProps {
   required?: boolean;
 }
 
-export default function CardTitleInput({ id, register, errors, required, setError, watch }: CardTitleInputProps) {
-  const { isError, checkTitle } = checkCardTitleInput(errors, watch, setError);
+export default function CardTextArea({ id, register, errors, required, setError, watch }: CardTextAreaProps) {
+  const { isError, checkTextArea } = CheckCardTextArea(errors, watch, setError);
 
   return (
     <>
       <S.CardsInputWrapper>
         <S.CardsLabel htmlFor={id}>
-          제목
+          설명
           {required ? <S.Star> *</S.Star> : null}
         </S.CardsLabel>
-        <S.Input
+        <S.CardsTextarea
           id={id}
-          type='text'
-          placeholder='제목을 입력해주세요'
+          placeholder='설명을 입력해 주세요'
           $isError={isError}
           {...register(id, {
-            required: '제목 입력은 필수입니다.',
+            required: '설명은 필수입니다.',
           })}
-          onBlur={checkTitle}
+          onBlur={checkTextArea}
           watch
         />
-        {errors.title && <S.ErrorMessage>{errors.title.message}</S.ErrorMessage>}
+        {errors.description && <S.ErrorMessage>{errors.description.message}</S.ErrorMessage>}
       </S.CardsInputWrapper>
     </>
   );
@@ -43,21 +42,24 @@ export default function CardTitleInput({ id, register, errors, required, setErro
 /* color: ${(props) => (props.$isError === false ? 'black' : 'red')}; */
 
 const S = {
-  Input: styled.input<{ $isError: boolean }>`
+  CardsTextarea: styled.textarea<{ $isError: boolean }>`
+    resize: none;
+    outline: none;
     color: ${({ theme }) => theme.color.black_333236};
     border: 0.1rem solid
       ${({ theme, $isError }) => ($isError === true ? theme.color.red_D6173A : theme.color.gray_D9D9D9)};
     border-radius: 0.6rem;
     font-size: 1.4rem;
     /* width: 28.7rem; */
-    height: 4.2rem;
-    padding: 0 1.6rem;
+    height: 8.4rem;
+    padding: 1.3rem 1.6rem;
     margin-bottom: ${({ $isError }) => ($isError ? `0.8rem` : `2.4rem`)};
 
     @media ${mediaBreakpoint.tablet} {
       font-size: 1.6rem;
       /* width: 48.4rem; */
-      height: 4.8rem;
+      height: 9.6rem;
+      padding: 1.5rem 1.6rem;
       margin-bottom: 0.8rem;
     }
 

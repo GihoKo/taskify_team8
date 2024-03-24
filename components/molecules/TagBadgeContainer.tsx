@@ -6,8 +6,11 @@ import TagBadge, { BadgeProps } from '@components/atoms/TagBadge';
 
 interface Props {
   list: BadgeProps[];
+  position?: 'absolute' | 'relative';
+  // ref?: React.RefObject<HTMLDivElement>;
 }
 
+<<<<<<< HEAD
 export default function TagBadgeContainer({ list }: Props) {
   console.log('list', list);
 
@@ -15,8 +18,11 @@ export default function TagBadgeContainer({ list }: Props) {
 
   // const tagList = list.map((item) => item.color);
 
+=======
+export default function TagBadgeContainer({ list, position = 'relative' }: Props) {
+>>>>>>> 41c04d2 (Co-authored-by: Duke <Dev-Duke-Seo@users.noreply.github.com>)
   return (
-    <S.Container>
+    <S.Container $position={position}>
       {list.map((item, index) => (
         <TagBadge key={index} color={item.color}>
           {item}
@@ -27,8 +33,11 @@ export default function TagBadgeContainer({ list }: Props) {
 }
 
 const S = {
-  Container: styled.div`
+  Container: styled.div<{ $position: 'absolute' | 'relative' }>`
     display: flex;
     gap: 0.6rem;
+    position: ${({ $position }) => $position};
+    left: ${({ $position }) => ($position === 'absolute' ? '1.6rem' : '')};
+    top: ${({ $position }) => ($position === 'absolute' ? '1.4rem' : '')};
   `,
 };
