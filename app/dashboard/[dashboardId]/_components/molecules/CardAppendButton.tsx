@@ -8,13 +8,18 @@ import { useModal } from '@hooks/use-modal/useModal';
 
 import PlusShapeIcon from '../atoms/PlusShapeIcon';
 
-const CardAppendButton = () => {
+interface CardAppendButtonProps {
+  columnId: number;
+  dashboardId: number;
+}
+
+const CardAppendButton = ({ columnId, dashboardId }: CardAppendButtonProps) => {
   const { openModal } = useModal();
 
   const handleCardAppendButtonClick = async () => {
     const CreateCardsModal = await import('../Cards/CreateCardsModal.').then((module) => module.default);
 
-    openModal(CreateCardsModal);
+    openModal(CreateCardsModal, { dashboardId, columnId });
   };
 
   return (

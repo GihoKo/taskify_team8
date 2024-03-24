@@ -33,19 +33,21 @@ const Card = ({ title, dueDate, assignee, tags, imageUrl }: CardProps) => {
           </S.TagsContainer>
           <S.DateAndProfileBox>
             <DueDate>{formatDateShorter(dueDate)}</DueDate>
-            <FirstLetterProfile
-              profileSize={{
-                onMobile: '2.2rem',
-                onTablet: '2.4rem',
-              }}
-              fontSize={{
-                onMobile: '1rem',
-                onTablet: '1.2rem',
-              }}
-              backgroundColor='#a3c4a2'
-            >
-              {assignee.nickname[0]}
-            </FirstLetterProfile>
+            {assignee ? (
+              <FirstLetterProfile
+                profileSize={{
+                  onMobile: '2.2rem',
+                  onTablet: '2.4rem',
+                }}
+                fontSize={{
+                  onMobile: '1rem',
+                  onTablet: '1.2rem',
+                }}
+                backgroundColor='#a3c4a2'
+              >
+                {assignee.nickname[0]}
+              </FirstLetterProfile>
+            ) : null}
           </S.DateAndProfileBox>
         </S.TagsAndDateBox>
       </S.TextContentsArea>
