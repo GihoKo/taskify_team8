@@ -1,17 +1,5 @@
+import { Comment } from '@apis/comments/getComments';
 import { axiosToken } from '@apis/instance/axiosToken';
-
-export interface Comment {
-  id: number;
-  content: string;
-  createdAt: string | Date;
-  updatedAt: string | Date;
-  cardId: number;
-  author: {
-    id: number;
-    nickname: string;
-    profileImageUrl: string | null;
-  };
-}
 
 export interface postCommentListResponse {
   comments: Comment[];

@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import styled, { css } from 'styled-components';
 
+import { Comment } from '@apis/comments/getComments';
 import { putComment, putCommentParams } from '@apis/comments/putComment';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
@@ -39,17 +40,16 @@ export default function ReplyModifyForm({ commentId, initialContent, onClickCanc
       alert('댓글 작성에 실패했습니다.');
     }
 
-    setCommentList(
-      (prev) =>
-        prev.map((comment) => {
-          if (comment.id === commentId) {
-            return { ...comment, content: newContent };
-          }
+    setCommentList((prev) =>
+      prev.map((comment) => {
+        if (comment.id === commentId) {
+          return { ...comment, content: newContent };
+        }
 
-          return comment;
-        }),
-      onClickCancel(false),
+        return comment;
+      }),
     );
+    onClickCancel(false);
   };
 
   const handleClickCancel = () => {
@@ -157,13 +157,13 @@ const S = {
   `,
 
   SubmitButton: styled.button`
-    ${buttonStyle}
+    ${buttonStyle};
     right: 1.2rem;
     color: ${({ theme }) => theme.color.violet_5534DA};
   `,
 
   CancelButton: styled.button`
-    ${buttonStyle}
+    ${buttonStyle};
     right: 6rem;
     color: ${({ theme }) => theme.color.gray_9FA6B2};
   `,

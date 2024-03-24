@@ -107,8 +107,10 @@ export default function CreateCardsModal({
       dueDate: formattedDate,
       tags: tagList as string[],
     };
+
     if (image.length > 0) {
       console.log('image', image);
+
       return {
         ...payloadDto,
         imageUrl: image,
@@ -138,6 +140,7 @@ export default function CreateCardsModal({
     if (!columnId) {
       return;
     }
+
     await queryClient.invalidateQueries(cardsQueryOptions.masterKey());
     submitModal();
   };
