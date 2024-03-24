@@ -1,10 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styled, { css } from 'styled-components';
 
+import { deleteCardItem } from '@apis/cards/deleteCardItem';
+import { Card } from '@apis/cards/getCardItem';
+import { Comment } from '@apis/comments/getComments';
 import CloseIcon from '@public/images/icons/close-icon.svg?component';
 import Divider from '@public/images/icons/horizontal-divder.svg?component';
 import KebabIcon from '@public/images/icons/kebab-icon.svg?component';
@@ -12,78 +16,81 @@ import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColumnNameBadge from '@components/atoms/ColumnNameBadge';
 import AssigneeInformation from '@components/molecules/AssigneeInformation';
+import ListGroup from '@components/molecules/ListGroup';
 import TagBadgeContainer from '@components/molecules/TagBadgeContainer';
-import ReplyArea from '@components/organisms/ReplyArea';
+import CommentArea from '@components/organisms/CommentArea';
 
-const mockData = [
-  {
-    id: '1',
-    name: '서인덕',
-    createdDate: '2021.12.30 19:00',
-    content: '댓글입니다.',
-    onClickModify: () => {},
-    onClickDelete: () => {},
-  },
-  {
-    id: '2',
-    name: '서인덕',
-    createdDate: '2021.12.30 19:00',
-    content: '댓글입니다.',
-    onClickModify: () => {},
-    onClickDelete: () => {},
-  },
-  {
-    id: '3',
-    name: '서인덕',
-    createdDate: '2021.12.30 19:00',
-    content: '댓글입니다.',
-    onClickModify: () => {},
-    onClickDelete: () => {},
-  },
-  {
-    id: '4',
-    name: '서인덕',
-    createdDate: '2021.12.30 19:00',
-    content: '댓글입니다.',
-    onClickModify: () => {},
-    onClickDelete: () => {},
-  },
-];
+interface ToDoModalProps {
+  id: number;
+  card: Card;
+  comments?: Comment[];
+  columnId: number;
+  dashboardId: number;
+}
 
-export default function ToDoModal(): JSX.Element {
+export default function ToDoCardModal({ id, card, comments, columnId, dashboardId }: ToDoModalProps): JSX.Element {
+  const [isListGroupOpen, setIsListGroupOpen] = useState(false);
+  const [listGroupPosition, setListGroupPosition] = useState({ x: 0, y: 0 });
+  const router = useRouter();
+
+  const handleListGroupClose = () => {
+    setIsListGroupOpen(false);
+  };
+
+  const handleClickKebabButton = (event: React.MouseEvent<SVGSVGElement>) => {
+    setIsListGroupOpen(true);
+    setListGroupPosition({ x: event.clientX, y: event.clientY });
+  };
+
+  const onDeleteCard = async () => {
+    try {
+      await deleteCardItem(id);
+      router.push(`/dashboard/${dashboardId}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const kebabList = [
+    {
+      children: '수정하기',
+      onClick: () => {
+        console.log('');
+      },
+    },
+    { children: '삭제하기', onClick: onDeleteCard },
+  ];
+
   return (
     <S.ModalTestDimmed>
       <S.ModalPage>
         <S.ButtonBox>
-          <S.KebabIcon />
+          <S.KebabIcon onClick={handleClickKebabButton} />
           <S.CloseIcon />
+          {isListGroupOpen && (
+            <ListGroup itemList={kebabList} onClose={handleListGroupClose} position={listGroupPosition} />
+          )}
         </S.ButtonBox>
 
-        <S.Heading>새로운 일정관리</S.Heading>
+        <S.Heading>{card.title}</S.Heading>
         <S.PageAlignWrapper>
-          <AssigneeInformation assigneeName='테스트' dueDate='2021.12.30 19:00' />
+          <AssigneeInformation assigneeName={card.assignee.nickname} dueDate={card.dueDate} />
           <S.Section>
             <S.BadgeBox>
               <ColumnNameBadge>To Do</ColumnNameBadge>
               <Divider />
-              <TagBadgeContainer
-                list={[
-                  { color: 'green', children: '태그1' },
-                  { color: 'blue', children: '태그2' },
-                  { color: 'orange', children: '태그3' },
-                  { color: 'red', children: '태그3' },
-                ]}
-              />
+              <TagBadgeContainer list={card.tags} />
             </S.BadgeBox>
-            <S.Content>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh arcu, quis consequat ante
-              cursus eget. Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros, vel aliquet diam elit at
-              leo.
-            </S.Content>
-            <S.ImageWrapper>
-              <Image src='/images/mock.png' alt='image' fill />
-            </S.ImageWrapper>
-            <ReplyArea replies={mockData} />
+            <S.Content>{card.description}</S.Content>
+            {card.imageUrl ? (
+              <S.ImageWrapper>
+                {' '}
+                <Image src={card.imageUrl} alt='image' fill />{' '}
+              </S.ImageWrapper>
+            ) : null}
+            {comments ? (
+              <CommentArea cardId={id} comments={comments} dashboardId={dashboardId} columnId={columnId} />
+            ) : null}
           </S.Section>
         </S.PageAlignWrapper>
       </S.ModalPage>
@@ -94,6 +101,7 @@ export default function ToDoModal(): JSX.Element {
 const iconCss = css`
   height: 1.2rem;
   width: 1.2rem;
+  cursor: pointer;
 
   @media ${mediaBreakpoint.tablet} {
     height: 2.8rem;
@@ -113,6 +121,12 @@ const S = {
 
   ModalPage: styled.div`
     width: 32.7rem;
+    height: fit-content;
+    white-space: nowrap;
+    overflow-x: clip;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+
     padding: 4rem 2rem;
     border-radius: 0.8rem;
     background-color: ${({ theme }) => theme.color.white_FFFFFF}; //컬러 적용하는 방법 확인

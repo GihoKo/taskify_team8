@@ -1,26 +1,61 @@
+import React, { FormEvent, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
 import styled from 'styled-components';
 
+import { postCommentList, postCommentListParams } from '@apis/comments/postComments';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 interface Props {
-  onClick?: () => void;
+  dashboardId: number;
+  columnId: number;
+  cardId: number;
+  onCreate: React.Dispatch<React.SetStateAction<Comment[]>>;
+}
+
+interface InputParams {
+  content: string;
 }
 
 // TODO: 입력버튼이 textarea를 가리는 문제.
-export default function ReplyInputForm({ onClick }: Props) {
+export default function ReplyInputForm({ dashboardId, columnId, cardId, onCreate }: Props) {
+  const { reset, register, handleSubmit } = useForm<InputParams>();
+
+  const onSubmit: SubmitHandler<InputParams> = async (input) => {
+    console.log(input.content);
+    const newComment: postCommentListParams = {
+      content: input.content,
+      dashboardId,
+      columnId,
+      cardId,
+    };
+
+    const response = await postCommentList(newComment);
+
+    if (!response) {
+      alert('댓글 작성에 실패했습니다.');
+
+      return;
+    }
+
+    onCreate((previous) => {
+      return [response, ...previous];
+    });
+
+    reset();
+  };
+
   return (
-    <S.Box>
+    <S.Form onSubmit={handleSubmit(onSubmit)}>
       <S.HeaderText>댓글</S.HeaderText>
-      <S.Input placeholder='댓글 작성하기' />
-      <S.Button type='submit' onClick={onClick}>
-        입력
-      </S.Button>
-    </S.Box>
+      <S.Input placeholder='댓글 작성하기' {...register('content', { required: true })} />
+      <S.Button type='submit'>입력</S.Button>
+    </S.Form>
   );
 }
 
 const S = {
-  Box: styled.div`
+  Form: styled.form`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -105,5 +140,6 @@ const S = {
     line-height: normal;
 
     white-space: nowrap;
+    cursor: pointer;
   `,
 };
