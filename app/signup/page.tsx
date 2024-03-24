@@ -179,12 +179,14 @@ function SignUp() {
 
   return (
     <>
-      {showSuccessModal && (
-        <ModalCheckIt text='가입이 완료되었습니다!' submitButtonText='확인' errorMessage={handleModalToggle} />
-      )}
-      {isModalOpen && (
-        <ModalCheckIt text='이미 사용 중인 이메일입니다.' submitButtonText='확인' errorMessage={handleModalToggle} />
-      )}
+      <S.signinCheckModal>
+        {showSuccessModal && (
+          <ModalCheckIt text='가입이 완료되었습니다!' submitButtonText='확인' errorMessage={handleModalToggle} />
+        )}
+        {isModalOpen && (
+          <ModalCheckIt text='이미 사용 중인 이메일입니다.' submitButtonText='확인' errorMessage={handleModalToggle} />
+        )}
+      </S.signinCheckModal>
       <S.Container>
         <S.Logo>
           <Link href={'/'}>
@@ -353,5 +355,8 @@ const S = {
     color: ${({ theme }) => theme.color.black_333236};
     font-size: 1.6rem;
     font-weight: 400;
+  `,
+  signinCheckModal: styled.div`
+    color: ${({ theme }) => theme.color.white_FFFFFF};
   `,
 };

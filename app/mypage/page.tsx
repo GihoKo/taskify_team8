@@ -231,7 +231,11 @@ function MyPage() {
 
   return (
     <S.Wrap>
-      {showPasswordError && <ModalCheckIt text={modalText} submitButtonText='확인' errorMessage={showPasswordToggle} />}
+      <S.passwordErrorText>
+        {showPasswordError && (
+          <ModalCheckIt text={modalText} submitButtonText='확인' errorMessage={showPasswordToggle} />
+        )}
+      </S.passwordErrorText>
       <SideBar />
       <S.Mypage>
         <DashboardNav />
@@ -475,5 +479,8 @@ const S = {
     display: flex;
     flex-flow: wrap;
     gap: 1.6rem;
+  `,
+  passwordErrorText: styled.div`
+    color: ${({ theme }) => theme.color.white_FFFFFF};
   `,
 };
