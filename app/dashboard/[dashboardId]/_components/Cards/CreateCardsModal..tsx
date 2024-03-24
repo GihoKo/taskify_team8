@@ -98,7 +98,6 @@ export default function CreateCardsModal({
     const formattedDate = dateTimeFormatter(date);
     const numDashboardId = Number(dashboardId);
     const numColumnId = Number(columnId);
-    const tagListType: string[] = tagList;
 
     return {
       assigneeUsersId: assignedMemberId,
@@ -107,7 +106,7 @@ export default function CreateCardsModal({
       title,
       description,
       dueDate: formattedDate,
-      tags: tagListType,
+      tags: tagList as string[],
       imageUrl: image,
     };
   };
@@ -120,6 +119,9 @@ export default function CreateCardsModal({
       alert('카드 생성에 실패했습니다.');
     }
 
+    if (!columnId) {
+      return;
+    }
     queryClient.invalidateQueries(cardsQueryOptions.cardList({ columnId }));
     submitModal();
   };
@@ -175,7 +177,7 @@ export default function CreateCardsModal({
           />
           <ImageFileInput
             id='image'
-            columnId={columnId}
+            columnId={columnId as number}
             register={register}
             errors={errors}
             setError={setError}
