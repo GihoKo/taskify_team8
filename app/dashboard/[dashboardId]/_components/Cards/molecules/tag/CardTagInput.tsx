@@ -67,7 +67,7 @@ export default function CardTagInput({
     if (pressedKey === 'Enter') {
       event.preventDefault();
 
-      const inputValue: string = event.target.value;
+      const inputValue: string = (event.target as HTMLInputElement).value;
 
       if (!inputValue) return;
 
@@ -76,7 +76,7 @@ export default function CardTagInput({
         color: 'orange',
       };
 
-      setTags((prev) => [...prev, newTag]);
+      setTags((prev: BadgeProps[]) => [...prev, newTag]);
 
       reset({ [id]: '' });
     }
@@ -87,7 +87,7 @@ export default function CardTagInput({
   // input이 있으면 input이 지워짐
   const onPressBackspace = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const pressedKey = event.key;
-    const input = event.target.value;
+    const input = (event.target as HTMLInputElement).value;
 
     if (input.length) {
       return;
@@ -96,11 +96,16 @@ export default function CardTagInput({
     if (pressedKey === 'Backspace' && tags.length > 0) {
       event.preventDefault();
       const lastIndex = tags.length;
-      setTags((prev) => [...prev.slice(0, lastIndex - 1)]);
+      setTags((prev: string[]) => [...prev.slice(0, lastIndex - 1)]);
     }
   };
 
-  const onKeyDown = (event: Event<HTMLInputElement>) => {
+  // const onKeyDown = (event: Event<HTMLInputElement>) => {
+  //   onPressEnter(event);
+  //   onPressBackspace(event);
+  // };
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onPressEnter(event);
     onPressBackspace(event);
   };
