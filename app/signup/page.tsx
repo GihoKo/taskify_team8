@@ -59,7 +59,7 @@ function SignUp() {
 
         if (response.status === 201) {
           setShowSuccessModal(true);
-          router.push('/login');
+          router.push('/signin');
         }
       }
     } catch (error) {
@@ -179,16 +179,18 @@ function SignUp() {
 
   return (
     <>
-      {showSuccessModal && (
-        <ModalCheckIt text='가입이 완료되었습니다!' submitButtonText='확인' errorMessage={handleModalToggle} />
-      )}
-      {isModalOpen && (
-        <ModalCheckIt text='이미 사용 중인 이메일입니다.' submitButtonText='확인' errorMessage={handleModalToggle} />
-      )}
+      <S.signinCheckModal>
+        {showSuccessModal && (
+          <ModalCheckIt text='가입이 완료되었습니다!' submitButtonText='확인' errorMessage={handleModalToggle} />
+        )}
+        {isModalOpen && (
+          <ModalCheckIt text='이미 사용 중인 이메일입니다.' submitButtonText='확인' errorMessage={handleModalToggle} />
+        )}
+      </S.signinCheckModal>
       <S.Container>
         <S.Logo>
           <Link href={'/'}>
-            <Image src='/images/icons/logoLogin.svg' alt='로고' fill />
+            <Image src='/images/icons/logoLogin-filledViolet_5544DA-200w-279h.svg' alt='로고' fill />
           </Link>
         </S.Logo>
         <S.Text>첫 방문을 환영합니다!</S.Text>
@@ -218,7 +220,7 @@ function SignUp() {
             hookform={register('password')}
             title='비밀번호'
             placeholder='8자 이상 입력해 주세요'
-            data='pwd'
+            data='password'
             errorMessage={passwordError}
             name='password'
             handleFocus={handleFocus('password')}
@@ -228,7 +230,7 @@ function SignUp() {
             hookform={register('passwordCheck')}
             title='비밀번호확인'
             placeholder='비밀번호를 한번 더 입력해 주세요'
-            data='pwd'
+            data='password'
             errorMessage={passwordCheckError}
             name='passwordCheck'
             handleFocus={handleFocus('passwordCheck')}
@@ -331,7 +333,7 @@ const S = {
     text-align: center;
     font-size: 1.8rem;
     font-weight: 500;
-
+    cursor: pointer;
     @media ${mediaBreakpoint.tablet} {
       width: 52rem;
     }
@@ -353,5 +355,8 @@ const S = {
     color: ${({ theme }) => theme.color.black_333236};
     font-size: 1.6rem;
     font-weight: 400;
+  `,
+  signinCheckModal: styled.div`
+    color: ${({ theme }) => theme.color.white_FFFFFF};
   `,
 };
