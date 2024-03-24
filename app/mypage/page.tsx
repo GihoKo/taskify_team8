@@ -38,7 +38,7 @@ function MyPage() {
   const [PasswordWrong, setPasswordWrong] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>('');
   const [profileButton, setProfileButton] = useState<boolean>(false);
-  const [PasswordButton, setPasswordButton] = useState<boolean>(false);
+  const [passwordButton, setPasswordButton] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showPasswordError, setShowPasswordError, showPasswordToggle] = useToggle(false);
 
@@ -70,7 +70,7 @@ function MyPage() {
       setPasswordWrong(true);
     } else {
       setPasswordWrong(false);
-      PasswordChange(PasswordValue);
+      passwordChange(PasswordValue);
     }
   };
 
@@ -202,11 +202,15 @@ function MyPage() {
   // -- 이미지 / 닉네임 변경 끝
 
   // 비밀번호 변경 시작
-  const PasswordChange = async (data: { password: string; newPassword: string }) => {
+  const passwordChange = async (data: { password: string; newPassword: string }) => {
     if (!PasswordWrong && data.password !== '' && data.newPassword !== '') {
       try {
-        setModalText('비밀번호가 변경 되었습니다');
-        showPasswordToggle();
+        const res = await axios.put('/auth/password', data);
+
+        if (res.status === 201) {
+          setModalText('비밀번호가 변경 되었습니다');
+          showPasswordToggle();
+        }
 
         router.push('/mypage');
       } catch (err) {
@@ -326,7 +330,7 @@ function MyPage() {
                 />
               </S.Inputs>
             </S.InputBox>
-            <S.Submit type='submit' value='변경' null={PasswordButton} disabled={!!PasswordButton} />
+            <S.Submit type='submit' value='변경' null={passwordButton} disabled={!!passwordButton} />
           </S.Box>
         </S.MyPage>
       </S.MypageWrapper>
