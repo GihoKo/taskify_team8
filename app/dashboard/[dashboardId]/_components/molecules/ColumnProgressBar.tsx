@@ -23,7 +23,7 @@ const ColumnProgressBar = ({ columnId, columnTitle }: ColumnProgressBarProps) =>
     return null;
   }
 
-  //  console.log(cardListData);
+  // console.log(cardListData);
 
   return (
     <S.Box>
