@@ -35,7 +35,7 @@ export const WithoutBorderProfile: Story = {
       onTablet: '1.2rem',
     },
     backgroundColor: '#a3c4a2',
-    as: 'button',
+    as: 'div',
     children: '조형민',
   },
 };
@@ -52,7 +52,7 @@ export const WithBorderProfile: Story = {
       onPc: '1.6rem',
     },
     backgroundColor: '#a3c4a2',
-    as: 'button',
+    as: 'div',
     children: '조형민',
     borderWidth: {
       onMobile: '2px',
@@ -79,7 +79,7 @@ export const OverlappingProfiles: Story = {
                 onPc: '1.6rem',
               },
               backgroundColor: '#a3c4a2',
-              as: 'button',
+              as: 'div',
               children: '조형민',
               borderWidth: {
                 onMobile: '2px',
@@ -100,7 +100,7 @@ export const OverlappingProfiles: Story = {
       onPc: '1.6rem',
     },
     backgroundColor: '#a3c4a2',
-    as: 'button',
+    as: 'div',
     children: '조형민',
     borderWidth: {
       onMobile: '2px',

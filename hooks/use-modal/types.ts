@@ -1,6 +1,11 @@
 import { ComponentProps, ComponentType, MutableRefObject, PropsWithChildren } from 'react';
 
-export type Obj = Record<string, any>;
+import { BaseObject } from '@interface/util';
+
+// export type Obj = Record<string, any>;
+export type Obj = {
+  [key: string]: any;
+};
 
 type Key = keyof Obj;
 
@@ -55,9 +60,12 @@ export interface OpenedModalState {
  * };
  * ```
  */
-export type ModalComponent<CustomComponentProps = Obj> = ComponentType<
-  Partial<CustomComponentProps> & RequiredModalProps
->;
+export type ModalComponent<CustomComponentProps = any> = CustomComponentProps extends BaseObject
+  ? ComponentType<
+      // Partial<CustomComponentProps> & RequiredModalProps
+      CustomComponentProps & RequiredModalProps
+    >
+  : ComponentType<RequiredModalProps>;
 
 /**
  * modalcomponent props
@@ -77,7 +85,7 @@ export type ModalComponent<CustomComponentProps = Obj> = ComponentType<
  * };
  * ```
  */
-export type ModalComponentProps<CustomComponentProps = Obj> = ComponentProps<ModalComponent<CustomComponentProps>>;
+export type ModalComponentProps<CustomComponentProps = unknown> = ComponentProps<ModalComponent<CustomComponentProps>>;
 
 type InternalModalComponentProps<T extends ModalComponent> = ComponentProps<T> & ModalHandler;
 
@@ -105,11 +113,14 @@ export type ModalComponentHasSubmitModal<T extends ModalComponent> =
 export type ModalComponentHasAllRequiredProps<T extends ModalComponent> =
   ComponentProps<T> extends RequiredModalProps ? T : never;
 
+// export type Without<T extends ModalComponentOrObj, K extends Key> = T extends ModalComponent
+//   ? Omit<InternalModalComponentProps<T>, K>
+//   : T extends Obj
+//     ? Omit<T, K>
+//     : never;
 export type Without<T extends ModalComponentOrObj, K extends Key> = T extends ModalComponent
   ? Omit<InternalModalComponentProps<T>, K>
-  : T extends Obj
-    ? Omit<T, K>
-    : never;
+  : Omit<T, K>;
 
 // TODO: Union type would be more simple than multiple Without types
 export type ModalComponentPropsWithoutModalRef<T extends ModalComponentOrObj> = Without<T, 'modalRef'>;

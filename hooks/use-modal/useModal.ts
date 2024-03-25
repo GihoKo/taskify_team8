@@ -23,6 +23,9 @@ export const useModal = () => {
 
   const openModal = <MC extends ModalComponent>(
     Component: ModalComponentHasAllRequiredProps<MC>,
+    /**
+     * @param props - 옵셔널하지 않게 바뀔 예정입니다. prop을 전달하지 않을 거면, null을 넣어주세요.
+     */
     props?: ExposedModalPropsWithoutModalRef<MC> | null,
     options?: OpenModalOptions,
   ) => {

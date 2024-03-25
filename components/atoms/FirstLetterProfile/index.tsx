@@ -57,7 +57,7 @@ type FirstLetterProfileProps = {
   profileImageUrl?: string | null;
 
   /**
-   * div로 렌더링할지 button으로 렌더링할지
+   * div로 렌더링할지 a으로 렌더링할지
    * @default 'div'
    */
   as?: 'div' | 'a';
