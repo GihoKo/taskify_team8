@@ -8,6 +8,7 @@ import { useParams, useRouter } from 'next/navigation';
 import styled from 'styled-components';
 
 import { Member } from '@apis/members/getDashboardMemberList';
+import { dashboardKeys } from '@queries/keys/dashboardKeys';
 import { membersKeys } from '@queries/keys/membersKeys';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
@@ -50,6 +51,7 @@ const MemberListTable = ({ memberList }: MemberListTableProps) => {
       },
       onSuccess: async () => {
         await queryClient.invalidateQueries({ queryKey: membersKeys.memberList(Number(dashboardId)) });
+        await queryClient.invalidateQueries({ queryKey: dashboardKeys.dashboardDetail(Number(dashboardId)) });
 
         if (isOwner) {
           router.replace('/mydashboard');

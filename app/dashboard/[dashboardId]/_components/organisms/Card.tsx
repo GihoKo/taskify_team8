@@ -71,6 +71,8 @@ export default Card;
 
 const S = {
   Box: styled.section`
+    cursor: pointer;
+
     display: flex;
     flex-direction: column;
     justify-content: center;

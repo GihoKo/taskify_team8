@@ -9,7 +9,7 @@ export const dashboardKeys = {
   currentPage: (currentPage: number) => [...dashboardKeys.dashboardList(), currentPage] as const,
   dashboardDetail: (dashboardId: number) => [...dashboardKeys.masterKey(), dashboardId] as const,
   dashboardInvitationList: (dashboardId: number) =>
-    [...dashboardKeys.masterKey(), dashboardId, 'invitationList'] as const,
+    [...dashboardKeys.dashboardDetail(dashboardId), 'invitationList'] as const,
 };
 
 type DashboardKeys = typeof dashboardKeys;
