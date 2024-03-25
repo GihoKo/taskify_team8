@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { ColumnList } from '@apis/columns/getColumnList';
 import { updateColumn } from '@apis/columns/updateColumn';
-import { columnsQueryOptions } from '@queries/keys/columnskeys';
+import { columnsKeys } from '@queries/keys/columnskeys';
 
 interface ColumnTitleProps {
   title: string;
@@ -37,7 +37,7 @@ export default function useUpdateColumn(
           const numberTypeColumndId = Number(columnId);
           const result = await updateColumn(data.title, numberTypeColumndId);
           console.log(result);
-          await queryClient.invalidateQueries(columnsQueryOptions.columnList(dashboardId));
+          await queryClient.invalidateQueries({ queryKey: columnsKeys.columnList(dashboardId) });
           submitModal();
         } catch (error) {
           console.log(error);

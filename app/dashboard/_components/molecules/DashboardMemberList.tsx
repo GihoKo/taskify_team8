@@ -40,7 +40,7 @@ const DashboardMemberList = () => {
           // dashboardId가 없는 경우 === 대시보드 멤버가 아님
           // TODO: 스낵바로 알림을 띄우거나 하는 게 좋을 듯.
           console.error('대시보드의 멤버가 아닙니다.');
-          router.replace('/dashboard'); // 쿠키가 없는 경우는 middleware에서 다 접근 불가능하게 이미 제어중임.
+          router.push('/mydashboard'); // 쿠키가 없는 경우는 middleware에서 다 접근 불가능하게 이미 제어중임.
         }
       }
     }
@@ -74,6 +74,7 @@ const DashboardMemberList = () => {
                 onMobile: '2px',
               }}
               isOverlapping={!!idx}
+              profileImageUrl={member.profileImageUrl}
             >
               {member.nickname[0]}
             </FirstLetterProfile>
