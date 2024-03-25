@@ -31,6 +31,7 @@ interface PasswordChange {
   newPasswordCheck: number;
 }
 
+// @ToDo 여러 긴급 처방이 있어서 꼭 리팩토링 부탁드립니다!
 function MyPage() {
   const { user, setUser } = useUserStore();
   const [currentUser, setCurrentUser] = useState<UserInfo | null>(null);
@@ -106,6 +107,13 @@ function MyPage() {
 
   // -- 이미지 / 닉네임 변경 시작
   const fetchProfileImage = useCallback(async () => {
+    // 긴급 처방
+    // 이미지가 기본 이미지가 아닐 때 서버에서 이미지를 가져오지 않는다.
+    // 따라서 이미지가 기본 이미지일 때 서버에서 이미지를 가져온다
+    if (previewUrl !== '/images/icons/profile-add-filledViolet_5544DA-w182-h183.svg') {
+      return;
+    }
+
     try {
       const response = await axiosToken.get('users/me');
 
@@ -165,11 +173,12 @@ function MyPage() {
     }
   };
 
+  // 긴급 처방
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
 
-      if (file && file.type.startsWith('image/')) {
+      if (file) {
         const imageUrl = await uploadImage(file);
 
         if (imageUrl) {
@@ -186,12 +195,14 @@ function MyPage() {
     }
   };
 
-  const handleDeleteImage = () => {
+  const handleDeleteImage = async () => {
     setProfileValue((prev) => ({
       ...prev,
       profileImageUrl: null,
     }));
     setPreviewUrl('/images/icons/profile-add-filledViolet_5544DA-w182-h183.svg');
+    // 긴급 처방
+    await handleChangeProfile({ nickname: user.nickname, profileImageUrl: null });
   };
 
   useEffect(() => {
