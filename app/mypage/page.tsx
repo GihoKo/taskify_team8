@@ -31,6 +31,7 @@ interface PasswordChange {
   newPasswordCheck: number;
 }
 
+// @ToDo 여러 긴급 처방이 있어서 꼭 리팩토링 부탁드립니다!
 function MyPage() {
   const { user, setUser } = useUserStore();
   const [currentUser, setCurrentUser] = useState<UserInfo | null>(null);
