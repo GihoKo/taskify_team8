@@ -4,13 +4,13 @@ import React, { FC } from 'react';
 
 import { usePathname } from 'next/navigation';
 
-import { returnBasedOnPathName } from './returnBaseOnPathName';
+import { returnBasedOnPathName } from './returnBasedOnPathName';
 
 export type CallableMappedComponent = (pathName: string) => React.ReactElement;
 
 export interface ComponentMappedToPath {
   path: string | string[] | RegExp;
-  component: ((pathName: string) => React.ReactElement) | React.ReactElement | null;
+  component: CallableMappedComponent | React.ReactElement | null;
 }
 
 export interface ComponentListMappedToPath {

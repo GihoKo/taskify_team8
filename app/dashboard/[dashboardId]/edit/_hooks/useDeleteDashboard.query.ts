@@ -15,7 +15,7 @@ export const useDeleteDashboard = () => {
     mutationFn: deleteDashboard,
     onSuccess: async (status) => {
       if (status === 204) {
-        await queryClient.invalidateQueries({ queryKey: dashboardKeys.masterKey() });
+        queryClient.invalidateQueries({ queryKey: dashboardKeys.masterKey() });
         router.push('/mydashboard');
       }
     },

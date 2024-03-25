@@ -35,7 +35,7 @@ const initialState: UserInfo = {
 export const userInfoSlice: StateCreator<
   UserInfoSlice,
   [ZustandMiddleware['devtools'], ZustandMiddleware['persist']]
-> = (set, get) => ({
+> = (set, _get) => ({
   user: { ...initialState },
   resetUser: () =>
     set({
@@ -43,14 +43,8 @@ export const userInfoSlice: StateCreator<
     }),
   setUser: (userInfo) => set({ user: userInfo }, false, UserInfoActionType.SET_USER_INFO),
   getUser: async () => {
-    let userInfo: UserInfo = get().user;
-
-    if (userInfo.id) {
-      return userInfo;
-    }
-
     try {
-      userInfo = await getUserInfo();
+      const userInfo = await getUserInfo();
       set({ user: userInfo });
 
       return userInfo;
@@ -60,6 +54,8 @@ export const userInfoSlice: StateCreator<
       }
 
       // 로컬 스토리지에서 불러오면 안 됨.
+      set({ user: { ...initialState } });
+
       return initialState;
     }
   },

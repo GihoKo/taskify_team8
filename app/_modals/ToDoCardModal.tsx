@@ -57,7 +57,7 @@ export default function ToDoCardModal({
   const onDeleteCard = async () => {
     try {
       await deleteCardItem(id);
-      await queryClient.invalidateQueries({ queryKey: cardsKeys.cardList(columnId) });
+      queryClient.invalidateQueries({ queryKey: cardsKeys.cardList(columnId) });
       closeModal();
     } catch (error) {
       console.error(error);

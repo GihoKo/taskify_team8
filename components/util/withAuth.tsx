@@ -15,7 +15,10 @@ const withAuth = (Component: FunctionComponent<PropsWithChildren>) => {
   const ProtectedComponent = (props: PropsWithChildren) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const { resetUser } = useUserStore((state) => ({ resetUser: state.resetUser }));
+    const { resetUser, getUser } = useUserStore(({ resetUser, getUser }) => ({
+      resetUser,
+      getUser,
+    }));
     const router = useRouter();
 
     const checkIsAuthenticated = useCallback(async () => {
@@ -29,8 +32,12 @@ const withAuth = (Component: FunctionComponent<PropsWithChildren>) => {
         return;
       }
 
-      setIsAuthenticated(true);
-    }, [router, resetUser]);
+      const user = await getUser();
+
+      if (user.id) {
+        setIsAuthenticated(true);
+      }
+    }, [router, resetUser, getUser]);
 
     useEffect(() => {
       checkIsAuthenticated();

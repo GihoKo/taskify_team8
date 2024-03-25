@@ -26,7 +26,7 @@ const InviteeListTable = ({ invitationList }: InviteeListTableProps) => {
       { dashboardId: Number(dashboardId), invitationId },
       {
         onSuccess: async () => {
-          await queryClient.invalidateQueries({ queryKey: dashboardKeys.dashboardInvitationList(Number(dashboardId)) });
+          queryClient.invalidateQueries({ queryKey: dashboardKeys.dashboardInvitationList(Number(dashboardId)) });
         },
         onError: (error) => {
           if (isAxiosError(error)) {

@@ -141,7 +141,7 @@ export default function CreateCardsModal({
       return;
     }
 
-    await queryClient.invalidateQueries(cardsQueryOptions.masterKey());
+    queryClient.invalidateQueries(cardsQueryOptions.masterKey());
     submitModal();
   };
 

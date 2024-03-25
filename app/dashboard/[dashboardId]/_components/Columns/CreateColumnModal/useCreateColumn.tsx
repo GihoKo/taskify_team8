@@ -4,6 +4,7 @@ import { FieldValues, SubmitHandler } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { createColumn } from '@apis/columns/createColumns';
+import { cardsKeys } from '@queries/keys/cardsKeys';
 import { columnsKeys } from '@queries/keys/columnskeys';
 
 interface ColumnTitleProps {
@@ -35,7 +36,8 @@ export default function useCreateColumn(
           const numberTypeDashboardId = Number(dashboardId);
           await createColumn(data.title, numberTypeDashboardId);
           // await queryClient.invalidateQueries(columnsQueryOptions.columnList(dashboardId));
-          await queryClient.invalidateQueries({ queryKey: columnsKeys.columnList(dashboardId) });
+          queryClient.invalidateQueries({ queryKey: columnsKeys.columnList(dashboardId) });
+          queryClient.invalidateQueries({ queryKey: cardsKeys.masterKey() });
           submitModal();
         } catch (error) {
           console.log(error);

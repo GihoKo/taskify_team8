@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import styled from 'styled-components';
 
@@ -72,26 +71,25 @@ const DashboardNav = () => {
           />
           {/* 내 프로필 정보 */}
           <S.MyInfoBox>
-            <Link href='/mypage'>
-              <FirstLetterProfile
-                as='button'
-                backgroundColor='#a3c4a2'
-                profileSize={{
-                  onMobile: '3.4rem',
-                  onPc: '3.8rem',
-                }}
-                fontSize={{
-                  onMobile: '1.4rem',
-                  onPc: '1.6rem',
-                }}
-                borderWidth={{
-                  onMobile: '2px',
-                }}
-                profileImageUrl={user.profileImageUrl}
-              >
-                {user.nickname[0]}
-              </FirstLetterProfile>
-            </Link>
+            <FirstLetterProfile
+              as='a'
+              href='/mypage'
+              backgroundColor='#a3c4a2'
+              profileSize={{
+                onMobile: '3.4rem',
+                onPc: '3.8rem',
+              }}
+              fontSize={{
+                onMobile: '1.4rem',
+                onPc: '1.6rem',
+              }}
+              borderWidth={{
+                onMobile: '2px',
+              }}
+              profileImageUrl={user.profileImageUrl}
+            >
+              {user.nickname[0]}
+            </FirstLetterProfile>
             <S.MyName>{user.nickname}</S.MyName>
           </S.MyInfoBox>
         </S.ProfileBox>
