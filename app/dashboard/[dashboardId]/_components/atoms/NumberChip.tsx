@@ -17,6 +17,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
 
     width: 2rem;
     height: 2rem;

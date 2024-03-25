@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import { deleteColumn } from '@apis/columns/deleteColumn';
-import { columnsQueryOptions } from '@queries/keys/columnskeys';
+import { columnsKeys } from '@queries/keys/columnskeys';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColumnButton from '../commons/ColumnButton';
@@ -35,7 +35,7 @@ export default function DeleteColumnModal({
     try {
       const numberTypeColumndId = Number(columnId);
       await deleteColumn(numberTypeColumndId);
-      await queryClient.invalidateQueries(columnsQueryOptions.columnList(dashboardId));
+      await queryClient.invalidateQueries({ queryKey: columnsKeys.columnList(dashboardId) });
       submitModal();
     } catch (error) {
       console.log(error);
