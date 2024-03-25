@@ -11,6 +11,7 @@ import { ColumnHeaderProps } from '../organisms/ColumnHeader';
 
 type ColumnProgressBarProps = ColumnHeaderProps;
 
+// @Notice: 빌드 에러 때문에 주석 좀 만졌습니다
 const ColumnProgressBar = ({ columnId, columnTitle }: ColumnProgressBarProps) => {
   // const queryClient = useQueryClient();
 
