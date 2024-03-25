@@ -26,7 +26,7 @@ export default function Main() {
           <S.WhiteText>새로운 일정 관리</S.WhiteText>
           <S.VioletText>Taskify</S.VioletText>
         </S.TitleWrapper>
-        <S.ServiceDescription>서비스의 메인 설명 들어갑니다.</S.ServiceDescription>
+        <S.ServiceDescription>작업 관리, 팀과의 협업, 일정 관리를 위한 올인원 솔루션</S.ServiceDescription>
         <S.LoginButton onClick={handleGotoSignInButtonClick}>로그인하기</S.LoginButton>
       </S.HeroBox>
 

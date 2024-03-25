@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
+import useModal from '@hooks/use-modal';
 import { useInView } from '@hooks/useInView';
 
 import { useGetCardListOnInfiniteScroll } from '../../_hooks/useGetCardListOnInfiniteScroll.query';
@@ -22,15 +23,17 @@ const CardColumnBody = ({ columnId, dashboardId }: CardColumnBodyProps) => {
     rootMargin: '0px 0px 500px 0px',
   });
 
-  const { data, fetchNextPage, hasNextPage } = useGetCardListOnInfiniteScroll({
+  const { data, fetchNextPage, hasNextPage, isSuccess, isFetched } = useGetCardListOnInfiniteScroll({
     columnId,
   });
+
+  const { openModal } = useModal();
 
   useEffect(() => {
     if (isIntersecting && hasNextPage) {
       fetchNextPage();
     }
-  }, [isIntersecting, hasNextPage, fetchNextPage]);
+  }, [isIntersecting, hasNextPage, fetchNextPage, isSuccess, isFetched]);
 
   return (
     <S.Container ref={rootRef}>
@@ -38,7 +41,7 @@ const CardColumnBody = ({ columnId, dashboardId }: CardColumnBodyProps) => {
       {data &&
         data.pages.length > 0 &&
         data.pages.map((card) => {
-          return <Card key={card.id} {...card} />;
+          return <Card key={card.id} {...card} openModal={openModal} columnId={columnId} />;
         })}
       <S.Threshold ref={intersectionObserveTargetRef} />
     </S.Container>

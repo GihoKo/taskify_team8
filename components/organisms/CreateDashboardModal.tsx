@@ -9,14 +9,13 @@ import ColumnButton from '@/app/dashboard/[dashboardId]/_components/Columns/comm
 import ColumnButtonsWrap from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnButtonWrap';
 import CreateModalTitle from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ColumnModalTitle';
 import ModalDimmed from '@/app/dashboard/[dashboardId]/_components/Columns/commons/ModalDimmed';
+import { DASHBOARD_COLORS } from '@/app/mydashboard/_constants';
 import { axiosToken } from '@apis/instance/axiosToken';
 import { mediaBreakpoint } from '@styles/mediaBreakpoint';
 
 import ColorSelectList from '@components/molecules/ColorSelectList';
 
 import { ModalComponentProps } from '@hooks/use-modal';
-
-import { DASHBOARD_COLORS } from '../../app/mydashboard/_constants';
 
 const CreateDashboardModal = ({ closeModal, modalRef }: ModalComponentProps) => {
   const queryClient = useQueryClient();

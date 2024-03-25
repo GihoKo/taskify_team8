@@ -5,18 +5,23 @@ import styled from 'styled-components';
 import TagBadge, { BadgeProps } from '@components/atoms/TagBadge';
 
 interface Props {
-  list: BadgeProps[];
+  list: BadgeProps[] | string[];
   position?: 'absolute' | 'relative';
   // ref?: React.RefObject<HTMLDivElement>;
 }
 
 export default function TagBadgeContainer({ list, position = 'relative' }: Props) {
+  console.log('list', list);
+
+  // if (list.length === 0) return <p>등록된 태그가 없습니다.</p>;
+
+  // const tagList = list.map((item) => item.color);
+
   return (
     <S.Container $position={position}>
-      {list.map((item, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <TagBadge key={index} color={item.color}>
-          {item.children}
+      {list.map((item, _index) => (
+        <TagBadge key={new Date().toString()} color='orange'>
+          {(item as BadgeProps).children! || item!}
         </TagBadge>
       ))}
     </S.Container>
