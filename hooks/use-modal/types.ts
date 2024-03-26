@@ -80,9 +80,7 @@ type ModalComponentSuperSet = ModalComponent<any>;
  * };
  * ```
  */
-export type ModalComponentProps<CustomComponentProps = unknown> = CustomComponentProps extends Obj
-  ? ComponentProps<ModalComponent<CustomComponentProps>>
-  : ComponentType<CustomComponentProps & RequiredModalProps>;
+export type ModalComponentProps<CustomComponentProps = unknown> = ComponentProps<ModalComponent<CustomComponentProps>>;
 
 type InternalModalComponentProps<T extends ModalComponentSuperSet> =
   T extends ModalComponent<infer R> ? R & ModalHandler : ModalHandler;

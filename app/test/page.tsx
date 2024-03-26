@@ -12,7 +12,7 @@ export default function TestModal() {
       (module) => module.default,
     );
 
-    openModal(CreateColumnModal);
+    openModal(CreateColumnModal, null);
   };
 
   return <S.Box onClick={handleCardClick}>hi</S.Box>;
