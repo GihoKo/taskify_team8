@@ -7,16 +7,16 @@ import {
   CloseModal,
   ModalComponent,
   ModalComponentHasAllRequiredProps,
-  OpenModalImpl,
+  OpenModalListImpl,
+  OpenModalListWithModalRef,
+  OpenModalListWithoutModalListRef,
   OpenModalOptions,
-  OpenModalWithModalRef,
-  OpenModalWithoutModalRef,
 } from './types';
 
 const useModalListImpl = () => {
   const { close, open } = useModalListDispatch();
 
-  const openModalImpl: OpenModalImpl = (ModalComponent, props) => {
+  const openModalListImpl: OpenModalListImpl = (ModalComponent, props) => {
     open({ ModalComponent, props });
   };
 
@@ -24,7 +24,7 @@ const useModalListImpl = () => {
     close({ ModalComponent });
   };
 
-  return { openModalImpl, closeModal };
+  return { openModalListImpl, closeModal };
 };
 
 /**
@@ -33,7 +33,7 @@ const useModalListImpl = () => {
 export const useModalListWithoutRef = () => {
   const { close, open } = useModalListDispatch();
 
-  const openModal: OpenModalWithoutModalRef = (ModalComponent, props) => {
+  const openModal: OpenModalListWithoutModalListRef = (ModalComponent, props) => {
     open({ ModalComponent, props });
   };
 
@@ -57,7 +57,7 @@ export const useModalListWithoutRef = () => {
  * ```
  */
 export const useModalList = () => {
-  const { openModalImpl, closeModal } = useModalListImpl();
+  const { openModalListImpl, closeModal } = useModalListImpl();
 
   const modalMapRef = useRef<
     Map<
@@ -66,8 +66,8 @@ export const useModalList = () => {
     >
   >(new Map());
 
-  const openModal: OpenModalWithModalRef = (ModalComponent, props, options) => {
-    openModalImpl(ModalComponent, props);
+  const openModal: OpenModalListWithModalRef = (ModalComponent, props, options) => {
+    openModalListImpl(ModalComponent, props);
 
     if (typeof props === 'object' && props !== null && props.modalRef) {
       // 이미 Map에 먼저 저장된 props.modalRef가 null일 때, 또 다른 props.modalRef가 null인 ModalComponent가 들어와서 기존 null에 매핑되어 있던 ModalComponent가 대체되어도 상관없음.
