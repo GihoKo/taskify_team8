@@ -7,9 +7,11 @@ import Spinner from '@components/atoms/Spinner';
 import { useObserveCardListQuery } from '../../_hooks/useObserveCardListQuery.query';
 import NumberChip from '../atoms/NumberChip';
 import ProgressChip from '../atoms/ProgressChip';
-import { ColumnHeaderProps } from '../organisms/ColumnHeader';
 
-type ColumnProgressBarProps = ColumnHeaderProps;
+type ColumnProgressBarProps = {
+  columnId: number;
+  columnTitle: string;
+};
 
 const ColumnProgressBar = ({ columnId, columnTitle }: ColumnProgressBarProps) => {
   const { data, status } = useObserveCardListQuery(columnId);
