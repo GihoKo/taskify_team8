@@ -90,7 +90,7 @@ export default function UpdateColumnModal({
 
   useEffect(() => {
     const subscription = watch((value) => {
-      setCurrentValue(value.title);
+      setCurrentValue(value.title || '');
     });
 
     return () => subscription.unsubscribe();

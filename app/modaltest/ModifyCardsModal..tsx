@@ -139,7 +139,7 @@ export default function ModifyCardsModal({
       return;
     }
 
-    await queryClient.invalidateQueries(cardsQueryOptions.masterKey());
+    queryClient.invalidateQueries(cardsQueryOptions.masterKey());
     submitModal();
   };
 

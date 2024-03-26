@@ -15,7 +15,7 @@ const InviteButton = (props: InviteButtonProps) => {
   const handleInvitationButtonClick = async () => {
     const InvitationModal = await import('@components/organisms/InvitationModal').then((module) => module.default);
 
-    openModal(InvitationModal);
+    openModal(InvitationModal, null);
   };
 
   return (

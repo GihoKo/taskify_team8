@@ -37,7 +37,7 @@ export default function useUpdateColumn(
           const numberTypeColumndId = Number(columnId);
           const result = await updateColumn(data.title, numberTypeColumndId);
           console.log(result);
-          await queryClient.invalidateQueries({ queryKey: columnsKeys.columnList(dashboardId) });
+          queryClient.invalidateQueries({ queryKey: columnsKeys.columnList(dashboardId) });
           submitModal();
         } catch (error) {
           console.log(error);

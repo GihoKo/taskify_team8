@@ -42,7 +42,7 @@ const useSideBar = () => {
       (module) => module.default,
     );
 
-    openModal(CreateDashboardModal);
+    openModal(CreateDashboardModal, null);
   };
 
   return {

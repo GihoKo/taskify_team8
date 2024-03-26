@@ -9,7 +9,7 @@ import useMdoal from '@hooks/use-modal';
 import ColumnProgressBar from '../molecules/ColumnProgressBar';
 
 export interface ColumnHeaderProps {
-  dashboardId?: number;
+  dashboardId: number;
   columnId: number;
   columnTitle: string;
 }

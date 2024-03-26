@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 
 import { Obj, TransformOptionalToNonNullableProps } from '@interface/util';
 
-import { returnBasedOnPathName } from './returnBaseOnPathName';
+import { returnBasedOnPathName } from './returnBasedOnPathName';
 import { ComponentListMappedToPath } from './withFunnel';
 
 interface NonNullableFunnelProps<T extends Obj>

@@ -40,7 +40,7 @@ export default function useDashboardList() {
       (module) => module.default,
     );
 
-    openModal(CreateDashboardModal);
+    openModal(CreateDashboardModal, null);
   };
 
   return {

@@ -1,10 +1,12 @@
 import { ComponentProps, ComponentType, MutableRefObject, PropsWithChildren } from 'react';
 
-export type Obj = Record<string, any>;
+export type Obj = {
+  [key: string]: any;
+};
 
 type Key = keyof Obj;
 
-type ModalComponentOrObj = ModalComponent | Obj;
+type ModalComponentOrObj = ModalComponentSuperSet | Obj;
 
 export type ValidModalProps = ModalHandler & Obj;
 
@@ -20,7 +22,7 @@ export interface OpenModalOptions {
   persist?: boolean;
 }
 
-type RequiredModalProps = Required<OptionalModalProps>;
+export type RequiredModalProps = Required<OptionalModalProps>;
 type HasCloseModal = SetPickedPropToRequired<OptionalModalProps, 'closeModal'>;
 type HasModalRef = SetPickedPropToRequired<OptionalModalProps, 'modalRef'>;
 type HasSubmitModal = SetPickedPropToRequired<OptionalModalProps, 'submitModal'>;
@@ -55,9 +57,10 @@ export interface OpenedModalState {
  * };
  * ```
  */
-export type ModalComponent<CustomComponentProps = Obj> = ComponentType<
-  Partial<CustomComponentProps> & RequiredModalProps
->;
+
+export type ModalComponent<CustomComponentProps = unknown> = ComponentType<CustomComponentProps & RequiredModalProps>;
+
+type ModalComponentSuperSet = ModalComponent<any>;
 
 /**
  * modalcomponent props
@@ -77,9 +80,10 @@ export type ModalComponent<CustomComponentProps = Obj> = ComponentType<
  * };
  * ```
  */
-export type ModalComponentProps<CustomComponentProps = Obj> = ComponentProps<ModalComponent<CustomComponentProps>>;
+export type ModalComponentProps<CustomComponentProps = unknown> = ComponentProps<ModalComponent<CustomComponentProps>>;
 
-type InternalModalComponentProps<T extends ModalComponent> = ComponentProps<T> & ModalHandler;
+type InternalModalComponentProps<T extends ModalComponentSuperSet> =
+  T extends ModalComponent<infer R> ? R & ModalHandler : ModalHandler;
 
 /**
  * * 함수의 인자 검증 부분에서 사용
@@ -105,7 +109,7 @@ export type ModalComponentHasSubmitModal<T extends ModalComponent> =
 export type ModalComponentHasAllRequiredProps<T extends ModalComponent> =
   ComponentProps<T> extends RequiredModalProps ? T : never;
 
-export type Without<T extends ModalComponentOrObj, K extends Key> = T extends ModalComponent
+export type Without<T extends ModalComponentOrObj, K extends Key> = T extends ModalComponentSuperSet
   ? Omit<InternalModalComponentProps<T>, K>
   : T extends Obj
     ? Omit<T, K>
@@ -118,12 +122,12 @@ export type ModalComponentPropsWithoutCloseModal<T extends ModalComponentOrObj> 
 
 export type ModalComponentPropsWithoutSubmitModal<T extends ModalComponentOrObj> = Without<T, 'submitModal'>;
 
-export type ExposedModalProps<T extends ModalComponent> = ModalComponentPropsWithoutSubmitModal<
+export type ExposedModalProps<T extends ModalComponentSuperSet> = ModalComponentPropsWithoutSubmitModal<
   ModalComponentPropsWithoutCloseModal<T>
 > &
   ModalHandler;
 
-export type ExposedModalPropsWithoutModalRef<T extends ModalComponent> = ModalComponentPropsWithoutModalRef<
+export type ExposedModalPropsWithoutModalRef<T extends ModalComponentSuperSet> = ModalComponentPropsWithoutModalRef<
   ExposedModalProps<T>
 > &
   Omit<ModalHandler, 'modalRef'>;
@@ -152,17 +156,17 @@ export type TModalListStateContext = Array<{
   props?: ValidModalProps;
 }>;
 
-export type OpenModalImpl = <VMC extends ModalComponent>(
+export type OpenModalListImpl = <VMC extends ModalComponentSuperSet>(
   ModalComponent: VMC,
   props?: ExposedModalProps<VMC> | null,
 ) => void;
 
-export type OpenModalWithoutModalRef = <VMC extends ModalComponent>(
+export type OpenModalListWithoutModalListRef = <VMC extends ModalComponentSuperSet>(
   ModalComponent: ModalComponentHasAllRequiredProps<VMC>,
   props?: ExposedModalPropsWithoutModalRef<VMC> | null,
 ) => void;
 
-export type OpenModalWithModalRef = <VMC extends ModalComponent>(
+export type OpenModalListWithModalRef = <VMC extends ModalComponentSuperSet>(
   ModalComponent: ModalComponentHasAllRequiredProps<VMC>,
   props?: ExposedModalProps<VMC> | null,
   options?: OpenModalOptions,
@@ -190,7 +194,18 @@ export type TModalDispatchContext = {
     props?: ExposedModalPropsWithoutModalRef<VMC> | null;
     options?: OpenModalOptions;
   }) => void;
-  close: () => void;
+  close: VoidFunction;
+};
+
+export type OpenModal = <MC extends ModalComponentSuperSet, VMC extends ModalComponentHasAllRequiredProps<MC>>(
+  Component: VMC,
+  props: ExposedModalPropsWithoutModalRef<VMC> | null,
+  options?: OpenModalOptions,
+) => void;
+
+export type UseModal = () => {
+  openModal: OpenModal;
+  closeModal: VoidFunction;
 };
 
 export type ModalProviderProps = PropsWithChildren;

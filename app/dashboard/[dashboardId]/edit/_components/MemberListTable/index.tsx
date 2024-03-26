@@ -50,8 +50,8 @@ const MemberListTable = ({ memberList }: MemberListTableProps) => {
         }
       },
       onSuccess: async () => {
-        await queryClient.invalidateQueries({ queryKey: membersKeys.memberList(Number(dashboardId)) });
-        await queryClient.invalidateQueries({ queryKey: dashboardKeys.dashboardDetail(Number(dashboardId)) });
+        queryClient.invalidateQueries({ queryKey: membersKeys.memberList(Number(dashboardId)) });
+        queryClient.invalidateQueries({ queryKey: dashboardKeys.dashboardDetail(Number(dashboardId)) });
 
         if (isOwner) {
           router.replace('/mydashboard');
