@@ -12,5 +12,6 @@ export const columnsQueryOptions = {
   columnList: (dashboardId: number) => ({
     queryKey: columnsKeys.columnList(dashboardId),
     queryFn: () => getColumnList(dashboardId),
+    staleTime: 0,
   }),
 };

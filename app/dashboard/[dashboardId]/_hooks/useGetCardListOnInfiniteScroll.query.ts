@@ -24,5 +24,6 @@ export const useGetCardListOnInfiniteScroll = ({ columnId, size = 5 }: GetCardLi
         totalCount: data?.pages?.[data.pages.length - 1].totalCount,
       };
     },
+    refetchOnMount: 'always',
   });
 };
